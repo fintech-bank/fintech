@@ -20,18 +20,17 @@ return new class extends Migration
             $table->float('initial_payment');
             $table->float('monthly_payment');
             $table->integer('monthly_days')->default(15);
+            $table->bigInteger('wallet_id')->unsigned();
+            $table->foreign('wallet_id')->references('id')->on('customer_wallets')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->bigInteger('wallet_payment_id')->unsigned();
+            $table->foreign('wallet_payment_id')->references('id')->on('customer_wallets')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
 
             $table->foreignId('epargne_plan_id')
-                            ->constrained()
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
-
-            $table->foreignId('customer_wallet_id')
-                            ->constrained()
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
-
-            $table->foreignId('customer_wallet_payment_id')
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();

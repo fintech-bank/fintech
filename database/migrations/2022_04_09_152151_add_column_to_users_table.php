@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('agent')->default(false);
             $table->boolean('customer')->default(true);
+            $table->string('identifiant')->nullable();
         });
     }
 

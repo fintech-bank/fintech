@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helper\UserHelper;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,8 @@ class UserSeeder extends Seeder
             "password" => \Hash::make('password'),
             "admin" => true,
             "agent" => false,
-            "customer" => false
+            "customer" => false,
+            "identifiant" => UserHelper::generateID()
         ]);
 
         User::create([
@@ -30,7 +32,8 @@ class UserSeeder extends Seeder
             "password" => \Hash::make('password'),
             "admin" => false,
             "agent" => true,
-            "customer" => false
+            "customer" => false,
+            "identifiant" => UserHelper::generateID()
         ]);
 
         User::create([
@@ -39,7 +42,8 @@ class UserSeeder extends Seeder
             "password" => \Hash::make('password'),
             "admin" => false,
             "agent" => false,
-            "customer" => true
+            "customer" => true,
+            "identifiant" => UserHelper::generateID()
         ]);
     }
 }

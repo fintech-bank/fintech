@@ -14,4 +14,9 @@ class UserHelper
             default: return "Client"; break;
         }
     }
+
+    public static function generateID()
+    {
+        return "ID".\Str::upper(\Str::random(6))."I".rand(0,9);
+    }
 }

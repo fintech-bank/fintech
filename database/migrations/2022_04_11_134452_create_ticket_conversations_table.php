@@ -18,20 +18,17 @@ return new class extends Migration
             $table->text('message');
             $table->timestamps();
 
+            $table->bigInteger('agent_id')->unsigned();
+            $table->foreign('agent_id')->references('id')->on('users')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->bigInteger('customer_id')->unsigned();
+            $table->foreign('customer_id')->references('id')->on('users')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
             $table->foreignId('ticket_id')
-                            ->constrained()
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
-
-
-            $table->foreignId('agent_id')
-                            ->nullable()
-                            ->constrained()
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
-
-            $table->foreignId('customer_id')
-                            ->nullable()
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();

@@ -16,6 +16,7 @@ License: For each use you must have a valid license purchased only from above li
     <title>{{ config('app.name') }}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="/favicon.ico" />
     <!--begin::Fonts-->
@@ -139,6 +140,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Global Javascript Bundle(used by all pages)-->
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
+<script src="/global/js/app.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Custom Javascript(used by this page)-->
 <script src="/assets/js/custom/authentication/sign-in/general.js"></script>

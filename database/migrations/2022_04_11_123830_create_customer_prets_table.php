@@ -28,7 +28,17 @@ return new class extends Migration
             $table->boolean('signed_bank')->default(false);
             $table->boolean('alert')->default(false);
             $table->enum('assurance_type', ["D", "DIM", "DIMC"])->default('DIM');
+            $table->bigInteger('wallet_loan_id')->unsigned();
+            $table->bigInteger('wallet_payment_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('wallet_loan_id')->references('id')->on('customer_wallets')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->foreign('wallet_payment_id')->references('id')->on('customer_wallets')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
 
             $table->foreignId('loan_plan_id')
                 ->constrained()
@@ -36,17 +46,6 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignId('customer_id')
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-
-            $table->foreignId('customer_wallet_loan_id')
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreignId('customer_wallet_payment_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
