@@ -1,0 +1,42 @@
+.bg-bank {
+    background-color: #0c27a3 !important;
+}
+
+.text-bank {
+    color: #0c27a3 !important;
+}
+
+.btn.btn-bank {
+    color: #fff !important;
+    background-color: #0c27a3 !important;
+}
+
+.btn-outline-bank {
+    color: #0c27a3 !important;
+    border-color: #0c27a3 !important;
+}
+
+.btn-outline-bank :hover {
+    color: #ffffff !important;
+    background-color: #0c27a3 !important;
+    border-color: #0c27a3 !important;
+}
+
+.border-bank {
+    border-color: #0c27a3 !important;
+}
+
+.nav-line-tabs .nav-item .nav-link.active, .nav-line-tabs .nav-item .nav-link:hover:not(.disabled), .nav-line-tabs .nav-item.show .nav-link {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #0c27a3;
+    transition: color .2s ease,background-color .2s ease;
+}
+
+.nav-line-tabs.nav-line-tabs-2x .nav-item .nav-link.active, .nav-line-tabs.nav-line-tabs-2x .nav-item .nav-link:hover:not(.disabled), .nav-line-tabs.nav-line-tabs-2x .nav-item.show .nav-link {
+    border-bottom-width: 2px;
+}
+
+.nav-line-tabs.nav-line-tabs-3x .nav-item .nav-link.active, .nav-line-tabs.nav-line-tabs-3x .nav-item .nav-link:hover:not(.disabled), .nav-line-tabs.nav-line-tabs-3x .nav-item.show .nav-link {
+    border-bottom-width: 3px;
+}

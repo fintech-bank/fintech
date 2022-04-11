@@ -1,0 +1,3 @@
+- ## Clients
+    - [Cotation](/{{route}}/{{version}}/client/cotation)
+    - [Code Auth SecurPass](/{{route}}/{{version}}/client/authcode)
