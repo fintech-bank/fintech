@@ -103,7 +103,7 @@
             <!--begin::Menu-->
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('agences.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -120,7 +120,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('banks.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -143,7 +143,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('document.category.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -160,7 +160,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('epargnes.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -177,7 +177,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('prets.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -194,7 +194,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('packages.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -211,7 +211,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('services.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -233,7 +233,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('category.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
@@ -250,7 +250,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="../../demo8/dist/apps/calendar.html">
+                    <a class="menu-link" href="{{ route('pages.index') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 							<span class="svg-icon svg-icon-2">
