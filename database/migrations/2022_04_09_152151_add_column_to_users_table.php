@@ -18,6 +18,7 @@ return new class extends Migration
             $table->boolean('agent')->default(false);
             $table->boolean('customer')->default(true);
             $table->string('identifiant')->nullable();
+            $table->timestamp('last_seen')->nullable();
         });
     }
 

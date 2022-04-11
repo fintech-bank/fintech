@@ -17,3 +17,4 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
     Route::get('/', [\App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
+

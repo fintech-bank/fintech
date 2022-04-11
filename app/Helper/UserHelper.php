@@ -19,4 +19,13 @@ class UserHelper
     {
         return "ID".\Str::upper(\Str::random(6))."I".rand(0,9);
     }
+
+    public static function getInfoOnline($user)
+    {
+        if(\Cache::has('user-is-online-'.$user->id)) {
+            return '<span class="bullet bullet-dot bg-success me-1"></span>Connecter';
+        } else {
+            return '<span class="bullet bullet-dot bg-danger me-1"></span>Déconnecter';
+        }
+    }
 }
