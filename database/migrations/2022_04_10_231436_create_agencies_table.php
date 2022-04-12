@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('postal');
             $table->string('city');
             $table->string('country', 2);
-            $table->boolean('online')->default(true);
+            $table->boolean('online')->default(false);
         });
     }
 

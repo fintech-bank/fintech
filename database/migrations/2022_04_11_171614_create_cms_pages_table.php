@@ -13,22 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cms_sub_categories', function (Blueprint $table) {
+        Schema::create('cms_pages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
             $table->string('slug');
-            $table->boolean('parent');
+            $table->json('content')->nullable();
+            $table->boolean('publish')->default(false);
+            $table->timestamps();
 
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('subcategory_id');
 
-            $table->foreign('parent_id')->references('id')->on('cms_sub_categories')
+            $table->foreign('subcategory_id')->references('id')->on('cms_sub_categories')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-
-            $table->foreignId('cms_category_id')
-                            ->constrained()
-                            ->cascadeOnUpdate()
-                            ->cascadeOnDelete();
 
         });
     }
@@ -40,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cms_sub_categories');
+        Schema::dropIfExists('cms_pages');
     }
 };

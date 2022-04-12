@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 include("auth.php");
 include("front.php");
+include("admin.php");
+
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'test']);

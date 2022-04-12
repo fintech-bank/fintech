@@ -2,6 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\UserActivity;
+use App\Http\Middleware\UserIsAdminMiddleware;
+use App\Http\Middleware\UserIsAgentMiddleware;
+use App\Http\Middleware\UserIsCustomerMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -21,6 +25,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Fruitcake\Cors\HandleCors::class
     ];
 
     /**
@@ -36,6 +41,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            UserActivity::class,
         ],
 
         'api' => [
@@ -63,5 +69,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'admin' => UserIsAdminMiddleware::class,
+        'agent' => UserIsAgentMiddleware::class,
+        'customer' => UserIsCustomerMiddleware::class,
     ];
 }

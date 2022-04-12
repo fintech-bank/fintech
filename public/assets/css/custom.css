@@ -40,3 +40,7 @@
 .nav-line-tabs.nav-line-tabs-3x .nav-item .nav-link.active, .nav-line-tabs.nav-line-tabs-3x .nav-item .nav-link:hover:not(.disabled), .nav-line-tabs.nav-line-tabs-3x .nav-item.show .nav-link {
     border-bottom-width: 3px;
 }
+
+.form-check.form-check-solid .form-check-input:checked {
+    background-color: #0c27a3;
+}
