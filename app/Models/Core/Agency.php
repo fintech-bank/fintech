@@ -2,7 +2,9 @@
 
 namespace App\Models\Core;
 
+use App\Helper\CountryHelper;
 use App\Models\Document\DocumentTransmiss;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,5 +30,15 @@ class Agency extends Model
         static::updated(function ($agency) {
             \Log::info("Mise à jour de l'agence: ".$agency->name);
         });
+    }
+
+    public function getCountryAttribute($value)
+    {
+        return CountryHelper::getCountryName(\Str::upper(\Str::limit($value, 2, '')));
+    }
+
+    public function setCountryAttribute($value)
+    {
+        $this->attributes['country'] = \Str::upper(\Str::limit($value, 2, ''));
     }
 }
