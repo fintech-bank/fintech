@@ -6,12 +6,6 @@ namespace App\Helper;
 
 class AgencyHelper
 {
-    public static function getCountryName($code)
-    {
-        $response = collect(\Http::get('https://restcountries.com/v3.1/alpha/' . $code)->object());
-        return $response->first()->name->common;
-    }
-
     public static function getOnline($online)
     {
         if ($online == true) {
