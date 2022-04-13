@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->integer('bridge_id');
+            $table->integer('bridge_id')->nullable();
             $table->string('name');
             $table->string('logo');
             $table->string('primary_color');
