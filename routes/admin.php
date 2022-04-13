@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
+Route::prefix('admin')->middleware(['auth'])->group(function() {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::resource('agences', AgenceController::class)->only(['index', 'store', 'show', 'update', 'destroy']);

@@ -24,7 +24,7 @@ Follow: http://www.twitter.com/themehats
     <meta content="" name="author"/>
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700&amp;subset=all' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700&amp;subset=all' rel='stylesheet' type='text/css'>
     <link href="/front/assets/plugins/socicon/socicon.css" rel="stylesheet" type="text/css"/>
     <link href="/front/assets/plugins/bootstrap-social/bootstrap-social.css" rel="stylesheet" type="text/css"/>
     <link href="/front/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -1455,6 +1455,7 @@ Follow: http://www.twitter.com/themehats
 
 <!-- BEGIN: PAGE CONTAINER -->
 <div class="c-layout-page">
+    @include("front.components.alert")
     @yield("content")
 </div>
 <!-- END: PAGE CONTAINER -->
