@@ -19,4 +19,4 @@ include("admin.php");
 
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'test']);
 Route::get('/home', [\App\Http\Controllers\TestController::class, 'home']);
-//Route::post('/push',[\App\Http\Controllers\TestController::class, 'pushStore']);
+Route::post('/push',[\App\Http\Controllers\TestController::class, 'pushStore']);

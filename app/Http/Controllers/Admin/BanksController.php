@@ -107,11 +107,18 @@ class BanksController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        //
+        try {
+            $bank = Bank::find($id);
+
+            return response()->json($bank);
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
     }
 
 
