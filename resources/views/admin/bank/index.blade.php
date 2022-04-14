@@ -180,6 +180,70 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" id="edit_bank">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-bank">
+                <h5 class="modal-title text-white">Edition d'une banque</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <form id="formEditBank" action="" method="post" novalidate>
+                <div class="modal-body">
+                    <x-form.input
+                        name="name"
+                        type="text"
+                        label="Nom de la banque" />
+
+                    <x-form.input
+                        name="logo"
+                        type="text"
+                        label="Adresse du logo de la banque" />
+
+                    <div class="row">
+                        <div class="col-3">
+                            <x-form.input
+                                name="primary_color"
+                                type="color"
+                                label="Couleur Primaire" />
+                        </div>
+                        <div class="col-3">
+                            <x-form.select-modal
+                                name="country"
+                                parent="#add_bank"
+                                :datas="\App\Helper\CountryHelper::getCountriesAll()"
+                                label="Pays"
+                                placeholder="Selectionner le pays de la banque" />
+                        </div>
+                        <div class="col-3">
+                            <x-form.input
+                                name="bic"
+                                type="text"
+                                label="BIC/SWIFT" />
+                        </div>
+
+                        <div class="col-3">
+                            <x-form.input
+                                name="process_time"
+                                type="text"
+                                label="Temps de propagation des opérations"
+                                value="24:00:00" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <x-form.button />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section("script")
