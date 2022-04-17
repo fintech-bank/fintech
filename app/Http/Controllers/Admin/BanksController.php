@@ -127,21 +127,37 @@ class BanksController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            Bank::find($id)->update($request->all());
+
+            return response()->json([
+                "bank" => Bank::find($id)
+            ]);
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        //
+        try {
+            Bank::find($id)->delete();
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
     }
 }
