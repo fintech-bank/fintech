@@ -8,7 +8,7 @@
     <!--begin::Page title-->
     <div class="page-title d-flex justify-content-center flex-column me-5">
         <!--begin::Title-->
-        <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Catégorie de document</h1>
+        <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Plan des épargnes</h1>
         <!--end::Title-->
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
@@ -23,7 +23,7 @@
             </li>
             <!--end::Item-->
             <!--begin::Item-->
-            <li class="breadcrumb-item text-dark">Gestion des catégories de document</li>
+            <li class="breadcrumb-item text-dark">Gestion des plans des épargnes</li>
             <!--end::Item-->
         </ul>
         <!--end::Breadcrumb-->
@@ -48,22 +48,38 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button class="btn btn-bank" data-bs-toggle="modal" data-bs-target="#add_category"><i class="fa-solid fa-plus"></i> Nouvelle catégorie</button>
+            <button class="btn btn-bank" data-bs-toggle="modal" data-bs-target="#add_plan"><i class="fa-solid fa-plus"></i> Nouveau Plan</button>
         </div>
     </div>
     <div class="card-body">
-        <table id="liste_category" class="table table-row-bordered gy-5">
+        <table id="liste_plan" class="table table-row-bordered gy-5">
             <thead>
             <tr class="fw-bold fs-6 text-muted">
-                <th>Catégorie</th>
+                <th>Désignation</th>
+                <th>Taux d'interet</th>
+                <th>Montant Initial</th>
+                <th>Limite</th>
+                <th>Disponibilité</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            @foreach(\App\Models\Core\DocumentCategory::all() as $category)
+            @foreach(\App\Models\Core\EpargnePlan::all() as $plan)
                 <tr>
                     <td>
-                        {{ $category->name }}
+                        {{ $plan->name }}
+                    </td>
+                    <td>{{ $plan->profit_percent }} %</td>
+                    <td>{{ eur($plan->init) }}</td>
+                    <td>{{ eur($plan->limit) }}</td>
+                    <td>
+                        Calcul des intérets: Tous les {{ $plan->profit_days }} Jours<br>
+                        Disponibilité:
+                        @if($plan->lock_days == 0)
+                            Immédiates
+                        @else
+                            {{ $plan->lock_days }} Jours
+                        @endif
                     </td>
                     <td>
                         <button class="btn btn-icon btn-circle btn-outline btn-outline-dashed btn-outline-primary rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="-30px, 20px">
@@ -82,7 +98,7 @@
 
                             <!--begin::Menu item-->
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3 edit" data-category="{{ $category->id }}">
+                                <a href="#" class="menu-link px-3 edit" data-plan="{{ $plan->id }}">
                                     Editer
                                 </a>
                             </div>
@@ -90,7 +106,7 @@
 
                             <!--begin::Menu item-->
                             <div class="menu-item px-3 py-3">
-                                <a href="#" class="menu-link px-3 text-danger delete" data-category="{{ $category->id }}">
+                                <a href="#" class="menu-link px-3 text-danger delete" data-plan="{{ $plan->id }}">
                                     Supprimer
                                 </a>
                             </div>
@@ -104,11 +120,11 @@
         </table>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" id="add_category">
+<div class="modal fade" tabindex="-1" id="add_plan">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-bank">
-                <h5 class="modal-title text-white">Nouvelle catégorie</h5>
+                <h5 class="modal-title text-white">Nouveau Plan d'épargne</h5>
 
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -117,12 +133,51 @@
                 <!--end::Close-->
             </div>
 
-            <form id="formAddCategory" action="{{ route('category.store') }}" method="post" novalidate>
+            <form id="formAddPlan" action="{{ route('epargnes.store') }}" method="post" novalidate>
                 <div class="modal-body">
                     <x-form.input
                         name="name"
                         type="text"
-                        label="Nom de la catégorie" />
+                        label="Nom du plan"
+                        required="true" />
+
+                    <x-form.input
+                        name="profit_percent"
+                        type="text"
+                        label="Taux d'interet"
+                        required="true" />
+
+                    <div class="row">
+                        <div class="col-6">
+                            <x-form.input
+                                name="lock_days"
+                                type="text"
+                                label="Disponibilité (en jours)"
+                                required="true" />
+                        </div>
+                        <div class="col-6">
+                            <x-form.input
+                                name="profit_days"
+                                type="text"
+                                label="Interval de calcul des intêret" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <x-form.input
+                                name="init"
+                                type="text"
+                                label="Dépot initial" />
+                        </div>
+                        <div class="col-6">
+                            <x-form.input
+                                name="limit"
+                                type="text"
+                                label="Limite d'épargne"
+                                required="true" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -132,11 +187,11 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" id="edit_category">
+<div class="modal fade" tabindex="-1" id="edit_plan">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-bank">
-                <h5 class="modal-title text-white">Edition d'une catégorie</h5>
+                <h5 class="modal-title text-white">Edition d'un plan d'épargne</h5>
 
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -145,12 +200,51 @@
                 <!--end::Close-->
             </div>
 
-            <form id="formEditCategory" action="" method="post" novalidate>
+            <form id="formEditPlan" action="" method="post" novalidate>
                 <div class="modal-body">
                     <x-form.input
                         name="name"
                         type="text"
-                        label="Nom de la catégorie" />
+                        label="Nom du plan"
+                        required="true" />
+
+                    <x-form.input
+                        name="profit_percent"
+                        type="text"
+                        label="Taux d'interet"
+                        required="true" />
+
+                    <div class="row">
+                        <div class="col-6">
+                            <x-form.input
+                                name="lock_days"
+                                type="text"
+                                label="Disponibilité (en jours)"
+                                required="true" />
+                        </div>
+                        <div class="col-6">
+                            <x-form.input
+                                name="profit_days"
+                                type="text"
+                                label="Interval de calcul des intêret" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <x-form.input
+                                name="init"
+                                type="text"
+                                label="Dépot initial" />
+                        </div>
+                        <div class="col-6">
+                            <x-form.input
+                                name="limit"
+                                type="text"
+                                label="Limite d'épargne"
+                                required="true" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="modal-footer">
@@ -163,5 +257,5 @@
 @endsection
 
 @section("script")
-    @include("admin.scripts.document.index")
+    @include("admin.scripts.epargnes.index")
 @endsection
