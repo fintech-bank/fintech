@@ -44,6 +44,9 @@ class SystemSeedCommand extends Command
 
         $this->info("Seeding: Liste des Utilisateur de Test");
         $this->call("db:seed", ["class" => "UserSeeder"]);
+
+        $this->info("Seeding: Liste des Catégories de documents");
+        $this->call("db:seed", ["class" => "DocumentCategorySeeder"]);
         return 0;
     }
 }
