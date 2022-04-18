@@ -93,14 +93,6 @@
                             <!--end::Menu separator-->
 
                             <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3 edit" data-plan="{{ $plan->id }}">
-                                    Editer
-                                </a>
-                            </div>
-                            <!--end::Menu item-->
-
-                            <!--begin::Menu item-->
                             <div class="menu-item px-3 py-3">
                                 <a href="#" class="menu-link px-3 text-danger delete" data-plan="{{ $plan->id }}">
                                     Supprimer
@@ -162,36 +154,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="modal-footer">
-                    <x-form.button />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" tabindex="-1" id="edit_plan">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-bank">
-                <h5 class="modal-title text-white">Edition d'un plan de prets</h5>
-
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark text-white"></i>
-                </div>
-                <!--end::Close-->
-            </div>
-
-            <form id="formEditPlan" action="" method="post" novalidate>
-                <div class="modal-body">
-                    <x-form.input
-                        name="name"
-                        type="text"
-                        label="Nom du plan"
-                        required="true" />
-
                     <div id="repeat_form_interest">
                         <div class="form-group">
                             <div data-repeater-list="repeat_form_interest">
@@ -222,6 +184,10 @@
                         </div>
                     </div>
 
+                    <x-form.textarea
+                        name="instruction"
+                        label="Instruction" />
+
                 </div>
 
                 <div class="modal-footer">
@@ -234,6 +200,7 @@
 @endsection
 
 @section("script")
+    <script src="/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
     <script src="/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
     @include("admin.scripts.prets.index")
 @endsection

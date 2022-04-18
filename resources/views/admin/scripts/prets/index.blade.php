@@ -1,11 +1,9 @@
 <script type="text/javascript">
     let modal = {
         modalAddPlan: document.querySelector('#add_plan'),
-        modalEditPlan: document.querySelector('#edit_plan'),
     }
 
     let btn = {
-        btnEdit: document.querySelectorAll('.edit'),
         btnDelete: document.querySelectorAll('.delete'),
     }
 
@@ -25,22 +23,6 @@
         }
     });
 
-    btn.btnEdit.forEach(b => {
-        b.addEventListener('click', e => {
-            e.preventDefault()
-            $.ajax({
-                url: `/admin/prets/${e.target.dataset.plan}`,
-                success: data => {
-                    console.log(data)
-                    modal.modalEditPlan.querySelector('#formEditPlan').setAttribute('action', '/admin/prets/'+e.target.dataset.plan)
-                    modal.modalEditPlan.querySelector('[name="name"]').value = data.name
-
-
-                    new bootstrap.Modal(modal.modalEditPlan).show()
-                }
-            })
-        })
-    })
     btn.btnDelete.forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault()
@@ -117,39 +99,6 @@
             }
         })
     })
-    $("#formEditPlan").on('submit', e => {
-        e.preventDefault()
-        let form = $("#formEditPlan")
-        let url = form.attr('action')
-        let btn = form.find('.btn-bank')
-        let data = form.serializeArray()
 
-        btn.attr('data-kt-indicator', 'on')
-        e.disabled = !1
 
-        $.ajax({
-            url: url,
-            method: 'PUT',
-            data: data,
-            success: data => {
-                console.log(data)
-                btn.removeAttr('data-kt-indicator')
-                e.disabled = !0
-                toastr.success(`Le plan de pret ${data.name} à été edité`, "Edition d'un plan de pret")
-                setTimeout(() => {
-                    window.location.reload()
-                }, 1200)
-            },
-            error: err => {
-                const errors = err.responseJSON.errors
-
-                Object.keys(errors).forEach(key => {
-                    toastr.error(errors[key][0], "Champs: "+key)
-                })
-
-                btn.removeAttr('data-kt-indicator')
-                e.disabled = !0
-            }
-        })
-    })
 </script>

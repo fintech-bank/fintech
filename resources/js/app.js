@@ -351,4 +351,8 @@ function storePushSubscription(pushSubscription) {
         });
 }
 
+document.querySelectorAll('.ckeditor').forEach(editor => {
+    console.log(editor)
+})
+
 initSW();
