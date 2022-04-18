@@ -154,21 +154,21 @@
                         </div>
                     </div>
 
-                    <div id="repeat_form_interest">
+                    <div id="kt_docs_repeater_basic" class="mb-10">
+                        <!--begin::Form group-->
                         <div class="form-group">
-                            <div data-repeater-list="repeat_form_interest">
+                            <div data-repeater-list="kt_docs_repeater_basic">
                                 <div data-repeater-item>
                                     <div class="form-group row">
-                                        <div class="col-4">
-                                            <label for="" class="form-label">Interet</label>
-                                            <input type="text" name="interest[]" class="form-control" />
+                                        <div class="col-md-3">
+                                            <label class="form-label">Taux:</label>
+                                            <input type="text" class="form-control mb-2 mb-md-0" name="interest" />
                                         </div>
-                                        <div class="col-4">
-                                            <label for="" class="form-label">Durée</label>
-                                            <input type="text" name="duration[]" class="form-control" />
-                                            <p class="text-muted">En Mois</p>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Durée:</label>
+                                            <input type="text" class="form-control mb-2 mb-md-0" name="duration" />
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-md-4">
                                             <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3 mt-md-8">
                                                 <i class="la la-trash-o"></i> Supprimer
                                             </a>
@@ -177,12 +177,17 @@
                                 </div>
                             </div>
                         </div>
+                        <!--end::Form group-->
+
+                        <!--begin::Form group-->
                         <div class="form-group mt-5">
                             <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
                                 <i class="la la-plus"></i> Ajouter
                             </a>
                         </div>
+                        <!--end::Form group-->
                     </div>
+                    <!--end::Repeater-->
 
                     <x-form.textarea
                         name="instruction"

@@ -7,7 +7,7 @@
         btnDelete: document.querySelectorAll('.delete'),
     }
 
-    $('#repeat_form_interest').repeater({
+    $('#kt_docs_repeater_basic').repeater({
         initEmpty: false,
 
         defaultValues: {
