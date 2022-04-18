@@ -10,4 +10,9 @@ class LoanPlan extends Model
     use HasFactory;
     protected $guarded = [];
     public $timestamps = false;
+
+    public function interests()
+    {
+        return $this->hasMany(LoanPlanInterest::class);
+    }
 }
