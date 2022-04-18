@@ -157,7 +157,7 @@
                     <div id="kt_docs_repeater_basic" class="mb-10">
                         <!--begin::Form group-->
                         <div class="form-group">
-                            <div data-repeater-list="kt_docs_repeater_basic">
+                            <div data-repeater-list="loan_interests">
                                 <div data-repeater-item>
                                     <div class="form-group row">
                                         <div class="col-md-3">
