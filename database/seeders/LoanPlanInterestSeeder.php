@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Core\LoanPlanInterest;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,34 @@ class LoanPlanInterestSeeder extends Seeder
      */
     public function run()
     {
-        //
+        LoanPlanInterest::query()->create([
+            'interest' => 4.39,
+            'duration' => 96,
+            "loan_plan_id" => 1
+        ])->create([
+            'interest' => 4.39,
+            'duration' => 84,
+            "loan_plan_id" => 2
+        ])->create([
+            'interest' => 4.39,
+            'duration' => 84,
+            "loan_plan_id" => 3
+        ])->create([
+            'interest' => 4.39,
+            'duration' => 84,
+            "loan_plan_id" => 4
+        ])->create([
+            'interest' => 4.39,
+            'duration' => 84,
+            "loan_plan_id" => 5
+        ])->create([
+            'interest' => 4.39,
+            'duration' => 84,
+            "loan_plan_id" => 6
+        ])->create([
+            'interest' => 1.25,
+            'duration' => 300,
+            "loan_plan_id" => 7
+        ]);
     }
 }
