@@ -7,7 +7,6 @@
     "require": {
         "php": "8.*",
         "arcanedev/log-viewer": "^9.0",
-        "arielmejiadev/larapex-charts": "^4.0",
         "barryvdh/laravel-dompdf": "^1.0",
         "binarytorch/larecipe": "^2.5",
         "creativeorange/gravatar": "~1.0",
