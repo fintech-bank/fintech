@@ -93,14 +93,6 @@
                             <!--end::Menu separator-->
 
                             <!--begin::Menu item-->
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3 edit" data-plan="{{ $plan->id }}">
-                                    Editer
-                                </a>
-                            </div>
-                            <!--end::Menu item-->
-
-                            <!--begin::Menu item-->
                             <div class="menu-item px-3 py-3">
                                 <a href="#" class="menu-link px-3 text-danger delete" data-plan="{{ $plan->id }}">
                                     Supprimer
@@ -162,51 +154,21 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="modal-footer">
-                    <x-form.button />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" tabindex="-1" id="edit_plan">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-bank">
-                <h5 class="modal-title text-white">Edition d'un plan de prets</h5>
-
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark text-white"></i>
-                </div>
-                <!--end::Close-->
-            </div>
-
-            <form id="formEditPlan" action="" method="post" novalidate>
-                <div class="modal-body">
-                    <x-form.input
-                        name="name"
-                        type="text"
-                        label="Nom du plan"
-                        required="true" />
-
-                    <div id="repeat_form_interest">
+                    <div id="kt_docs_repeater_basic" class="mb-10">
+                        <!--begin::Form group-->
                         <div class="form-group">
-                            <div data-repeater-list="repeat_form_interest">
+                            <div data-repeater-list="loan_interests">
                                 <div data-repeater-item>
                                     <div class="form-group row">
-                                        <div class="col-4">
-                                            <label for="" class="form-label">Interet</label>
-                                            <input type="text" name="interest[]" class="form-control" />
+                                        <div class="col-md-3">
+                                            <label class="form-label">Taux:</label>
+                                            <input type="text" class="form-control mb-2 mb-md-0" name="interest" />
                                         </div>
-                                        <div class="col-4">
-                                            <label for="" class="form-label">Durée</label>
-                                            <input type="text" name="duration[]" class="form-control" />
-                                            <p class="text-muted">En Mois</p>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Durée:</label>
+                                            <input type="text" class="form-control mb-2 mb-md-0" name="duration" />
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-md-4">
                                             <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3 mt-md-8">
                                                 <i class="la la-trash-o"></i> Supprimer
                                             </a>
@@ -215,12 +177,21 @@
                                 </div>
                             </div>
                         </div>
+                        <!--end::Form group-->
+
+                        <!--begin::Form group-->
                         <div class="form-group mt-5">
                             <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
                                 <i class="la la-plus"></i> Ajouter
                             </a>
                         </div>
+                        <!--end::Form group-->
                     </div>
+                    <!--end::Repeater-->
+
+                    <x-form.textarea
+                        name="instruction"
+                        label="Instruction" />
 
                 </div>
 
@@ -234,6 +205,7 @@
 @endsection
 
 @section("script")
+    <script src="/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
     <script src="/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
     @include("admin.scripts.prets.index")
 @endsection

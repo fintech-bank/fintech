@@ -351,4 +351,5 @@ function storePushSubscription(pushSubscription) {
         });
 }
 
+
 initSW();
