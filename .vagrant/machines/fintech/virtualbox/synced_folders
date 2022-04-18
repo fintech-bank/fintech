@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/code":{"type":null,"mount_options":["uid=1000","gid=1000","_netdev"],"guestpath":"/home/vagrant/code","hostpath":"E:/laragon/www/fintech","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"E:/laragon/www/fintech","disabled":false,"__vagrantfile":true}}}

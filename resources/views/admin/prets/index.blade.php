@@ -200,7 +200,7 @@
 @endsection
 
 @section("script")
-    <script src="/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
+    <script src="/assets/plugins/custom/tinymce/tinymce.bundle.js"></script>
     <script src="/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
     @include("admin.scripts.prets.index")
 @endsection
