@@ -31,6 +31,7 @@ Follow: http://www.twitter.com/themehats
     <link href="/front/assets/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="/front/assets/plugins/animate/animate.min.css" rel="stylesheet" type="text/css"/>
     <link href="/front/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN: BASE PLUGINS  -->
@@ -49,6 +50,8 @@ Follow: http://www.twitter.com/themehats
     <link href="/front/assets/demos/default/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
     <link href="/front/assets/demos/default/css/themes/default.css" rel="stylesheet" id="style_theme" type="text/css"/>
     <link href="/front/assets/demos/default/css/custom.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/front.css') }}">
     <!-- END THEME STYLES -->
 
     <link rel="shortcut icon" href="/favicon.ico"/>
@@ -1573,7 +1576,21 @@ Follow: http://www.twitter.com/themehats
 <div class="c-layout-go2top">
     <i class="icon-arrow-up"></i>
 </div><!-- END: LAYOUT/FOOTERS/GO2TOP -->
-
+<div class="floating-container">
+    <div class="floating-button">+</div>
+    <div class="element-container">
+        <a href="#" id="olvy-target">
+            <span class="float-element tooltip-left">
+                <i class="fa-solid fa-newspaper"></i> Mise à jours
+            </span>
+        </a>
+        <a href="#">
+            <span class="float-element tooltip-left">
+                <i class="fa-solid fa-rss"></i> Aidez-nous !
+            </span>
+        </a>
+    </div>
+</div>
 <!-- BEGIN: LAYOUT/BASE/BOTTOM -->
 <!-- BEGIN: CORE PLUGINS -->
 <!--[if lt IE 9]>
@@ -1605,6 +1622,7 @@ Follow: http://www.twitter.com/themehats
 <script src="/front/assets/plugins/typed/typed.min.js" type="text/javascript"></script>
 <script src="/front/assets/plugins/slider-for-bootstrap/js/bootstrap-slider.js" type="text/javascript"></script>
 <script src="/front/assets/plugins/js-cookie/js.cookie.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" type="text/javascript"></script>
 <!-- END: LAYOUT PLUGINS -->
 
 <!-- BEGIN: THEME SCRIPTS -->
@@ -1619,6 +1637,23 @@ Follow: http://www.twitter.com/themehats
 <!-- END: THEME SCRIPTS -->
 
 <!-- BEGIN: PAGE SCRIPTS -->
+<script>
+    var OlvyConfig = {
+        organisation: "fintech",
+        project: 'Site',
+        target: "#olvy-target",
+        type: "modal",
+        view: {
+            showSearch: false,
+            compact: true,
+            showHeader: true, // only applies when widget type is embed. you cannot hide header for modal and sidebar widgets
+            showUnreadIndicator: true,
+            unreadIndicatorColor: "#cc1919",
+            unreadIndicatorPosition: "top-right"
+        }
+    };
+</script>
+<script type="text/javascript" src="https://app.olvy.co/script.js" defer="defer"></script>
 <script>
     $(document).ready(function() {
 

@@ -19730,10 +19730,49 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/css/app.css":
-/*!*******************************!*\
-  !*** ./resources/css/app.css ***!
-  \*******************************/
+/***/ "./resources/scss/app.scss":
+/*!*********************************!*\
+  !*** ./resources/scss/app.scss ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/scss/front.scss":
+/*!***********************************!*\
+  !*** ./resources/scss/front.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/scss/admin.scss":
+/*!***********************************!*\
+  !*** ./resources/scss/admin.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/scss/account.scss":
+/*!*************************************!*\
+  !*** ./resources/scss/account.scss ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -20048,7 +20087,10 @@ process.umask = function() { return 0; };
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/global/js/app": 0,
-/******/ 			"global/css/app": 0
+/******/ 			"css/account": 0,
+/******/ 			"css/admin": 0,
+/******/ 			"css/front": 0,
+/******/ 			"css/app": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -20098,8 +20140,11 @@ process.umask = function() { return 0; };
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["global/css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["global/css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/front.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/admin.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/account.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

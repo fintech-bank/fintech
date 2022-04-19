@@ -10,15 +10,38 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@semantic-release/changelog": "^6.0.1",
+        "@semantic-release/commit-analyzer": "^9.0.2",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/npm": "^9.0.1",
+        "@semantic-release/release-notes-generator": "^10.0.3",
         "axios": "^0.25",
         "browser-sync": "^2.27.9",
         "browser-sync-webpack-plugin": "^2.3.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.50.1",
+        "sass-loader": "^12.1.0",
+        "semantic-release": "^19.0.2"
     },
     "dependencies": {
         "laravel-echo": "^1.11.4",
         "pusher-js": "^7.0.6"
+    },
+    "release": {
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            [
+                "@semantic-release/npm",
+                {
+                    " npmPublish": false
+                }
+            ],
+            "@semantic-release/changelog",
+            "@semantic-release/git"
+        ]
     }
 }
