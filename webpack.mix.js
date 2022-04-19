@@ -12,9 +12,10 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/global/js')
-    .postCss('resources/css/app.css', 'public/global/css', [
-        //
-    ]);
+    .sass('resources/scss/app.scss', 'public/css/app.css')
+    .sass('resources/scss/front.scss', 'public/css/front.css')
+    .sass('resources/scss/admin.scss', 'public/css/admin.css')
+    .sass('resources/scss/account.scss', 'public/css/account.css');
 
 mix.disableNotifications()
 mix.browserSync('fintech.io');
