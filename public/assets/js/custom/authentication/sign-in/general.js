@@ -29,7 +29,7 @@ let KTSigninGeneral = function () {
                                     success: data => {
                                         e.removeAttribute('data-kt-indicator')
                                         e.disabled = !1
-                                        window.location='/'
+                                        window.location=data
                                     },
                                     error: data => {
                                         e.removeAttribute('data-kt-indicator')

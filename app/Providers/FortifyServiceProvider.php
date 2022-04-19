@@ -29,7 +29,8 @@ class FortifyServiceProvider extends ServiceProvider
 
             public function toResponse($request)
             {
-                return response()->json();
+                $url = url()->previous();
+                return response()->json($url);
             }
         });
 
