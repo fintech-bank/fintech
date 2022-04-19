@@ -19,7 +19,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
 
         // Horizon::routeSmsNotificationsTo('15556667777');
         // Horizon::routeMailNotificationsTo('example@example.com');
-        Horizon::routeSlackNotificationsTo('https://hooks.slack.com/services/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', '#bank');
+        //Horizon::routeSlackNotificationsTo();
 
         Horizon::night();
     }

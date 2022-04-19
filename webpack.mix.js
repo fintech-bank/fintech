@@ -17,3 +17,4 @@ mix.js('resources/js/app.js', 'public/global/js')
     ]);
 
 mix.disableNotifications()
+mix.browserSync('fintech.io');

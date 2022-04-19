@@ -138,7 +138,13 @@
                         label="Prix du plan"
                         required="true" />
 
-                    <x
+                    <x-form.select
+                        name="type_prlv"
+                        :datas="\App\Helper\PackageHelper::getTypePrlvToArray()"
+                        label="Fréquence de prélèvement" />
+
+                    <div class="separator my-10"></div>
+                    <h3>Options</h3>
 
                 </div>
 
