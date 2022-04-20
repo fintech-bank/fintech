@@ -21,4 +21,15 @@ class ServiceHelper
 
         return json_encode($arr);
     }
+
+    public static function setTypePrlv($type)
+    {
+        switch ($type) {
+            case 'Mensuel': return 'mensual';
+            case 'Trimestriel': return 'trim';
+            case 'Semestriel': return 'sem';
+            case 'Ponctuel': return 'ponctual';
+            default: return 'annual';
+        }
+    }
 }

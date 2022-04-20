@@ -122,5 +122,43 @@
             }
         })
     })
+    $("#formEditService").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formEditService")
+        let url = form.attr('action')
+        let btn = form.find('.btn-bank')
+        let data = form.serializeArray()
+
+        btn.attr('data-kt-indicator', 'on')
+        e.disabled = !1
+
+        $.ajax({
+            url: url,
+            method: 'put',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                e.disabled = !0
+                toastr.success(`Le Service ${data.name} à été édité`, "Edition Service")
+                form[0].reset()
+                t.on('draw', () => {
+                    $("#liste_service tbody").prepend(data.html)
+                    $("#liste_service tbody").hide().fadeIn()
+                })
+                t.draw()
+            },
+            error: err => {
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key)
+                })
+
+                btn.removeAttr('data-kt-indicator')
+                e.disabled = !0
+            }
+        })
+    })
 
 </script>

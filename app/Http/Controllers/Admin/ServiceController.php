@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helper\LogHelper;
+use App\Helper\ServiceHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Core\Service;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class ServiceController extends Controller
             $service = Service::create([
                 "name" => $request->get('name'),
                 "price" => $request->get('price'),
-                "type_prlv" => $request->get('type_prlv'),
+                "type_prlv" => ServiceHelper::setTypePrlv($request->get('type_prlv')),
                 "package_id" => $request->get('package_id'),
             ]);
 
@@ -82,7 +83,7 @@ class ServiceController extends Controller
             $service = Service::find($id);
             $service->name = $request->get('name');
             $service->price = $request->get('price');
-            $service->type_prlv = $request->get('type_prlv');
+            $service->type_prlv = ServiceHelper::setTypePrlv($request->get('type_prlv'));
             $service->package_id = $request->get('package_id');
             $service->save();
 
