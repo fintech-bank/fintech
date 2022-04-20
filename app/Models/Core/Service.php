@@ -15,4 +15,15 @@ class Service extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
+    public function getTypePrlvAttribute($value)
+    {
+        switch ($value) {
+            case 'mensual': return 'Mensuel';break;
+            case 'trim': return 'Trimestriel';break;
+            case 'sem': return 'Semestriel';break;
+            case 'ponctual': return 'Ponctuel';break;
+            default: return 'Annuel';break;
+        }
+    }
 }

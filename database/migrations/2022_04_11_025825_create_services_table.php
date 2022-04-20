@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->float('price');
-            $table->enum('type_prlv', ['PONCTUAL', 'MENSUAL', 'TRIM', 'DEC', 'ANNUAL'])->default('MENSUAL');
+            $table->enum('type_prlv', ['ponctual', 'mensual', 'trim', 'sem', 'annual'])->default('mensual');
 
             $table->foreignId('package_id')->nullable()
                 ->constrained()
