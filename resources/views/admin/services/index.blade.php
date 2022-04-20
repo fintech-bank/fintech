@@ -191,6 +191,51 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" id="edit_service">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-bank">
+                <h5 class="modal-title text-white">Nouveau Service</h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <form id="formEditService" action="{{ route('services.store') }}" method="post" novalidate>
+                <div class="modal-body">
+                    <x-form.input
+                        name="name"
+                        type="text"
+                        label="Nom du service"
+                        required="true" />
+
+                    <x-form.input
+                        name="price"
+                        type="text"
+                        label="Prix du service"
+                        required="true" />
+
+                    <x-form.select
+                        name="type_prlv"
+                        :datas="\App\Helper\PackageHelper::getTypePrlvToArray()"
+                        label="Fréquence de prélèvement" />
+
+                    <x-form.select
+                        name="package_id"
+                        :datas="\App\Helper\ServiceHelper::getTypePrlvToArray()"
+                        label="Liaison avec un package" />
+                </div>
+
+                <div class="modal-footer">
+                    <x-form.button />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section("script")

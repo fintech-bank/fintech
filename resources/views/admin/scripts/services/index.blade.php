@@ -58,7 +58,25 @@
                     modal.modalShowService.querySelector('#service_price').innerHTML = data.price !== 0 ? new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.price) : '<span class="badge badge-success">Gratuit</span>'
                     modal.modalShowService.querySelector('#service_prlv').innerHTML = data.type_prlv
 
-                    new bootstrap.Modal(modal.modalShowPackage).show()
+                    new bootstrap.Modal(modal.modalShowService).show()
+                }
+            })
+        })
+    })
+    btn.btnEdit.forEach(b => {
+        b.addEventListener('click', e => {
+            e.preventDefault()
+            $.ajax({
+                url: `/admin/services/${e.target.dataset.service}`,
+                success: data => {
+                    console.log(data)
+                    modal.modalEditService.querySelector('#formEditService').setAttribute('action', '/admin/services/'+e.target.dataset.service)
+                    modal.modalEditService.querySelector('[name="name"]').value = data.name
+                    modal.modalEditService.querySelector('[name="price"]').value = data.price
+                    modal.modalEditService.querySelector('[name="type_prlv"]').value = data.type_prlv
+                    modal.modalEditService.querySelector('[name="package_id"]').value = data.package_id
+
+                    new bootstrap.Modal(modal.modalEditService).show()
                 }
             })
         })
