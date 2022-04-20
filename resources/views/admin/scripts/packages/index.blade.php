@@ -1,33 +1,27 @@
 <script type="text/javascript">
     let modal = {
         modalAddPlan: document.querySelector('#add_plan'),
+        modalShowPackage: document.querySelector('#show_packages'),
     }
 
     let btn = {
         btnDelete: document.querySelectorAll('.delete'),
+        btnShow: document.querySelectorAll('.info'),
     }
 
-    $('#kt_docs_repeater_basic').repeater({
-        initEmpty: false,
-
-        defaultValues: {
-            'text-input': 'foo'
-        },
-
-        show: function () {
-            $(this).slideDown();
-        },
-
-        hide: function (deleteElement) {
-            $(this).slideUp(deleteElement);
+    let checkRender = (text, ischecked) => {
+        if(ischecked === true) {
+            return `<div class="d-flex flex-row align-items-center"><i class="fa fa-check-circle text-success fa-lg me-2 mb-3"></i> ${text}</div>`
+        } else {
+            return `<div class="d-flex flex-row align-items-center"><i class="fa fa-times-circle text-danger fa-lg me-2 mb-3"></i> ${text}</div>`
         }
-    });
+    }
 
     btn.btnDelete.forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault()
             Swal.fire({
-                text: "Voulez-vous supprimer ce plan de prets ?",
+                text: "Voulez-vous supprimer ce package ?",
                 icon: 'warning',
                 showCancelButton: true,
                 buttonsStyling: false,
@@ -40,10 +34,10 @@
             }).then(result => {
                 if(result.value) {
                     $.ajax({
-                        url: `/admin/prets/${e.target.dataset.plan}`,
+                        url: `/admin/packages/${e.target.dataset.package}`,
                         method: 'DELETE',
                         success: () => {
-                            toastr.success("Le plan de pret à été supprimer avec succès", "Suppression d'un plan de prets")
+                            toastr.success("Le package à été supprimer avec succès", "Suppression d'un package")
                             btn.parentNode.parentNode.parentNode.parentNode.classList.add('d-none')
                         },
                         error: err => {
@@ -54,6 +48,36 @@
                             })
                         }
                     })
+                }
+            })
+        })
+    })
+    btn.btnShow.forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault()
+            $.ajax({
+                url: `/admin/packages/${e.target.dataset.package}`,
+                success: data => {
+                    console.log(data)
+
+                    modal.modalShowPackage.querySelector('#package_name').innerHTML = data.name
+                    modal.modalShowPackage.querySelector('#package_price').innerHTML = data.price !== 0 ? new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.price) : '<span class="badge badge-success">Gratuit</span>'
+                    modal.modalShowPackage.querySelector('#package_prlv').innerHTML = data.type_prlv
+                    modal.modalShowPackage.querySelector('#options').innerHTML = ''
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.visa_classic === 0 ? checkRender('Une carte Visa Classic incluse', false) : checkRender('Une carte Visa Classic incluse', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.check_deposit === 0 ? checkRender('Dépôts de chèques', false) : checkRender('Dépôts de chèques', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.payment_withdraw === 0 ? checkRender('Retraits et paiements illimités en zone euro', false) : checkRender('Retraits et paiements illimités en zone euro', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.overdraft === 0 ? checkRender('Mise en place du découvert autorisé', false) : checkRender('Mise en place du découvert autorisé', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.cash_deposit === 0 ? checkRender('Dépot d\'espèce', false) : checkRender('Dépot d\'espèce', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.withdraw_international === 0 ? checkRender('Retrait espèce hors zone euro', false) : checkRender('Retrait espèce hors zone euro', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.payment_international === 0 ? checkRender('Paiement hors zone euro', false) : checkRender('Paiement hors zone euro', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.payment_insurance === 0 ? checkRender('Assurance des moyens de paiements', false) : checkRender('Assurance des moyens de paiements', true)
+                    modal.modalShowPackage.querySelector('#options').innerHTML += data.check === 0 ? checkRender('Disponibilité d\'un chéquier', false) : checkRender('Disponibilité d\'un chéquier', true)
+
+                    modal.modalShowPackage.querySelector('#package_cb_physique').innerHTML = data.nb_carte_physique
+                    modal.modalShowPackage.querySelector('#package_cb_virtuel').innerHTML = data.nb_carte_virtuel
+
+                    new bootstrap.Modal(modal.modalShowPackage).show()
                 }
             })
         })
@@ -79,11 +103,11 @@
                 console.log(data)
                 btn.removeAttr('data-kt-indicator')
                 e.disabled = !0
-                toastr.success(`Le plan de pret ${data.name} à été ajouté`, "Nouveau plan de pret")
+                toastr.success(`Le package ${data.name} à été ajouté`, "Nouveau package")
                 form[0].reset()
                 table.on('draw', () => {
-                    $("#liste_plan tbody").prepend(data.html)
-                    $("#liste_plan tbody").hide().fadeIn()
+                    $("#liste_packages tbody").prepend(data.html)
+                    $("#liste_packages tbody").hide().fadeIn()
                 })
                 table.draw()
             },
@@ -100,67 +124,7 @@
         })
     })
 
-    window.addEventListener('load', e => {
-        let options = {
-            selector: '.ckeditor',
-            plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
-            imagetools_cors_hosts: ['picsum.photos'],
-            menubar: 'file edit view insert format tools table help',
-            toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-            toolbar_sticky: true,
-            autosave_ask_before_unload: true,
-            autosave_interval: '30s',
-            autosave_prefix: '{path}{query}-{id}-',
-            autosave_restore_when_empty: false,
-            autosave_retention: '2m',
-            image_advtab: true,
-            link_list: [
-                { title: 'My page 1', value: 'https://www.tiny.cloud' },
-                { title: 'My page 2', value: 'http://www.moxiecode.com' }
-            ],
-            image_list: [
-                { title: 'My page 1', value: 'https://www.tiny.cloud' },
-                { title: 'My page 2', value: 'http://www.moxiecode.com' }
-            ],
-            image_class_list: [
-                { title: 'None', value: '' },
-                { title: 'Some class', value: 'class-name' }
-            ],
-            importcss_append: true,
-            file_picker_callback: function (callback, value, meta) {
-                /* Provide file and text for the link dialog */
-                if (meta.filetype === 'file') {
-                    callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
-                }
 
-                /* Provide image and alt text for the image dialog */
-                if (meta.filetype === 'image') {
-                    callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
-                }
-
-                /* Provide alternative source and posted for the media dialog */
-                if (meta.filetype === 'media') {
-                    callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
-                }
-            },
-            templates: [
-                { title: 'New Table', description: 'creates a new table', content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>' },
-                { title: 'Starting my story', description: 'A cure for writers block', content: 'Once upon a time...' },
-                { title: 'New list with dates', description: 'New List with dates', content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>' }
-            ],
-            template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
-            template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
-            height: 600,
-            image_caption: true,
-            quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
-            noneditable_noneditable_class: 'mceNonEditable',
-            toolbar_mode: 'sliding',
-            contextmenu: 'link image imagetools table',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        }
-
-        tinymce.init(options)
-    })
 
 
 </script>

@@ -111,6 +111,52 @@
         </table>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" id="show_packages">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-bank">
+                <h5 class="modal-title text-white" id="package_name"></h5>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="d-flex flex-row justify-content-between">
+                    <div class="mb-5">
+                        <table class="table fs-3">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-bold">Tarif</td>
+                                    <td id="package_price">{{ eur(5.50) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Fréquence de prélèvement</td>
+                                    <td id="package_prlv">{{ eur(5.50) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="separator my-5"></div>
+                        <div id="options"></div>
+                    </div>
+                    <div class="d-flex flex-row flex-stack mb-5 border border-3 w-300px p-10">
+                        <div class="symbol symbol-50px me-5" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" title="Carte Physique">
+                            <div class="symbol-label fs-2 fw-bold"><i class="fa fa-credit-card"></i></div>
+                            <span class="symbol-badge badge badge-circle bg-success top-100 start-100" id="package_cb_physique">5</span>
+                        </div>
+                        <div class="symbol symbol-50px" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" title="Carte Virtuel">
+                            <div class="symbol-label fs-2 fw-bold"><i class="fa fa-credit-card-alt"></i></div>
+                            <span class="symbol-badge badge badge-circle bg-success top-100 start-100" id="package_cb_virtuel">5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" tabindex="-1" id="add_packages">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -144,8 +190,71 @@
                         label="Fréquence de prélèvement" />
 
                     <div class="separator my-10"></div>
-                    <h3>Options</h3>
-
+                    <h3 class="mb-5">Options</h3>
+                    <div class="d-flex flex-column justify-content-evenly">
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="visa_classic" value="1" checked id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Carte Visa
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="check_deposit" value="1" checked id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Dépot de cheque
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="payment_withdraw" value="1" checked id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Retraits & Paiements illimité
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="overdraft" value="1" id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Découvert Autorisé
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="cash_deposit" value="1" id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Dépot d'espèce
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="withdraw_international" value="1" id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Retrait d'espèce hors zone euro
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="payment_international" value="1" id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Payment hors zone euro
+                            </label>
+                        </div>
+                        <div class="form-check form-switch form-check-custom form-check-solid">
+                            <input class="form-check-input" type="checkbox" name="check" value="1" id="flexSwitchDefault"/>
+                            <label class="form-check-label" for="flexSwitchDefault">
+                                Chéquier
+                            </label>
+                        </div>
+                    </div>
+                    <div class="separator my-10"></div>
+                    <h3 class="mb-10">Carte Bancaire</h3>
+                    <div class="d-flex flex-row justify-content-evenly">
+                        <x-form.input
+                            name="nb_carte_physique"
+                            type="text"
+                            label="Nombre de carte Physique"
+                            value="1" />
+                        <x-form.input
+                            name="nb_carte_virtuel"
+                            type="text"
+                            label="Nombre de carte virtuel"
+                            value="1" />
+                    </div>
                 </div>
 
                 <div class="modal-footer">
