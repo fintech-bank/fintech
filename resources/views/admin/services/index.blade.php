@@ -8,7 +8,7 @@
     <!--begin::Page title-->
     <div class="page-title d-flex justify-content-center flex-column me-5">
         <!--begin::Title-->
-        <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Packages</h1>
+        <h1 class="d-flex flex-column text-dark fw-bolder fs-3 mb-0">Services</h1>
         <!--end::Title-->
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 pt-1">
@@ -23,7 +23,7 @@
             </li>
             <!--end::Item-->
             <!--begin::Item-->
-            <li class="breadcrumb-item text-dark">Gestion des Packages</li>
+            <li class="breadcrumb-item text-dark">Gestion des Services</li>
             <!--end::Item-->
         </ul>
         <!--end::Breadcrumb-->
@@ -44,36 +44,31 @@
 					</svg>
 				</span>
                 <!--end::Svg Icon-->
-                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Rechercher une banque">
+                <input type="text" data-kt-customer-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Rechercher un service">
             </div>
         </div>
         <div class="card-toolbar">
-            <button class="btn btn-bank" data-bs-toggle="modal" data-bs-target="#add_packages"><i class="fa-solid fa-plus"></i> Nouveau packages</button>
+            <button class="btn btn-bank" data-bs-toggle="modal" data-bs-target="#add_service"><i class="fa-solid fa-plus"></i> Nouveau Service</button>
         </div>
     </div>
     <div class="card-body">
-        <table id="liste_packages" class="table table-row-bordered gy-5">
+        <table id="liste_service" class="table table-row-bordered gy-5">
             <thead>
             <tr class="fw-bold fs-6 text-muted">
-                <th>Nom du plan</th>
-                <th>Prix</th>
+                <th>Désignation</th>
+                <th>Tarif</th>
                 <th>Fréquence de Prlv</th>
-                <th>Information de carte</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            @foreach(\App\Models\Core\Package::all() as $package)
+            @foreach(\App\Models\Core\Service::all() as $service)
                 <tr>
                     <td>
-                        {{ $package->name }}
+                        {{ $service->name }}
                     </td>
-                    <td>{{ eur($package->price) }}</td>
-                    <td>{{ $package->type_prlv }}</td>
-                    <td>
-                        <strong>Nombre de carte Physique:</strong> {{ $package->nb_carte_physique }}<br>
-                        <strong>Nombre de carte Virtuel:</strong> {{ $package->nb_carte_virtuel }}<br>
-                    </td>
+                    <td>{{ eur($service->price) }}</td>
+                    <td>{{ $service->type_prlv }}</td>
                     <td>
                         <button class="btn btn-icon btn-circle btn-outline btn-outline-dashed btn-outline-primary rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="-30px, 20px">
                             <i class="fa-solid fa-ellipsis rotate-90"></i>
@@ -90,14 +85,20 @@
                             <!--end::Menu separator-->
 
                             <div class="menu-item px-3 py-3">
-                                <a href="#" class="menu-link px-3 text-dark info" data-package="{{ $package->id }}">
+                                <a href="#" class="menu-link px-3 text-dark info" data-service="{{ $service->id }}">
                                     Information
+                                </a>
+                            </div>
+
+                            <div class="menu-item px-3 py-3">
+                                <a href="#" class="menu-link px-3 text-dark edit" data-service="{{ $service->id }}">
+                                    Editer
                                 </a>
                             </div>
 
                             <!--begin::Menu item-->
                             <div class="menu-item px-3 py-3">
-                                <a href="#" class="menu-link px-3 text-danger delete" data-package="{{ $package->id }}">
+                                <a href="#" class="menu-link px-3 text-danger delete" data-service="{{ $service->id }}">
                                     Supprimer
                                 </a>
                             </div>
@@ -111,7 +112,7 @@
         </table>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" id="show_packages">
+<div class="modal fade" tabindex="-1" id="show_service">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-bank">
@@ -157,11 +158,11 @@
         </div>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" id="add_packages">
+<div class="modal fade" tabindex="-1" id="add_service">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-bank">
-                <h5 class="modal-title text-white">Nouveau Package</h5>
+                <h5 class="modal-title text-white">Nouveau Service</h5>
 
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -267,5 +268,5 @@
 @endsection
 
 @section("script")
-    @include("admin.scripts.packages.index")
+    @include("admin.scripts.services.index")
 @endsection
