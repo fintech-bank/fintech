@@ -42,6 +42,9 @@ class SystemSeedCommand extends Command
         $this->info("Seeding: Liste des Packages");
         $this->call("db:seed", ["class" => "PackageSeeder"]);
 
+        $this->info("Seeding: Liste des Services");
+        $this->call("db:seed", ["class" => "ServiceSeeder"]);
+
         $this->info("Seeding: Liste des Utilisateur de Test");
         $this->call("db:seed", ["class" => "UserSeeder"]);
 
