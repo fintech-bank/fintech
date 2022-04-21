@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/mmockelyn/fintech/compare/v1.0.0...v1.1.0) (2022-04-21)
+
+
+### Features
+
+* CMS - Gestion des categories et des sous-categories ([5a76b1c](https://github.com/mmockelyn/fintech/commit/5a76b1c2c62f1d8d62464c508125bd2e30f56ee5))
+* CMS - Gestion des categories et des sous-categories ([3634b74](https://github.com/mmockelyn/fintech/commit/3634b74b71a1f0bdbc84c46148411178ff06b154))
+
 # 1.0.0 (2022-04-20)
 
 
