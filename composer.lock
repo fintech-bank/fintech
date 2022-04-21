@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e5503bea40b34a3d057d43a627cb283",
+    "content-hash": "486157ede61113117ef90d0f17544304",
     "packages": [
         {
             "name": "arcanedev/log-viewer",
@@ -5108,6 +5108,123 @@
                 }
             ],
             "time": "2022-03-27T21:42:02+00:00"
+        },
+        {
+            "name": "rockett/pipeline",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikerockett/pipeline.git",
+                "reference": "a332edf99511d3e07e848dcc3e1b68166881296e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikerockett/pipeline/zipball/a332edf99511d3e07e848dcc3e1b68166881296e",
+                "reference": "a332edf99511d3e07e848dcc3e1b68166881296e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.5",
+                "orchestra/testbench": "^6.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rockett\\Pipeline\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net",
+                    "role": "Author of Original Source"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com",
+                    "role": "Maintainer of Original Source"
+                },
+                {
+                    "name": "Mike Rockétt",
+                    "email": "os@rockett.pw",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A plug and play pipeline implementation.",
+            "keywords": [
+                "composition",
+                "design pattern",
+                "pattern",
+                "pipeline",
+                "sequential"
+            ],
+            "support": {
+                "issues": "https://github.com/mikerockett/pipeline/issues",
+                "source": "https://github.com/mikerockett/pipeline/tree/2.0.2"
+            },
+            "time": "2021-06-26T09:29:50+00:00"
+        },
+        {
+            "name": "rockett/weasyprint",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/mikerockett/weasyprint.git",
+                "reference": "4c0aa8548ac38ae3bef3f0cd629f7a1257674ef6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/mikerockett%2Fweasyprint/repository/archive.zip?sha=4c0aa8548ac38ae3bef3f0cd629f7a1257674ef6",
+                "reference": "4c0aa8548ac38ae3bef3f0cd629f7a1257674ef6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.47|^9.0",
+                "php": "^8.0",
+                "rockett/pipeline": "^2.0",
+                "symfony/process": "^5.2|^6.0"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.4",
+                "nunomaduro/collision": "^5.3|^6.0",
+                "orchestra/testbench": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "WeasyPrint\\Provider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WeasyPrint\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Rockett",
+                    "email": "os@rockett.pw"
+                }
+            ],
+            "description": "A feature-rich Laravel wrapper for the WeasyPrint Document Factory.",
+            "support": {
+                "issues": "https://gitlab.com/mikerockett/weasyprint/-/issues",
+                "source": "https://gitlab.com/mikerockett/weasyprint/-/tree/v6.1.0"
+            },
+            "time": "2022-02-20T05:40:53+00:00"
         },
         {
             "name": "rplansky/credit-card",

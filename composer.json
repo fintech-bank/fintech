@@ -25,6 +25,7 @@
         "mmockelyn/laravel-totem": "^8.4",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^7.0",
+        "rockett/weasyprint": "^6.1",
         "rplansky/credit-card": "dev-master",
         "spatie/laravel-slack-alerts": "^1.1",
         "viacreative/sudo-su": "^1.1"

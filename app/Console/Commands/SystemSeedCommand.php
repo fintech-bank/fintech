@@ -50,6 +50,12 @@ class SystemSeedCommand extends Command
 
         $this->info("Seeding: Liste des Catégories de documents");
         $this->call("db:seed", ["class" => "DocumentCategorySeeder"]);
+
+        $this->info("Seeding: Liste des Catégories de pages");
+        $this->call("db:seed", ["class" => "CmsCategorySeeder"]);
+
+        $this->info("Seeding: Liste des Sous Catégories de pages");
+        $this->call("db:seed", ["class" => "CmsSubCategorySeeder"]);
         return 0;
     }
 }
