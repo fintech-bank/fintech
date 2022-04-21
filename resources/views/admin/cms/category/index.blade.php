@@ -101,6 +101,35 @@
                             <!--end::Menu-->
                         </td>
                     </tr>
+                    <div class="modal fade" tabindex="-1" id="add_subcategory">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-bank">
+                                    <h5 class="modal-title text-white">Nouvelle Sous categorie</h5>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="fa-solid fa-xmark text-white"></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <form id="formAddSubCategory" action="{{ route('subcategory.store', $category->id) }}" method="post" novalidate>
+                                    <div class="modal-body">
+                                        <x-form.input
+                                            name="name"
+                                            type="text"
+                                            label="Nom de la sous catégorie"
+                                            required="true" />
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <x-form.button />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
             </tbody>
         </table>
@@ -113,7 +142,7 @@
                 <h5 class="modal-title text-white">Sous Catégorie</h5>
 
                 <!--begin::Close-->
-                <button class="btn btn-outline btn-outline-bank" data-bs-toggle="modal" data-bs-target="#add_subcategory"><i class="fa-solid fa-plus-circle me-2"></i> Nouvelle sous catégorie</button>
+                <button class="btn btn-outline btn-outline-primary" data-bs-toggle="modal" data-bs-target="#add_subcategory"><i class="fa-solid fa-plus-circle me-2"></i> Nouvelle sous catégorie</button>
                 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fa-solid fa-xmark"></i>
                 </div>

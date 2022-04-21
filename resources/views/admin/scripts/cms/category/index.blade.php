@@ -17,7 +17,9 @@
             $.ajax({
                 url: `/admin/cms/category/${e.target.dataset.category}/subcategory`,
                 success: data => {
+                    modal.modalShowSubcategory.querySelector('#table_subcategory').innerHTML = data
 
+                    new bootstrap.Modal(modal.modalShowSubcategory).show()
                 }
             })
         })
