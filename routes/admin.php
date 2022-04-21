@@ -44,6 +44,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
     Route::prefix('cms')->group(function () {
         Route::resource('category', CmsCategoryController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
         Route::resource('pages', CmsPagesController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
+
+        Route::prefix('category/{category}')->group(function () {
+            Route::resource('subcategory', \App\Http\Controllers\Admin\CmsSubcategoryController::class)->only('index', 'store', 'destroy');
+        });
     });
 });
 
