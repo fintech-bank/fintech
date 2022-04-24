@@ -33,7 +33,8 @@ class UserSeeder extends Seeder
             "admin" => false,
             "agent" => true,
             "customer" => false,
-            "identifiant" => UserHelper::generateID()
+            "identifiant" => UserHelper::generateID(),
+            "agency_id" => 2
         ]);
 
         User::create([
@@ -45,5 +46,7 @@ class UserSeeder extends Seeder
             "customer" => true,
             "identifiant" => UserHelper::generateID()
         ]);
+
+
     }
 }

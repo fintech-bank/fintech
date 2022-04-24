@@ -19,6 +19,8 @@ return new class extends Migration
             $table->boolean('customer')->default(true);
             $table->string('identifiant')->nullable();
             $table->timestamp('last_seen')->nullable();
+
+
         });
     }
 

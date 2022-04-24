@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("legal_capacity")->nullable();
             $table->string('family_situation')->nullable();
             $table->string("logement")->nullable();
-            $table->timestamp('logement_at')->default(now());
+            $table->dateTime('logement_at')->default(now());
             $table->integer('child')->default(0);
             $table->integer('person_charged')->default(0);
             $table->string("pro_category")->nullable();

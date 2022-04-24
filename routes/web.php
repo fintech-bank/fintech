@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 include("auth.php");
 include("front.php");
 include("admin.php");
+include("agent.php");
 
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'test']);
 Route::get('/home', [\App\Http\Controllers\TestController::class, 'home']);

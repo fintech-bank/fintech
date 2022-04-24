@@ -25,6 +25,13 @@ return new class extends Migration
             $table->string('country', 2);
             $table->boolean('online')->default(false);
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('agency_id')->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+        });
     }
 
     /**

@@ -20,13 +20,13 @@ return new class extends Migration
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('lastname')->nullable();
-            $table->timestamp('datebirth')->nullable();
-            $table->timestamp('citybirth')->nullable();
-            $table->timestamp('countrybirth')->nullable();
+            $table->dateTime('datebirth')->nullable();
+            $table->string('citybirth')->nullable();
+            $table->string('countrybirth')->nullable();
             $table->string('company')->nullable();
             $table->string('siret')->nullable();
             $table->string('address');
-            $table->string('addressbis');
+            $table->string('addressbis')->nullable();
             $table->string('postal');
             $table->string('city');
             $table->string('country', 2);
