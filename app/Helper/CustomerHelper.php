@@ -6,6 +6,18 @@ namespace App\Helper;
 
 class CustomerHelper
 {
+    public static function getTypeCustomerArray()
+    {
+        return json_encode([
+            [
+                'name' => "part"
+            ],
+            [
+                'name' => "pro"
+            ]
+        ]);
+    }
+
     public static function getTypeCustomer($type, $labeled = false)
     {
         if ($labeled == false) {

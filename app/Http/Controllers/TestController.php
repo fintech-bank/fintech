@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\AgencyHelper;
 use App\Helper\CountryHelper;
+use App\Helper\GeoHelper;
 use Auth;
 use Illuminate\Http\Request;
 use Vicopo\Vicopo;
@@ -12,7 +13,7 @@ class TestController extends Controller
 {
     public function test()
     {
-        dd(Vicopo::https('85000')[0]->city);
+        dd(GeoHelper::getCitiesFromCountry('france'));
     }
 
     public function home()

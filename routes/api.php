@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/geo/countries', function () {
+    $result = \App\Helper\GeoHelper::getAllCountries();
+    $json = [];
+    foreach ($result as $item) {
+        $json[] = [
+            'id' => $item->iso,
+            'name' => $item->name
+        ];
+    }
+
+    return response()->json($json);
 });
+
+Route::post('/geo/cities', [\App\Http\Controllers\Api\GeoController::class, 'cities']);
+Route::get('/geo/cities/{postal}', [\App\Http\Controllers\Api\GeoController::class, 'citiesByPostal']);

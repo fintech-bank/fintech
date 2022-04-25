@@ -30,6 +30,8 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
     Route::prefix('customers')->group(function () {
         Route::get('/', [\App\Http\Controllers\Agent\CustomerController::class, 'index'])->name('agent.customer.index');
         Route::get('create', [\App\Http\Controllers\Agent\CustomerController::class, 'create'])->name('agent.customer.create');
+        Route::post('create', [\App\Http\Controllers\Agent\CustomerController::class, 'store'])->name('agent.customer.store');
+        Route::get('{customer}', [\App\Http\Controllers\Agent\CustomerController::class, 'show'])->name('agent.customer.show');
     });
 });
 

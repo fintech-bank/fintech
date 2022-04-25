@@ -2580,6 +2580,37 @@ if (document.querySelector('.ckeditor')) {
   });
 }
 
+document.querySelectorAll('.datepick').forEach(function (dat) {
+  $(dat).flatpickr({
+    locale: 'fr'
+  });
+});
+var selects = document.querySelectorAll('[data-control="select2"]');
+var inputMasks = document.querySelectorAll('.maskinput');
+selects.forEach(function (select) {
+  if (select.dataset.uri) {
+    console.log($(select));
+    $(select).select2({
+      ajax: {
+        url: select.dataset.uri,
+        dataType: 'json',
+        delay: 250,
+        processResults: function processResults(data) {
+          console.log(data);
+          return {
+            results: data
+          };
+        },
+        cache: true
+      }
+    });
+  }
+});
+inputMasks.forEach(function (input) {
+  Inputmask({
+    "mask": input.dataset.mask
+  }).mask(input);
+});
 initSW();
 
 /***/ }),

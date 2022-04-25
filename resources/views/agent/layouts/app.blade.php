@@ -95,6 +95,7 @@ License: For each use you must have a valid license purchased only from above li
 <script src="/assets/js/custom/widgets.js"></script>
 <script src="/assets/js/custom/apps/chat/chat.js"></script>
 <script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
 <script src="/global/js/app.js"></script>
 @yield("script")
 <!--end::Page Custom Javascript-->
