@@ -196,6 +196,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Insee' => NSpehler\LaravelInsee\Facades\Insee::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
     ])->toArray(),
 
 ];

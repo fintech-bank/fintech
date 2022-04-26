@@ -27,6 +27,7 @@
     "semantic-release": "^19.0.2"
   },
   "dependencies": {
+    "aws-sdk": "^2.1121.0",
     "laravel-echo": "^1.11.4",
     "pusher-js": "^7.0.6"
   },

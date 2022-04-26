@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\AgencyHelper;
-use App\Helper\CountryHelper;
-use App\Helper\GeoHelper;
+use App\Helper\CustomerCreditCard;
 use Auth;
+use IbanGenerator\Generator;
 use Illuminate\Http\Request;
-use Vicopo\Vicopo;
+
 
 class TestController extends Controller
 {
     public function test()
     {
-        dd(GeoHelper::getCitiesFromCountry('france'));
+        $d = CustomerCreditCard::calcLimitRetrait(900);
+        dd($d);
     }
 
     public function home()

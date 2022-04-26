@@ -59,4 +59,12 @@ class CustomerSituationHelper
             ["name" => "Sans Emploie"],
         ]);
     }
+
+    public static function calcDiffInSituation($customer)
+    {
+        $income = $customer->income->pro_incoming + $customer->income->patrimoine;
+        $charge = $customer->charge->rent + $customer->charge->credit + $customer->charge->divers;
+
+        return $income - $charge;
+    }
 }

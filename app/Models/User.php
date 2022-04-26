@@ -63,5 +63,10 @@ class User extends Authenticatable
         return $this->belongsTo(Agency::class);
     }
 
+    public function routeNotificationForTwilio()
+    {
+        return $this->customer()->mobile;
+    }
+
 
 }
