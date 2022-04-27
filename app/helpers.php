@@ -12,3 +12,29 @@ if(!function_exists('random_color')) {
         return $color[rand(0,7)];
     }
 }
+
+if(!function_exists('random_string_alpha_upper')) {
+    function random_string_alpha_upper($len = 10) {
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $var_size = strlen($chars);
+        $random_str = "";
+        for( $x = 0; $x < $len; $x++ ) {
+            $random_str .= $chars[ rand( 0, $var_size - 1 ) ];
+        }
+
+        return $random_str;
+    }
+}
+
+if(!function_exists('random_numeric')) {
+    function random_numeric($len = 10) {
+        $chars = "0123456789";
+        $var_size = strlen($chars);
+        $random_str = "";
+        for( $x = 0; $x < $len; $x++ ) {
+            $random_str .= $chars[ rand( 0, $var_size - 1 ) ];
+        }
+
+        return $random_str;
+    }
+}

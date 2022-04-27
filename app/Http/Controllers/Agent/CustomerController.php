@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Helper\CustomerSituationHelper;
+use App\Helper\DocumentFile;
+use App\Helper\LogHelper;
 use App\Helper\UserHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
@@ -15,6 +17,7 @@ use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
 use App\Notifications\Core\SendPasswordSms;
+use Authy\AuthyApi;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
 
@@ -32,6 +35,7 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         $user = $this->createUser($request);
 
         return response()->json($user);
@@ -83,8 +87,19 @@ class CustomerController extends Controller
             'country' => $request->get('country'),
             'phone' => $request->get('phone'),
             'mobile' => $request->get('mobile'),
+            'country_code' => "+33",
             'customer_id' => $customer->id
         ]);
+
+        $authy = new AuthyApi(config('twilio-notification-channel.authy_secret'));
+        $authyUser = $authy->registerUser($user->email,$request->get('mobile'), '+33');
+        if($authyUser->ok()) {
+            $info->authy_id = $authyUser->id();
+        } else {
+            LogHelper::notify('critical', $authyUser->errors());
+        }
+
+        $info->save();
 
         $setting = CustomerSetting::create([
             'customer_id' => $customer->id
@@ -129,13 +144,48 @@ class CustomerController extends Controller
          * - Convention Carte Bleu
          * - Condition Générale
          */
+        $document = new DocumentFile();
+        $document->createDocument('Convention relation particulier - CUS'.$customer->user->identifiant,
+        $customer,
+        3,
+        "CNT".\Str::upper(\Str::random(6)),
+        true,
+        false,
+        false,
+        null,
+        true,
+        'agence.convention_part');
+
+        $document->createDocument('Releve Identité Bancaire - CUS'.$customer->user->identifiant,
+        $customer,
+        5,
+        null,
+        false,
+        false,
+        false,
+        null,
+        true,
+        'agence.rib');
+
+        $document->createDocument('Convention Carte Bancaire VISA Physique - CUS'.$customer->user->identifiant,
+            $customer,
+            3,
+            "CNT".\Str::upper(\Str::random(6)),
+            true,
+            false,
+            false,
+            null,
+            true,
+            'agence.convention_cb_physique');
+        
+
 
         // Notification mail de Bienvenue
     }
 
     private function createWallet($customer)
     {
-        $number_account = rand(1000000000,9999999999).\Str::upper(\Str::random(1));
+        $number_account = rand(10000000000,99999999999);
         $ibanC = new Generator($customer->user->agency->code_banque, $number_account, 'FR');
         $iban = $ibanC->generate();
         $rib_key = \Str::substr($iban, 18,2);
@@ -165,7 +215,7 @@ class CustomerController extends Controller
             "code" => base64_encode($card_code),
             "limit_payment" => \App\Helper\CustomerCreditCard::calcLimitPayment(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
             "limit_retrait" => \App\Helper\CustomerCreditCard::calcLimitRetrait(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
-            "customer_wallet_id" => $wallet->customer_id
+            "customer_wallet_id" => $wallet->id
         ]);
 
         // Envoie du code de la carte bleu par sms

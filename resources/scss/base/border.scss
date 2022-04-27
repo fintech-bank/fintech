@@ -1,0 +1,13 @@
+@for $i from 1 through 5 {
+    .border-#{$i} {
+        border-width: 1px*$i;
+    }
+}
+
+.border-primary {border-color: var(--primary);}
+.border-secondary {border-color: var(--secondary);}
+.border-warning {border-color: var(--warning);}
+.border-danger {border-color: var(--danger);}
+.border-success {border-color: var(--success);}
+.border-info {border-color: var(--info);}
+.border-bank {border-color: var(--bank);}

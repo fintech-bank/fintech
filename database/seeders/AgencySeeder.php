@@ -24,7 +24,8 @@ class AgencySeeder extends Seeder
             "postal" => "44000",
             "city" => "Nantes Cedex 4",
             "country" => "FR",
-            "online" => true
+            "online" => true,
+            "phone" => "08 99 49 32 01"
         ]);
 
         Agency::create([
@@ -36,7 +37,8 @@ class AgencySeeder extends Seeder
             "postal" => "44000",
             "city" => "Nantes Cedex 4",
             "country" => "FR",
-            "online" => false
+            "online" => false,
+            "phone" => "08 99 49 32 01"
         ]);
     }
 }

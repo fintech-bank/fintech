@@ -23,4 +23,14 @@ class CustomerInfo extends Model
     {
         return $this->mobile;
     }
+
+    /**
+     * Route notifications for the authy channel.
+     *
+     * @return int
+     */
+    public function routeNotificationForAuthy()
+    {
+        return $this->authy_id;
+    }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18e8fc15bd34e271c22581141adb4864",
+    "content-hash": "56c24a649843298237b1c90b55ee3160",
     "packages": [
         {
             "name": "alimranahmed/laraocr",
@@ -201,6 +201,64 @@
                 "source": "https://github.com/ARCANEDEV/Support/tree/9.0.0"
             },
             "time": "2022-02-10T19:52:50+00:00"
+        },
+        {
+            "name": "authy/php",
+            "version": "4.0.0-rc2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twilio/authy-php.git",
+                "reference": "eda62d856febc3bf48db79b52f7fd2faeee5f9de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twilio/authy-php/zipball/eda62d856febc3bf48db79b52f7fd2faeee5f9de",
+                "reference": "eda62d856febc3bf48db79b52f7fd2faeee5f9de",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0||~7.0",
+                "php": "^7.2.5||^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8||^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Authy": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Twilio Authy",
+                    "email": "help@twilio.com",
+                    "homepage": "https://www.twilio.com/docs/authy/api",
+                    "role": "Official support"
+                },
+                {
+                    "name": "Kelley Robinson",
+                    "email": "krobinson@twilio.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP client for Authy",
+            "homepage": "https://github.com/twilio/authy-php",
+            "keywords": [
+                "2fa",
+                "Authentication",
+                "api",
+                "two-factor"
+            ],
+            "support": {
+                "issues": "https://github.com/twilio/authy-php/issues",
+                "source": "https://github.com/twilio/authy-php/tree/4.0.0-rc2"
+            },
+            "time": "2021-03-15T17:27:08+00:00"
         },
         {
             "name": "aws/aws-crt-php",
@@ -3069,6 +3127,78 @@
                 "source": "https://github.com/kylekatarnls/vicopo/tree/master"
             },
             "time": "2019-01-16T10:04:15+00:00"
+        },
+        {
+            "name": "laravel-notification-channels/authy",
+            "version": "v9.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-notification-channels/authy.git",
+                "reference": "064a4d5055a4487f769bccdbec29105a4c658e60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-notification-channels/authy/zipball/064a4d5055a4487f769bccdbec29105a4c658e60",
+                "reference": "064a4d5055a4487f769bccdbec29105a4c658e60",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/notifications": "^9.0.0 || ^10.0.0",
+                "illuminate/queue": "^9.0.0 || ^10.0.0",
+                "php": "^8.0.0",
+                "rinvex/laravel-authy": "^9.0.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.30.0",
+                "mockery/mockery": "^1.4.0",
+                "phpunit/phpunit": "^9.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Authy\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rinvex LLC",
+                    "email": "help@rinvex.com",
+                    "homepage": "https://rinvex.com"
+                },
+                {
+                    "name": "Abdelrahman Omran",
+                    "email": "me@omranic.com",
+                    "homepage": "https://omranic.com",
+                    "role": "Project Lead"
+                },
+                {
+                    "name": "The Generous Laravel Community",
+                    "homepage": "https://github.com/laravel-notification-channels/authy/contributors"
+                }
+            ],
+            "description": "Authy notification channel for Laravel, with the ability to send in-app, sms, and call verification tokens.",
+            "homepage": "https://rinvex.com",
+            "keywords": [
+                "authy",
+                "call",
+                "laravel",
+                "phone",
+                "rinvex",
+                "sms",
+                "token",
+                "verification"
+            ],
+            "support": {
+                "docs": "https://github.com/laravel-notification-channels/authy/blob/master/README.md",
+                "email": "help@rinvex.com",
+                "issues": "https://github.com/laravel-notification-channels/authy/issues",
+                "source": "https://github.com/laravel-notification-channels/authy"
+            },
+            "time": "2022-02-14T07:51:39+00:00"
         },
         {
             "name": "laravel-notification-channels/twilio",
@@ -6146,6 +6276,172 @@
                 }
             ],
             "time": "2022-03-27T21:42:02+00:00"
+        },
+        {
+            "name": "rinvex/authy",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rinvex/authy.git",
+                "reference": "e9204e801d67d7d3479615f78e878531018a83d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rinvex/authy/zipball/e9204e801d67d7d3479615f78e878531018a83d9",
+                "reference": "e9204e801d67d7d3479615f78e878531018a83d9",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4.0",
+                "php": "^8.0.0",
+                "psr/http-message": "^1.0.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.31.0",
+                "mockery/mockery": "^1.5.0",
+                "phpunit/phpunit": "^9.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rinvex\\Authy\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rinvex LLC",
+                    "email": "help@rinvex.com",
+                    "homepage": "https://rinvex.com"
+                },
+                {
+                    "name": "Abdelrahman Omran",
+                    "email": "me@omranic.com",
+                    "homepage": "https://omranic.com",
+                    "role": "Project Lead"
+                },
+                {
+                    "name": "The Generous Laravel Community",
+                    "homepage": "https://github.com/rinvex/authy/contributors"
+                }
+            ],
+            "description": "Rinvex Authy is a simple wrapper for Authy TOTP API, the best rated Two-Factor Authentication service for consumers, simplest 2fa Rest API for developers and a strong authentication platform for the enterprise.",
+            "homepage": "https://rinvex.com",
+            "keywords": [
+                "Authentication",
+                "authy",
+                "automated",
+                "call",
+                "message",
+                "phone",
+                "register",
+                "rinvex",
+                "security",
+                "sms",
+                "token",
+                "twofactor",
+                "verification"
+            ],
+            "support": {
+                "docs": "https://github.com/rinvex/authy/README.md",
+                "email": "help@rinvex.com",
+                "issues": "https://github.com/rinvex/authy/issues",
+                "source": "https://github.com/rinvex/authy"
+            },
+            "time": "2022-02-14T07:53:34+00:00"
+        },
+        {
+            "name": "rinvex/laravel-authy",
+            "version": "v9.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rinvex/laravel-authy.git",
+                "reference": "5280d54a998f553c971aacbf5c5e1a2d1ff2d6ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rinvex/laravel-authy/zipball/5280d54a998f553c971aacbf5c5e1a2d1ff2d6ad",
+                "reference": "5280d54a998f553c971aacbf5c5e1a2d1ff2d6ad",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4.0",
+                "illuminate/support": "^9.0.0 || ^10.0.0",
+                "php": "^8.0.0",
+                "rinvex/authy": "^6.0.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.31.0",
+                "illuminate/container": "^9.0.0 || ^10.0.0",
+                "phpunit/phpunit": "^9.5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rinvex\\Authy\\Providers\\AuthyServiceProvider"
+                    ],
+                    "aliases": {
+                        "AuthyApp": "Rinvex\\Authy\\Facades\\AuthyApp",
+                        "AuthyUser": "Rinvex\\Authy\\Facades\\AuthyUser",
+                        "AuthyToken": "Rinvex\\Authy\\Facades\\AuthyToken"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rinvex\\Authy\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rinvex LLC",
+                    "email": "help@rinvex.com",
+                    "homepage": "https://rinvex.com"
+                },
+                {
+                    "name": "Abdelrahman Omran",
+                    "email": "me@omranic.com",
+                    "homepage": "https://omranic.com",
+                    "role": "Project Lead"
+                },
+                {
+                    "name": "The Generous Laravel Community",
+                    "homepage": "https://github.com/rinvex/laravel-authy/contributors"
+                }
+            ],
+            "description": "Rinvex Authy is a simple wrapper for Authy TOTP, the best rated Two-Factor Authentication service for consumers, simplest 2fa Rest API for developers and a strong authentication platform for the enterprise.",
+            "homepage": "https://rinvex.com",
+            "keywords": [
+                "Authentication",
+                "authy",
+                "automated",
+                "call",
+                "laravel",
+                "message",
+                "phone",
+                "register",
+                "rinvex",
+                "security",
+                "sms",
+                "token",
+                "twofactor",
+                "verification"
+            ],
+            "support": {
+                "docs": "https://github.com/rinvex/laravel-authy/README.md",
+                "email": "help@rinvex.com",
+                "issues": "https://github.com/rinvex/laravel-authy/issues",
+                "source": "https://github.com/rinvex/laravel-authy"
+            },
+            "time": "2022-02-14T08:03:37+00:00"
         },
         {
             "name": "rize/uri-template",
@@ -12261,12 +12557,13 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "RC",
     "stability-flags": {
+        "authy/php": 5,
         "mmockelyn/laravel-insee": 20,
         "rplansky/credit-card": 20
     },
-    "prefer-stable": true,
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "8.*"

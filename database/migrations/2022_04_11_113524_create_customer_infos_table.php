@@ -29,9 +29,11 @@ return new class extends Migration
             $table->string('addressbis')->nullable();
             $table->string('postal');
             $table->string('city');
-            $table->string('country', 2);
+            $table->string('country');
             $table->string('phone')->nullable();
             $table->string('mobile');
+            $table->string('country_code')->nullable();
+            $table->string('authy_id')->nullable();
             $table->boolean('isVerified')->default(false);
 
             $table->foreignId('customer_id')

@@ -13,7 +13,7 @@
             <i class="bi bi-dash fs-1"></i>
         </button>
 
-        <input type="text" id="{{ $name }}" class="form-control" value="{{ $value }}" data-kt-dialer-control="input" @if($required == true) required @endif />
+        <input type="text" id="{{ $name }}" class="form-control" name="{{ $name }}" value="{{ $value }}" data-kt-dialer-control="input" @if($required == true) required @endif />
 
         <button class="btn btn-icon btn-outline btn-outline-secondary" type="button" data-kt-dialer-control="increase">
             <i class="bi bi-plus fs-1"></i>

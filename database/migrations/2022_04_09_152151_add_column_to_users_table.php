@@ -19,8 +19,6 @@ return new class extends Migration
             $table->boolean('customer')->default(true);
             $table->string('identifiant')->nullable();
             $table->timestamp('last_seen')->nullable();
-
-
         });
     }
 
@@ -35,6 +33,8 @@ return new class extends Migration
             $table->removeColumn('admin');
             $table->removeColumn('agent');
             $table->removeColumn('customer');
+            $table->removeColumn('identifiant');
+            $table->removeColumn('last_seen');
         });
     }
 };
