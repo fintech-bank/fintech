@@ -15,9 +15,9 @@ class TestController extends Controller
     public function test()
     {
         $document = new DocumentFile();
-        $customer = Customer::find(85);
+        $customer = Customer::find(55);
         //dd($customer);
-        return $document->generatePDF('agence.convention_part', $customer, 1, ["wallet" => $customer->wallets()->first(), "card" => $customer->wallets()->first()->cards()->first()], false, false, null, true, '');
+        return $document->generatePDF('agence.convention_part', $customer, 4, ["wallet" => $customer->wallets()->first(), "card" => $customer->wallets()->first()->cards()->first()], false, false, null, true, '');
         return view('pdf.agence.convention_part', [
             'data' => [],
             'agence' => $customer->user->agency,

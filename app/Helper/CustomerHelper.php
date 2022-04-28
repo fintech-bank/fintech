@@ -75,4 +75,13 @@ class CustomerHelper
             return $customer->info->company;
         }
     }
+
+    public static function getFirstname($customer)
+    {
+        if($customer->info->type == 'pro') {
+            return $customer->info->company;
+        } else {
+            return $customer->info->firstname;
+        }
+    }
 }

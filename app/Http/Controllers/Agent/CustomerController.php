@@ -7,6 +7,7 @@ use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Helper\UserHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\Customer\WelcomeContract;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerCreditCard;
 use App\Models\Customer\CustomerInfo;
@@ -177,10 +178,9 @@ class CustomerController extends Controller
             null,
             true,
             'agence.convention_cb_physique');
-        
-
 
         // Notification mail de Bienvenue
+        \Mail::to($user)->send(new WelcomeContract($customer, $document));
     }
 
     private function createWallet($customer)

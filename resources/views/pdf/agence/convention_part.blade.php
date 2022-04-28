@@ -37,7 +37,7 @@
         <tr class="border-bottom border-gray-800">
             <td class="" colspan="2">
                 @if($customer->info->type == 'part')
-                    {{ $customer->info->civility }}. {{ $customer->info->lastname }} {{ $customer->info->firstname }}
+                    {{ $customer->info->civility }}. {{ $customer->info->lastname }} {{ $customer->info->firstname }}<br>
                 @else
                     {{ $customer->info->company }}<br>
                 @endif
@@ -82,7 +82,7 @@
                 <u class="fw-bold fs-4 mb-2">INFORMATION SUR VOTRE COMPTE</u>
                 <ul class="list-unstyled">
                     <li>- COMPTE @if($customer->info->type == 'part') {{ $customer->info->civility.'. '. $customer->info->lastname.' '.$customer->info->firstname }} @else {{ $customer->info->company }} @endif - N°{{ $customer->wallets()->first()->number_account }} EXTRAIT MENSUEL</li>
-                    <li>- AUTORISATION DE DECOUVERT: Néant</li>
+                    <li>- AUTORISATION DE DECOUVERT: @if($data['wallet']->decouvert == 1) {{ eur($data['wallet']->balance_decouvert) }} @else Néant @endif</li>
                 </ul>
                 <u class="fw-bold fs-4 mb-2">VOTRE COMPTE A DISTANCE</u>
                 <ul class="list-unstyled">

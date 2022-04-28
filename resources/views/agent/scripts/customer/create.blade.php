@@ -182,9 +182,9 @@
             url: url,
             method: 'post',
             data: data,
-            success: data => {
+            success: () => {
                 btn.removeAttr('data-kt-indicator')
-                console.log(data)
+                window.location.href='{{ route('agent.customer.index') }}'
             }
         })
     })
