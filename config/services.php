@@ -33,6 +33,11 @@ return [
 
     'google' => [
         'api_key' => env("GOOGLE_CLOUD_KEY")
+    ],
+
+    'stripe' => [
+        'api_key' => env('STRIPE_API_KEY'),
+        'api_secret' => env('STRIPE_API_SECRET'),
     ]
 
 ];

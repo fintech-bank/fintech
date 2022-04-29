@@ -32,6 +32,10 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         Route::get('create', [\App\Http\Controllers\Agent\CustomerController::class, 'create'])->name('agent.customer.create');
         Route::post('create', [\App\Http\Controllers\Agent\CustomerController::class, 'store'])->name('agent.customer.store');
         Route::get('{customer}', [\App\Http\Controllers\Agent\CustomerController::class, 'show'])->name('agent.customer.show');
+
+        Route::prefix('{customer}/verify')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Agent\VerifyController::class, 'go'])->name('agent.customer.verify.start');
+        });
     });
 });
 

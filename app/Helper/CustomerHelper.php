@@ -84,4 +84,34 @@ class CustomerHelper
             return $customer->info->firstname;
         }
     }
+
+    public static function getAmountAllDeposit($customer)
+    {
+        $calc = 0;
+        $wallets = $customer->wallets();
+
+        foreach ($wallets as $wallet) {
+            $ds = $wallet->transactions()->where('type', 'depot')->get();
+            foreach ($ds as $transaction) {
+                $calc += $transaction->amount;
+            }
+        }
+
+        return eur($calc);
+    }
+
+    public static function getAmountAllWithdraw($customer)
+    {
+        $calc = 0;
+        $wallets = $customer->wallets();
+
+        foreach ($wallets as $wallet) {
+            $ds = $wallet->transactions()->where('type', 'retrait')->get();
+            foreach ($ds as $transaction) {
+                $calc += $transaction->amount;
+            }
+        }
+
+        return eur($calc);
+    }
 }

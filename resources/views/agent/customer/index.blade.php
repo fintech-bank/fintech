@@ -233,7 +233,7 @@
                     <!--end::Date=-->
                     <!--begin::Action=-->
                     <td class="text-end">
-                        <a href="" class="btn btn-sm btn-circle btn-icon btn-bank" data-bs-toggle="tooltip" data-bs-placement="left" title="Détail"><i class="fa fa-desktop"></i> </a>
+                        <a href="{{ route('agent.customer.show', $customer->id) }}" class="btn btn-sm btn-circle btn-icon btn-bank" data-bs-toggle="tooltip" data-bs-placement="left" title="Détail"><i class="fa fa-desktop"></i> </a>
                     </td>
                     <!--end::Action=-->
                 </tr>

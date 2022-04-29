@@ -42,6 +42,13 @@ class CustomerController extends Controller
         return response()->json($user);
     }
 
+    public function show($customer_id)
+    {
+        $customer = Customer::with('user', 'package', 'info', 'setting', 'situation', 'income', 'charge', 'wallets', 'beneficiaires', 'documents', 'transmisses')->find($customer_id);
+
+        return view('agent.customer.show', compact('customer'));
+    }
+
     private function createUser($request)
     {
         $password = \Str::random(10);
