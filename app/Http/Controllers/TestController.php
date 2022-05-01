@@ -14,17 +14,20 @@ class TestController extends Controller
 {
     public function test()
     {
-        $document = new DocumentFile();
-        $customer = Customer::find(55);
-        //dd($customer);
-        return $document->generatePDF('agence.convention_part', $customer, 4, ["wallet" => $customer->wallets()->first(), "card" => $customer->wallets()->first()->cards()->first()], false, false, null, true, '');
-        return view('pdf.agence.convention_part', [
-            'data' => [],
-            'agence' => $customer->user->agency,
-            'document' => null,
-            'title' => "Document",
-            "header_type" => "address"
-        ]);
+        $customer = Customer::find(29);
+        $calc = 0;
+        $wallets = $customer->wallets();
+
+        foreach ($wallets->with('transactions')->get() as $wallet) {
+            dd($wallet->transactions()->where('type', 'virement')->orWhere('type', 'sepa')->get());
+            $ds = $wallet->transactions()->where('type', 'virement')->where('type', 'sepa')->get();
+            foreach ($ds as $transaction) {
+                $calc += $transaction->amount;
+            }
+        }
+
+        return eur($calc);
+
     }
 
     public function home()

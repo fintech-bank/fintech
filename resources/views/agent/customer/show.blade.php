@@ -214,17 +214,26 @@
                 <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-8">
                     <!--begin:::Tab item-->
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_customer_view_overview_tab">Overview</a>
+                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#overview">Aperçu</a>
                     </li>
                     <!--end:::Tab item-->
                     <!--begin:::Tab item-->
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_customer_view_overview_events_and_logs_tab">Events &amp; Logs</a>
+                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#infos">Informations</a>
                     </li>
                     <!--end:::Tab item-->
                     <!--begin:::Tab item-->
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_customer_view_overview_statements">Statements</a>
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#wallets">Comptes bancaire</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#files">Fichiers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#simulate">Simulations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#support">Supports</a>
                     </li>
                     <!--end:::Tab item-->
                     <!--begin:::Tab item-->
@@ -329,1239 +338,139 @@
                 <!--begin:::Tab content-->
                 <div class="tab-content" id="myTabContent">
                     <!--begin:::Tab pane-->
-                    <div class="tab-pane fade show active" id="kt_customer_view_overview_tab" role="tabpanel">
-                        <!--begin::Card-->
-                        <div class="card pt-4 mb-6 mb-xl-9">
-                            <!--begin::Card header-->
-                            <div class="card-header border-0">
-                                <!--begin::Card title-->
-                                <div class="card-title">
-                                    <h2>Payment Records</h2>
-                                </div>
-                                <!--end::Card title-->
-                                <!--begin::Card toolbar-->
-                                <div class="card-toolbar">
-                                    <!--begin::Filter-->
-                                    <button type="button" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
-                                        <span class="svg-icon svg-icon-3">
-																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																	<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
-																	<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
-																	<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
-																</svg>
-															</span>
-                                        <!--end::Svg Icon-->Add payment</button>
-                                    <!--end::Filter-->
-                                </div>
-                                <!--end::Card toolbar-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0 pb-5">
-                                <!--begin::Table-->
-                                <div id="kt_table_customers_payment_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table align-middle table-row-dashed gy-5 dataTable no-footer" id="kt_table_customers_payment">
-                                            <!--begin::Table head-->
-                                            <thead class="border-bottom border-gray-200 fs-7 fw-bolder">
-                                            <!--begin::Table row-->
-                                            <tr class="text-start text-muted text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Invoice No.: activate to sort column ascending" style="width: 139.297px;">Invoice No.</th><th class="sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 120.5px;">Status</th><th class="sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 113.531px;">Amount</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 229.156px;">Date</th><th class="text-end min-w-100px pe-4 sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 148.266px;">Actions</th></tr>
-                                            <!--end::Table row-->
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                            <tbody class="fs-6 fw-bold text-gray-600">
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <!--begin::Table row-->
-
-                                            <!--end::Table row-->
-                                            <tr class="odd">
-                                                <!--begin::Invoice=-->
-                                                <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">7445-6872</a>
-                                                </td>
-                                                <!--end::Invoice=-->
-                                                <!--begin::Status=-->
-                                                <td>
-                                                    <span class="badge badge-light-success">Successful</span>
-                                                </td>
-                                                <!--end::Status=-->
-                                                <!--begin::Amount=-->
-                                                <td>$1,200.00</td>
-                                                <!--end::Amount=-->
-                                                <!--begin::Date=-->
-                                                <td data-order="2020-12-14T20:43:00+01:00">14 Dec 2020, 8:43 pm</td>
-                                                <!--end::Date=-->
-                                                <!--begin::Action=-->
-                                                <td class="pe-0 text-end">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                        <span class="svg-icon svg-icon-5 m-0">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                        <!--end::Svg Icon--></a>
-                                                    <!--begin::Menu-->
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="/metronic8/demo1/../demo1/apps/customers/view.html" class="menu-link px-3">View</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu-->
-                                                </td>
-                                                <!--end::Action=-->
-                                            </tr><tr class="even">
-                                                <!--begin::Invoice=-->
-                                                <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">2332-9939</a>
-                                                </td>
-                                                <!--end::Invoice=-->
-                                                <!--begin::Status=-->
-                                                <td>
-                                                    <span class="badge badge-light-success">Successful</span>
-                                                </td>
-                                                <!--end::Status=-->
-                                                <!--begin::Amount=-->
-                                                <td>$79.00</td>
-                                                <!--end::Amount=-->
-                                                <!--begin::Date=-->
-                                                <td data-order="2020-12-01T10:12:00+01:00">01 Dec 2020, 10:12 am</td>
-                                                <!--end::Date=-->
-                                                <!--begin::Action=-->
-                                                <td class="pe-0 text-end">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                        <span class="svg-icon svg-icon-5 m-0">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                        <!--end::Svg Icon--></a>
-                                                    <!--begin::Menu-->
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="/metronic8/demo1/../demo1/apps/customers/view.html" class="menu-link px-3">View</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu-->
-                                                </td>
-                                                <!--end::Action=-->
-                                            </tr><tr class="odd">
-                                                <!--begin::Invoice=-->
-                                                <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">4002-3782</a>
-                                                </td>
-                                                <!--end::Invoice=-->
-                                                <!--begin::Status=-->
-                                                <td>
-                                                    <span class="badge badge-light-success">Successful</span>
-                                                </td>
-                                                <!--end::Status=-->
-                                                <!--begin::Amount=-->
-                                                <td>$5,500.00</td>
-                                                <!--end::Amount=-->
-                                                <!--begin::Date=-->
-                                                <td data-order="2020-11-12T14:01:00+01:00">12 Nov 2020, 2:01 pm</td>
-                                                <!--end::Date=-->
-                                                <!--begin::Action=-->
-                                                <td class="pe-0 text-end">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                        <span class="svg-icon svg-icon-5 m-0">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                        <!--end::Svg Icon--></a>
-                                                    <!--begin::Menu-->
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="/metronic8/demo1/../demo1/apps/customers/view.html" class="menu-link px-3">View</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu-->
-                                                </td>
-                                                <!--end::Action=-->
-                                            </tr><tr class="even">
-                                                <!--begin::Invoice=-->
-                                                <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">4585-8536</a>
-                                                </td>
-                                                <!--end::Invoice=-->
-                                                <!--begin::Status=-->
-                                                <td>
-                                                    <span class="badge badge-light-warning">Pending</span>
-                                                </td>
-                                                <!--end::Status=-->
-                                                <!--begin::Amount=-->
-                                                <td>$880.00</td>
-                                                <!--end::Amount=-->
-                                                <!--begin::Date=-->
-                                                <td data-order="2020-10-21T17:54:00+02:00">21 Oct 2020, 5:54 pm</td>
-                                                <!--end::Date=-->
-                                                <!--begin::Action=-->
-                                                <td class="pe-0 text-end">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                        <span class="svg-icon svg-icon-5 m-0">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                        <!--end::Svg Icon--></a>
-                                                    <!--begin::Menu-->
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="/metronic8/demo1/../demo1/apps/customers/view.html" class="menu-link px-3">View</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu-->
-                                                </td>
-                                                <!--end::Action=-->
-                                            </tr><tr class="odd">
-                                                <!--begin::Invoice=-->
-                                                <td>
-                                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">3505-9684</a>
-                                                </td>
-                                                <!--end::Invoice=-->
-                                                <!--begin::Status=-->
-                                                <td>
-                                                    <span class="badge badge-light-success">Successful</span>
-                                                </td>
-                                                <!--end::Status=-->
-                                                <!--begin::Amount=-->
-                                                <td>$7,650.00</td>
-                                                <!--end::Amount=-->
-                                                <!--begin::Date=-->
-                                                <td data-order="2020-10-19T07:32:00+02:00">19 Oct 2020, 7:32 am</td>
-                                                <!--end::Date=-->
-                                                <!--begin::Action=-->
-                                                <td class="pe-0 text-end">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                        <span class="svg-icon svg-icon-5 m-0">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                        <!--end::Svg Icon--></a>
-                                                    <!--begin::Menu-->
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="/metronic8/demo1/../demo1/apps/customers/view.html" class="menu-link px-3">View</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu-->
-                                                </td>
-                                                <!--end::Action=-->
-                                            </tr></tbody>
-                                            <!--end::Table body-->
-                                        </table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_table_customers_payment_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_table_customers_payment_previous"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_table_customers_payment_next"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
-                                <!--end::Table-->
-                            </div>
-                            <!--end::Card body-->
-                        </div>
-                        <!--end::Card-->
-                        <!--begin::Card-->
-                        <div class="card pt-4 mb-6 mb-xl-9">
-                            <!--begin::Card header-->
-                            <div class="card-header border-0">
-                                <!--begin::Card title-->
-                                <div class="card-title">
-                                    <h2 class="fw-bolder mb-0">Payment Methods</h2>
-                                </div>
-                                <!--end::Card title-->
-                                <!--begin::Card toolbar-->
-                                <div class="card-toolbar">
-                                    <a href="#" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
-                                        <span class="svg-icon svg-icon-3">
-																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																	<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
-																	<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
-																	<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
-																</svg>
-															</span>
-                                        <!--end::Svg Icon-->Add new method</a>
-                                </div>
-                                <!--end::Card toolbar-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div id="kt_customer_view_payment_method" class="card-body pt-0">
-                                <!--begin::Option-->
-                                <div class="py-0" data-kt-customer-payment-method="row">
-                                    <!--begin::Header-->
-                                    <div class="py-3 d-flex flex-stack flex-wrap">
-                                        <!--begin::Toggle-->
-                                        <div class="d-flex align-items-center collapsible rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_1" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_1">
-                                            <!--begin::Arrow-->
-                                            <div class="me-3 rotate-90">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Arrow-->
-                                            <!--begin::Logo-->
-                                            <img src="/metronic8/demo1/assets/media/svg/card-logos/mastercard.svg" class="w-40px me-3" alt="">
-                                            <!--end::Logo-->
-                                            <!--begin::Summary-->
-                                            <div class="me-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="text-gray-800 fw-bolder">Mastercard</div>
-                                                    <div class="badge badge-light-primary ms-5">Primary</div>
-                                                </div>
-                                                <div class="text-muted">Expires Dec 2024</div>
-                                            </div>
-                                            <!--end::Summary-->
-                                        </div>
-                                        <!--end::Toggle-->
-                                        <!--begin::Toolbar-->
-                                        <div class="d-flex my-3 ms-9">
-                                            <!--begin::Edit-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card">
-																		<span data-bs-toggle="tooltip" data-bs-trigger="hover" title="" data-bs-original-title="Edit">
-																			<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-																			<span class="svg-icon svg-icon-3">
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																					<path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
-																					<path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-                                                                            <!--end::Svg Icon-->
-																		</span>
-                                            </a>
-                                            <!--end::Edit-->
-                                            <!--begin::Delete-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="tooltip" title="" data-kt-customer-payment-method="delete" data-bs-original-title="Delete">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
-																				<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
-																				<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <!--end::Delete-->
-                                            <!--begin::More-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px" data-bs-toggle="tooltip" title="" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-original-title="More Options">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"></path>
-																				<path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <!--begin::Menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold w-150px py-3" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" data-kt-payment-mehtod-action="set_as_primary">Set as Primary</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu-->
-                                            <!--end::More-->
-                                        </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                        <div class="row g-5 g-xl-8">
+                            <div class="col-xl-3">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                     <!--begin::Body-->
-                                    <div id="kt_customer_view_payment_method_1" class="collapse show fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
-                                        <!--begin::Details-->
-                                        <div class="d-flex flex-wrap py-5">
-                                            <!--begin::Col-->
-                                            <div class="flex-equal me-5">
-                                                <table class="table table-flush fw-bold gy-1">
-                                                    <tbody><tr>
-                                                        <td class="text-muted min-w-125px w-125px">Name</td>
-                                                        <td class="text-gray-800">Emma Smith</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Number</td>
-                                                        <td class="text-gray-800">**** 7411</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Expires</td>
-                                                        <td class="text-gray-800">12/2024</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Type</td>
-                                                        <td class="text-gray-800">Mastercard credit card</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Issuer</td>
-                                                        <td class="text-gray-800">VICBANK</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">ID</td>
-                                                        <td class="text-gray-800">id_4325df90sdf8</td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="flex-equal">
-                                                <table class="table table-flush fw-bold gy-1">
-                                                    <tbody><tr>
-                                                        <td class="text-muted min-w-125px w-125px">Billing address</td>
-                                                        <td class="text-gray-800">AU</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Phone</td>
-                                                        <td class="text-gray-800">No phone provided</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Email</td>
-                                                        <td class="text-gray-800">
-                                                            <a href="#" class="text-gray-900 text-hover-primary">smith@kpmg.com</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Origin</td>
-                                                        <td class="text-gray-800">Australia
-                                                            <div class="symbol symbol-20px symbol-circle ms-2">
-                                                                <img src="/metronic8/demo1/assets/media/flags/australia.svg">
-                                                            </div></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">CVC check</td>
-                                                        <td class="text-gray-800">Passed
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen043.svg-->
-                                                            <span class="svg-icon svg-icon-2 svg-icon-success">
-																					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																						<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="currentColor"></rect>
-																						<path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="currentColor"></path>
-																					</svg>
-																				</span>
-                                                            <!--end::Svg Icon--></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                        <!--end::Details-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-success svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M13 9.59998V21C13 21.6 12.6 22 12 22C11.4 22 11 21.6 11 21V9.59998H13Z" fill="currentColor"/>
+                                            <path opacity="0.3" d="M4 9.60002H20L12.7 2.3C12.3 1.9 11.7 1.9 11.3 2.3L4 9.60002Z" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getAmountAllDeposit($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Total déposé</div>
                                     </div>
                                     <!--end::Body-->
-                                </div>
-                                <!--end::Option-->
-                                <div class="separator separator-dashed"></div>
-                                <!--begin::Option-->
-                                <div class="py-0" data-kt-customer-payment-method="row">
-                                    <!--begin::Header-->
-                                    <div class="py-3 d-flex flex-stack flex-wrap">
-                                        <!--begin::Toggle-->
-                                        <div class="d-flex align-items-center collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_2" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_2">
-                                            <!--begin::Arrow-->
-                                            <div class="me-3 rotate-90">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Arrow-->
-                                            <!--begin::Logo-->
-                                            <img src="/metronic8/demo1/assets/media/svg/card-logos/visa.svg" class="w-40px me-3" alt="">
-                                            <!--end::Logo-->
-                                            <!--begin::Summary-->
-                                            <div class="me-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="text-gray-800 fw-bolder">Visa</div>
-                                                </div>
-                                                <div class="text-muted">Expires Feb 2022</div>
-                                            </div>
-                                            <!--end::Summary-->
-                                        </div>
-                                        <!--end::Toggle-->
-                                        <!--begin::Toolbar-->
-                                        <div class="d-flex my-3 ms-9">
-                                            <!--begin::Edit-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card">
-																		<span data-bs-toggle="tooltip" data-bs-trigger="hover" title="" data-bs-original-title="Edit">
-																			<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-																			<span class="svg-icon svg-icon-3">
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																					<path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
-																					<path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-                                                                            <!--end::Svg Icon-->
-																		</span>
-                                            </a>
-                                            <!--end::Edit-->
-                                            <!--begin::Delete-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="tooltip" title="" data-kt-customer-payment-method="delete" data-bs-original-title="Delete">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
-																				<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
-																				<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <!--end::Delete-->
-                                            <!--begin::More-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px" data-bs-toggle="tooltip" title="" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-original-title="More Options">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"></path>
-																				<path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <!--begin::Menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold w-150px py-3" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" data-kt-payment-mehtod-action="set_as_primary">Set as Primary</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu-->
-                                            <!--end::More-->
-                                        </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
+                                </a>
+                            </div>
+                            <div class="col-xl-3">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                     <!--begin::Body-->
-                                    <div id="kt_customer_view_payment_method_2" class="collapse fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
-                                        <!--begin::Details-->
-                                        <div class="d-flex flex-wrap py-5">
-                                            <!--begin::Col-->
-                                            <div class="flex-equal me-5">
-                                                <table class="table table-flush fw-bold gy-1">
-                                                    <tbody><tr>
-                                                        <td class="text-muted min-w-125px w-125px">Name</td>
-                                                        <td class="text-gray-800">Melody Macy</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Number</td>
-                                                        <td class="text-gray-800">**** 5857</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Expires</td>
-                                                        <td class="text-gray-800">02/2022</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Type</td>
-                                                        <td class="text-gray-800">Visa credit card</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Issuer</td>
-                                                        <td class="text-gray-800">ENBANK</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">ID</td>
-                                                        <td class="text-gray-800">id_w2r84jdy723</td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="flex-equal">
-                                                <table class="table table-flush fw-bold gy-1">
-                                                    <tbody><tr>
-                                                        <td class="text-muted min-w-125px w-125px">Billing address</td>
-                                                        <td class="text-gray-800">UK</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Phone</td>
-                                                        <td class="text-gray-800">No phone provided</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Email</td>
-                                                        <td class="text-gray-800">
-                                                            <a href="#" class="text-gray-900 text-hover-primary">melody@altbox.com</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Origin</td>
-                                                        <td class="text-gray-800">United Kingdom
-                                                            <div class="symbol symbol-20px symbol-circle ms-2">
-                                                                <img src="/metronic8/demo1/assets/media/flags/united-kingdom.svg">
-                                                            </div></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">CVC check</td>
-                                                        <td class="text-gray-800">Passed
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
-                                                            <span class="svg-icon svg-icon-2 svg-icon-success">
-																					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																						<path opacity="0.3" d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor"></path>
-																						<path d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor"></path>
-																					</svg>
-																				</span>
-                                                            <!--end::Svg Icon--></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                        <!--end::Details-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-danger svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.5" d="M13 14.4V3.00003C13 2.40003 12.6 2.00003 12 2.00003C11.4 2.00003 11 2.40003 11 3.00003V14.4H13Z" fill="currentColor"/>
+                                            <path d="M5.7071 16.1071C5.07714 15.4771 5.52331 14.4 6.41421 14.4H17.5858C18.4767 14.4 18.9229 15.4771 18.2929 16.1071L12.7 21.7C12.3 22.1 11.7 22.1 11.3 21.7L5.7071 16.1071Z" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getAmountAllWithdraw($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Total Retiré</div>
                                     </div>
                                     <!--end::Body-->
-                                </div>
-                                <!--end::Option-->
-                                <div class="separator separator-dashed"></div>
-                                <!--begin::Option-->
-                                <div class="py-0" data-kt-customer-payment-method="row">
-                                    <!--begin::Header-->
-                                    <div class="py-3 d-flex flex-stack flex-wrap">
-                                        <!--begin::Toggle-->
-                                        <div class="d-flex align-items-center collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_3" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_3">
-                                            <!--begin::Arrow-->
-                                            <div class="me-3 rotate-90">
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </div>
-                                            <!--end::Arrow-->
-                                            <!--begin::Logo-->
-                                            <img src="/metronic8/demo1/assets/media/svg/card-logos/american-express.svg" class="w-40px me-3" alt="">
-                                            <!--end::Logo-->
-                                            <!--begin::Summary-->
-                                            <div class="me-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="text-gray-800 fw-bolder">American Express</div>
-                                                    <div class="badge badge-light-danger ms-5">Expired</div>
-                                                </div>
-                                                <div class="text-muted">Expires Aug 2021</div>
-                                            </div>
-                                            <!--end::Summary-->
-                                        </div>
-                                        <!--end::Toggle-->
-                                        <!--begin::Toolbar-->
-                                        <div class="d-flex my-3 ms-9">
-                                            <!--begin::Edit-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card">
-																		<span data-bs-toggle="tooltip" data-bs-trigger="hover" title="" data-bs-original-title="Edit">
-																			<!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-																			<span class="svg-icon svg-icon-3">
-																				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																					<path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
-																					<path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-                                                                            <!--end::Svg Icon-->
-																		</span>
-                                            </a>
-                                            <!--end::Edit-->
-                                            <!--begin::Delete-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="tooltip" title="" data-kt-customer-payment-method="delete" data-bs-original-title="Delete">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
-																				<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
-																				<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <!--end::Delete-->
-                                            <!--begin::More-->
-                                            <a href="#" class="btn btn-icon btn-active-light-primary w-30px h-30px" data-bs-toggle="tooltip" title="" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-bs-original-title="More Options">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
-                                                <span class="svg-icon svg-icon-3">
-																			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																				<path d="M17.5 11H6.5C4 11 2 9 2 6.5C2 4 4 2 6.5 2H17.5C20 2 22 4 22 6.5C22 9 20 11 17.5 11ZM15 6.5C15 7.9 16.1 9 17.5 9C18.9 9 20 7.9 20 6.5C20 5.1 18.9 4 17.5 4C16.1 4 15 5.1 15 6.5Z" fill="currentColor"></path>
-																				<path opacity="0.3" d="M17.5 22H6.5C4 22 2 20 2 17.5C2 15 4 13 6.5 13H17.5C20 13 22 15 22 17.5C22 20 20 22 17.5 22ZM4 17.5C4 18.9 5.1 20 6.5 20C7.9 20 9 18.9 9 17.5C9 16.1 7.9 15 6.5 15C5.1 15 4 16.1 4 17.5Z" fill="currentColor"></path>
-																			</svg>
-																		</span>
-                                                <!--end::Svg Icon-->
-                                            </a>
-                                            <!--begin::Menu-->
-                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold w-150px py-3" data-kt-menu="true">
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" data-kt-payment-mehtod-action="set_as_primary">Set as Primary</a>
-                                                </div>
-                                                <!--end::Menu item-->
-                                            </div>
-                                            <!--end::Menu-->
-                                            <!--end::More-->
-                                        </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
+                                </a>
+                            </div>
+                            <div class="col-xl-3">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                     <!--begin::Body-->
-                                    <div id="kt_customer_view_payment_method_3" class="collapse fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
-                                        <!--begin::Details-->
-                                        <div class="d-flex flex-wrap py-5">
-                                            <!--begin::Col-->
-                                            <div class="flex-equal me-5">
-                                                <table class="table table-flush fw-bold gy-1">
-                                                    <tbody><tr>
-                                                        <td class="text-muted min-w-125px w-125px">Name</td>
-                                                        <td class="text-gray-800">Max Smith</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Number</td>
-                                                        <td class="text-gray-800">**** 3760</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Expires</td>
-                                                        <td class="text-gray-800">08/2021</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Type</td>
-                                                        <td class="text-gray-800">American express credit card</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Issuer</td>
-                                                        <td class="text-gray-800">USABANK</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">ID</td>
-                                                        <td class="text-gray-800">id_89457jcje63</td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div>
-                                            <!--end::Col-->
-                                            <!--begin::Col-->
-                                            <div class="flex-equal">
-                                                <table class="table table-flush fw-bold gy-1">
-                                                    <tbody><tr>
-                                                        <td class="text-muted min-w-125px w-125px">Billing address</td>
-                                                        <td class="text-gray-800">US</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Phone</td>
-                                                        <td class="text-gray-800">No phone provided</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Email</td>
-                                                        <td class="text-gray-800">
-                                                            <a href="#" class="text-gray-900 text-hover-primary">max@kt.com</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">Origin</td>
-                                                        <td class="text-gray-800">United States of America
-                                                            <div class="symbol symbol-20px symbol-circle ms-2">
-                                                                <img src="/metronic8/demo1/assets/media/flags/united-states.svg">
-                                                            </div></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-muted min-w-125px w-125px">CVC check</td>
-                                                        <td class="text-gray-800">Failed
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                                            <span class="svg-icon svg-icon-2 svg-icon-danger">
-																					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																						<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-																						<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
-																					</svg>
-																				</span>
-                                                            <!--end::Svg Icon--></td>
-                                                    </tr>
-                                                    </tbody></table>
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                        <!--end::Details-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M7 6.59998V20C7 20.6 7.4 21 8 21C8.6 21 9 20.6 9 20V6.59998H7ZM15 17.4V4C15 3.4 15.4 3 16 3C16.6 3 17 3.4 17 4V17.4H15Z" fill="currentColor"/>
+                                            <path opacity="0.3" d="M3 6.59999H13L8.7 2.3C8.3 1.9 7.7 1.9 7.3 2.3L3 6.59999ZM11 17.4H21L16.7 21.7C16.3 22.1 15.7 22.1 15.3 21.7L11 17.4Z" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getAmountAllTransfers($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Total Transféré</div>
                                     </div>
                                     <!--end::Body-->
-                                </div>
-                                <!--end::Option-->
+                                </a>
                             </div>
-                            <!--end::Card body-->
+                            <div class="col-xl-3">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z" fill="currentColor"/>
+                                            <path opacity="0.3" d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z" fill="currentColor"/>
+                                            <path d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getAmountAllTransactions($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Transactions</div>
+                                    </div>
+                                    <!--end::Body-->
+                                </a>
+                            </div>
+                            <div class="col-xl-3">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path opacity="0.3" d="M15.8 11.4H6C5.4 11.4 5 11 5 10.4C5 9.80002 5.4 9.40002 6 9.40002H15.8C16.4 9.40002 16.8 9.80002 16.8 10.4C16.8 11 16.3 11.4 15.8 11.4ZM15.7 13.7999C15.7 13.1999 15.3 12.7999 14.7 12.7999H6C5.4 12.7999 5 13.1999 5 13.7999C5 14.3999 5.4 14.7999 6 14.7999H14.8C15.3 14.7999 15.7 14.2999 15.7 13.7999Z" fill="currentColor"/>
+                                            <path d="M18.8 15.5C18.9 15.7 19 15.9 19.1 16.1C19.2 16.7 18.7 17.2 18.4 17.6C17.9 18.1 17.3 18.4999 16.6 18.7999C15.9 19.0999 15 19.2999 14.1 19.2999C13.4 19.2999 12.7 19.2 12.1 19.1C11.5 19 11 18.7 10.5 18.5C10 18.2 9.60001 17.7999 9.20001 17.2999C8.80001 16.8999 8.49999 16.3999 8.29999 15.7999C8.09999 15.1999 7.80001 14.7 7.70001 14.1C7.60001 13.5 7.5 12.8 7.5 12.2C7.5 11.1 7.7 10.1 8 9.19995C8.3 8.29995 8.79999 7.60002 9.39999 6.90002C9.99999 6.30002 10.7 5.8 11.5 5.5C12.3 5.2 13.2 5 14.1 5C15.2 5 16.2 5.19995 17.1 5.69995C17.8 6.09995 18.7 6.6 18.8 7.5C18.8 7.9 18.6 8.29998 18.3 8.59998C18.2 8.69998 18.1 8.69993 18 8.79993C17.7 8.89993 17.4 8.79995 17.2 8.69995C16.7 8.49995 16.5 7.99995 16 7.69995C15.5 7.39995 14.9 7.19995 14.2 7.19995C13.1 7.19995 12.1 7.6 11.5 8.5C10.9 9.4 10.5 10.6 10.5 12.2C10.5 13.3 10.7 14.2 11 14.9C11.3 15.6 11.7 16.1 12.3 16.5C12.9 16.9 13.5 17 14.2 17C15 17 15.7 16.8 16.2 16.4C16.8 16 17.2 15.2 17.9 15.1C18 15 18.5 15.2 18.8 15.5Z" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getCountAllLoan($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Prets</div>
+                                    </div>
+                                    <!--end::Body-->
+                                </a>
+                            </div>
+                            <div class="col-xl-4">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M6 20C6 20.6 5.6 21 5 21C4.4 21 4 20.6 4 20H6ZM18 20C18 20.6 18.4 21 19 21C19.6 21 20 20.6 20 20H18Z" fill="currentColor"/>
+                                            <path opacity="0.3" d="M21 20H3C2.4 20 2 19.6 2 19V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V19C22 19.6 21.6 20 21 20ZM12 10H10.7C10.5 9.7 10.3 9.50005 10 9.30005V8C10 7.4 9.6 7 9 7C8.4 7 8 7.4 8 8V9.30005C7.7 9.50005 7.5 9.7 7.3 10H6C5.4 10 5 10.4 5 11C5 11.6 5.4 12 6 12H7.3C7.5 12.3 7.7 12.5 8 12.7V14C8 14.6 8.4 15 9 15C9.6 15 10 14.6 10 14V12.7C10.3 12.5 10.5 12.3 10.7 12H12C12.6 12 13 11.6 13 11C13 10.4 12.6 10 12 10Z" fill="currentColor"/>
+                                            <path d="M18.5 11C18.5 10.2 17.8 9.5 17 9.5C16.2 9.5 15.5 10.2 15.5 11C15.5 11.4 15.7 11.8 16 12.1V13C16 13.6 16.4 14 17 14C17.6 14 18 13.6 18 13V12.1C18.3 11.8 18.5 11.4 18.5 11Z" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getCoutAllEpargnes($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Epargnes</div>
+                                    </div>
+                                    <!--end::Body-->
+                                </a>
+                            </div>
+                            <div class="col-xl-5">
+                                <a href="#" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                        <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z" fill="currentColor"/>
+                                            <rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="currentColor"/>
+                                            <path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z" fill="currentColor"/>
+                                            <rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="currentColor"/>
+                                            </svg>
+										</span>
+                                        <!--end::Svg Icon-->
+                                        <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ \App\Helper\CustomerHelper::getCountAllBeneficiaires($customer) }}</div>
+                                        <div class="fw-bold text-gray-400">Bénéficiaires</div>
+                                    </div>
+                                    <!--end::Body-->
+                                </a>
+                            </div>
                         </div>
-                        <!--end::Card-->
-                        <!--begin::Card-->
-                        <div class="card pt-4 mb-6 mb-xl-9">
-                            <!--begin::Card header-->
-                            <div class="card-header border-0">
-                                <!--begin::Card title-->
-                                <div class="card-title">
-                                    <h2 class="fw-bolder">Credit Balance</h2>
-                                </div>
-                                <!--end::Card title-->
-                                <!--begin::Card toolbar-->
-                                <div class="card-toolbar">
-                                    <a href="#" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_adjust_balance">
-                                        <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
-                                        <span class="svg-icon svg-icon-3">
-																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-																	<path opacity="0.3" d="M21.4 8.35303L19.241 10.511L13.485 4.755L15.643 2.59595C16.0248 2.21423 16.5426 1.99988 17.0825 1.99988C17.6224 1.99988 18.1402 2.21423 18.522 2.59595L21.4 5.474C21.7817 5.85581 21.9962 6.37355 21.9962 6.91345C21.9962 7.45335 21.7817 7.97122 21.4 8.35303ZM3.68699 21.932L9.88699 19.865L4.13099 14.109L2.06399 20.309C1.98815 20.5354 1.97703 20.7787 2.03189 21.0111C2.08674 21.2436 2.2054 21.4561 2.37449 21.6248C2.54359 21.7934 2.75641 21.9115 2.989 21.9658C3.22158 22.0201 3.4647 22.0084 3.69099 21.932H3.68699Z" fill="currentColor"></path>
-																	<path d="M5.574 21.3L3.692 21.928C3.46591 22.0032 3.22334 22.0141 2.99144 21.9594C2.75954 21.9046 2.54744 21.7864 2.3789 21.6179C2.21036 21.4495 2.09202 21.2375 2.03711 21.0056C1.9822 20.7737 1.99289 20.5312 2.06799 20.3051L2.696 18.422L5.574 21.3ZM4.13499 14.105L9.891 19.861L19.245 10.507L13.489 4.75098L4.13499 14.105Z" fill="currentColor"></path>
-																</svg>
-															</span>
-                                        <!--end::Svg Icon-->Adjust Balance</a>
-                                </div>
-                                <!--end::Card toolbar-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0">
-                                <div class="fw-bolder fs-2">$32,487.57
-                                    <span class="text-muted fs-4 fw-bold">USD</span>
-                                    <div class="fs-7 fw-normal text-muted">Balance will increase the amount due on the customer's next invoice.</div></div>
-                            </div>
-                            <!--end::Card body-->
-                        </div>
-                        <!--end::Card-->
-                        <!--begin::Card-->
-                        <div class="card pt-2 mb-6 mb-xl-9">
-                            <!--begin::Card header-->
-                            <div class="card-header border-0">
-                                <!--begin::Card title-->
-                                <div class="card-title">
-                                    <h2>Invoices</h2>
-                                </div>
-                                <!--end::Card title-->
-                                <!--begin::Toolbar-->
-                                <div class="card-toolbar m-0">
-                                    <!--begin::Tab nav-->
-                                    <ul class="nav nav-stretch fs-5 fw-bold nav-line-tabs nav-line-tabs-2x border-transparent" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_year_tab" class="nav-link text-active-primary active" data-bs-toggle="tab" role="tab" href="#kt_customer_details_invoices_1">This Year</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2019_tab" class="nav-link text-active-primary ms-3" data-bs-toggle="tab" role="tab" href="#kt_customer_details_invoices_2">2020</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2018_tab" class="nav-link text-active-primary ms-3" data-bs-toggle="tab" role="tab" href="#kt_customer_details_invoices_3">2019</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a id="kt_referrals_2017_tab" class="nav-link text-active-primary ms-3" data-bs-toggle="tab" role="tab" href="#kt_customer_details_invoices_4">2018</a>
-                                        </li>
-                                    </ul>
-                                    <!--end::Tab nav-->
-                                </div>
-                                <!--end::Toolbar-->
-                            </div>
-                            <!--end::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body pt-0">
-                                <!--begin::Tab Content-->
-                                <div id="kt_referred_users_tab_content" class="tab-content">
-                                    <!--begin::Tab panel-->
-                                    <div id="kt_customer_details_invoices_1" class="py-0 tab-pane fade show active" role="tabpanel">
-                                        <!--begin::Table-->
-                                        <div id="kt_customer_details_invoices_table_1_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table id="kt_customer_details_invoices_table_1" class="table align-middle table-row-dashed fs-6 fw-bolder gy-5 dataTable no-footer">
-                                                    <!--begin::Thead-->
-                                                    <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class="text-start text-muted gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_1" rowspan="1" colspan="1" aria-label="Order ID: activate to sort column ascending" style="width: 136.812px;">Order ID</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_1" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 140.391px;">Amount</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_1" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 140.391px;">Status</th><th class="min-w-125px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_1" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 174.594px;">Date</th><th class="min-w-100px text-end pe-7 sorting_disabled" rowspan="1" colspan="1" aria-label="Invoice" style="width: 148.812px;">Invoice</th></tr>
-                                                    </thead>
-                                                    <!--end::Thead-->
-                                                    <!--begin::Tbody-->
-                                                    <tbody class="fs-6 fw-bold text-gray-600">
-
-
-
-
-
-
-
-
-
-                                                    <tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">102445788</a>
-                                                        </td>
-                                                        <td class="text-success">$38.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Nov 01, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">423445721</a>
-                                                        </td>
-                                                        <td class="text-danger">$-2.60</td>
-                                                        <td>
-                                                            <span class="badge badge-light-danger">Rejected</span>
-                                                        </td>
-                                                        <td>Oct 24, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">312445984</a>
-                                                        </td>
-                                                        <td class="text-success">$76.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-success">Approved</span>
-                                                        </td>
-                                                        <td>Oct 08, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">312445984</a>
-                                                        </td>
-                                                        <td class="text-success">$5.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Sep 15, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">523445943</a>
-                                                        </td>
-                                                        <td class="text-danger">$-1.30</td>
-                                                        <td>
-                                                            <span class="badge badge-light-success">Approved</span>
-                                                        </td>
-                                                        <td>May 30, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr></tbody>
-                                                    <!--end::Tbody-->
-                                                </table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_customer_details_invoices_table_1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_customer_details_invoices_table_1_previous"><a href="#" aria-controls="kt_customer_details_invoices_table_1" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_customer_details_invoices_table_1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_customer_details_invoices_table_1" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_customer_details_invoices_table_1_next"><a href="#" aria-controls="kt_customer_details_invoices_table_1" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
-                                        <!--end::Table-->
-                                    </div>
-                                    <!--end::Tab panel-->
-                                    <!--begin::Tab panel-->
-                                    <div id="kt_customer_details_invoices_2" class="py-0 tab-pane fade" role="tabpanel">
-                                        <!--begin::Table-->
-                                        <div id="kt_customer_details_invoices_table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table id="kt_customer_details_invoices_table_2" class="table align-middle table-row-dashed fs-6 fw-bolder gy-5 dataTable no-footer">
-                                                    <!--begin::Thead-->
-                                                    <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class="text-start text-muted gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_2" rowspan="1" colspan="1" aria-label="Order ID: activate to sort column ascending" style="width: 0px;">Order ID</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_2" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 0px;">Amount</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th><th class="min-w-125px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_2" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th><th class="min-w-100px text-end pe-7 sorting_disabled" rowspan="1" colspan="1" aria-label="Invoice" style="width: 0px;">Invoice</th></tr>
-                                                    </thead>
-                                                    <!--end::Thead-->
-                                                    <!--begin::Tbody-->
-                                                    <tbody class="fs-6 fw-bold text-gray-600">
-
-
-
-
-
-
-
-
-
-                                                    <tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">523445943</a>
-                                                        </td>
-                                                        <td class="text-danger">$-1.30</td>
-                                                        <td>
-                                                            <span class="badge badge-light-success">Approved</span>
-                                                        </td>
-                                                        <td>May 30, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">231445943</a>
-                                                        </td>
-                                                        <td class="text-success">$204.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-success">Approved</span>
-                                                        </td>
-                                                        <td>Apr 22, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">426445943</a>
-                                                        </td>
-                                                        <td class="text-success">$31.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-info">In progress</span>
-                                                        </td>
-                                                        <td>Feb 09, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">984445943</a>
-                                                        </td>
-                                                        <td class="text-success">$52.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-danger">Rejected</span>
-                                                        </td>
-                                                        <td>Nov 01, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">324442313</a>
-                                                        </td>
-                                                        <td class="text-danger">$-0.80</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Jan 04, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr></tbody>
-                                                    <!--end::Tbody-->
-                                                </table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_customer_details_invoices_table_2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_customer_details_invoices_table_2_previous"><a href="#" aria-controls="kt_customer_details_invoices_table_2" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_customer_details_invoices_table_2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_customer_details_invoices_table_2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_customer_details_invoices_table_2_next"><a href="#" aria-controls="kt_customer_details_invoices_table_2" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
-                                        <!--end::Table-->
-                                    </div>
-                                    <!--end::Tab panel-->
-                                    <!--begin::Tab panel-->
-                                    <div id="kt_customer_details_invoices_3" class="py-0 tab-pane fade" role="tabpanel">
-                                        <!--begin::Table-->
-                                        <div id="kt_customer_details_invoices_table_3_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table id="kt_customer_details_invoices_table_3" class="table align-middle table-row-dashed fs-6 fw-bolder gy-5 dataTable no-footer">
-                                                    <!--begin::Thead-->
-                                                    <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class="text-start text-muted gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_3" rowspan="1" colspan="1" aria-label="Order ID: activate to sort column ascending" style="width: 0px;">Order ID</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_3" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 0px;">Amount</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_3" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th><th class="min-w-125px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_3" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th><th class="min-w-100px text-end pe-7 sorting_disabled" rowspan="1" colspan="1" aria-label="Invoice" style="width: 0px;">Invoice</th></tr>
-                                                    </thead>
-                                                    <!--end::Thead-->
-                                                    <!--begin::Tbody-->
-                                                    <tbody class="fs-6 fw-bold text-gray-600">
-
-
-
-
-
-
-
-
-
-                                                    <tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">426445943</a>
-                                                        </td>
-                                                        <td class="text-success">$31.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-danger">Rejected</span>
-                                                        </td>
-                                                        <td>Feb 09, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">984445943</a>
-                                                        </td>
-                                                        <td class="text-success">$52.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Nov 01, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">324442313</a>
-                                                        </td>
-                                                        <td class="text-danger">$-0.80</td>
-                                                        <td>
-                                                            <span class="badge badge-light-danger">Rejected</span>
-                                                        </td>
-                                                        <td>Jan 04, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">312445984</a>
-                                                        </td>
-                                                        <td class="text-success">$5.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-danger">Rejected</span>
-                                                        </td>
-                                                        <td>Sep 15, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">102445788</a>
-                                                        </td>
-                                                        <td class="text-success">$38.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-danger">Rejected</span>
-                                                        </td>
-                                                        <td>Nov 01, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr></tbody>
-                                                    <!--end::Tbody-->
-                                                </table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_customer_details_invoices_table_3_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_customer_details_invoices_table_3_previous"><a href="#" aria-controls="kt_customer_details_invoices_table_3" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_customer_details_invoices_table_3" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_customer_details_invoices_table_3" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_customer_details_invoices_table_3_next"><a href="#" aria-controls="kt_customer_details_invoices_table_3" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
-                                        <!--end::Table-->
-                                    </div>
-                                    <!--end::Tab panel-->
-                                    <!--begin::Tab panel-->
-                                    <div id="kt_customer_details_invoices_4" class="py-0 tab-pane fade" role="tabpanel">
-                                        <!--begin::Table-->
-                                        <div id="kt_customer_details_invoices_table_4_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table id="kt_customer_details_invoices_table_4" class="table align-middle table-row-dashed fs-6 fw-bolder gy-5 dataTable no-footer">
-                                                    <!--begin::Thead-->
-                                                    <thead class="border-bottom border-gray-200 fs-7 text-uppercase fw-bolder">
-                                                    <tr class="text-start text-muted gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_4" rowspan="1" colspan="1" aria-label="Order ID: activate to sort column ascending" style="width: 0px;">Order ID</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_4" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 0px;">Amount</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_4" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 0px;">Status</th><th class="min-w-125px sorting" tabindex="0" aria-controls="kt_customer_details_invoices_table_4" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 0px;">Date</th><th class="min-w-100px text-end pe-7 sorting_disabled" rowspan="1" colspan="1" aria-label="Invoice" style="width: 0px;">Invoice</th></tr>
-                                                    </thead>
-                                                    <!--end::Thead-->
-                                                    <!--begin::Tbody-->
-                                                    <tbody class="fs-6 fw-bold text-gray-600">
-
-
-
-
-
-
-
-
-
-                                                    <tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">102445788</a>
-                                                        </td>
-                                                        <td class="text-success">$38.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Nov 01, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">423445721</a>
-                                                        </td>
-                                                        <td class="text-danger">$-2.60</td>
-                                                        <td>
-                                                            <span class="badge badge-light-info">In progress</span>
-                                                        </td>
-                                                        <td>Oct 24, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">102445788</a>
-                                                        </td>
-                                                        <td class="text-success">$38.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Nov 01, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="even">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">423445721</a>
-                                                        </td>
-                                                        <td class="text-danger">$-2.60</td>
-                                                        <td>
-                                                            <span class="badge badge-light-warning">Pending</span>
-                                                        </td>
-                                                        <td>Oct 24, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr><tr class="odd">
-                                                        <td data-order="Invalid date">
-                                                            <a href="#" class="text-gray-600 text-hover-primary">426445943</a>
-                                                        </td>
-                                                        <td class="text-success">$31.00</td>
-                                                        <td>
-                                                            <span class="badge badge-light-success">Approved</span>
-                                                        </td>
-                                                        <td>Feb 09, 2020</td>
-                                                        <td class="text-end">
-                                                            <button class="btn btn-sm btn-light btn-active-light-primary">Download</button>
-                                                        </td>
-                                                    </tr></tbody>
-                                                    <!--end::Tbody-->
-                                                </table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_customer_details_invoices_table_4_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_customer_details_invoices_table_4_previous"><a href="#" aria-controls="kt_customer_details_invoices_table_4" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_customer_details_invoices_table_4" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_customer_details_invoices_table_4" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_customer_details_invoices_table_4_next"><a href="#" aria-controls="kt_customer_details_invoices_table_4" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
-                                        <!--end::Table-->
-                                    </div>
-                                    <!--end::Tab panel-->
-                                </div>
-                                <!--end::Tab Content-->
-                            </div>
-                            <!--end::Card body-->
-                        </div>
-                        <!--end::Card-->
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->

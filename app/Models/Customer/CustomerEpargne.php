@@ -19,11 +19,11 @@ class CustomerEpargne extends Model
 
     public function wallet()
     {
-        return $this->belongsTo(CustomerWallet::class, 'customer_wallet_id');
+        return $this->belongsTo(CustomerWallet::class, 'wallet_id');
     }
 
     public function payment()
     {
-        return $this->belongsTo(CustomerWallet::class, 'customer_wallet_payment_id');
+        return $this->belongsTo(CustomerWallet::class, 'wallet_payment_id');
     }
 }

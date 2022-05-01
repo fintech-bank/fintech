@@ -97,7 +97,7 @@ class SystemSeedCommand extends Command
             "agent" => false,
             "customer" => true,
             "identifiant" => UserHelper::generateID(),
-            "agency_id" => $agency->id
+            "agency_id" => $agency->id,
         ]);
 
         $bar = $this->output->createProgressBar(User::all()->count());
@@ -106,7 +106,8 @@ class SystemSeedCommand extends Command
         foreach ($users as $user) {
             $customer = Customer::factory()->create([
                 'user_id' => $user->id,
-                "package_id" => Package::all()->random()->id
+                "package_id" => Package::all()->random()->id,
+                "agent_id" => 2
             ]);
 
             CustomerInfo::factory()->create([

@@ -75,5 +75,20 @@ class Customer extends Model
         return $this->hasMany(DocumentTransmiss::class);
     }
 
+    public function agent()
+    {
+        return $this->hasOne(User::class, 'agent_id');
+    }
+
+    public function prets()
+    {
+        return $this->hasMany(CustomerPret::class);
+    }
+
+    public function epargnes()
+    {
+        return $this->hasMany(CustomerEpargne::class);
+    }
+
 
 }
