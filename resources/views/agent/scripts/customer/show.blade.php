@@ -3,6 +3,10 @@
         btnVerify: document.querySelector('#btnVerify')
     }
 
+    let modals = {
+        modalUpdateStatusAccount: document.querySelector('#updateStatus')
+    }
+
     if(buttons.btnVerify) {
         buttons.btnVerify.addEventListener('click', e => {
             e.preventDefault()
@@ -34,4 +38,28 @@
     }
 
     verifSoldesAllWallets()
+
+    modals.modalUpdateStatusAccount.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("formUpdateStatus")
+        let uri = form.attr('action')
+        let btn = form.find('.btn-bank')
+        let data = form.serializeArray()
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: uri,
+            method: 'put',
+            data: data,
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le compte du client est maintenant <strong>${data.status}</strong>`)
+            },
+            error: () => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.error("Erreur lors de la mise à jour du status du compte client.", "Erreur Système")
+            }
+        })
+    })
 </script>

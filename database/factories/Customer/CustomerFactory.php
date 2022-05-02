@@ -17,9 +17,9 @@ class CustomerFactory extends Factory
      */
     public function definition()
     {
-        $open = ["open", "completed", "accepted", "declined", "terminated"];
+        $open = ["open", "completed", "accepted", "declined", "terminated", "suspended", "closed"];
         return [
-            "status_open_account" => $open[rand(0,4)],
+            "status_open_account" => $open[rand(0,6)],
             "auth_code" => base64_encode(1234),
             "agency_id" => Agency::all()->random()->id
         ];

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->enum("status_open_account", ["open", "completed", "accepted", "declined", "terminated"])->default("open");
+            $table->enum("status_open_account", ["open", "completed", "accepted", "declined", "terminated", "suspended", "closed"])->default("open");
             $table->integer("cotation")->default(5)->comment("Cotation bancaire du client");
             $table->string('auth_code');
             $table->unsignedBigInteger('agent_id')->unsigned()->nullable();

@@ -54,6 +54,8 @@ class CustomerHelper
                 case 'completed': return 'Dossier Complet'; break;
                 case 'accepted': return 'Dossier Accepter'; break;
                 case 'declined': return 'Dossier Refuser'; break;
+                case 'suspended': return 'Suspendue'; break;
+                case 'closed': return 'Dossier Clotûrer'; break;
                 default: return 'Compte Actif'; break;
             }
         } else {
@@ -62,6 +64,8 @@ class CustomerHelper
                 case 'completed': return '<span class="badge badge-warning">Dossier Complet</span>'; break;
                 case 'accepted': return '<span class="badge badge-success">Dossier Accepter</span>'; break;
                 case 'declined': return '<span class="badge badge-danger">Dossier Refuser</span>'; break;
+                case 'suspended': return '<span class="badge badge-warning">Dossier Suspendue</span>'; break;
+                case 'closed': return '<span class="badge badge-danger">Dossier Clotûrer</span>'; break;
                 default: return '<span class="badge badge-secondary">Compte Actif</span>'; break;
             }
         }

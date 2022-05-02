@@ -121,6 +121,18 @@
                                         <span class="form-check-label text-gray-600">Terminer</span>
                                     </label>
                                     <!--end::Option-->
+                                    <!--begin::Option-->
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
+                                        <input class="form-check-input" type="radio" name="status_open_account" value="suspended" />
+                                        <span class="form-check-label text-gray-600">Suspendue</span>
+                                    </label>
+                                    <!--end::Option-->
+                                    <!--begin::Option-->
+                                    <label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
+                                        <input class="form-check-input" type="radio" name="status_open_account" value="closed" />
+                                        <span class="form-check-label text-gray-600">Clotûrer</span>
+                                    </label>
+                                    <!--end::Option-->
                                 </div>
                                 <!--end::Options-->
                             </div>
