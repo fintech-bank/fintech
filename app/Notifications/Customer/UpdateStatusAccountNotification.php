@@ -14,18 +14,30 @@ class UpdateStatusAccountNotification extends Notification
 
     public $customer;
     public $status;
+    /**
+     * @var null
+     */
+    public $reason;
+    /**
+     * @var null
+     */
+    public $nameDocument;
 
     /**
      * Create a new notification instance.
      *
      * @param $customer
      * @param $status
+     * @param null $reason
+     * @param null $nameDocument
      */
-    public function __construct($customer, $status)
+    public function __construct($customer, $status, $reason = null, $nameDocument = null)
     {
         //
         $this->customer = $customer;
         $this->status = $status;
+        $this->reason = $reason;
+        $this->nameDocument = $nameDocument;
     }
 
     /**
@@ -47,12 +59,25 @@ class UpdateStatusAccountNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject("Votre compte en ligne")
-                    ->view('emails.customer.update_status_account', [
-                        "customer" => $this->customer,
-                        "status" => CustomerHelper::getStatusOpenAccount($this->status)
-                    ]);
+        if($this->status == 'closed') {
+            return (new MailMessage)
+                ->subject("Votre compte en ligne")
+                ->view('emails.customer.update_status_account', [
+                    "customer" => $this->customer,
+                    "statusLib" => CustomerHelper::getStatusOpenAccount($this->status),
+                    "status" => $this->status,
+                    "reason" => $this->reason
+                ])->attach('/storage/gdd/'.$this->customer->id.'/courriers/');
+        } else {
+            return (new MailMessage)
+                ->subject("Votre compte en ligne")
+                ->view('emails.customer.update_status_account', [
+                    "customer" => $this->customer,
+                    "statusLib" => CustomerHelper::getStatusOpenAccount($this->status),
+                    "status" => $this->status,
+                    "reason" => $this->reason
+                ]);
+        }
     }
 
     /**

@@ -259,6 +259,11 @@
                                 <a href="#updateStatus" data-bs-toggle="modal" class="menu-link px-5">Changer l'état du compte client</a>
                             </div>
                             <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5">
+                                <a href="#updateAccount" data-bs-toggle="modal" class="menu-link px-5">Changer le type de compte</a>
+                            </div>
+                            <!--end::Menu item-->
                         </div>
                         <!--end::Menu-->
                         <!--end::Menu-->
@@ -1443,7 +1448,7 @@
                     <!--end::Close-->
                 </div>
 
-                <form id="formUpdateStatus" action="/api/customer/{{ $customer->id }}/updateStatus" method="post">
+                <form id="formUpdateStatus" action="{{ route('agent.customer.updateStatus', $customer->id) }}" method="post">
                     @csrf
                     @method("put")
                     <div class="modal-body">
@@ -1457,6 +1462,40 @@
                                 <option value="terminated" @if($customer->status_open_account == 'terminated') selected @endif>Compte actif</option>
                                 <option value="suspended" @if($customer->status_open_account == 'suspended') selected @endif>Compte suspendue</option>
                                 <option value="closed" @if($customer->status_open_account == 'closed') selected @endif>Compte clotûrer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="updateAccount">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Changement de type de compte</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formUpdateAccount" action="{{ route('agent.customer.updateTypeAccount', $customer->id) }}" method="post">
+                    @csrf
+                    @method("put")
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="package_id" class="form-label">Type de compte</label>
+                            <select id="package_id" name="package_id" class="form-control" data-control="select2">
+                                @foreach(\App\Models\Core\Package::all() as $package)
+                                <option value="{{ $package->id }}" @if($customer->package_id == $package->id) selected @endif>{{ $package->name }} ({{ eur($package->price) }} / par mois)</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

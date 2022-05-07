@@ -56,6 +56,7 @@ class DocumentFile
         }
     }
 
+
     /**
      * @param $view
      * @param $customer

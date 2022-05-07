@@ -4,7 +4,8 @@
     }
 
     let modals = {
-        modalUpdateStatusAccount: document.querySelector('#updateStatus')
+        modalUpdateStatusAccount: document.querySelector('#updateStatus'),
+        modalUpdateTypeAccount: document.querySelector('#updateAccount')
     }
 
     if(buttons.btnVerify) {
@@ -41,7 +42,7 @@
 
     modals.modalUpdateStatusAccount.querySelector('form').addEventListener('submit', e => {
         e.preventDefault()
-        let form = $("formUpdateStatus")
+        let form = $("#formUpdateStatus")
         let uri = form.attr('action')
         let btn = form.find('.btn-bank')
         let data = form.serializeArray()
@@ -55,6 +56,29 @@
             success: data => {
                 btn.removeAttr('data-kt-indicator')
                 toastr.success(`Le compte du client est maintenant <strong>${data.status}</strong>`)
+            },
+            error: () => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.error("Erreur lors de la mise à jour du status du compte client.", "Erreur Système")
+            }
+        })
+    })
+    modals.modalUpdateTypeAccount.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("#formUpdateAccount")
+        let uri = form.attr('action')
+        let btn = form.find('.btn-bank')
+        let data = form.serializeArray()
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: uri,
+            method: 'put',
+            data: data,
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le type de compte du client à été mis à jours`)
             },
             error: () => {
                 btn.removeAttr('data-kt-indicator')

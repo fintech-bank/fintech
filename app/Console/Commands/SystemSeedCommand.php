@@ -32,7 +32,7 @@ class SystemSeedCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'system:seed {--test}';
+    protected $signature = 'system:seed {--base} {--test}';
 
     /**
      * The console command description.
@@ -48,6 +48,10 @@ class SystemSeedCommand extends Command
      */
     public function handle()
     {
+        if($this->option('base')) {
+            $this->call('migrate:fresh');
+        }
+
         $this->info("Seeding: Liste des agences");
         $this->call("db:seed", ["class" => "AgencySeeder"]);
 

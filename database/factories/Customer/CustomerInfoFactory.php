@@ -40,7 +40,7 @@ class CustomerInfoFactory extends Factory
             "address" => $this->faker->streetAddress,
             "addressbis" => $this->faker->boolean == true ? $this->faker->streetAddress : null,
             "postal" => $postal,
-            "city" => "City",
+            "city" => $this->faker->city,
             "country" => "FR",
             "phone" => $this->faker->e164PhoneNumber(),
             "mobile" => $this->faker->e164PhoneNumber(),
