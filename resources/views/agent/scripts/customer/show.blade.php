@@ -5,7 +5,9 @@
 
     let modals = {
         modalUpdateStatusAccount: document.querySelector('#updateStatus'),
-        modalUpdateTypeAccount: document.querySelector('#updateAccount')
+        modalUpdateTypeAccount: document.querySelector('#updateAccount'),
+        modalWriteSms: document.querySelector('#write-sms'),
+        modalWriteMail: document.querySelector('#write-mail'),
     }
 
     if(buttons.btnVerify) {
@@ -83,6 +85,52 @@
             error: () => {
                 btn.removeAttr('data-kt-indicator')
                 toastr.error("Erreur lors de la mise à jour du status du compte client.", "Erreur Système")
+            }
+        })
+    })
+    modals.modalWriteSms.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("#formWriteSms")
+        let uri = form.attr('action')
+        let btn = form.find('.btn-bank')
+        let data = form.serializeArray()
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: uri,
+            method: 'post',
+            data: data,
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le Sms à bien été transmis`)
+            },
+            error: () => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.error("Erreur lors de la transmission du sms au client", "Erreur Système")
+            }
+        })
+    })
+    modals.modalWriteMail.querySelector('form').addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("#formWriteMail")
+        let uri = form.attr('action')
+        let btn = form.find('.btn-bank')
+        let data = form.serializeArray()
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: uri,
+            method: 'post',
+            data: data,
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le Mail à bien été transmis`)
+            },
+            error: () => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.error("Erreur lors de la transmission du mail au client", "Erreur Système")
             }
         })
     })

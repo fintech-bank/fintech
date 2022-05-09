@@ -34,6 +34,8 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         Route::get('{customer}', [\App\Http\Controllers\Agent\CustomerController::class, 'show'])->name('agent.customer.show');
         Route::put('{customer}/updateStatus', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'updateStatus'])->name('agent.customer.updateStatus');
         Route::put('{customer}/updateTypeAccount', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'updateTypeAccount'])->name('agent.customer.updateTypeAccount');
+        Route::post('{customer}/writeSms', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'writeSms'])->name('agent.customer.writeSms');
+        Route::post('{customer}/writeMail', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'writeMail'])->name('agent.customer.writeMail');
 
         Route::prefix('{customer}/verify')->group(function () {
             Route::get('/', [\App\Http\Controllers\Agent\VerifyController::class, 'go'])->name('agent.customer.verify.start');

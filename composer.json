@@ -39,6 +39,7 @@
         "rplansky/credit-card": "dev-master",
         "spatie/laravel-slack-alerts": "^1.1",
         "stripe/stripe-php": "^7.125",
+        "twilio/sdk": "^6.37",
         "viacreative/sudo-su": "^1.1"
     },
     "require-dev": {
