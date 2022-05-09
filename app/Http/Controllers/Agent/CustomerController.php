@@ -17,6 +17,9 @@ use App\Models\Customer\CustomerSituationCharge;
 use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
+use App\Notifications\Agent\Customer\ReinitAuthCustomer;
+use App\Notifications\Agent\Customer\ReinitCodeCustomer;
+use App\Notifications\Agent\Customer\ReinitPasswordCustomer;
 use App\Notifications\Core\SendPasswordSms;
 use Authy\AuthyApi;
 use IbanGenerator\Generator;
@@ -49,12 +52,80 @@ class CustomerController extends Controller
         return view('agent.customer.show', compact('customer'));
     }
 
+    public function update(Request $request, $customer_id)
+    {
+        //dd($request->all());
+        $customer = Customer::find($customer_id);
+        switch ($request->get('control')) {
+            case 'address':
+                CustomerInfo::where('customer_id', $customer_id)->first()->update([
+                    'address' => $request->get('address') ? $request->get('address') : $customer->info->address,
+                    'addressbis' => $request->get('addressbis') ? $request->get('addressbis') : $customer->info->addressbis,
+                    'postal' => $request->get('postal') ? $request->get('postal') : $customer->info->postal,
+                    'city' => $request->get('city') != null ? $request->get('city') : $customer->info->city,
+                    'country' => $request->get('country') != null ? $request->get('country') : $customer->info->country,
+                ]);
+                break;
+
+            case 'coordonnee':
+
+                $customer->user->update([
+                    "email" => $request->get('email') && $customer->user->email !== $request->get('email') ? $request->get('email') : $customer->user->email,
+                ]);
+
+                $customer->info->update([
+                    "phone" => $request->has('phone') && $customer->info->phone !== $request->get('phone') ? $request->get('phone') : $customer->info->phone,
+                    "mobile" => $request->has('mobile') && $customer->info->mobile !== $request->get('mobile') ? $request->get('mobile') : $customer->info->mobile,
+                ]);
+                break;
+
+            case 'situation':
+                $customer->situation->update([
+                    "legal_capacity" => $request->has('legal_capacity') && $customer->situation->legal_capacity !== $request->get('legal_capacity') ? $request->get('legal_capacity') : $customer->situation->legal_capacity,
+                    "family_situation" => $request->has('family_situation') && $customer->situation->family_situation !== $request->get('family_situation') ? $request->get('family_situation') : $customer->situation->family_situation,
+                    "logement" => $request->has('logement') && $customer->situation->logement !== $request->get('logement') ? $request->get('logement') : $customer->situation->logement,
+                    "logement_at" => $request->has('logement_at') && $customer->situation->logement_at !== $request->get('logement_at') ? $request->get('logement_at') : $customer->situation->logement_at,
+                    "child" => $request->has('child') && $customer->situation->child !== $request->get('child') ? $request->get('child') : $customer->situation->child,
+                    "person_charged" => $request->has('person_charged') && $customer->situation->person_charged !== $request->get('person_charged') ? $request->get('person_charged') : $customer->situation->person_charged,
+                    "pro_category" => $request->has('pro_category') && $customer->situation->pro_category !== $request->get('pro_category') ? $request->get('pro_category') : $customer->situation->pro_category,
+                    "pro_profession" => $request->has('pro_profession') && $customer->situation->pro_profession !== $request->get('pro_profession') ? $request->get('pro_profession') : $customer->situation->pro_profession,
+                ]);
+
+                $customer->income->update([
+                    "pro_incoming" => $request->has('pro_incoming') && $customer->income->pro_incoming !== $request->get('pro_incoming') ? $request->get('pro_incoming') : $customer->income->pro_incoming,
+                    "patrimoine" => $request->has('patrimoine') && $customer->income->patrimoine !== $request->get('patrimoine') ? $request->get('patrimoine') : $customer->income->patrimoine,
+                ]);
+
+                $customer->charge->update([
+                    "rent" => $request->has('rent') && $customer->charge->rent !== $request->get('rent') ? $request->get('rent') : $customer->charge->rent,
+                    "divers" => $request->has('divers') && $customer->charge->divers !== $request->get('divers') ? $request->get('divers') : $customer->charge->divers,
+                    "nb_credit" => $request->has('nb_credit') && $customer->charge->nb_credit !== $request->get('nb_credit') ? $request->get('nb_credit') : $customer->charge->nb_credit,
+                    "credit" => $request->has('credit') && $customer->charge->credit !== $request->get('credit') ? $request->get('credit') : $customer->charge->credit,
+                ]);
+                break;
+
+            case 'communication':
+                $customer->setting->update([
+                    "notif_sms" => $request->has('notif_sms') ? 1 : 0,
+                    "notif_app" => $request->has('notif_app') ? 1 : 0,
+                    "notif_mail" => $request->has('notif_mail') ? 1 : 0,
+                ]);
+                break;
+        }
+
+        // Notification Client
+
+        // Notification Agent
+        LogHelper::notify('notice', "Mise à jours des informations du client: ".$customer->user->name);
+        return redirect()->back()->with('success', "Les informations du client ont été mise à jours.");
+    }
+
     private function createUser($request)
     {
         $password = \Str::random(10);
 
         $user = User::create([
-            "name" => $request->get('firstname')." ".$request->get('lastname'),
+            "name" => $request->get('firstname') . " " . $request->get('lastname'),
             "email" => $request->get('email'),
             "password" => \Hash::make($password),
             "identifiant" => UserHelper::generateID(),
@@ -68,7 +139,7 @@ class CustomerController extends Controller
 
     private function createCustomer($request, $user, $password)
     {
-        $code_auth = rand(1000,9999);
+        $code_auth = rand(1000, 9999);
         $customer = Customer::create([
             'status_open_account' => "terminated",
             'auth_code' => $code_auth,
@@ -100,8 +171,8 @@ class CustomerController extends Controller
         ]);
 
         $authy = new AuthyApi(config('twilio-notification-channel.authy_secret'));
-        $authyUser = $authy->registerUser($user->email,$request->get('mobile'), '+33');
-        if($authyUser->ok()) {
+        $authyUser = $authy->registerUser($user->email, $request->get('mobile'), '+33');
+        if ($authyUser->ok()) {
             $info->authy_id = $authyUser->id();
         } else {
             LogHelper::notify('critical', $authyUser->errors());
@@ -153,32 +224,32 @@ class CustomerController extends Controller
          * - Condition Générale
          */
         $document = new DocumentFile();
-        $document->createDocument('Convention relation particulier - CUS'.$customer->user->identifiant,
-        $customer,
-        3,
-        "CNT".\Str::upper(\Str::random(6)),
-        true,
-        false,
-        false,
-        null,
-        true,
-        'agence.convention_part');
-
-        $document->createDocument('Releve Identité Bancaire - CUS'.$customer->user->identifiant,
-        $customer,
-        5,
-        null,
-        false,
-        false,
-        false,
-        null,
-        true,
-        'agence.rib');
-
-        $document->createDocument('Convention Carte Bancaire VISA Physique - CUS'.$customer->user->identifiant,
+        $document->createDocument('Convention relation particulier - CUS' . $customer->user->identifiant,
             $customer,
             3,
-            "CNT".\Str::upper(\Str::random(6)),
+            "CNT" . \Str::upper(\Str::random(6)),
+            true,
+            false,
+            false,
+            null,
+            true,
+            'agence.convention_part');
+
+        $document->createDocument('Releve Identité Bancaire - CUS' . $customer->user->identifiant,
+            $customer,
+            5,
+            null,
+            false,
+            false,
+            false,
+            null,
+            true,
+            'agence.rib');
+
+        $document->createDocument('Convention Carte Bancaire VISA Physique - CUS' . $customer->user->identifiant,
+            $customer,
+            3,
+            "CNT" . \Str::upper(\Str::random(6)),
             true,
             false,
             false,
@@ -192,10 +263,10 @@ class CustomerController extends Controller
 
     private function createWallet($customer)
     {
-        $number_account = rand(10000000000,99999999999);
+        $number_account = rand(10000000000, 99999999999);
         $ibanC = new Generator($customer->user->agency->code_banque, $number_account, 'FR');
         $iban = $ibanC->generate();
-        $rib_key = \Str::substr($iban, 18,2);
+        $rib_key = \Str::substr($iban, 18, 2);
         return CustomerWallet::create([
             "uuid" => \Str::uuid(),
             "number_account" => $number_account,
@@ -210,15 +281,15 @@ class CustomerController extends Controller
     private function createCreditCard($request, $wallet)
     {
         $creditcard = new \Plansky\CreditCard\Generator();
-        $card_number =$creditcard->single();
-        $card_code = rand(1000,9999);
+        $card_number = $creditcard->single();
+        $card_code = rand(1000, 9999);
 
         return CustomerCreditCard::create([
-            "exp_month" => \Str::length(now()->month) <= 1 ? "0".now()->month : now()->month,
+            "exp_month" => \Str::length(now()->month) <= 1 ? "0" . now()->month : now()->month,
             "number" => $card_number,
             "support" => $request->get('card_support'),
             "debit" => $request->get('card_debit'),
-            "cvc" => rand(100,999),
+            "cvc" => rand(100, 999),
             "code" => base64_encode($card_code),
             "limit_payment" => \App\Helper\CustomerCreditCard::calcLimitPayment(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
             "limit_retrait" => \App\Helper\CustomerCreditCard::calcLimitRetrait(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
@@ -227,4 +298,5 @@ class CustomerController extends Controller
 
         // Envoie du code de la carte bleu par sms
     }
+
 }

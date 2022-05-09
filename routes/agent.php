@@ -32,8 +32,12 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         Route::get('create', [\App\Http\Controllers\Agent\CustomerController::class, 'create'])->name('agent.customer.create');
         Route::post('create', [\App\Http\Controllers\Agent\CustomerController::class, 'store'])->name('agent.customer.store');
         Route::get('{customer}', [\App\Http\Controllers\Agent\CustomerController::class, 'show'])->name('agent.customer.show');
+        Route::put('{customer}', [\App\Http\Controllers\Agent\CustomerController::class, 'update'])->name('agent.customer.update');
         Route::put('{customer}/updateStatus', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'updateStatus'])->name('agent.customer.updateStatus');
         Route::put('{customer}/updateTypeAccount', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'updateTypeAccount'])->name('agent.customer.updateTypeAccount');
+        Route::put('{customer}/reinitPass', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'reinitPass'])->name('agent.customer.reinitPass');
+        Route::put('{customer}/reinitCode', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'reinitCode'])->name('agent.customer.reinitCode');
+        Route::put('{customer}/reinitAuth', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'reinitAuth'])->name('agent.customer.reinitAuth');
         Route::post('{customer}/writeSms', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'writeSms'])->name('agent.customer.writeSms');
         Route::post('{customer}/writeMail', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'writeMail'])->name('agent.customer.writeMail');
 

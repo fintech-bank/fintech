@@ -1,6 +1,9 @@
 <script type="text/javascript">
     let buttons = {
-        btnVerify: document.querySelector('#btnVerify')
+        btnVerify: document.querySelector('#btnVerify'),
+        btnPass: document.querySelector('#btnPass'),
+        btnCode: document.querySelector('#btnCode'),
+        btnAuth: document.querySelector('#btnAuth'),
     }
 
     let modals = {
@@ -40,7 +43,42 @@
         })
     }
 
+    let citiesFromPostal = (select) => {
+        let contentCities = document.querySelector('#divCity')
+        let block = new KTBlockUI(contentCities, {
+            message: '<div class="blockui-message"><span class="spinner-border text-primary"></span> Chargement...</div>',
+        })
+        block.block();
+
+        $.ajax({
+            url: '/api/geo/cities/'+select.value,
+            success: data => {
+                block.release()
+                contentCities.innerHTML = data
+                $("#city").select2()
+            }
+        })
+    }
+
+    let countryOptions = (item) => {
+        if ( !item.id ) {
+            return item.text;
+        }
+
+        let span = document.createElement('span');
+        let imgUrl = item.element.getAttribute('data-kt-select2-country');
+        let template = '';
+
+        template += '<img src="' + imgUrl + '" class="rounded-circle w-20px h-20px me-2" alt="image" />';
+        template += item.text;
+
+        span.innerHTML = template;
+
+        return $(span);
+    }
+
     verifSoldesAllWallets()
+    citiesFromPostal(document.querySelector("#postal"))
 
     modals.modalUpdateStatusAccount.querySelector('form').addEventListener('submit', e => {
         e.preventDefault()
@@ -134,4 +172,72 @@
             }
         })
     })
+    document.querySelectorAll('[name="postal"]').forEach(input => {
+        input.addEventListener('keyup', e => {
+            console.log(e.target.value.length)
+            if(e.target.value.length === 5) {
+                citiesFromPostal(e.target)
+            }
+        })
+    })
+    buttons.btnPass.addEventListener('click', e => {
+        e.preventDefault()
+
+        e.target.setAttribute('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: `/agence/customers/${buttons.btnCode.dataset.customer}/reinitPass`,
+            method: 'put',
+            success: data => {
+                e.target.removeAttribute('data-kt-indicator')
+                toastr.success("Le mot de passe du client à été réinitialiser", "Réinitialisation du mot de passe")
+            },
+            error: err => {
+                e.target.removeAttribute('data-kt-indicator')
+                toastr.error("Erreur lors de la réinitialisation du mot de passe", "Erreur système")
+            }
+        })
+    })
+    buttons.btnCode.addEventListener('click', e => {
+        e.preventDefault()
+
+        e.target.setAttribute('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: `/agence/customers/${buttons.btnCode.dataset.customer}/reinitCode`,
+            method: 'put',
+            success: data => {
+                e.target.removeAttribute('data-kt-indicator')
+                toastr.success("Le Code SECURPASS du client à été réinitialiser", "Réinitialisation du code SECURPASS")
+            },
+            error: err => {
+                e.target.removeAttribute('data-kt-indicator')
+                toastr.error("Erreur lors de la réinitialisation du code", "Erreur système")
+            }
+        })
+    })
+    buttons.btnAuth.addEventListener('click', e => {
+        e.preventDefault()
+
+        e.target.setAttribute('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: `/agence/customers/${buttons.btnCode.dataset.customer}/reinitAuth`,
+            method: 'put',
+            success: data => {
+                e.target.removeAttribute('data-kt-indicator')
+                toastr.success("L'authentification double facteur du client à été réinitialiser", "Réinitialisation de l'authentificateur")
+            },
+            error: err => {
+                e.target.removeAttribute('data-kt-indicator')
+                toastr.error("Erreur lors de la réinitialisation du code", "Erreur système")
+            }
+        })
+    })
+
+    $("#country").select2({
+        templateSelection: countryOptions,
+        templateResult: countryOptions
+    })
+
 </script>

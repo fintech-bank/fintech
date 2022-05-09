@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Mail\Agent\Customer\WriteMail;
 use App\Models\Core\Package;
 use App\Models\Customer\Customer;
+use App\Notifications\Agent\Customer\ReinitAuthCustomer;
+use App\Notifications\Agent\Customer\ReinitCodeCustomer;
+use App\Notifications\Agent\Customer\ReinitPasswordCustomer;
 use App\Notifications\Agent\Customer\UpdateStatusAccountNotification;
 use App\Notifications\Agent\Customer\UpdateTypeAccountNotification;
 use App\Services\Twillo;
@@ -131,5 +134,49 @@ class CustomerController extends Controller
             LogHelper::notify('error', $exception->getMessage());
             return response()->json($exception->getMessage());
         }
+    }
+
+    public function reinitPass(Request $request, $customer_id)
+    {
+        $password = \Str::random(8);
+        $customer = Customer::find($customer_id);
+
+        $customer->user->update([
+            'password' => $password
+        ]);
+
+        // Envoie du pass par sms
+        $customer->info->notify(new ReinitPasswordCustomer($password));
+
+        return response()->json();
+    }
+
+    public function reinitCode(Request $request, $customer_id)
+    {
+        $code = random_numeric(4);
+        $customer = Customer::find($customer_id);
+
+        $customer->update([
+            'auth_code' => base64_encode($code)
+        ]);
+
+        // Envoie du code par sms
+        $customer->info->notify(new ReinitCodeCustomer($code));
+        return response()->json();
+    }
+
+    public function reinitAuth(Request $request, $customer_id)
+    {
+        $customer = Customer::find($customer_id);
+
+        $customer->user->update([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'two_factor_confirmed_at' => null,
+        ]);
+
+        // Notification client
+        $customer->user->notify(new ReinitAuthCustomer($customer));
+        return response()->json();
     }
 }
