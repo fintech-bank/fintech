@@ -258,6 +258,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+                           href="#cards">Carte Bancaire</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
                            href="#files">Fichiers</a>
                     </li>
                     <li class="nav-item">
@@ -920,7 +924,7 @@
                                                 </div>
                                                 <div class="mb-10">
                                                     <!--begin::Label-->
-                                                    <label class="form-label fs-5 fw-bold mb-3">Type de client:</label>
+                                                    <label class="form-label fs-5 fw-bold mb-3">Status du compte:</label>
                                                     <!--end::Label-->
                                                     <!--begin::Options-->
                                                     <div class="d-flex flex-column flex-wrap fw-bold" data-kt-customer-table-filter="status_wallet">
@@ -1036,6 +1040,11 @@
                             </div>
                             <!--end::Card body-->
                         </div>
+                    </div>
+                    <!--end:::Tab pane-->
+                    <!--begin:::Tab pane-->
+                    <div class="tab-pane fade" id="cards" role="tabpanel">
+
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->

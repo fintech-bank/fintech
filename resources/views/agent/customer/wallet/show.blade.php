@@ -241,7 +241,7 @@
 												</svg>
 											</span>
                                         <!--end::Svg Icon-->
-                                        <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Search Order" />
+                                        <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Rechercher une transaction" />
                                     </div>
                                     <!--end::Search-->
                                 </div>
@@ -250,8 +250,8 @@
                                 <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                                     <!--begin::Flatpickr-->
                                     <div class="input-group w-250px">
-                                        <input class="form-control form-control-solid rounded rounded-end-0" placeholder="Pick date range" id="kt_ecommerce_sales_flatpickr" />
-                                        <button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
+                                        <input class="form-control form-control-solid rounded rounded-end-0" placeholder="Date des mouvement" id="date_transaction" />
+                                        <button class="btn btn-icon btn-light" id="date_transaction_clear">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
                                             <span class="svg-icon svg-icon-2">
 													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -265,24 +265,22 @@
                                     <!--end::Flatpickr-->
                                     <div class="w-100 mw-150px">
                                         <!--begin::Select2-->
-                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Status" data-kt-ecommerce-order-filter="status">
+                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Type de mouvement" data-kt-ecommerce-order-filter="type">
                                             <option></option>
                                             <option value="all">All</option>
-                                            <option value="Cancelled">Cancelled</option>
-                                            <option value="Completed">Completed</option>
-                                            <option value="Denied">Denied</option>
-                                            <option value="Expired">Expired</option>
-                                            <option value="Failed">Failed</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Processing">Processing</option>
-                                            <option value="Refunded">Refunded</option>
-                                            <option value="Delivered">Delivered</option>
-                                            <option value="Delivering">Delivering</option>
+                                            <option value="depot">Dépot</option>
+                                            <option value="retrait">Retrait</option>
+                                            <option value="payment">Paiement CB</option>
+                                            <option value="virement">Virement Bancaire</option>
+                                            <option value="sepa">Prélèvement Bancaire</option>
+                                            <option value="frais">Frais Bancaire</option>
+                                            <option value="souscription">Souscription</option>
+                                            <option value="autre">Autre</option>
                                         </select>
                                         <!--end::Select2-->
                                     </div>
                                     <!--begin::Add product-->
-                                    <a href="../../demo2/dist/apps/ecommerce/catalog/add-product.html" class="btn btn-primary">Add Order</a>
+                                    <a href="#add_mouvement" class="btn btn-primary" data-bs-toggle="modal">Nouveau Mouvement</a>
                                     <!--end::Add product-->
                                 </div>
                                 <!--end::Card toolbar-->
@@ -291,7 +289,7 @@
                             <!--begin::Card body-->
                             <div class="card-body pt-0">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_sales_table">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_transactions">
                                     <!--begin::Table head-->
                                     <thead>
                                     <!--begin::Table row-->
@@ -310,7 +308,7 @@
                                     <!--begin::Table row-->
                                     @foreach($wallet->transactions as $transaction)
                                     <tr>
-                                        <td>
+                                        <td data-order="{{ $transaction->type }}">
                                             {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
                                         </td>
                                         <td class="text-start" data-order="{{ $transaction->created_at->format('Y-m-d') }}">
@@ -324,7 +322,18 @@
                                                 <span class="text-danger fw-bolder">{{ eur($transaction->amount) }}</span>
                                             @endif
                                         </td>
-                                        <td></td>
+                                        <td class="text-end">
+                                            @if($transaction->confirmed == false)
+                                                <button class="btn btn-icon btn-sm btn-circle btn-bank btnConfirm" data-bs-toggle="tooltip" title="Confirmé l'écriture" data-transaction="{{ $transaction->id }}">
+                                                    <span class="indicator-label" data-transaction="{{ $transaction->id }}">
+                                                        <i class="fas fa-check" data-transaction="{{ $transaction->id }}"></i>
+                                                    </span>
+                                                    <span class="indicator-progress">
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                    </span>
+                                                </button>
+                                            @endif
+                                        </td>
                                     </tr>
                                     <!--end::Table row-->
                                     @endforeach

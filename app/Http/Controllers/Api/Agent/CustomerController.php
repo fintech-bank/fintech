@@ -26,7 +26,7 @@ class CustomerController extends Controller
         $wallets = [];
 
         foreach ($customer->wallets as $wallet) {
-            if ($wallet->balance_actual <= 0 && $wallet->decouvert == 0) {
+            if ($wallet->balance_actual < 0 && $wallet->decouvert == 0) {
                 $wallets[] = [
                     "compte" => $wallet->number_account,
                     "status" => "outdated"

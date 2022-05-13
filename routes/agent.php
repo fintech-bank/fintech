@@ -49,6 +49,10 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
             Route::post('/', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'store'])->name('agent.customer.wallet.store');
             Route::post('decouvert', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'decouvert'])->name('agent.customer.wallet.decouvert');
             Route::get('{wallet_id}', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'show'])->name('agent.customer.wallet.show');
+
+            Route::prefix('{wallet_id}/transactions')->group(function () {
+                Route::put('{id}/confirm', [\App\Http\Controllers\Agent\CustomerTransactionController::class, 'confirm'])->name('customer.wallet.transaction.confirm');
+            });
         });
     });
 });

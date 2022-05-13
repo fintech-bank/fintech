@@ -16,7 +16,8 @@
     }
 
     let elements = {
-        outstanding: document.querySelector('#outstanding')
+        outstanding: document.querySelector('#outstanding'),
+        tableWallet: $("#liste_wallet")
     }
 
     if (buttons.btnVerify) {
@@ -342,5 +343,39 @@
             }
         })
     })
+
+    let tableWallet = elements.tableWallet.DataTable({
+        info: !1,
+        order: []
+    })
+
+    document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function (e) {
+        tableWallet.search(e.target.value).draw()
+    }))
+
+    let type_wallet = document.querySelectorAll('[data-kt-customer-table-filter="type_wallet"] [name="type_wallet"]')
+    let status_wallet = document.querySelectorAll('[data-kt-customer-table-filter="status_wallet"] [name="status_wallet"]')
+
+    document.querySelector('[data-kt-customer-table-filter="filter"]').addEventListener('click', () => {
+        let a = "";
+        let h = "";
+        type_wallet.forEach((c => {
+            c.checked && (a = c.value)
+            "all" === a && (a = "")
+        }));
+
+        status_wallet.forEach((n => {
+            n.checked && (h = n.value)
+            "all" === a && (a = "")
+        }));
+
+        const r = a + " "+ h;
+        tableWallet.search(r).draw()
+    })
+
+    document.querySelector('[data-kt-customer-table-filter="reset"]').addEventListener("click", (function () {
+        type_wallet[0].checked = !0, status_wallet[0].checked = !0, tableWallet.search("").draw()
+    }))
+
 
 </script>
