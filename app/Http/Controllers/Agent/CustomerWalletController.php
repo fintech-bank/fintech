@@ -52,6 +52,17 @@ class CustomerWalletController extends Controller
             auth()->user()->notify(new CreateWalletNotification($customer, $wallet, $doc_wallet));
             $customer->user->notify(new CreateWalletNotificationAlias($customer, $wallet, $doc_wallet));
 
+            if($request->has('decouvert')) {
+                $customer->documents()->create([
+                    'name' => "Contrat Découvert",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => false,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+            }
+
             $creditcard = new \Plansky\CreditCard\Generator();
             $card_number = $creditcard->single();
             $card_code = rand(1000, 9999);
