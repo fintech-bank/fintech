@@ -52,4 +52,13 @@ class CustomerCreditCard
     {
         return $contact == 1 ? "OUI" : "NON";
     }
+
+    public static function getCreditCard($number, $obscure = true)
+    {
+        if ($obscure == true) {
+            return "XXXX XXXX XXXX " . \Str::substr($number, 12, 16);
+        } else {
+            return $number;
+        }
+    }
 }
