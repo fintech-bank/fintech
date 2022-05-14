@@ -33,3 +33,7 @@ Route::get('/geo/cities/{postal}', [\App\Http\Controllers\Api\GeoController::cla
 Route::prefix('customer')->group(function () {
     Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
 });
+
+Route::prefix('wallet')->group(function () {
+    Route::get('{id}/chartSummary', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'chartSummary']);
+});

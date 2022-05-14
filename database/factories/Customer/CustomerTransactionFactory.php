@@ -41,6 +41,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => rand(10,1000),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 
@@ -54,6 +55,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => - rand(10,1000),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 
@@ -67,6 +69,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => rand(10,1000),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 
@@ -80,6 +83,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => $this->faker->boolean(45) == true ? rand(10,1000) : - rand(10,1000),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 
@@ -93,6 +97,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => $this->faker->boolean(45) == true ? rand(1,10) : - rand(1,10),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 
@@ -106,6 +111,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => $this->faker->boolean(15) == true ? rand(1,10) : - rand(1,10),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 
@@ -119,6 +125,7 @@ class CustomerTransactionFactory extends Factory
             "amount" => - rand(1,10),
             "confirmed" => $confirmed,
             "confirmed_at" => $confirmed == true ? $this->faker->dateTimeBetween(now()->subYear(), now()) : null,
+            "created_at" => $this->faker->dateTimeBetween('-3 months', 'now')
         ];
     }
 

@@ -131,7 +131,7 @@
                     <!--end:::Tab item-->
                     <!--begin:::Tab item-->
                     <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#credit_card">Informations</a>
+                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#infos">Informations</a>
                     </li>
                     <!--end:::Tab item-->
                     <!--begin:::Tab item-->
@@ -306,7 +306,7 @@
                                     <!--begin::Table body-->
                                     <tbody class="fw-bold text-gray-600">
                                     <!--begin::Table row-->
-                                    @foreach($wallet->transactions as $transaction)
+                                    @foreach($wallet->transactions()->orderBy('created_at', 'desc')->get() as $transaction)
                                     <tr>
                                         <td data-order="{{ $transaction->type }}">
                                             {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
@@ -349,7 +349,135 @@
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
                     <div class="tab-pane fade" id="infos" role="tabpanel">
+                        <div class="card shadow-lg">
+                            <div class="card-header bg-bank">
+                                <h3 class="card-title text-white">Information sur le compte {{ $wallet->number_account }}</h3>
+                                <div class="card-toolbar">
+                                    <button type="button" class="btn btn-sm btn-light rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-offset="30px, 30px">
+                                        Action
+                                        <i class="fa-solid fa-caret-down ms-2"></i>
+                                    </button>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px" data-kt-menu="true">
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Outils</div>
+                                        </div>
+                                        <!--end::Menu item-->
 
+                                        <!--begin::Menu separator-->
+                                        <div class="separator mb-3 opacity-75"></div>
+                                        <!--end::Menu separator-->
+
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="{{ route('agent.customer.wallet.showRib', [$wallet->customer_id, $wallet->id]) }}" class="menu-link px-3">
+                                                Afficher le RIB
+                                            </a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        @if($wallet->decouvert == false)
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3 mb-2">
+                                                <a href="#" id="btnDecouvertRequest" class="menu-link px-3">
+                                                    Demander un découvert
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        @endif
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart_summary" class="mb-10" style="height: 350px;"></div>
+                                <div class="row mb-5">
+                                    <div class="col-4">
+                                        <div class="fw-bolder mt-5">Numéro de compte</div>
+                                        <div class="text-gray-600">{{ $wallet->number_account }}</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="fw-bolder mt-5">IBAN</div>
+                                        <div class="text-gray-600">{{ $wallet->iban }}</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="fw-bolder mt-5">Type</div>
+                                        <div class="text-gray-600">{{ Str::ucfirst($wallet->type) }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-5">
+                                        <h3 class="fw-bolder text-center mb-3">Paiements</h3>
+                                        <div class="d-flex flex-row justify-content-between bg-gray-200 p-5 rounded">
+                                            <div class="d-flex flex-column flex-center">
+                                                <i class="fa-solid fa-money-check-dollar fa-3x"></i>
+                                                <span class="fw-bolder fs-3">Chèques</span>
+                                                <span class="fw-bolder fs-2">0</span>
+                                                <span class="fs-6">0,00 €</span>
+                                                <div class="text-muted">en moyenne</div>
+                                            </div>
+                                            <div class="d-flex flex-column flex-center">
+                                                <i class="fa-solid fa-credit-card fa-3x"></i>
+                                                <span class="fw-bolder fs-3">Achat CB</span>
+                                                <span class="fw-bolder fs-2">{{ \App\Models\Customer\CustomerTransaction::where('customer_wallet_id', $wallet->id)->where('type', 'payment')->get()->count() }}</span>
+                                                <span class="fs-6">{{ eur(\App\Models\Customer\CustomerTransaction::where('customer_wallet_id', $wallet->id)->where('type', 'payment')->avg('amount')) }}</span>
+                                                <div class="text-muted">en moyenne</div>
+                                            </div>
+                                            <div class="d-flex flex-column flex-center">
+                                                <i class="fa-solid fa-money-bill-transfer fa-3x"></i>
+                                                <span class="fw-bolder fs-3">Prélèvements</span>
+                                                <span class="fw-bolder fs-2">{{ \App\Models\Customer\CustomerTransaction::where('customer_wallet_id', $wallet->id)->where('type', 'sepa')->get()->count() }}</span>
+                                                <span class="fs-6">{{ eur(\App\Models\Customer\CustomerTransaction::where('customer_wallet_id', $wallet->id)->where('type', 'sepa')->avg('amount')) }}</span>
+                                                <div class="text-muted">en moyenne</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <h3 class="fw-bolder text-center mb-3">Retraits</h3>
+                                        <div class="d-flex flex-row justify-content-between bg-gray-200 p-5 rounded">
+                                            <div class="d-flex flex-column flex-center">
+                                                <i class="fa-solid fa-building fa-3x"></i>
+                                                <span class="fw-bolder fs-3">Guichet</span>
+                                                <span class="fw-bolder fs-2">0</span>
+                                                <span class="fs-6">0,00 €</span>
+                                                <div class="text-muted">en moyenne</div>
+                                            </div>
+                                            <div class="d-flex flex-column flex-center">
+                                                <i class="fa-solid fa-money-bill fa-3x"></i>
+                                                <span class="fw-bolder fs-3">Retrait DAB</span>
+                                                <span class="fw-bolder fs-2">0</span>
+                                                <span class="fs-6">0,00 €</span>
+                                                <div class="text-muted">en moyenne</div>
+                                            </div>
+                                            <div class="d-flex flex-column flex-center">
+                                                <i class="fa-solid fa-money-bill fa-3x"></i>
+                                                <span class="fw-bolder fs-3">Retrait DABV</span>
+                                                <span class="fw-bolder fs-2">0</span>
+                                                <span class="fs-6">0,00 €</span>
+                                                <div class="text-muted">en moyenne</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex flex-column flex-center bg-light-success p-5 rounded text-center mb-3">
+                                                <span class="fw-bolder fs-2">0,00 €</span>
+                                                <div class="fs-6">Recette Moyenne</div>
+                                            </div>
+                                            <div class="d-flex flex-column flex-center bg-light-danger p-5 rounded text-center mb-3">
+                                                <span class="fw-bolder fs-2">0,00 €</span>
+                                                <div class="fs-6">Débit Moyen</div>
+                                            </div>
+                                            <div class="d-flex flex-column flex-center bg-light-info p-5 rounded text-center mb-3">
+                                                <span class="fw-bolder fs-2">0,00 €</span>
+                                                <div class="fs-6">Découvert Autorisé</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
@@ -374,6 +502,89 @@
                     <!--end:::Tab pane-->
                 </div>
                 <!--end:::Tab content-->
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="add_mouvement">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Nouveau mouvement sur le compte</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formAddTransaction" action="{{ route('customer.wallet.transaction.store', [$wallet->customer_id, $wallet->id]) }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="service" class="form-label">Service Associé</label>
+                            <select class="form-select form-select-solid" id="service" name="service" data-control="select2" data-dropdown-parent="#add_mouvement" data-placeholder="Services" data-allow-clear="true" onchange="selectedService(this)">
+                                <option></option>
+                                @foreach(\App\Models\Core\Service::all() as $service)
+                                    <option value="{{ $service->name }}" data-price="{{ $service->price }}">{{ $service->name }} ({{ eur($service->price) }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <x-form.input
+                            name="designation"
+                            type="text"
+                            label="Désignation"
+                            required="true" />
+
+                        <x-form.input
+                            name="description"
+                            type="text"
+                            label="Description" />
+
+                        <x-form.input-group
+                            name="amount"
+                            label="Montant de la transaction"
+                            symbol="€"
+                            placement="left"
+                            required="true" />
+
+                        <x-form.checkbox
+                            name="confirmed"
+                            label="Confirmé"
+                            value="true"
+                            checked="true" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="decouvert_request">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Demande de découvert pour le compte {{ $wallet->number_account }}</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formRequestDecouvert" action="{{ route('agent.customer.wallet.requestDecouvert', [$wallet->customer_id, $wallet->id]) }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div id="outstanding"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
             </div>
         </div>
     </div>

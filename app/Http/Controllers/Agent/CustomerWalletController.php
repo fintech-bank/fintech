@@ -165,4 +165,31 @@ class CustomerWalletController extends Controller
             ]);
         }
     }
+
+    public function showRib($customer, $wallet)
+    {
+        $wallet = CustomerWallet::find($wallet);
+
+        return view('agent.customer.wallet.rib', compact('wallet'));
+    }
+
+    public function requestDecouvert(Request $request, $customer, $wallet)
+    {
+        $wallet = CustomerWallet::find($wallet);
+
+        if($request->get('balance_decouvert') > $request->get('balance_max')) {
+            return response()->json("Montant Superieur a la limite autorise", 421);
+        }
+
+        try {
+            $wallet->decouvert = true;
+            $wallet->balance_decouvert = $request->get('balance_decouvert');
+            $wallet->save();
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
+    }
 }
