@@ -481,8 +481,122 @@
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
-                    <div class="tab-pane fade" id="wallets" role="tabpanel">
+                    <div class="tab-pane fade" id="transfers" role="tabpanel">
+                        <div class="card ">
+                            <div class="card-header card-header-stretch">
+                                <h3 class="card-title">Title</h3>
+                                <div class="card-toolbar">
+                                    <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#virements"><i class="fa-solid fa-exchange me-2"></i> Virements</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#beneficiaires"><i class="fa-solid fa-users me-2"></i> Bénéficiaires</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="virements" role="tabpanel">
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <!--begin::Search-->
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <input type="text" data-kt-transfers-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Rechercher un virements" />
+                                            </div>
+                                            <!--end::Search-->
+                                            <div class="d-flex flex-stack">
+                                                <div class="w-100 mw-150px me-3">
+                                                    <!--begin::Select2-->
+                                                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Type de virement" data-kt-transfer-filter="type">
+                                                        <option></option>
+                                                        <option value="all">Tous</option>
+                                                        <option value="immediat">Immédiat</option>
+                                                        <option value="differed">Différé</option>
+                                                        <option value="permanant">Permanent</option>
+                                                    </select>
+                                                    <!--end::Select2-->
+                                                </div>
+                                                <div class="w-100 mw-150px me-3">
+                                                    <!--begin::Select2-->
+                                                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Status du virement" data-kt-transfer-filter="status">
+                                                        <option></option>
+                                                        <option value="all">Tous</option>
+                                                        <option value="paid">Payer</option>
+                                                        <option value="pending">En attente</option>
+                                                        <option value="in_transit">En cours d'execution</option>
+                                                        <option value="canceled">Annulé</option>
+                                                        <option value="failed">Rejeté</option>
+                                                    </select>
+                                                    <!--end::Select2-->
+                                                </div>
+                                                <!--begin::Add product-->
+                                                <a href="#add_transfers" class="btn btn-primary" data-bs-toggle="modal">Nouveau virement</a>
+                                                <!--end::Add product-->
+                                            </div>
+                                        </div>
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_transfers">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                            <!--begin::Table row-->
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="">Description</th>
+                                                <th class="text-end">Montant</th>
+                                                <th class="">Type</th>
+                                                <th class="">Etat</th>
+                                                <th class="text-end min-w-100px">Actions</th>
+                                            </tr>
+                                            <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-bold text-gray-600">
+                                            <!--begin::Table row-->
+                                            @foreach($wallet->transfers()->orderBy('transfer_date', 'desc')->get() as $transfer)
+                                                <tr>
+                                                    <td>
+                                                        {{ $transfer->reason }}<br>
+                                                        <i>{{ \App\Helper\CustomerTransferHelper::getNameBeneficiaire($transfer->beneficiaire) }}</i>
+                                                    </td>
+                                                    <td class="text-end">{{ eur($transfer->amount) }}</td>
+                                                    <td data-order="{{ $transfer->type }}">
+                                                        {{ Str::ucfirst($transfer->type) }}
+                                                    </td>
+                                                    <td data-order="{{ $transfer->status }}">
+                                                        {{ Str::ucfirst($transfer->status) }}
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-bank btn-circle btn-icon me-5" data-bs-toggle="tooltip" title="Voir le virement"><i class="fa-solid fa-eye"></i> </button>
+                                                        @if($transfer->status == 'pending')
+                                                            <button class="btn btn-sm btn-success btn-circle btn-icon" data-bs-toggle="tooltip" title="Accepter le virement"><i class="fa-solid fa-check"></i> </button>
+                                                            <button class="btn btn-sm btn-danger btn-circle btn-icon" data-bs-toggle="tooltip" title="Refuser le virement"><i class="fa-solid fa-times"></i> </button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            @endforeach
+                                            <!--end::Table row-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
 
+                                    <div class="tab-pane fade" id="beneficiaires" role="tabpanel">
+                                        ...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->

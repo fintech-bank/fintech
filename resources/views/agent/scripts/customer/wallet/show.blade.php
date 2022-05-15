@@ -1,6 +1,7 @@
 <script type="text/javascript">
     let tables = {
-        tableTransaction: $("#liste_transactions")
+        tableTransaction: $("#liste_transactions"),
+        tableTransfers: $("#liste_transfers"),
     }
 
     let elements = {
@@ -13,6 +14,16 @@
     let maxDate;
 
     let listeTransaction = tables.tableTransaction.DataTable({
+        info: false,
+        order: [],
+        pageLength: 10,
+        columnDefs: [
+            {orderable: false, targets: 4},
+        ],
+
+    });
+
+    let listeTransfer = tables.tableTransfers.DataTable({
         info: false,
         order: [],
         pageLength: 10,
@@ -66,6 +77,12 @@
             listeTransaction.search(e.target.value).draw();
         });
     }
+    let handleSearchDatatableTransfers = () => {
+        const filterSearch = document.querySelector('[data-kt-transfers-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            listeTransfer.search(e.target.value).draw();
+        });
+    }
 
     // Handle status filter dropdown
     let handleStatusFilter = () => {
@@ -76,6 +93,28 @@
                 value = '';
             }
             listeTransaction.column(0).search(value).draw();
+        });
+    }
+
+    let handleStatusFilterTransfers = () => {
+        const filterStatus = document.querySelector('[data-kt-transfer-filter="status"]');
+        $(filterStatus).on('change', e => {
+            let value = e.target.value;
+            if (value === 'all') {
+                value = '';
+            }
+            listeTransfer.column(3).search(value).draw();
+        });
+    }
+
+    let handleTypeFilterTransfers = () => {
+        const filterStatus = document.querySelector('[data-kt-transfer-filter="type"]');
+        $(filterStatus).on('change', e => {
+            let value = e.target.value;
+            if (value === 'all') {
+                value = '';
+            }
+            listeTransfer.column(2).search(value).draw();
         });
     }
 
@@ -361,7 +400,10 @@
 
     initDateRange()
     handleSearchDatatable()
+    handleSearchDatatableTransfers()
     handleStatusFilter()
+    handleStatusFilterTransfers()
+    handleTypeFilterTransfers()
     handleClearFlatpickr()
     initChartSummary()
 </script>

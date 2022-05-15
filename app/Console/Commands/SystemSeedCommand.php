@@ -186,6 +186,8 @@ class SystemSeedCommand extends Command
                     "customer_id" => $customer->id,
                 ]);
 
+                //dd(CustomerBeneficiaire::query()->where('customer_id', $customer->id)->get()->random());
+
                 // Commande de chéquier
                 CustomerCheck::factory(rand(0,2))->create([
                     "customer_wallet_id" => $wallet_account->id
