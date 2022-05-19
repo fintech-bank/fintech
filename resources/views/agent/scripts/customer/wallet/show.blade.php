@@ -6,7 +6,9 @@
 
     let elements = {
         btnConfirms: document.querySelectorAll('.btnConfirm'),
-        chartSummary: document.querySelector("#chart_summary")
+        chartSummary: document.querySelector("#chart_summary"),
+        btnAcceptTransfer: document.querySelectorAll('.btnAccept'),
+        btnRejectTransfer: document.querySelectorAll('.btnReject'),
     }
 
     let flatpickr;
@@ -128,6 +130,19 @@
 
     let selectedService = (service) => {
         document.querySelector('#designation').value = service.value
+    }
+
+    let selectedTypeVirement = (type) => {
+        if(type.value == 'differed') {
+            document.querySelector('#differed').classList.remove('d-none')
+            document.querySelector('#permanent').classList.add('d-none')
+        } else if(type.value == 'permanent') {
+            document.querySelector('#differed').classList.add('d-none')
+            document.querySelector('#permanent').classList.remove('d-none')
+        } else {
+            document.querySelector('#differed').classList.remove('d-none')
+            document.querySelector('#permanent').classList.remove('d-none')
+        }
     }
 
     let initChartSummary = () => {
@@ -338,6 +353,66 @@
             })
         })
     }
+    if(elements.btnAcceptTransfer) {
+        elements.btnAcceptTransfer.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: `/agence/customers/{{ $wallet->customer->id }}/wallets/{{ $wallet->id }}/virement/${btn.dataset.transfer}/accept`,
+                    method: 'PUT',
+                    success: data => {
+                        console.log(data)
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Le virement à été accepter est actuellement ${data.status}`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                        e.target.parentNode.querySelector('.btnAccept').classList.add('d-none')
+                        e.target.parentNode.querySelector('.btnReject').classList.add('d-none')
+                    },
+                    error: err => {
+                        console.log(err.responseJSON.error)
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnRejectTransfer) {
+        elements.btnRejectTransfer.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: `/agence/customers/{{ $wallet->customer->id }}/wallets/{{ $wallet->id }}/virement/${btn.dataset.transfer}/reject`,
+                    method: 'PUT',
+                    success: data => {
+                        console.log(data)
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Le virement à été refuser et est actuellement ${data.status}`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                        e.target.parentNode.querySelector('.btnAccept').classList.add('d-none')
+                        e.target.parentNode.querySelector('.btnReject').classList.add('d-none')
+                    },
+                    error: err => {
+                        console.log(err.responseJSON.error)
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
 
     $("#formAddTransaction").on('submit', e => {
         e.preventDefault()
@@ -396,6 +471,79 @@
                 }
             }
         })
+    })
+
+    $("#formAddVirement").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formAddVirement")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le virement à été initialiser`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                console.log(err.responseJSON.error)
+                btn.removeAttr('data-kt-indicator')
+                toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                    "positionClass": "toastr-bottom-right",
+                })
+            }
+        })
+    })
+
+    $("#formEditStatusWallet").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formEditStatusWallet")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le status du compte ${data.number_account} à été changer en ${data.status}`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                console.log(err.responseJSON.error)
+                btn.removeAttr('data-kt-indicator')
+                toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                    "positionClass": "toastr-bottom-right",
+                })
+            }
+        })
+    })
+
+    $("#permanent_date").flatpickr({
+        altInput: true,
+        altFormat: "d/m/Y",
+        dateFormat: "Y-m-d",
+        mode: "multiple"
     })
 
     initDateRange()

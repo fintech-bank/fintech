@@ -112,6 +112,11 @@
                                     <a href="#"
                                        class="text-gray-600 text-hover-primary">{{ $wallet->iban }}</a>
                                 </div>
+                                <div class="fw-bolder mt-5">Etat du compte</div>
+                                <div class="text-gray-600">
+                                    <a href="#"
+                                       class="text-gray-600 text-hover-primary">{!! \App\Helper\CustomerWalletHelper::getStatusWallet($wallet->status, true) !!}</a>
+                                </div>
                             </div>
                         </div>
                         <!--end::Details content-->
@@ -374,6 +379,11 @@
                                                 Afficher le RIB
                                             </a>
                                         </div>
+                                        <div class="menu-item px-3">
+                                            <a href="#editStatus" data-bs-toggle="modal" class="menu-link px-3">
+                                                Changer le status du compte
+                                            </a>
+                                        </div>
                                         <!--end::Menu item-->
                                         @if($wallet->decouvert == false)
                                             <!--begin::Menu item-->
@@ -539,7 +549,7 @@
                                                     <!--end::Select2-->
                                                 </div>
                                                 <!--begin::Add product-->
-                                                <a href="#add_transfers" class="btn btn-primary" data-bs-toggle="modal">Nouveau virement</a>
+                                                <a href="#add_virement" class="btn btn-primary" data-bs-toggle="modal">Nouveau virement</a>
                                                 <!--end::Add product-->
                                             </div>
                                         </div>
@@ -551,8 +561,8 @@
                                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                                 <th class="">Description</th>
                                                 <th class="text-end">Montant</th>
-                                                <th class="">Type</th>
-                                                <th class="">Etat</th>
+                                                <th class="text-center">Type</th>
+                                                <th class="text-center">Etat</th>
                                                 <th class="text-end min-w-100px">Actions</th>
                                             </tr>
                                             <!--end::Table row-->
@@ -568,17 +578,26 @@
                                                         <i>{{ \App\Helper\CustomerTransferHelper::getNameBeneficiaire($transfer->beneficiaire) }}</i>
                                                     </td>
                                                     <td class="text-end">{{ eur($transfer->amount) }}</td>
-                                                    <td data-order="{{ $transfer->type }}">
-                                                        {{ Str::ucfirst($transfer->type) }}
+                                                    <td class="text-center" data-order="{{ $transfer->type }}">
+                                                        {{ \App\Helper\CustomerTransferHelper::getTypeTransfer($transfer->type) }}
                                                     </td>
-                                                    <td data-order="{{ $transfer->status }}">
-                                                        {{ Str::ucfirst($transfer->status) }}
+                                                    <td class="text-center" data-order="{{ $transfer->status }}">
+                                                        {!! \App\Helper\CustomerTransferHelper::getStatusTransfer($transfer->status, true) !!}
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-sm btn-bank btn-circle btn-icon me-5" data-bs-toggle="tooltip" title="Voir le virement"><i class="fa-solid fa-eye"></i> </button>
                                                         @if($transfer->status == 'pending')
-                                                            <button class="btn btn-sm btn-success btn-circle btn-icon" data-bs-toggle="tooltip" title="Accepter le virement"><i class="fa-solid fa-check"></i> </button>
-                                                            <button class="btn btn-sm btn-danger btn-circle btn-icon" data-bs-toggle="tooltip" title="Refuser le virement"><i class="fa-solid fa-times"></i> </button>
+                                                            <x-base.button
+                                                            class="btn-sm btn-success btn-circle btn-icon btnAccept"
+                                                            :datas="[['name' => 'transfer', 'value' => $transfer->id]]"
+                                                            text='<i class="fa-solid fa-check"></i>'
+                                                            tooltip="Accepter le virement" />
+
+                                                            <x-base.button
+                                                                class="btn-sm btn-danger btn-circle btn-icon btnReject"
+                                                                :datas="[['name' => 'transfer', 'value' => $transfer->id]]"
+                                                                text='<i class="fa-solid fa-times"></i>'
+                                                                tooltip="Refuser le virement" />
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -667,6 +686,116 @@
                             label="Confirmé"
                             value="true"
                             checked="true" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="editStatus">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Edition du status du compte</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditStatusWallet" action="{{ route('agent.customer.wallet.update', [$wallet->customer_id, $wallet->id]) }}" method="post">
+                    @csrf
+                    <input type="hidden" name="action" value="updateStatus">
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="status" class="form-label">Service Associé</label>
+                            <select class="form-select form-select-solid" id="status" name="status" data-control="select2" data-dropdown-parent="#editStatus" data-placeholder="Status" data-allow-clear="true">
+                                <option></option>
+                                <option value="pending" @if($wallet->status == 'pending') selected @endif>En attente</option>
+                                <option value="active" @if($wallet->status == 'active') selected @endif>Actif</option>
+                                <option value="suspended" @if($wallet->status == 'suspended') selected @endif>Suspendue</option>
+                                <option value="closed" @if($wallet->status == 'closed') selected @endif>Clotûrer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="add_virement">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Nouveau virement depuis ce compte</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formAddVirement" action="{{ route('customer.wallet.virement.store', [$wallet->customer_id, $wallet->id]) }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="customer_beneficiaire_id" class="form-label">Bénéficiaire</label>
+                            <select class="form-select form-select-solid" id="customer_beneficiaire_id" name="customer_beneficiaire_id" data-control="select2" data-dropdown-parent="#add_virement" data-placeholder="Bénéficiaire" data-allow-clear="true">
+                                <option></option>
+                                @foreach($wallet->customer->beneficiaires as $beneficiaire)
+                                    <option value="{{ $beneficiaire->id }}">{{ \App\Helper\CustomerTransferHelper::getNameBeneficiaire($beneficiaire) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <x-form.input
+                            name="amount"
+                            type="text"
+                            label="Montant à envoyer"
+                            required="true"
+                            text="Montant du compte: {{ eur($wallet->balance_actual) }}" />
+
+                        <x-form.input
+                            name="reference"
+                            type="text"
+                            label="Référence" />
+
+                        <x-form.input
+                            name="reason"
+                            type="text"
+                            label="Description" />
+
+                        <div class="mb-10">
+                            <label for="type" class="form-label">Type de Virement</label>
+                            <select class="form-select form-select-solid" id="type" name="type" data-control="select2" data-dropdown-parent="#add_virement" data-placeholder="Type de Virement" data-allow-clear="true" onchange="selectedTypeVirement(this)">
+                                <option></option>
+                                <option value="immediat" selected>Immédiat</option>
+                                <option value="differed">Différé</option>
+                                <option value="permanent">Permanent</option>
+                            </select>
+                        </div>
+
+                        <div id="differed" class="d-none">
+                            <x-form.input-date
+                                name="transfer_date"
+                                type="text"
+                                label="Date du virement" />
+                        </div>
+                        <div id="permanent" class="d-none">
+                            <x-form.input-date
+                                name="permanent_date"
+                                type="text"
+                                label="Date du virement permanent" />
+                        </div>
                     </div>
 
                     <div class="modal-footer">

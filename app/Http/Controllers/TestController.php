@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\CustomerCreditCard;
 use App\Helper\DocumentFile;
 use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerWallet;
 use Auth;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
@@ -14,19 +15,9 @@ class TestController extends Controller
 {
     public function test()
     {
-        $customer = Customer::find(29);
-        $calc = 0;
-        $wallets = $customer->wallets();
+        $calc = CustomerWallet::where('type', 'compte')->orWhere('type', 'epargne')->where('status', '!=', 'closed')->sum('balance_actual');
 
-        foreach ($wallets->with('transactions')->get() as $wallet) {
-            dd($wallet->transactions()->where('type', 'virement')->orWhere('type', 'sepa')->get());
-            $ds = $wallet->transactions()->where('type', 'virement')->where('type', 'sepa')->get();
-            foreach ($ds as $transaction) {
-                $calc += $transaction->amount;
-            }
-        }
-
-        return eur($calc);
+        dd(eur($calc));
 
     }
 

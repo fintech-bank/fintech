@@ -4,6 +4,9 @@
 namespace App\Helper;
 
 
+use App\Models\Customer\CustomerTransaction;
+use App\Models\Customer\CustomerWallet;
+
 class CustomerTransactionHelper
 {
     public static function getTypeTransaction($type, $labeled = false, $symbol = false)
@@ -64,5 +67,45 @@ class CustomerTransactionHelper
         } else {
             return \Str::ucfirst($type);
         }
+    }
+
+    public static function create($type, $type_transaction, $description, $amount, $wallet, $confirm = true, $designation = null, $confirmed_at = null)
+    {
+        if($type == 'debit') {
+            CustomerTransaction::create([
+                "uuid" => \Str::uuid(),
+                "type" => $type_transaction,
+                "designation" => $designation,
+                "description" => $description,
+                "amount" => $amount,
+                "confirmed" => $confirm,
+                "confirmed_at" => $confirmed_at,
+                "customer_wallet_id" => $wallet
+            ]);
+        } else {
+            CustomerTransaction::create([
+                "uuid" => \Str::uuid(),
+                "type" => $type_transaction,
+                "designation" => $designation,
+                "description" => $description,
+                "amount" => $amount,
+                "confirmed" => $confirm,
+                "confirmed_at" => $confirmed_at,
+                "customer_wallet_id" => $wallet
+            ]);
+        }
+
+        $transaction = CustomerTransaction::with('wallet')->latest()->first();
+
+        $wallet = CustomerWallet::find($wallet);
+        if($confirm == true) {
+            $wallet->balance_actual += $transaction->amount;
+            $wallet->save();
+        } else {
+            $wallet->balance_coming += $amount;
+            $wallet->save();
+        }
+
+        return $transaction;
     }
 }

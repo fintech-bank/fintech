@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Helper\CustomerSituationHelper;
+use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
 use App\Helper\IbanHelper;
 use App\Helper\LogHelper;
@@ -138,7 +139,7 @@ class CustomerWalletController extends Controller
             $reason = "Votre situation professionnel ne permet pas un découvert bancaire";
         }
 
-        if (CustomerWallet::where("customer_id", $customer->id)->get()->sum('balance_actual') >= 0) {
+        if (CustomerWallet::where("customer_id", $customer->id)->where('type', 'compte')->get()->sum('balance_actual') >= 0) {
             $r++;
         } else {
             $r--;
@@ -190,6 +191,27 @@ class CustomerWalletController extends Controller
         }catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json($exception->getMessage());
+        }
+    }
+
+    public function update(Request $request, $customer, $wallet)
+    {
+        $wallet = CustomerWallet::find($wallet);
+
+        switch ($request->get('action')) {
+            case 'updateStatus':
+                try {
+                    $wallet->status = $request->get('status');
+                    $wallet->save();
+
+                    return response()->json([
+                        'number_account' => $wallet->number_account,
+                        'status' => CustomerWalletHelper::getStatusWallet($request->get('status'))
+                    ]);
+                }catch (\Exception $exception) {
+                    return response()->json(api_error('err-0001', $exception->getMessage(), 'critical'));
+                }
+                break;
         }
     }
 }

@@ -48,14 +48,25 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         Route::prefix('{customer}/wallets')->group(function () {
             Route::post('/', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'store'])->name('agent.customer.wallet.store');
             Route::post('decouvert', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'decouvert'])->name('agent.customer.wallet.decouvert');
-            Route::get('{wallet_id}', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'show'])->name('agent.customer.wallet.show');
-            Route::get('{wallet_id}/rib', [\App\Http\Controllers\PdfController::class, 'showRib'])->name('agent.customer.wallet.showRib');
-            Route::get('{wallet_id}/report', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'report'])->name('agent.customer.wallet.report');
-            Route::post('{wallet_id}/decouvert', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'requestDecouvert'])->name('agent.customer.wallet.requestDecouvert');
 
-            Route::prefix('{wallet_id}/transactions')->group(function () {
-                Route::post('/', [\App\Http\Controllers\Agent\CustomerTransactionController::class, 'store'])->name('customer.wallet.transaction.store');
-                Route::put('{id}/confirm', [\App\Http\Controllers\Agent\CustomerTransactionController::class, 'confirm'])->name('customer.wallet.transaction.confirm');
+
+            Route::prefix('{wallet_id}')->group(function () {
+                Route::get('/', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'show'])->name('agent.customer.wallet.show');
+                Route::get('/rib', [\App\Http\Controllers\PdfController::class, 'showRib'])->name('agent.customer.wallet.showRib');
+                Route::get('/report', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'report'])->name('agent.customer.wallet.report');
+                Route::post('/decouvert', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'requestDecouvert'])->name('agent.customer.wallet.requestDecouvert');
+                Route::put('/', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'update'])->name('agent.customer.wallet.update');
+
+                Route::prefix('/transactions')->group(function () {
+                    Route::post('/', [\App\Http\Controllers\Agent\CustomerTransactionController::class, 'store'])->name('customer.wallet.transaction.store');
+                    Route::put('{id}/confirm', [\App\Http\Controllers\Agent\CustomerTransactionController::class, 'confirm'])->name('customer.wallet.transaction.confirm');
+                });
+
+                Route::prefix('/virement')->group(function () {
+                    Route::post('/', [\App\Http\Controllers\Agent\CustomerVirementController::class, 'store'])->name('customer.wallet.virement.store');
+                    Route::put('{transfer_id}/accept', [\App\Http\Controllers\Agent\CustomerVirementController::class, 'accept'])->name('customer.wallet.virement.accept');
+                    Route::put('{transfer_id}/reject', [\App\Http\Controllers\Agent\CustomerVirementController::class, 'reject'])->name('customer.wallet.virement.reject');
+                });
             });
         });
     });

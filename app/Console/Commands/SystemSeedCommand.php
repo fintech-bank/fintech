@@ -96,7 +96,7 @@ class SystemSeedCommand extends Command
     {
         $agency = Agency::all()->random();
 
-        $users = User::factory(rand(20, 100))->create([
+        $users = User::factory(rand(100, 1000))->create([
             "admin" => false,
             "agent" => false,
             "customer" => true,

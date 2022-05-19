@@ -38,3 +38,17 @@ if(!function_exists('random_numeric')) {
         return $random_str;
     }
 }
+
+if(!function_exists('api_error')) {
+    function api_error($code, $message, $type = 'critical', $detail = null, $help = null) {
+        \App\Helper\LogHelper::notify(
+            $type,
+            $code.' - '.$message.($detail != null ? ' - '.$detail.' - ' : '').($help != null ? $help : ''));
+        return [
+            'error' => $code,
+            'message' => $message,
+            'detail' => $detail,
+            'help' => $help
+        ];
+    }
+}
