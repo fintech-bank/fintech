@@ -593,7 +593,7 @@
                                                         {!! \App\Helper\CustomerTransferHelper::getStatusTransfer($transfer->status, true) !!}
                                                     </td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-bank btn-circle btn-icon me-5" data-bs-toggle="tooltip" title="Voir le virement"><i class="fa-solid fa-eye"></i> </button>
+                                                        <button class="btn btn-sm btn-bank btn-circle btn-icon me-5 btnShowTransfer" data-bs-toggle="tooltip" title="Voir le virement" data-transfer="{{ $transfer->id }}"><i class="fa-solid fa-eye"></i> </button>
                                                         @if($transfer->status == 'pending')
                                                             <x-base.button
                                                             class="btn-sm btn-success btn-circle btn-icon btnAccept"
@@ -845,10 +845,10 @@
                 <div class="modal-header bg-bank">
                     <h5 class="modal-title"></h5>
                     <div class="modal-title text-white text-center">
-                        <div class="mb-5 fs-8" data-transaction-div="type">Prélèvement bancaire</div>
-                        <div class="fw-bolder" data-transaction-div="title">Prélèvement SEPA Menard S.A.R.L.</div>
-                        <div class="mb-5" data-transaction-div="dateText">Débité le 12 mai 2022</div>
-                        <div class="fs-2 fw-bolder" data-transaction-div="amount">- 20,82 €</div>
+                        <div class="mb-5 fs-8" data-transaction-div="type"></div>
+                        <div class="fw-bolder" data-transaction-div="title"></div>
+                        <div class="mb-5" data-transaction-div="dateText"></div>
+                        <div class="fs-2 fw-bolder" data-transaction-div="amount"></div>
                     </div>
 
                     <!--begin::Close-->
@@ -861,17 +861,81 @@
                 <div class="modal-body">
                     <div class="d-flex flex-column">
                         <div class="fs-3">Libellé</div>
-                        <div class="fs-5" data-transaction-div="description">Prélèvement SEPA Menard S.A.R.L.</div>
+                        <div class="fs-5" data-transaction-div="description"></div>
                     </div>
                     <div class="separator my-5"></div>
                     <div class="d-flex flex-column">
                         <div class="fs-3">Date de l'opération</div>
-                        <div class="fs-5" data-transaction-div="date">12 mai 2022</div>
+                        <div class="fs-5" data-transaction-div="date"></div>
                     </div>
                     <div class="separator my-5"></div>
                     <div class="d-flex flex-column">
                         <div class="fs-3">Référence</div>
-                        <div class="fs-5" data-transaction-div="reference">UC78HYII</div>
+                        <div class="fs-5" data-transaction-div="reference"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="show_transfer">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank align-items-center">
+                    <h5 class="modal-title"></h5>
+                    <div class="modal-title text-white text-center">
+                        <div class="mb-5 fs-3" data-transfer-div="title"></div>
+                    </div>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3"><i class="fa-solid fa-sign-out me-3"></i> Depuis le compte</div>
+                        <div class="fs-5 p-5" data-transfer-div="wallet_customer"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3"><i class="fa-solid fa-sign-in me-3"></i> Vers le compte</div>
+                        <div class="fs-5 p-5" data-transfer-div="wallet_beneficiaire"></div>
+                    </div>
+                    <div class="separator my-5"></div>
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3">Status</div>
+                        <div class="fs-5 fw-bolder" data-transfer-div="status"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3">Montant</div>
+                        <div class="fs-5 fw-bolder" data-transfer-div="amount"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3">Motif</div>
+                        <div class="fs-5" data-transfer-div="reason"></div>
+                    </div>
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3">Type</div>
+                        <div class="fs-5" data-transfer-div="type"></div>
+                    </div>
+                    <div id="dateTransferPermanent" class="d-none">
+                        <div class="d-flex flex-column mb-5">
+                            <div class="fs-3">Périodicité</div>
+                            <div class="fs-5">Mensuel</div>
+                        </div>
+                        <div class="d-flex flex-column mb-5">
+                            <div class="fs-3">Date de début</div>
+                            <div class="fs-5" data-transfer-div="start"></div>
+                        </div>
+                        <div class="d-flex flex-column mb-5">
+                            <div class="fs-3">Date de fin</div>
+                            <div class="fs-5" data-transfer-div="end"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mb-5">
+                        <div class="fs-3">Date</div>
+                        <div class="fs-5" data-transfer-div="date"></div>
                     </div>
                 </div>
             </div>

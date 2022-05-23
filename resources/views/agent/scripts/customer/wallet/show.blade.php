@@ -9,11 +9,13 @@
         chartSummary: document.querySelector("#chart_summary"),
         btnAcceptTransfer: document.querySelectorAll('.btnAccept'),
         btnRejectTransfer: document.querySelectorAll('.btnReject'),
-        btnShowTransaction: document.querySelectorAll('.btnShowTransaction')
+        btnShowTransaction: document.querySelectorAll('.btnShowTransaction'),
+        btnShowTransfer: document.querySelectorAll('.btnShowTransfer'),
     }
 
     let modals = {
-        modalShowTransaction: document.querySelector('#show_transaction')
+        modalShowTransaction: document.querySelector('#show_transaction'),
+        modalShowTransfer: document.querySelector('#show_transfer'),
     }
 
     let flatpickr;
@@ -436,6 +438,59 @@
                         modals.modalShowTransaction.querySelector('[data-transaction-div="description"]').innerHTML = data.description
                         modals.modalShowTransaction.querySelector('[data-transaction-div="date"]').innerHTML = data.date
                         modals.modalShowTransaction.querySelector('[data-transaction-div="reference"]').innerHTML = data.reference
+
+                        modal.show()
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnShowTransfer) {
+        elements.btnShowTransfer.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                let modal = new bootstrap.Modal(modals.modalShowTransfer)
+                modal.show()
+
+                $.ajax({
+                    url: '/api/transfer/'+btn.dataset.transfer,
+                    success: data => {
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="title"]').innerHTML = data.title
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="wallet_customer"]').innerHTML = `
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-row">
+                                <img src="${data.wallet_customer.bank.logo}" width="16" height="16" class="img-responsive me-5">
+                                <span class="fs-8">${data.wallet_customer.bank.name}</span>
+                            </div>
+                            <div class="">${data.wallet_customer.name}</div>
+                            <div class="">${data.wallet_customer.account}</div>
+                        </div>
+                        `
+
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="wallet_beneficiaire"]').innerHTML = `
+                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-row">
+                                <img src="${data.wallet_beneficiaire.bank.logo}" width="16" height="16" class="img-responsive me-5">
+                                <span class="fs-8">${data.wallet_beneficiaire.bank.name}</span>
+                            </div>
+                            <div class="">${data.wallet_beneficiaire.name}</div>
+                            <div class="">${data.wallet_beneficiaire.account}</div>
+                        </div>
+                        `
+
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="status"]').innerHTML = data.status
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="amount"]').innerHTML = data.amount
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="reason"]').innerHTML = data.reason
+                        modals.modalShowTransfer.querySelector('[data-transfer-div="type"]').innerHTML = data.type
+
+                        if(data.typeText == 'permanent') {
+                            modals.modalShowTransfer.querySelector('[data-transfer-div="start"]').innerHTML = data.date.start
+                            modals.modalShowTransfer.querySelector('[data-transfer-div="end"]').innerHTML = data.date.end
+                            modals.modalShowTransfer.querySelector('#dateTransferPermanent').classList.remove('d-none')
+                        } else {
+                            modals.modalShowTransfer.querySelector('#dateTransferPermanent').classList.add('d-none')
+                            modals.modalShowTransfer.querySelector('[data-transfer-div="date"]').innerHTML = data.date
+                        }
 
                         modal.show()
                     }

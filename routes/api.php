@@ -41,3 +41,7 @@ Route::prefix('wallet')->group(function () {
 Route::prefix('transaction')->group(function () {
     Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'info']);
 });
+
+Route::prefix('transfer')->group(function () {
+    Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransferController::class, 'info']);
+});
