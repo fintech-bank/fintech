@@ -9,6 +9,11 @@
         chartSummary: document.querySelector("#chart_summary"),
         btnAcceptTransfer: document.querySelectorAll('.btnAccept'),
         btnRejectTransfer: document.querySelectorAll('.btnReject'),
+        btnShowTransaction: document.querySelectorAll('.btnShowTransaction')
+    }
+
+    let modals = {
+        modalShowTransaction: document.querySelector('#show_transaction')
     }
 
     let flatpickr;
@@ -273,6 +278,7 @@
         })
     }
 
+
     elements.btnConfirms.forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault()
@@ -408,6 +414,30 @@
                         toastr.error(err.responseJSON.message, err.responseJSON.error, {
                             "positionClass": "toastr-bottom-right",
                         })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnShowTransaction) {
+        elements.btnShowTransaction.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                let modal = new bootstrap.Modal(modals.modalShowTransaction)
+
+
+                $.ajax({
+                    url: '/api/transaction/'+btn.dataset.transaction,
+                    success: data => {
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="type"]').innerHTML = data.type
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="title"]').innerHTML = data.title
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="dateText"]').innerHTML = data.dateText
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="amount"]').innerHTML = data.amount
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="description"]').innerHTML = data.description
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="date"]').innerHTML = data.date
+                        modals.modalShowTransaction.querySelector('[data-transaction-div="reference"]').innerHTML = data.reference
+
+                        modal.show()
                     }
                 })
             })

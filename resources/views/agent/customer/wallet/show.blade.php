@@ -328,6 +328,14 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
+                                            <button class="btn btn-icon btn-sm btn-circle btn-primary btnShowTransaction" data-bs-toggle="tooltip" title="Détail de l'écriture" data-transaction="{{ $transaction->id }}">
+                                                <span class="indicator-label" data-transaction="{{ $transaction->id }}">
+                                                        <i class="fa-solid fa-eye" data-transaction="{{ $transaction->id }}"></i>
+                                                    </span>
+                                                <span class="indicator-progress">
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                    </span>
+                                            </button>
                                             @if($transaction->confirmed == false)
                                                 <button class="btn btn-icon btn-sm btn-circle btn-bank btnConfirm" data-bs-toggle="tooltip" title="Confirmé l'écriture" data-transaction="{{ $transaction->id }}">
                                                     <span class="indicator-label" data-transaction="{{ $transaction->id }}">
@@ -828,6 +836,44 @@
                         <x-form.button />
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="show_transaction">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title"></h5>
+                    <div class="modal-title text-white text-center">
+                        <div class="mb-5 fs-8" data-transaction-div="type">Prélèvement bancaire</div>
+                        <div class="fw-bolder" data-transaction-div="title">Prélèvement SEPA Menard S.A.R.L.</div>
+                        <div class="mb-5" data-transaction-div="dateText">Débité le 12 mai 2022</div>
+                        <div class="fs-2 fw-bolder" data-transaction-div="amount">- 20,82 €</div>
+                    </div>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex flex-column">
+                        <div class="fs-3">Libellé</div>
+                        <div class="fs-5" data-transaction-div="description">Prélèvement SEPA Menard S.A.R.L.</div>
+                    </div>
+                    <div class="separator my-5"></div>
+                    <div class="d-flex flex-column">
+                        <div class="fs-3">Date de l'opération</div>
+                        <div class="fs-5" data-transaction-div="date">12 mai 2022</div>
+                    </div>
+                    <div class="separator my-5"></div>
+                    <div class="d-flex flex-column">
+                        <div class="fs-3">Référence</div>
+                        <div class="fs-5" data-transaction-div="reference">UC78HYII</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

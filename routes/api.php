@@ -37,3 +37,7 @@ Route::prefix('customer')->group(function () {
 Route::prefix('wallet')->group(function () {
     Route::get('{id}/chartSummary', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'chartSummary']);
 });
+
+Route::prefix('transaction')->group(function () {
+    Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'info']);
+});
