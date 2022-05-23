@@ -4,6 +4,10 @@
 namespace App\Helper;
 
 
+use App\Models\Customer\CustomerBeneficiaire;
+use App\Models\Customer\CustomerTransfer;
+use App\Models\Customer\CustomerWallet;
+
 class CustomerTransferHelper
 {
     public static function getNameBeneficiaire($beneficiaire)
@@ -54,5 +58,103 @@ class CustomerTransferHelper
                 default: return '<span class="badge badge-info"><i class="fa-solid fa-triangle-exclamation fa-beat-fade me-2"></i> Inconnue</span>'; break;
             }
         }
+    }
+
+
+    /**
+     * Execute le transfer et définie l'état à "Paid" si réussi ou "Failed" si échoué
+     * @param $virement
+     */
+    public static function executeTransfer($virement)
+    {
+        $transfer = CustomerTransfer::query()->find($virement);
+        $compte_beneficiaire = CustomerWallet::query()->where('iban', $transfer->beneficiaire->iban)->first();
+
+        if($transfer->beneficiaire->titulaire == true) {
+            if($compte_beneficiaire->status == 'active') {
+                $transfer->wallet->balance_coming = $transfer->wallet->balance_coming - $transfer->amount;
+                $transfer->wallet->balance_actual = $transfer->wallet->balance_actual + $transfer->amount;
+                $transfer->wallet->save();
+
+                $compte_beneficiaire->balance_actual = $compte_beneficiaire->balance_actual + $transfer->amount;
+                $compte_beneficiaire->save();
+
+                CustomerTransactionHelper::create('credit',
+                'virement', $transfer->reason, $transfer->amount, $compte_beneficiaire->id,
+                true, $transfer->reference.' - '.$transfer->reason,
+                now());
+
+                $transfer->status = 'paid';
+                $transfer->save();
+
+                return $transfer;
+
+            } else {
+                $transfer->status = 'failed';
+                $transfer->save();
+
+                return $transfer;
+            }
+        } else {
+            $transfer->wallet->balance_coming = $transfer->wallet->balance_coming - $transfer->amount;
+            $transfer->wallet->balance_actual = $transfer->wallet->balance_actual + $transfer->amount;
+            $transfer->wallet->save();
+
+            $transfer->status = 'paid';
+            $transfer->save();
+
+            return $transfer;
+        }
+    }
+
+    public static function initTransfer($virement)
+    {
+        $transfer = CustomerTransfer::query()->find($virement);
+        $compte_beneficiaire = CustomerWallet::query()->where('iban', $transfer->beneficiaire->iban)->first();
+
+
+        if($transfer->transfer_date >= now()->startOfDay() && $transfer->transfer_date <= now()->endOfDay()) {
+            if($transfer->beneficiaire->titulaire == true) {
+                if($compte_beneficiaire->status == 'active') {
+                    $transfer->wallet->balance_coming = $transfer->wallet->balance_coming - $transfer->amount;
+                    $transfer->wallet->balance_actual = $transfer->wallet->balance_actual + $transfer->amount;
+                    $transfer->wallet->save();
+
+                    $compte_beneficiaire->balance_actual = $compte_beneficiaire->balance_actual + $transfer->amount;
+                    $compte_beneficiaire->save();
+
+                    CustomerTransactionHelper::create('credit',
+                        'virement', $transfer->reason, $transfer->amount, $compte_beneficiaire->id,
+                        true, $transfer->reference.' - '.$transfer->reason,
+                        now());
+
+                    $transfer->status = 'paid';
+                    $transfer->save();
+
+                    return $transfer;
+
+                } else {
+                    $transfer->status = 'failed';
+                    $transfer->save();
+
+                    return $transfer;
+                }
+            } else {
+                $transfer->wallet->balance_coming = $transfer->wallet->balance_coming - $transfer->amount;
+                $transfer->wallet->balance_actual = $transfer->wallet->balance_actual + $transfer->amount;
+                $transfer->wallet->save();
+
+                $transfer->status = 'paid';
+                $transfer->save();
+
+                return $transfer;
+            }
+        }
+        return $transfer;
+    }
+
+    public static function programTransfer($virement)
+    {
+
     }
 }

@@ -161,6 +161,37 @@ class SystemSeedCommand extends Command
                             "wallet_payment_id" => $wallet_account->id,
                             "epargne_plan_id" => EpargnePlan::all()->random()->id,
                         ]);
+
+                        if($wallet_epargne->customer->info->type == 'part') {
+                            CustomerBeneficiaire::query()->create([
+                                'uuid' => Str::uuid(),
+                                'type' => 'retail',
+                                'civility' => Str::upper($wallet_epargne->customer->info->civility),
+                                'firstname' => $wallet_epargne->customer->info->firstname,
+                                'lastname' => $wallet_epargne->customer->info->lastname,
+                                'currency' => 'eur',
+                                'bankname' => 'Finbank',
+                                'iban' => $wallet_epargne->iban,
+                                'bic' => $wallet_epargne->customer->user->agency->bic,
+                                'titulaire' => true,
+                                'customer_id' => $customer->id,
+                                'bank_id' => 176
+                            ]);
+                        } else {
+                            CustomerBeneficiaire::query()->create([
+                                'uuid' => Str::uuid(),
+                                'type' => 'corporate',
+                                'company' => $wallet_epargne->customer->info->company,
+                                'currency' => 'eur',
+                                'bankname' => 'Finbank',
+                                'iban' => $wallet_epargne->iban,
+                                'bic' => $wallet_epargne->customer->user->agency->bic,
+                                'titulaire' => true,
+                                'customer_id' => $customer->id,
+                                'bank_id' => 176
+                            ]);
+                        }
+
                     }
                 }
 

@@ -14,12 +14,12 @@ class BanksTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('banks')->delete();
-        
+
         \DB::table('banks')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'bridge_id' => 506,
@@ -30,7 +30,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'bridge_id' => 505,
@@ -41,7 +41,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'bridge_id' => 504,
@@ -52,7 +52,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'bridge_id' => 502,
@@ -63,7 +63,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'bridge_id' => 499,
@@ -74,7 +74,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'bridge_id' => 489,
@@ -85,7 +85,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 7,
                 'bridge_id' => 488,
@@ -96,7 +96,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 8,
                 'bridge_id' => 487,
@@ -107,7 +107,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 9,
                 'bridge_id' => 486,
@@ -118,7 +118,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 10,
                 'bridge_id' => 485,
@@ -129,7 +129,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'FIDCFR21',
                 'process_time' => '24:00:00',
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 11,
                 'bridge_id' => 481,
@@ -140,7 +140,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 12,
                 'bridge_id' => 480,
@@ -151,7 +151,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 13,
                 'bridge_id' => 478,
@@ -162,7 +162,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 14,
                 'bridge_id' => 476,
@@ -173,7 +173,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 15,
                 'bridge_id' => 475,
@@ -184,7 +184,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 16,
                 'bridge_id' => 474,
@@ -195,7 +195,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 17,
                 'bridge_id' => 470,
@@ -206,7 +206,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            17 => 
+            17 =>
             array (
                 'id' => 18,
                 'bridge_id' => 458,
@@ -217,7 +217,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            18 => 
+            18 =>
             array (
                 'id' => 19,
                 'bridge_id' => 452,
@@ -228,7 +228,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            19 => 
+            19 =>
             array (
                 'id' => 20,
                 'bridge_id' => 451,
@@ -239,7 +239,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            20 => 
+            20 =>
             array (
                 'id' => 21,
                 'bridge_id' => 450,
@@ -250,7 +250,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            21 => 
+            21 =>
             array (
                 'id' => 22,
                 'bridge_id' => 449,
@@ -261,7 +261,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            22 => 
+            22 =>
             array (
                 'id' => 23,
                 'bridge_id' => 448,
@@ -272,7 +272,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            23 => 
+            23 =>
             array (
                 'id' => 24,
                 'bridge_id' => 447,
@@ -283,7 +283,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            24 => 
+            24 =>
             array (
                 'id' => 25,
                 'bridge_id' => 446,
@@ -294,7 +294,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            25 => 
+            25 =>
             array (
                 'id' => 26,
                 'bridge_id' => 445,
@@ -305,7 +305,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            26 => 
+            26 =>
             array (
                 'id' => 27,
                 'bridge_id' => 444,
@@ -316,7 +316,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            27 => 
+            27 =>
             array (
                 'id' => 28,
                 'bridge_id' => 443,
@@ -327,7 +327,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            28 => 
+            28 =>
             array (
                 'id' => 29,
                 'bridge_id' => 442,
@@ -338,7 +338,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            29 => 
+            29 =>
             array (
                 'id' => 30,
                 'bridge_id' => 441,
@@ -349,7 +349,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            30 => 
+            30 =>
             array (
                 'id' => 31,
                 'bridge_id' => 440,
@@ -360,7 +360,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            31 => 
+            31 =>
             array (
                 'id' => 32,
                 'bridge_id' => 439,
@@ -371,7 +371,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CEPAFRPP142',
                 'process_time' => '24:00:00',
             ),
-            32 => 
+            32 =>
             array (
                 'id' => 33,
                 'bridge_id' => 438,
@@ -382,7 +382,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            33 => 
+            33 =>
             array (
                 'id' => 34,
                 'bridge_id' => 437,
@@ -393,7 +393,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CEPAFRPP751',
                 'process_time' => '24:00:00',
             ),
-            34 => 
+            34 =>
             array (
                 'id' => 35,
                 'bridge_id' => 436,
@@ -404,7 +404,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            35 => 
+            35 =>
             array (
                 'id' => 36,
                 'bridge_id' => 435,
@@ -415,7 +415,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            36 => 
+            36 =>
             array (
                 'id' => 37,
                 'bridge_id' => 431,
@@ -426,7 +426,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            37 => 
+            37 =>
             array (
                 'id' => 38,
                 'bridge_id' => 428,
@@ -437,7 +437,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            38 => 
+            38 =>
             array (
                 'id' => 39,
                 'bridge_id' => 425,
@@ -448,7 +448,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            39 => 
+            39 =>
             array (
                 'id' => 40,
                 'bridge_id' => 424,
@@ -459,7 +459,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            40 => 
+            40 =>
             array (
                 'id' => 41,
                 'bridge_id' => 423,
@@ -470,7 +470,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            41 => 
+            41 =>
             array (
                 'id' => 42,
                 'bridge_id' => 422,
@@ -481,7 +481,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            42 => 
+            42 =>
             array (
                 'id' => 43,
                 'bridge_id' => 421,
@@ -492,7 +492,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            43 => 
+            43 =>
             array (
                 'id' => 44,
                 'bridge_id' => 420,
@@ -503,7 +503,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'GPBAFRPP',
                 'process_time' => '24:00:00',
             ),
-            44 => 
+            44 =>
             array (
                 'id' => 45,
                 'bridge_id' => 419,
@@ -514,7 +514,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'YOMOFRP1',
                 'process_time' => '24:00:00',
             ),
-            45 => 
+            45 =>
             array (
                 'id' => 46,
                 'bridge_id' => 418,
@@ -525,7 +525,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            46 => 
+            46 =>
             array (
                 'id' => 47,
                 'bridge_id' => 417,
@@ -536,7 +536,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            47 => 
+            47 =>
             array (
                 'id' => 48,
                 'bridge_id' => 416,
@@ -547,7 +547,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            48 => 
+            48 =>
             array (
                 'id' => 49,
                 'bridge_id' => 415,
@@ -558,7 +558,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            49 => 
+            49 =>
             array (
                 'id' => 50,
                 'bridge_id' => 414,
@@ -569,7 +569,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'SOAPFR22',
                 'process_time' => '24:00:00',
             ),
-            50 => 
+            50 =>
             array (
                 'id' => 51,
                 'bridge_id' => 413,
@@ -580,7 +580,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            51 => 
+            51 =>
             array (
                 'id' => 52,
                 'bridge_id' => 412,
@@ -591,7 +591,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            52 => 
+            52 =>
             array (
                 'id' => 53,
                 'bridge_id' => 411,
@@ -602,7 +602,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            53 => 
+            53 =>
             array (
                 'id' => 54,
                 'bridge_id' => 410,
@@ -613,7 +613,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            54 => 
+            54 =>
             array (
                 'id' => 55,
                 'bridge_id' => 409,
@@ -624,7 +624,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            55 => 
+            55 =>
             array (
                 'id' => 56,
                 'bridge_id' => 408,
@@ -635,7 +635,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            56 => 
+            56 =>
             array (
                 'id' => 57,
                 'bridge_id' => 401,
@@ -646,7 +646,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            57 => 
+            57 =>
             array (
                 'id' => 58,
                 'bridge_id' => 400,
@@ -657,7 +657,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            58 => 
+            58 =>
             array (
                 'id' => 59,
                 'bridge_id' => 388,
@@ -668,7 +668,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            59 => 
+            59 =>
             array (
                 'id' => 60,
                 'bridge_id' => 350,
@@ -679,7 +679,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            60 => 
+            60 =>
             array (
                 'id' => 61,
                 'bridge_id' => 349,
@@ -690,7 +690,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            61 => 
+            61 =>
             array (
                 'id' => 62,
                 'bridge_id' => 348,
@@ -701,7 +701,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            62 => 
+            62 =>
             array (
                 'id' => 63,
                 'bridge_id' => 347,
@@ -712,7 +712,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            63 => 
+            63 =>
             array (
                 'id' => 64,
                 'bridge_id' => 304,
@@ -723,7 +723,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            64 => 
+            64 =>
             array (
                 'id' => 65,
                 'bridge_id' => 303,
@@ -734,7 +734,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'BFBKFRP1',
                 'process_time' => '24:00:00',
             ),
-            65 => 
+            65 =>
             array (
                 'id' => 66,
                 'bridge_id' => 302,
@@ -745,7 +745,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            66 => 
+            66 =>
             array (
                 'id' => 67,
                 'bridge_id' => 299,
@@ -756,7 +756,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            67 => 
+            67 =>
             array (
                 'id' => 68,
                 'bridge_id' => 298,
@@ -767,7 +767,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            68 => 
+            68 =>
             array (
                 'id' => 69,
                 'bridge_id' => 297,
@@ -778,7 +778,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            69 => 
+            69 =>
             array (
                 'id' => 70,
                 'bridge_id' => 296,
@@ -789,7 +789,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            70 => 
+            70 =>
             array (
                 'id' => 71,
                 'bridge_id' => 295,
@@ -800,7 +800,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            71 => 
+            71 =>
             array (
                 'id' => 72,
                 'bridge_id' => 294,
@@ -811,7 +811,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            72 => 
+            72 =>
             array (
                 'id' => 73,
                 'bridge_id' => 293,
@@ -822,7 +822,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            73 => 
+            73 =>
             array (
                 'id' => 74,
                 'bridge_id' => 292,
@@ -833,7 +833,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            74 => 
+            74 =>
             array (
                 'id' => 75,
                 'bridge_id' => 289,
@@ -844,7 +844,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            75 => 
+            75 =>
             array (
                 'id' => 76,
                 'bridge_id' => 288,
@@ -855,7 +855,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            76 => 
+            76 =>
             array (
                 'id' => 77,
                 'bridge_id' => 286,
@@ -866,7 +866,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            77 => 
+            77 =>
             array (
                 'id' => 78,
                 'bridge_id' => 285,
@@ -877,7 +877,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            78 => 
+            78 =>
             array (
                 'id' => 79,
                 'bridge_id' => 284,
@@ -888,7 +888,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            79 => 
+            79 =>
             array (
                 'id' => 80,
                 'bridge_id' => 283,
@@ -899,7 +899,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            80 => 
+            80 =>
             array (
                 'id' => 81,
                 'bridge_id' => 282,
@@ -910,7 +910,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            81 => 
+            81 =>
             array (
                 'id' => 82,
                 'bridge_id' => 281,
@@ -921,7 +921,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            82 => 
+            82 =>
             array (
                 'id' => 83,
                 'bridge_id' => 280,
@@ -932,7 +932,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            83 => 
+            83 =>
             array (
                 'id' => 84,
                 'bridge_id' => 279,
@@ -943,7 +943,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            84 => 
+            84 =>
             array (
                 'id' => 85,
                 'bridge_id' => 179,
@@ -954,7 +954,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            85 => 
+            85 =>
             array (
                 'id' => 86,
                 'bridge_id' => 172,
@@ -965,7 +965,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            86 => 
+            86 =>
             array (
                 'id' => 87,
                 'bridge_id' => 167,
@@ -976,7 +976,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            87 => 
+            87 =>
             array (
                 'id' => 88,
                 'bridge_id' => 166,
@@ -987,7 +987,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            88 => 
+            88 =>
             array (
                 'id' => 89,
                 'bridge_id' => 165,
@@ -998,7 +998,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            89 => 
+            89 =>
             array (
                 'id' => 90,
                 'bridge_id' => 156,
@@ -1009,7 +1009,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            90 => 
+            90 =>
             array (
                 'id' => 91,
                 'bridge_id' => 152,
@@ -1020,7 +1020,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            91 => 
+            91 =>
             array (
                 'id' => 92,
                 'bridge_id' => 151,
@@ -1031,7 +1031,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            92 => 
+            92 =>
             array (
                 'id' => 93,
                 'bridge_id' => 147,
@@ -1042,7 +1042,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            93 => 
+            93 =>
             array (
                 'id' => 94,
                 'bridge_id' => 145,
@@ -1053,7 +1053,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            94 => 
+            94 =>
             array (
                 'id' => 95,
                 'bridge_id' => 144,
@@ -1064,7 +1064,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            95 => 
+            95 =>
             array (
                 'id' => 96,
                 'bridge_id' => 143,
@@ -1075,7 +1075,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            96 => 
+            96 =>
             array (
                 'id' => 97,
                 'bridge_id' => 142,
@@ -1086,7 +1086,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            97 => 
+            97 =>
             array (
                 'id' => 98,
                 'bridge_id' => 141,
@@ -1097,7 +1097,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            98 => 
+            98 =>
             array (
                 'id' => 99,
                 'bridge_id' => 140,
@@ -1108,7 +1108,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            99 => 
+            99 =>
             array (
                 'id' => 100,
                 'bridge_id' => 139,
@@ -1119,7 +1119,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            100 => 
+            100 =>
             array (
                 'id' => 101,
                 'bridge_id' => 138,
@@ -1130,7 +1130,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            101 => 
+            101 =>
             array (
                 'id' => 102,
                 'bridge_id' => 137,
@@ -1141,7 +1141,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'TARNFR2L',
                 'process_time' => '24:00:00',
             ),
-            102 => 
+            102 =>
             array (
                 'id' => 103,
                 'bridge_id' => 136,
@@ -1152,7 +1152,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            103 => 
+            103 =>
             array (
                 'id' => 104,
                 'bridge_id' => 135,
@@ -1163,7 +1163,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'BNUGFR21',
                 'process_time' => '24:00:00',
             ),
-            104 => 
+            104 =>
             array (
                 'id' => 105,
                 'bridge_id' => 134,
@@ -1174,7 +1174,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'LAYDFR2W',
                 'process_time' => '24:00:00',
             ),
-            105 => 
+            105 =>
             array (
                 'id' => 106,
                 'bridge_id' => 133,
@@ -1185,7 +1185,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            106 => 
+            106 =>
             array (
                 'id' => 107,
                 'bridge_id' => 132,
@@ -1196,7 +1196,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            107 => 
+            107 =>
             array (
                 'id' => 108,
                 'bridge_id' => 131,
@@ -1207,7 +1207,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            108 => 
+            108 =>
             array (
                 'id' => 109,
                 'bridge_id' => 130,
@@ -1218,7 +1218,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            109 => 
+            109 =>
             array (
                 'id' => 110,
                 'bridge_id' => 129,
@@ -1229,7 +1229,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            110 => 
+            110 =>
             array (
                 'id' => 111,
                 'bridge_id' => 128,
@@ -1240,7 +1240,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'FTNOFRP1',
                 'process_time' => '24:00:00',
             ),
-            111 => 
+            111 =>
             array (
                 'id' => 112,
                 'bridge_id' => 126,
@@ -1251,7 +1251,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            112 => 
+            112 =>
             array (
                 'id' => 113,
                 'bridge_id' => 122,
@@ -1262,7 +1262,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'BOUSFRPP',
                 'process_time' => '24:00:00',
             ),
-            113 => 
+            113 =>
             array (
                 'id' => 114,
                 'bridge_id' => 120,
@@ -1273,7 +1273,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            114 => 
+            114 =>
             array (
                 'id' => 115,
                 'bridge_id' => 119,
@@ -1284,7 +1284,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            115 => 
+            115 =>
             array (
                 'id' => 116,
                 'bridge_id' => 118,
@@ -1295,7 +1295,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            116 => 
+            116 =>
             array (
                 'id' => 117,
                 'bridge_id' => 117,
@@ -1306,7 +1306,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            117 => 
+            117 =>
             array (
                 'id' => 118,
                 'bridge_id' => 116,
@@ -1317,7 +1317,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            118 => 
+            118 =>
             array (
                 'id' => 119,
                 'bridge_id' => 115,
@@ -1328,7 +1328,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            119 => 
+            119 =>
             array (
                 'id' => 120,
                 'bridge_id' => 114,
@@ -1339,7 +1339,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            120 => 
+            120 =>
             array (
                 'id' => 121,
                 'bridge_id' => 113,
@@ -1350,7 +1350,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            121 => 
+            121 =>
             array (
                 'id' => 122,
                 'bridge_id' => 80,
@@ -1361,7 +1361,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            122 => 
+            122 =>
             array (
                 'id' => 123,
                 'bridge_id' => 79,
@@ -1372,7 +1372,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            123 => 
+            123 =>
             array (
                 'id' => 124,
                 'bridge_id' => 78,
@@ -1383,7 +1383,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            124 => 
+            124 =>
             array (
                 'id' => 125,
                 'bridge_id' => 77,
@@ -1394,7 +1394,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            125 => 
+            125 =>
             array (
                 'id' => 126,
                 'bridge_id' => 76,
@@ -1405,7 +1405,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            126 => 
+            126 =>
             array (
                 'id' => 127,
                 'bridge_id' => 75,
@@ -1416,7 +1416,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            127 => 
+            127 =>
             array (
                 'id' => 128,
                 'bridge_id' => 74,
@@ -1427,7 +1427,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            128 => 
+            128 =>
             array (
                 'id' => 129,
                 'bridge_id' => 73,
@@ -1438,7 +1438,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            129 => 
+            129 =>
             array (
                 'id' => 130,
                 'bridge_id' => 72,
@@ -1449,7 +1449,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            130 => 
+            130 =>
             array (
                 'id' => 131,
                 'bridge_id' => 71,
@@ -1460,7 +1460,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            131 => 
+            131 =>
             array (
                 'id' => 132,
                 'bridge_id' => 70,
@@ -1471,7 +1471,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            132 => 
+            132 =>
             array (
                 'id' => 133,
                 'bridge_id' => 69,
@@ -1482,7 +1482,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            133 => 
+            133 =>
             array (
                 'id' => 134,
                 'bridge_id' => 66,
@@ -1493,7 +1493,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            134 => 
+            134 =>
             array (
                 'id' => 135,
                 'bridge_id' => 65,
@@ -1504,7 +1504,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            135 => 
+            135 =>
             array (
                 'id' => 136,
                 'bridge_id' => 64,
@@ -1515,7 +1515,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            136 => 
+            136 =>
             array (
                 'id' => 137,
                 'bridge_id' => 63,
@@ -1526,7 +1526,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            137 => 
+            137 =>
             array (
                 'id' => 138,
                 'bridge_id' => 62,
@@ -1537,7 +1537,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            138 => 
+            138 =>
             array (
                 'id' => 139,
                 'bridge_id' => 61,
@@ -1548,7 +1548,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            139 => 
+            139 =>
             array (
                 'id' => 140,
                 'bridge_id' => 60,
@@ -1559,7 +1559,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            140 => 
+            140 =>
             array (
                 'id' => 141,
                 'bridge_id' => 59,
@@ -1570,7 +1570,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            141 => 
+            141 =>
             array (
                 'id' => 142,
                 'bridge_id' => 58,
@@ -1581,7 +1581,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            142 => 
+            142 =>
             array (
                 'id' => 143,
                 'bridge_id' => 57,
@@ -1592,7 +1592,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            143 => 
+            143 =>
             array (
                 'id' => 144,
                 'bridge_id' => 56,
@@ -1603,7 +1603,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            144 => 
+            144 =>
             array (
                 'id' => 145,
                 'bridge_id' => 55,
@@ -1614,7 +1614,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            145 => 
+            145 =>
             array (
                 'id' => 146,
                 'bridge_id' => 54,
@@ -1625,7 +1625,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            146 => 
+            146 =>
             array (
                 'id' => 147,
                 'bridge_id' => 53,
@@ -1636,7 +1636,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            147 => 
+            147 =>
             array (
                 'id' => 148,
                 'bridge_id' => 52,
@@ -1647,7 +1647,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            148 => 
+            148 =>
             array (
                 'id' => 149,
                 'bridge_id' => 51,
@@ -1658,7 +1658,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            149 => 
+            149 =>
             array (
                 'id' => 150,
                 'bridge_id' => 50,
@@ -1669,7 +1669,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            150 => 
+            150 =>
             array (
                 'id' => 151,
                 'bridge_id' => 49,
@@ -1680,7 +1680,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            151 => 
+            151 =>
             array (
                 'id' => 152,
                 'bridge_id' => 48,
@@ -1691,7 +1691,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            152 => 
+            152 =>
             array (
                 'id' => 153,
                 'bridge_id' => 40,
@@ -1702,7 +1702,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPPPG',
                 'process_time' => '24:00:00',
             ),
-            153 => 
+            153 =>
             array (
                 'id' => 154,
                 'bridge_id' => 39,
@@ -1713,7 +1713,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            154 => 
+            154 =>
             array (
                 'id' => 155,
                 'bridge_id' => 38,
@@ -1724,7 +1724,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            155 => 
+            155 =>
             array (
                 'id' => 156,
                 'bridge_id' => 37,
@@ -1735,7 +1735,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPLIL',
                 'process_time' => '24:00:00',
             ),
-            156 => 
+            156 =>
             array (
                 'id' => 157,
                 'bridge_id' => 36,
@@ -1746,7 +1746,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPMTZ',
                 'process_time' => '24:00:00',
             ),
-            157 => 
+            157 =>
             array (
                 'id' => 158,
                 'bridge_id' => 35,
@@ -1757,7 +1757,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            158 => 
+            158 =>
             array (
                 'id' => 159,
                 'bridge_id' => 34,
@@ -1768,7 +1768,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            159 => 
+            159 =>
             array (
                 'id' => 160,
                 'bridge_id' => 32,
@@ -1779,7 +1779,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            160 => 
+            160 =>
             array (
                 'id' => 161,
                 'bridge_id' => 31,
@@ -1790,7 +1790,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPNAN',
                 'process_time' => '24:00:00',
             ),
-            161 => 
+            161 =>
             array (
                 'id' => 162,
                 'bridge_id' => 30,
@@ -1801,7 +1801,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPBDX',
                 'process_time' => '24:00:00',
             ),
-            162 => 
+            162 =>
             array (
                 'id' => 163,
                 'bridge_id' => 28,
@@ -1812,7 +1812,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            163 => 
+            163 =>
             array (
                 'id' => 164,
                 'bridge_id' => 25,
@@ -1823,7 +1823,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPTLS',
                 'process_time' => '24:00:00',
             ),
-            164 => 
+            164 =>
             array (
                 'id' => 165,
                 'bridge_id' => 23,
@@ -1834,7 +1834,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            165 => 
+            165 =>
             array (
                 'id' => 166,
                 'bridge_id' => 21,
@@ -1845,7 +1845,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            166 => 
+            166 =>
             array (
                 'id' => 167,
                 'bridge_id' => 20,
@@ -1856,7 +1856,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            167 => 
+            167 =>
             array (
                 'id' => 168,
                 'bridge_id' => 18,
@@ -1867,7 +1867,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => 'CCBPFRPPMTG',
                 'process_time' => '24:00:00',
             ),
-            168 => 
+            168 =>
             array (
                 'id' => 169,
                 'bridge_id' => 17,
@@ -1878,7 +1878,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            169 => 
+            169 =>
             array (
                 'id' => 170,
                 'bridge_id' => 16,
@@ -1889,7 +1889,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            170 => 
+            170 =>
             array (
                 'id' => 171,
                 'bridge_id' => 15,
@@ -1900,7 +1900,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            171 => 
+            171 =>
             array (
                 'id' => 172,
                 'bridge_id' => 14,
@@ -1911,7 +1911,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            172 => 
+            172 =>
             array (
                 'id' => 173,
                 'bridge_id' => 6,
@@ -1922,7 +1922,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            173 => 
+            173 =>
             array (
                 'id' => 174,
                 'bridge_id' => 5,
@@ -1933,7 +1933,7 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
-            174 => 
+            174 =>
             array (
                 'id' => 175,
                 'bridge_id' => 4,
@@ -1944,8 +1944,19 @@ class BanksTableSeeder extends Seeder
                 'bic' => '',
                 'process_time' => '24:00:00',
             ),
+            175 =>
+                array (
+                    'id' => 176,
+                    'bridge_id' => 0,
+                    'name' => 'FINBANK ',
+                    'logo' => config('app.url').'/storage/logo/logo_carre.png',
+                    'primary_color' => 'DB0029',
+                    'country' => 'FR',
+                    'bic' => 'FINFRPPXXX',
+                    'process_time' => '02:00:00',
+                ),
         ));
-        
-        
+
+
     }
 }

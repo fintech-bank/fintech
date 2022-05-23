@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Agent;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerTransaction;
+use App\Models\Customer\CustomerWallet;
 use Illuminate\Http\Request;
 
 class CustomerTransactionController extends Controller
@@ -34,10 +35,17 @@ class CustomerTransactionController extends Controller
     public function confirm($customer, $wallet, $transaction)
     {
         try {
-            CustomerTransaction::find($transaction)->update([
-                'confirmed' => true,
-                'confirmed_at' => now()
-            ]);
+            $transaction = CustomerTransaction::find($transaction);
+            $transaction->confirmed = true;
+            $transaction->confirmed_at = now();
+            $transaction->save();
+
+
+
+            $wallet = CustomerWallet::find($wallet);
+            $wallet->balance_coming = $wallet->balance_coming - $transaction->amount;
+            $wallet->balance_actual = $wallet->balance_actual + $transaction->amount;
+            $wallet->save();
 
             return response()->json();
         }catch (\Exception $exception) {

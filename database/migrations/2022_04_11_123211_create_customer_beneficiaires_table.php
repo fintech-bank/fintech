@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid();
             $table->enum("type", ["corporate", "retail"])->default('retail');
             $table->string('company')->nullable();
-            $table->enum("civility", ["M", "MME"])->nullable();
+            $table->enum("civility", ["M", "MME", "MLLE"])->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('currency')->default('EUR');

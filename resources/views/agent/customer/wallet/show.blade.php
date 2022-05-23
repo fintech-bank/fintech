@@ -752,7 +752,7 @@
                             <select class="form-select form-select-solid" id="customer_beneficiaire_id" name="customer_beneficiaire_id" data-control="select2" data-dropdown-parent="#add_virement" data-placeholder="Bénéficiaire" data-allow-clear="true">
                                 <option></option>
                                 @foreach($wallet->customer->beneficiaires as $beneficiaire)
-                                    <option value="{{ $beneficiaire->id }}">{{ \App\Helper\CustomerTransferHelper::getNameBeneficiaire($beneficiaire) }}</option>
+                                    <option value="{{ $beneficiaire->id }}">{{ \App\Helper\CustomerTransferHelper::getNameBeneficiaire($beneficiaire) }} @if($beneficiaire->titulaire == true) (Compte Personnel) @endif </option>
                                 @endforeach
                             </select>
                         </div>
