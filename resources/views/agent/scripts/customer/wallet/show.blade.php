@@ -2,6 +2,7 @@
     let tables = {
         tableTransaction: $("#liste_transactions"),
         tableTransfers: $("#liste_transfers"),
+        tableBeneficiaire: $("#liste_beneficiaires"),
     }
 
     let elements = {
@@ -38,6 +39,16 @@
         pageLength: 10,
         columnDefs: [
             {orderable: false, targets: 4},
+        ],
+
+    });
+
+    let listeBeneficiaire = tables.tableBeneficiaire.DataTable({
+        info: false,
+        order: [],
+        pageLength: 10,
+        columnDefs: [
+            {orderable: false, targets: 3},
         ],
 
     });
@@ -92,6 +103,12 @@
             listeTransfer.search(e.target.value).draw();
         });
     }
+    let handleSearchDatatableBeneficiaire = () => {
+        const filterSearch = document.querySelector('[data-kt-beneficiaire-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            listeBeneficiaire.search(e.target.value).draw();
+        });
+    }
 
     // Handle status filter dropdown
     let handleStatusFilter = () => {
@@ -124,6 +141,16 @@
                 value = '';
             }
             listeTransfer.column(2).search(value).draw();
+        });
+    }
+    let handleTypeFilterBeneficiaire = () => {
+        const filterStatus = document.querySelector('[data-kt-beneficiaire-filter="type"]');
+        $(filterStatus).on('change', e => {
+            let value = e.target.value;
+            if (value === 'all') {
+                value = '';
+            }
+            listeBeneficiaire.column(1).search(value).draw();
         });
     }
 
@@ -634,9 +661,11 @@
     initDateRange()
     handleSearchDatatable()
     handleSearchDatatableTransfers()
+    handleSearchDatatableBeneficiaire()
     handleStatusFilter()
     handleStatusFilterTransfers()
     handleTypeFilterTransfers()
+    handleTypeFilterBeneficiaire()
     handleClearFlatpickr()
     initChartSummary()
 </script>

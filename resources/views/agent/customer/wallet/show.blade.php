@@ -619,7 +619,113 @@
                                     </div>
 
                                     <div class="tab-pane fade" id="beneficiaires" role="tabpanel">
-                                        ...
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <!--begin::Search-->
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <input type="text" data-kt-beneficiaire-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Rechercher un bénéficiaire" />
+                                            </div>
+                                            <!--end::Search-->
+                                            <div class="d-flex flex-stack">
+                                                <div class="w-100 mw-150px me-3">
+                                                    <!--begin::Select2-->
+                                                    <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Type de bénéficiaire" data-kt-beneficiaire-filter="type">
+                                                        <option></option>
+                                                        <option value="all">Tous</option>
+                                                        <option value="Particulier">Particulier</option>
+                                                        <option value="Professionnel">Professionnel</option>
+                                                    </select>
+                                                    <!--end::Select2-->
+                                                </div>
+                                                <!--begin::Add product-->
+                                                <a href="#add_beneficiaire" class="btn btn-primary" data-bs-toggle="modal">Nouveau bénéficiaire</a>
+                                                <!--end::Add product-->
+                                            </div>
+                                        </div>
+                                        <!--begin::Table-->
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_beneficiaires">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                            <!--begin::Table row-->
+                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                <th class="">Type</th>
+                                                <th class="">Nom / Raison Social</th>
+                                                <th class="">Domiciliation bancaire</th>
+                                                <th class="text-end min-w-100px">Actions</th>
+                                            </tr>
+                                            <!--end::Table row-->
+                                            </thead>
+                                            <!--end::Table head-->
+                                            <!--begin::Table body-->
+                                            <tbody class="fw-bold text-gray-600">
+                                            <!--begin::Table row-->
+                                            @foreach($wallet->customer->beneficiaires as $beneficiaire)
+                                                <tr>
+                                                    <td data-order="{{ $beneficiaire->type }}">
+                                                        @if($beneficiaire->type == 'retail')
+                                                            Particulier
+                                                        @else
+                                                            Professionnel
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        {{ \App\Helper\CustomerTransferHelper::getNameBeneficiaire($beneficiaire) }}
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex flex-column">
+                                                            <div class="d-flex flex-row">
+                                                                <img src="{{ $beneficiaire->bank->logo }}" height="16" class="img-responsive me-5">
+                                                                <span class="fs-8">{{ $beneficiaire->bank->name }}</span>
+                                                            </div>
+                                                            <div class="">{{ $beneficiaire->iban }}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-circle btn-outline btn-outline-bank" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px"><i class="fa-solid fa-pencil me-3"></i> Actions</button>
+                                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px" data-kt-menu="true">
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Actions</div>
+                                                            </div>
+                                                            <!--end::Menu item-->
+
+                                                            <!--begin::Menu separator-->
+                                                            <div class="separator mb-3 opacity-75"></div>
+                                                            <!--end::Menu separator-->
+
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="#" class="menu-link px-3 btnEditBeneficiaire" data-beneficiaire="{{ $beneficiaire->id }}">
+                                                                    Editer le bénéficiaire
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+
+                                                            <!--begin::Menu item-->
+                                                            <div class="menu-item px-3">
+                                                                <a href="#" class="menu-link px-3 btnDeleteBeneficiaire" data-beneficiaire="{{ $beneficiaire->id }}">
+                                                                    Supprimer le bénéficiaire
+                                                                </a>
+                                                            </div>
+                                                            <!--end::Menu item-->
+
+                                                        </div>
+                                                        <!--end::Menu-->
+                                                    </td>
+                                                </tr>
+                                                <!--end::Table row-->
+                                            @endforeach
+                                            <!--end::Table row-->
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
                                     </div>
                                 </div>
                             </div>
