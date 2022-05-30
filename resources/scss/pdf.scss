@@ -1,0 +1,197 @@
+body {
+    font-family: Poppins, Arial, 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+}
+
+footer {
+    font-size: 8px;
+}
+
+.body {
+    background-color: #dfe0e0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius-radius: 5px;
+}
+
+.body.white {
+    background-color: #ffffff;
+}
+.page-break {
+    page-break-after: always;
+}
+header {
+    padding: 15px;
+    display: inline-block;
+
+    .date {
+        font-size: 10px;
+        position: absolute;
+        right: 10px;
+        top: 40px;
+    }
+
+    .address_customer {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        position: absolute;
+        right: 130px;
+        top: 90px;
+    }
+
+    .logo img {
+        width: 150px;
+        position: relative;
+    }
+
+    .banner-title {
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        background-color: #ff9d00;
+        color: white;
+        width: 750px;
+        position: absolute;
+        text-align: left;
+        left: 245px;
+        top: 0;
+        font-weight: bold;
+        padding: 10px
+    }
+
+    .banner-title-content {
+        font-size: 30px;
+    }
+
+    .letter-code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 10px;
+        position: absolute;
+        right: 10px;
+        top: 0
+    }
+}
+
+.alert {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ff9d00;
+    text-align: center;
+}
+
+.container {
+    padding: 15px;
+    display: inline-block;
+    border-radius: 5px;
+
+    img {
+        width: 150px;
+        position: relative;
+    }
+
+    .addressText {
+        width: 300px;
+        position: absolute;
+        text-align: left;
+        left: 185px;
+        top: 30px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #ffffff;
+    }
+
+    .headingText {
+        position: absolute;
+        text-align: right;
+        right: 5px;
+        font-weight: bold;
+        font-size: 20px;
+        color: #ffffff;
+    }
+}
+
+.text-center {
+    text-align: center;
+}
+
+.fs-1 {
+    font-size: 0.5rem;
+    text-align: center;
+}
+
+.fs-2 {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.fs-3 {
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.fs-4 {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.util {
+    width: 70%;
+    border: 3px dashed #ff7b22;
+    border-radius: 20px;
+    margin: 0 45px;
+    padding: 10px;
+}
+
+.table-global {
+    width: 90%;
+    margin: 0 auto;
+    border: 3px solid #ff7b22;
+    border-radius: 20px;
+}
+
+.my-10 {
+    margin-top: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
+}
+
+@for $i from 1 through 100 {
+    .mb-#{$i} {
+        margin-bottom: 1px*$i;
+    }
+}
+
+:root {
+    --primary: #ff7b22;
+    --secondary: #1794d7;
+    --warning: #dec981;
+    --danger: #ff3041;
+    --success: #3cc700;
+    --info: #7230b8;
+    --bank: #002f87;
+}
+
+span.text-primary { color: var(--primary) !important; }
+span.text-secondary { color: var(--secondary) !important; }
+span.text-warning { color: var(--warning) !important; }
+span.text-danger { color: var(--danger) !important; }
+span.text-success { color: var(--success) !important; }
+span.text-info { color: var(--info) !important; }
+span.text-bank { color: var(--bank) !important; }
+
+i.icon-primary { color: var(--primary) !important; }
+i.icon-secondary { color: var(--secondary) !important; }
+i.icon-warning { color: var(--warning) !important; }
+i.icon-danger { color: var(--danger) !important; }
+i.icon-success { color: var(--success) !important; }
+i.icon-info { color: var(--info) !important; }
+i.icon-bank { color: var(--bank) !important; }
+
+.bg-primary { color: var(--primary) !important; }
+.bg-secondary { color: var(--secondary) !important; }
+.bg-warning { color: var(--warning) !important; }
+.bg-danger { color: var(--danger) !important; }
+.bg-success { color: var(--success) !important; }
+.bg-info { color: var(--info) !important; }
+.bg-bank { color: var(--bank) !important; }
+
+@import "base/separator";
+@import "base/border";

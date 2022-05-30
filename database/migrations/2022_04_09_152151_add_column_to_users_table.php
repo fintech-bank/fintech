@@ -33,6 +33,8 @@ return new class extends Migration
             $table->removeColumn('admin');
             $table->removeColumn('agent');
             $table->removeColumn('customer');
+            $table->removeColumn('identifiant');
+            $table->removeColumn('last_seen');
         });
     }
 };

@@ -1,0 +1,17 @@
+.separator {
+    display: block;
+    height: 0;
+    border-bottom: 1px solid #EFF2F5;
+
+    .separator-dotted {
+        border-bottom-style: dotted;
+    }
+
+    .separator-dashed {
+        border-bottom-style: dashed;
+    }
+
+    .separator-double {
+        border-bottom-style: double;
+    }
+}

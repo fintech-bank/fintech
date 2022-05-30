@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Core\Agency;
 use App\Models\Core\Package;
 use App\Models\Core\TicketConversation;
 use App\Models\Customer\Customer;
@@ -56,6 +57,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(TicketConversation::class);
     }
+
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class);
+    }
+
 
 
 }

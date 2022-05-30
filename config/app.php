@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'fr_FR',
 
     /*
     |--------------------------------------------------------------------------
@@ -196,6 +196,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Insee' => NSpehler\LaravelInsee\Facades\Insee::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
+        'PDF' => \Barryvdh\DomPDF\Facade\Pdf::class,
     ])->toArray(),
 
 ];

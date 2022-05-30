@@ -415,4 +415,43 @@ if(document.querySelector('.ckeditor')) {
     })
 }
 
+document.querySelectorAll('.datepick').forEach(dat => {
+    $(dat).flatpickr({
+        locale: 'fr'
+    });
+})
+
+let selects = document.querySelectorAll('[data-control="select2"]')
+let inputMasks = document.querySelectorAll('.maskinput')
+
+selects.forEach(select => {
+    if(select.dataset.uri) {
+        console.log($(select))
+        $(select).select2({
+            ajax:{
+                url: select.dataset.uri,
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    console.log(data)
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
+        })
+    }
+})
+
+inputMasks.forEach(input => {
+    Inputmask({
+        "mask": input.dataset.mask
+    }).mask(input)
+})
+
 initSW();
+
+
+
+

@@ -4,6 +4,7 @@ namespace App\Models\Core;
 
 use App\Helper\CountryHelper;
 use App\Models\Document\DocumentTransmiss;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,11 @@ class Agency extends Model
     public function documents()
     {
         return $this->hasMany(DocumentTransmiss::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
     }
 
     public static function boot()

@@ -17,7 +17,7 @@ class Customer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function package()
@@ -73,6 +73,21 @@ class Customer extends Model
     public function transmisses()
     {
         return $this->hasMany(DocumentTransmiss::class);
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(User::class, 'agent_id');
+    }
+
+    public function prets()
+    {
+        return $this->hasMany(CustomerPret::class);
+    }
+
+    public function epargnes()
+    {
+        return $this->hasMany(CustomerEpargne::class);
     }
 
 

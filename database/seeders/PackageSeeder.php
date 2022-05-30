@@ -20,5 +20,17 @@ class PackageSeeder extends Seeder
             'price' => 0,
             'type_prlv' => 'mensual',
         ]);
+
+        Package::query()->create([
+            'name' => "Gold",
+            'price' => 4.99,
+            'type_prlv' => 'mensual',
+        ]);
+
+        Package::query()->create([
+            'name' => "Platine",
+            'price' => 9.99,
+            'type_prlv' => 'mensual',
+        ]);
     }
 }

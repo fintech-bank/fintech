@@ -2580,6 +2580,37 @@ if (document.querySelector('.ckeditor')) {
   });
 }
 
+document.querySelectorAll('.datepick').forEach(function (dat) {
+  $(dat).flatpickr({
+    locale: 'fr'
+  });
+});
+var selects = document.querySelectorAll('[data-control="select2"]');
+var inputMasks = document.querySelectorAll('.maskinput');
+selects.forEach(function (select) {
+  if (select.dataset.uri) {
+    console.log($(select));
+    $(select).select2({
+      ajax: {
+        url: select.dataset.uri,
+        dataType: 'json',
+        delay: 250,
+        processResults: function processResults(data) {
+          console.log(data);
+          return {
+            results: data
+          };
+        },
+        cache: true
+      }
+    });
+  }
+});
+inputMasks.forEach(function (input) {
+  Inputmask({
+    "mask": input.dataset.mask
+  }).mask(input);
+});
 initSW();
 
 /***/ }),
@@ -19871,6 +19902,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/scss/pdf.scss":
+/*!*********************************!*\
+  !*** ./resources/scss/pdf.scss ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -20176,6 +20220,7 @@ process.umask = function() { return 0; };
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/global/js/app": 0,
+/******/ 			"css/pdf": 0,
 /******/ 			"css/account": 0,
 /******/ 			"css/admin": 0,
 /******/ 			"css/front": 0,
@@ -20229,11 +20274,12 @@ process.umask = function() { return 0; };
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/front.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/admin.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/account.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/front.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/admin.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/account.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app"], () => (__webpack_require__("./resources/scss/pdf.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

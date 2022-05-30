@@ -23,7 +23,15 @@ return new class extends Migration
             $table->string('postal');
             $table->string('city');
             $table->string('country', 2);
+            $table->string('phone');
             $table->boolean('online')->default(false);
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignId('agency_id')->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 

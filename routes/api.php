@@ -14,6 +14,40 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/geo/countries', function () {
+    $result = \App\Helper\GeoHelper::getAllCountries();
+    $json = [];
+    foreach ($result as $item) {
+        $json[] = [
+            'id' => $item->iso,
+            'name' => $item->name
+        ];
+    }
+
+    return response()->json($json);
 });
+
+Route::post('/geo/cities', [\App\Http\Controllers\Api\GeoController::class, 'cities']);
+Route::get('/geo/cities/{postal}', [\App\Http\Controllers\Api\GeoController::class, 'citiesByPostal']);
+
+Route::prefix('customer')->group(function () {
+    Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
+});
+
+Route::prefix('wallet')->group(function () {
+    Route::get('{id}/chartSummary', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'chartSummary']);
+});
+
+Route::prefix('transaction')->group(function () {
+    Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'info']);
+});
+
+Route::prefix('transfer')->group(function () {
+    Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransferController::class, 'info']);
+});
+
+Route::prefix('bank')->group(function () {
+    Route::get('{bank_id}', [\App\Http\Controllers\Api\Agent\BankController::class, 'info']);
+});
+
+Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);

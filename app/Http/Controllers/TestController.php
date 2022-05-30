@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\AgencyHelper;
-use App\Helper\CountryHelper;
+use App\Helper\CustomerCreditCard;
+use App\Helper\DocumentFile;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerWallet;
 use Auth;
+use IbanGenerator\Generator;
 use Illuminate\Http\Request;
+
 
 class TestController extends Controller
 {
     public function test()
     {
-        dd(\request()->user());
+        $calc = CustomerWallet::where('type', 'compte')->orWhere('type', 'epargne')->where('status', '!=', 'closed')->sum('balance_actual');
+
+        dd(eur($calc));
+
     }
 
     public function home()

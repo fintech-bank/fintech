@@ -6,14 +6,22 @@
     "license": "MIT",
     "require": {
         "php": "8.*",
+        "alimranahmed/laraocr": "^1.2",
         "arcanedev/log-viewer": "^9.0",
+        "authy/php": "^4.0@RC",
+        "aws/aws-sdk-php-laravel": "^3.7",
         "barryvdh/laravel-dompdf": "^1.0",
         "binarytorch/larecipe": "^2.5",
         "creativeorange/gravatar": "~1.0",
         "diglactic/laravel-breadcrumbs": "^7.1",
         "fruitcake/laravel-cors": "^3.0",
+        "globalcitizen/php-iban": "^4.1",
+        "google/cloud-vision": "^1.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/validation": "^3.1",
+        "jschaedl/iban": "^1.3",
+        "kylekatarnls/vicopo": "^1.2",
+        "laravel-notification-channels/authy": "^9.1",
         "laravel-notification-channels/twilio": "^3.2",
         "laravel-notification-channels/webpush": "^7.0",
         "laravel/fortify": "^1.12",
@@ -21,13 +29,18 @@
         "laravel/horizon": "^5.9",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "mmockelyn/iban-generator": "^1.0",
         "mmockelyn/laravel-insee": "dev-master",
+        "mmockelyn/laravel-mail-viewer": "^8.0",
         "mmockelyn/laravel-totem": "^8.4",
+        "orangehill/iseed": "^3.0",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^7.0",
         "rockett/weasyprint": "^6.1",
         "rplansky/credit-card": "dev-master",
         "spatie/laravel-slack-alerts": "^1.1",
+        "stripe/stripe-php": "^7.125",
+        "twilio/sdk": "^6.37",
         "viacreative/sudo-su": "^1.1"
     },
     "require-dev": {
@@ -79,6 +92,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "rc",
+    "prefer-stable": false
 }
