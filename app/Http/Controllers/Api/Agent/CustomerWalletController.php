@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer\CustomerBeneficiaire;
 use App\Models\Customer\CustomerWallet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -63,5 +64,13 @@ class CustomerWalletController extends Controller
             'decouvert' => $decouvert
         ]);
 
+    }
+
+    public function getBeneficiaire(Request $request, $id)
+    {
+        $beneficiaire = CustomerBeneficiaire::query()->find($id);
+        $wallet = CustomerWallet::query()->find($request->get('wallet'));
+
+        return response()->json(['beneficiaire' => $beneficiaire, 'url' => route('agent.customer.wallet.beneficiaire.update', [$wallet->customer_id, $wallet->id, $beneficiaire->id])]);
     }
 }

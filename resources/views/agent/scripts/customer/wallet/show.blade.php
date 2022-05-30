@@ -14,11 +14,14 @@
         btnShowTransfer: document.querySelectorAll('.btnShowTransfer'),
         retailField: document.querySelector("#add_beneficiaire").querySelector('#retailField'),
         corporateField: document.querySelector("#add_beneficiaire").querySelector('#corporateField'),
+        btnEditBeneficiaires: document.querySelectorAll('.btnEditBeneficiaire'),
+        btnDeleteBeneficiaires: document.querySelectorAll('.btnDeleteBeneficiaire'),
     }
 
     let modals = {
         modalShowTransaction: document.querySelector('#show_transaction'),
         modalShowTransfer: document.querySelector('#show_transfer'),
+        modalEditBeneficiaire: document.querySelector('#edit_beneficiaire')
     }
 
     let flatpickr;
@@ -572,6 +575,71 @@
             })
         })
     }
+    if(elements.btnEditBeneficiaires) {
+        elements.btnEditBeneficiaires.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+
+                $.ajax({
+                    url: '/api/beneficiaire/'+e.target.dataset.beneficiaire,
+                    data: {"wallet": e.target.dataset.wallet},
+                    success: data => {
+                        console.log(data)
+                        let modal = new bootstrap.Modal(modals.modalEditBeneficiaire)
+
+                        modals.modalEditBeneficiaire.querySelector('#formEditBeneficiaire').setAttribute('href', data.url)
+
+                        modals.modalEditBeneficiaire.querySelector('[name="company"]').value = data.beneficiaire.company
+                        modals.modalEditBeneficiaire.querySelector('[name="firstname"]').value = data.beneficiaire.firstname
+                        modals.modalEditBeneficiaire.querySelector('[name="lastname"]').value = data.beneficiaire.lastname
+                        modals.modalEditBeneficiaire.querySelector('[name="bankname"]').value = data.beneficiaire.bankname
+                        modals.modalEditBeneficiaire.querySelector('[name="bic"]').value = data.beneficiaire.bic
+                        modals.modalEditBeneficiaire.querySelector('[name="iban"]').value = data.beneficiaire.iban
+
+                        if(data.beneficiaire.titulaire == 1) {
+                            modals.modalEditBeneficiaire.querySelector('[name="titulaire"]').setAttribute('checked', 'checked')
+                        }
+
+                        modal.show()
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnDeleteBeneficiaires) {
+        elements.btnDeleteBeneficiaires.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: 'DELETE',
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        if(data.state == 'success') {
+                            e.target.parentNode.parentNode.parentNode.parentNode.classList.add('d-none')
+                            toastr.success("Le bénéficiaire à été supprimé", null, {
+                                "positionClass": "toastr-bottom-right",
+                            })
+                        } else {
+                            toastr.warning("Le bénéficiaire à actuellement à ou plusieurs virements en cours d'éxécutions", "Suppression interdite", {
+                                "positionClass": "toastr-bottom-right",
+                            })
+                        }
+                    },
+                    error: err => {
+                        console.log(err.responseJSON.error)
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
 
     $("#formAddTransaction").on('submit', e => {
         e.preventDefault()
@@ -715,6 +783,44 @@
                 console.log(data)
                 btn.removeAttr('data-kt-indicator')
                 toastr.success(`Le bénéficiaire à été ajouté`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
+    })
+    $("#formEditBeneficiaire").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formEditBeneficiaire")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le bénéficiaire à été éditer`, null, {
                     "positionClass": "toastr-bottom-right",
                 })
                 setTimeout(() => {

@@ -702,7 +702,7 @@
 
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3 btnEditBeneficiaire" data-beneficiaire="{{ $beneficiaire->id }}">
+                                                                <a href="#" class="menu-link px-3 btnEditBeneficiaire" data-beneficiaire="{{ $beneficiaire->id }}" data-wallet="{{ $wallet->id }}">
                                                                     Editer le bénéficiaire
                                                                 </a>
                                                             </div>
@@ -710,7 +710,7 @@
 
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3 btnDeleteBeneficiaire" data-beneficiaire="{{ $beneficiaire->id }}">
+                                                                <a href="{{ route('agent.customer.wallet.beneficiaire.delete', [$wallet->customer_id, $wallet->id, $beneficiaire->id]) }}" class="menu-link px-3 btnDeleteBeneficiaire" data-beneficiaire="{{ $beneficiaire->id }}">
                                                                     Supprimer le bénéficiaire
                                                                 </a>
                                                             </div>
@@ -1051,7 +1051,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-bank">
-                    <h5 class="modal-title text-white">Modal title</h5>
+                    <h5 class="modal-title text-white">Nouveau bénéficiaire</h5>
 
                     <!--begin::Close-->
                     <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
@@ -1150,6 +1150,111 @@
                             label="Ce compte appartient au client"
                             value="true" />
 
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="edit_beneficiaire">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Edition d'un bénéficiaire</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditBeneficiaire" action="">
+                    @csrf
+                    @method("PUT")
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <h3 class="mb-3">Type de bénéficiaire</h3>
+                            <div class="d-flex flex-row">
+                                <x-form.radio
+                                    name="type"
+                                    value="retail"
+                                    for="type"
+                                    label="Particulier" />
+
+                                <x-form.radio
+                                    name="type"
+                                    value="corporate"
+                                    for="type"
+                                    label="Entreprise" />
+                            </div>
+                        </div>
+                        <div id="corporateField">
+                            <x-form.input
+                                name="company"
+                                type="text"
+                                label="Entreprise" />
+                        </div>
+                        <div id="retailField">
+                            <div class="mb-10">
+                                <h3 class="mb-3">Civilité</h3>
+                                <div class="d-flex flex-row">
+                                    <x-form.radio
+                                        name="civility"
+                                        value="M"
+                                        for="type"
+                                        label="Monsieur"
+                                        checked="false" />
+
+                                    <x-form.radio
+                                        name="civility"
+                                        value="MME"
+                                        for="type"
+                                        label="Madame"
+                                        checked="false" />
+
+                                    <x-form.radio
+                                        name="civility"
+                                        value="MME"
+                                        for="type"
+                                        label="Mademoiselle"
+                                        checked="false" />
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row">
+                                <x-form.input
+                                    name="firstname"
+                                    type="text"
+                                    label="Nom"
+                                    class="me-3" />
+
+                                <x-form.input
+                                    name="lastname"
+                                    type="text"
+                                    label="Prénom" />
+                            </div>
+                        </div>
+                        <div class="separator my-10"></div>
+                        <h3 class="fw-bolder text-bank">Information bancaire</h3>
+                        <input type="hidden" name="bankname">
+                        <x-form.input
+                            name="bic"
+                            type="text"
+                            label="BIC/SWIFT" />
+
+                        <x-form.input
+                            name="iban"
+                            type="text"
+                            label="IBAN" />
+
+                        <x-form.checkbox
+                            name="titulaire"
+                            label="Ce compte appartient au client"
+                            value="true" />
 
                     </div>
 

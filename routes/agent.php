@@ -70,6 +70,8 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
 
                 Route::prefix('beneficiaire')->group(function () {
                     Route::post('/', [\App\Http\Controllers\Agent\CustomerBeneficiaireController::class, 'store'])->name('agent.customer.wallet.beneficiaire.store');
+                    Route::put('{id}', [\App\Http\Controllers\Agent\CustomerBeneficiaireController::class, 'update'])->name('agent.customer.wallet.beneficiaire.update');
+                    Route::delete('{id}', [\App\Http\Controllers\Agent\CustomerBeneficiaireController::class, 'delete'])->name('agent.customer.wallet.beneficiaire.delete');
                 });
             });
         });
