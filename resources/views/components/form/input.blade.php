@@ -1,7 +1,7 @@
 @if($type == 'hidden')
     <input type="hidden" name="{{ $name }}" value="{{ $value }}">
 @else
-    <div class="mb-10">
+    <div class="mb-10 me-3">
         @if($help == true)
             <label for="{{ $name }}" class="{{ $required == true ? 'required' : '' }} form-label">
                 {{ $label }}

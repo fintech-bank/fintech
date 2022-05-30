@@ -31,6 +31,7 @@
         "laravel/tinker": "^2.7",
         "mmockelyn/iban-generator": "^1.0",
         "mmockelyn/laravel-insee": "dev-master",
+        "mmockelyn/laravel-mail-viewer": "^8.0",
         "mmockelyn/laravel-totem": "^8.4",
         "orangehill/iseed": "^3.0",
         "predis/predis": "^1.1",

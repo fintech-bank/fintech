@@ -67,6 +67,10 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                     Route::put('{transfer_id}/accept', [\App\Http\Controllers\Agent\CustomerVirementController::class, 'accept'])->name('customer.wallet.virement.accept');
                     Route::put('{transfer_id}/reject', [\App\Http\Controllers\Agent\CustomerVirementController::class, 'reject'])->name('customer.wallet.virement.reject');
                 });
+
+                Route::prefix('beneficiaire')->group(function () {
+                    Route::post('/', [\App\Http\Controllers\Agent\CustomerBeneficiaireController::class, 'store'])->name('agent.customer.wallet.beneficiaire.store');
+                });
             });
         });
     });

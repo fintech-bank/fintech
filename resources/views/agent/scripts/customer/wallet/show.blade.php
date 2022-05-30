@@ -12,6 +12,8 @@
         btnRejectTransfer: document.querySelectorAll('.btnReject'),
         btnShowTransaction: document.querySelectorAll('.btnShowTransaction'),
         btnShowTransfer: document.querySelectorAll('.btnShowTransfer'),
+        retailField: document.querySelector("#add_beneficiaire").querySelector('#retailField'),
+        corporateField: document.querySelector("#add_beneficiaire").querySelector('#corporateField'),
     }
 
     let modals = {
@@ -306,6 +308,51 @@
             }
         })
     }
+
+    let optionFormatBank = (item) => {
+        if ( !item.id ) {
+            return item.text;
+        }
+
+        var span = document.createElement('span');
+        var imgUrl = item.element.getAttribute('data-bank-logo');
+        var template = '';
+
+        template += '<img src="' + imgUrl + '" class="rounded-circle h-20px me-2" alt="image"/>';
+        template += item.text;
+
+        span.innerHTML = template;
+
+        return $(span);
+    }
+    let checkBankInfo = (item) => {
+        $.ajax({
+            url: '/api/bank/'+item.value,
+            success: data => {
+                document.querySelector('[name="bic"]').value = data.bic
+                document.querySelector('[name="bankname"]').value = data.name
+            }
+        })
+    }
+    let selectTypeBeneficiaire = () => {
+        document.querySelector('#add_beneficiaire').querySelectorAll('[name="type"]').forEach(input => {
+            elements.corporateField.classList.add('d-none')
+            elements.retailField.classList.add('d-none')
+            input.addEventListener('click', e => {
+                console.log(e.target.value)
+
+                if(e.target.value == 'retail') {
+                    elements.corporateField.classList.add('d-none')
+                    elements.retailField.classList.remove('d-none')
+                } else {
+                    elements.corporateField.classList.remove('d-none')
+                    elements.retailField.classList.add('d-none')
+                }
+            })
+        })
+    }
+
+    selectTypeBeneficiaire()
 
 
     elements.btnConfirms.forEach(btn => {
@@ -651,11 +698,55 @@
         })
     })
 
+    $("#formAddBeneficiaire").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formAddBeneficiaire")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le bénéficiaire à été ajouté`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
+    })
+
     $("#permanent_date").flatpickr({
         altInput: true,
         altFormat: "d/m/Y",
         dateFormat: "Y-m-d",
         mode: "multiple"
+    })
+
+    $("#bank_id").select2({
+        templateSelection: optionFormatBank,
+        templateResult: optionFormatBank
     })
 
     initDateRange()
