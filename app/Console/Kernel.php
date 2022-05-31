@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
         $schedule->command('bank:execute call=virement')->description("Execute tache courante banque")->daily();
+        $schedule->command("system:execute call=autoAcceptCreditPrlv")->description("Accept automatiquement les prélèvements créditeurs")->daily();
     }
 
     /**

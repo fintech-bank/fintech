@@ -6,6 +6,7 @@ use App\Helper\CustomerCreditCard;
 use App\Helper\DocumentFile;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
+use App\Services\BankFintech;
 use Auth;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
@@ -15,10 +16,11 @@ class TestController extends Controller
 {
     public function test()
     {
-        $calc = CustomerWallet::where('type', 'compte')->orWhere('type', 'epargne')->where('status', '!=', 'closed')->sum('balance_actual');
-
-        dd(eur($calc));
-
+        $call = new BankFintech();
+        $obj = (object)[
+            "bank_id" => 56
+        ];
+        dd($call->callRefundSepa($obj));
     }
 
     public function home()

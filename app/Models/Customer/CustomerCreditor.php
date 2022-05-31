@@ -5,18 +5,14 @@ namespace App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerSepa extends Model
+class CustomerCreditor extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public $timestamps = false;
 
     public function wallet()
     {
         return $this->belongsTo(CustomerWallet::class, 'customer_wallet_id');
-    }
-
-    public function creditor()
-    {
-        return $this->hasMany(CustomerCreditor::class);
     }
 }

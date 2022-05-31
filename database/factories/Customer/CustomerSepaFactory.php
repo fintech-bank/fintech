@@ -21,7 +21,7 @@ class CustomerSepaFactory extends Factory
         return [
             "uuid" => $this->faker->uuid(),
             "creditor" => $this->faker->company,
-            "number_mandate" => \Str::upper(random_bytes(rand(10,20))),
+            "number_mandate" => \Str::upper(\Str::random(rand(6,15))),
             "status" => $status[rand(0,4)]
         ];
     }
