@@ -15,4 +15,9 @@ class CustomerCreditor extends Model
     {
         return $this->belongsTo(CustomerWallet::class, 'customer_wallet_id');
     }
+
+    public function sepa()
+    {
+        return $this->belongsTo(CustomerSepa::class, 'customer_sepa_id');
+    }
 }

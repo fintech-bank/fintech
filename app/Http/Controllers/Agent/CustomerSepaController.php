@@ -65,4 +65,75 @@ class CustomerSepaController extends Controller
             return response()->json(null, 426);
         }
     }
+
+    public function accept($customer, $wallet, $sepa)
+    {
+        $sepa = CustomerSepa::query()->find($sepa);
+
+        try {
+            if($sepa->amount <= 0) {
+                CustomerTransactionHelper::create(
+                    'debit',
+                    'sepa',
+                    "Prélèvement bancaire - ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    - $sepa->amount,
+                    $sepa->customer_wallet_id,
+                    true,
+                    "Prélèvement bancaire - ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    now());
+            } else {
+                CustomerTransactionHelper::create(
+                    'credit',
+                    'sepa',
+                    "Prélèvement bancaire -  ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    $sepa->amount,
+                    $sepa->customer_wallet_id,
+                    true,
+                    "Prélèvement bancaire -  ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    now());
+            }
+
+            $sepa->status = 'processed';
+            $sepa->save();
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(null, 500);
+        }
+    }
+    public function reject($customer, $wallet, $sepa)
+    {
+        $sepa = CustomerSepa::query()->find($sepa);
+
+        try {
+
+            $sepa->status = 'return';
+            $sepa->save();
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(null, 500);
+        }
+    }
+    public function opposit($customer, $wallet, $sepa)
+    {
+        $sepa = CustomerSepa::find($sepa);
+
+        try {
+
+            $sepa->creditor()->update([
+                'opposit' => true
+            ]);
+
+            $sepa->status = 'rejected';
+            $sepa->save();
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(null, 500);
+        }
+    }
 }

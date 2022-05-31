@@ -903,20 +903,20 @@
                                                     @if($transaction->status == 'waiting')
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3 btnAcceptSepa" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
+                                                            <a href="{{ route('agent.customer.wallet.sepas.accept', [$wallet->customer_id, $wallet->id, $transaction->id]) }}" class="menu-link px-3 btnAcceptSepa" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
                                                                 Accepter le prélèvement
                                                             </a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3 btnRejectSepa" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
+                                                            <a href="{{ route('agent.customer.wallet.sepas.reject', [$wallet->customer_id, $wallet->id, $transaction->id]) }}" class="menu-link px-3 btnRejectSepa" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
                                                                 Rejeter le prélèvement
                                                             </a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3 btnOppositSepa" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
+                                                            <a href="{{ route('agent.customer.wallet.sepas.opposit', [$wallet->customer_id, $wallet->id, $transaction->id]) }}" class="menu-link px-3 btnOppositSepa" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
                                                                 Créer une opposition
                                                             </a>
                                                         </div>

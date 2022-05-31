@@ -687,6 +687,81 @@
             })
         })
     }
+    if(elements.btnAcceptSepas) {
+        elements.btnAcceptSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: "PUT",
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Le Prélèvement ${data.number_mandate} à été accepté`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    },
+                    error: err => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnRejectSepas) {
+        elements.btnRejectSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: "PUT",
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Le Prélèvement ${data.number_mandate} à été rejeté`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    },
+                    error: err => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnOppositSepas) {
+        elements.btnOppositSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: "PUT",
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Une opposition au mandat N° ${data.number_mandate} à été créer`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    },
+                    error: err => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
 
     document.querySelector('[data-kt-sepas-table-filter="search"]').addEventListener("keyup", (function (e) {
         listeSepas.search(e.target.value).draw()
