@@ -92,7 +92,7 @@ class CustomerTransactionFactory extends Factory
         $confirmed = $this->faker->boolean(50) == true;
         return [
             "uuid" => $this->faker->uuid(),
-            "type" => "frais",
+            "type" => "sepa",
             "designation" => "Prélèvement SEPA ".$this->faker->company,
             "amount" => $this->faker->boolean(45) == true ? rand(1,10) : - rand(1,10),
             "confirmed" => $confirmed,

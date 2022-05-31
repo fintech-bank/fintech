@@ -33,6 +33,11 @@ class CustomerWallet extends Model
         return $this->hasMany(CustomerSepa::class);
     }
 
+    public function creditors()
+    {
+        return $this->hasMany(CustomerCreditor::class);
+    }
+
     public function transfers()
     {
         return $this->hasMany(CustomerTransfer::class);

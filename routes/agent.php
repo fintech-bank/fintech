@@ -73,6 +73,14 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                     Route::put('{id}', [\App\Http\Controllers\Agent\CustomerBeneficiaireController::class, 'update'])->name('agent.customer.wallet.beneficiaire.update');
                     Route::delete('{id}', [\App\Http\Controllers\Agent\CustomerBeneficiaireController::class, 'delete'])->name('agent.customer.wallet.beneficiaire.delete');
                 });
+
+                Route::prefix('sepas')->group(function () {
+                    Route::get('{id}', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'show'])->name('agent.customer.wallet.sepas.show');
+                    Route::put('{id}/refund', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'refund_request'])->name('agent.customer.wallet.sepas.refund');
+                    Route::put('{id}/accept', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'accept'])->name('agent.customer.wallet.sepas.accept');
+                    Route::put('{id}/reject', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'reject'])->name('agent.customer.wallet.sepas.reject');
+                    Route::put('{id}/opposit', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'opposit'])->name('agent.customer.wallet.sepas.opposit');
+                });
             });
         });
     });

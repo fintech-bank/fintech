@@ -3,6 +3,7 @@
         tableTransaction: $("#liste_transactions"),
         tableTransfers: $("#liste_transfers"),
         tableBeneficiaire: $("#liste_beneficiaires"),
+        tableSepas: $("#liste_sepas")
     }
 
     let elements = {
@@ -16,17 +17,24 @@
         corporateField: document.querySelector("#add_beneficiaire").querySelector('#corporateField'),
         btnEditBeneficiaires: document.querySelectorAll('.btnEditBeneficiaire'),
         btnDeleteBeneficiaires: document.querySelectorAll('.btnDeleteBeneficiaire'),
+        btnAcceptSepas: document.querySelectorAll('.btnAcceptSepa'),
+        btnRejectSepas: document.querySelectorAll('.btnRejectSepa'),
+        btnOppositSepas: document.querySelectorAll('.btnOppositSepa'),
+        btnRefundSepas: document.querySelectorAll('.btnRefundSepa'),
     }
 
     let modals = {
         modalShowTransaction: document.querySelector('#show_transaction'),
         modalShowTransfer: document.querySelector('#show_transfer'),
-        modalEditBeneficiaire: document.querySelector('#edit_beneficiaire')
+        modalEditBeneficiaire: document.querySelector('#edit_beneficiaire'),
+        modalRequestRefundSepa: document.querySelector('#request_refund_sepa')
     }
 
     let flatpickr;
     let minDate;
     let maxDate;
+    let creditor = document.querySelector('[data-kt-sepas-filter="creditor"]')
+    let statusSepa = document.querySelectorAll('[data-kt-sepas-table-filter="status"] [name="status"]')
 
     let listeTransaction = tables.tableTransaction.DataTable({
         info: false,
@@ -57,6 +65,16 @@
         ],
 
     });
+
+    let listeSepas = tables.tableSepas.DataTable({
+        info: false,
+        order: [],
+        pageLength: 10,
+        columnDefs: [
+            {orderable: false, targets: 3},
+            {orderable: false, targets: 6},
+        ],
+    })
 
     function handleFlatpickr(selectedDates, dateStr, instance) {
         minDate = selectedDates[0] ? new Date(selectedDates[0]) : null;
@@ -355,6 +373,7 @@
         })
     }
 
+
     selectTypeBeneficiaire()
 
 
@@ -640,6 +659,124 @@
             })
         })
     }
+    if(elements.btnRefundSepas) {
+        elements.btnRefundSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+
+                        let modal = new bootstrap.Modal(modals.modalRequestRefundSepa)
+
+                        modals.modalRequestRefundSepa.querySelector("#formRequestRefundSepa").setAttribute('action', data.url_refund)
+
+                        modal.show()
+                    },
+                    error: err => {
+                        console.log(err.responseJSON.error)
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnAcceptSepas) {
+        elements.btnAcceptSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: "PUT",
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Le Prélèvement ${data.number_mandate} à été accepté`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    },
+                    error: err => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnRejectSepas) {
+        elements.btnRejectSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: "PUT",
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Le Prélèvement ${data.number_mandate} à été rejeté`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    },
+                    error: err => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnOppositSepas) {
+        elements.btnOppositSepas.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                btn.setAttribute('data-kt-indicator', 'on')
+
+                $.ajax({
+                    url: e.target.getAttribute('href'),
+                    method: "PUT",
+                    success: data => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.success(`Une opposition au mandat N° ${data.number_mandate} à été créer`, null, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    },
+                    error: err => {
+                        btn.removeAttribute('data-kt-indicator')
+                        toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                            "positionClass": "toastr-bottom-right",
+                        })
+                    }
+                })
+            })
+        })
+    }
+
+    document.querySelector('[data-kt-sepas-table-filter="search"]').addEventListener("keyup", (function (e) {
+        listeSepas.search(e.target.value).draw()
+    }))
+
+    document.querySelector('[data-kt-sepas-table-filter="filter"]').addEventListener('click', () => {
+        let a = "";
+        statusSepa.forEach((c => {
+            c.checked && (a = c.value)
+            "all" === a && (a = "")
+        }));
+
+        const r = a;
+        listeSepas.search(r).draw()
+    })
 
     $("#formAddTransaction").on('submit', e => {
         e.preventDefault()
@@ -837,6 +974,54 @@
                         "positionClass": "toastr-bottom-right",
                     })
                 })
+            }
+        })
+
+
+    })
+
+    $("#formRequestRefundSepa").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formRequestRefundSepa")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+        const resultDiv = modals.modalRequestRefundSepa.querySelector("#resultRequestRefundSepa")
+
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            statusCode: {
+                200: () => {
+                    const modal = new bootstrap.Modal(modals.modalRequestRefundSepa)
+                    btn.removeAttr('data-kt-indicator')
+                    resultDiv.querySelector('.alert').classList.add('bg-success')
+                    resultDiv.querySelector('.icon').innerHTML = '<i class="fa-solid fa-check text-light-success"></i>'
+                    resultDiv.querySelector('.title').innerHTML = 'Demande de remboursement accepté'
+                    resultDiv.querySelector('.text').innerHTML = 'Votre demande de remboursement à été accepté par la banque distante.'
+                    resultDiv.classList.remove('d-none')
+                    modal.addEventListener('hidden.bs.modal', e => {
+                        window.location.reload()
+                    })
+                },
+                500: err => {
+                    btn.removeAttr('data-kt-indicator')
+                    toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                },
+                426: () => {
+                    btn.removeAttr('data-kt-indicator')
+                    resultDiv.querySelector('.alert').classList.add('bg-danger')
+                    resultDiv.querySelector('.icon').innerHTML = '<i class="fa-solid fa-times text-light-danger"></i>'
+                    resultDiv.querySelector('.title').innerHTML = 'Demande de remboursement refusé'
+                    resultDiv.querySelector('.text').innerHTML = 'Votre demande de remboursement à été refusé par la banque distante.'
+                    resultDiv.classList.remove('d-none')
+                }
             }
         })
 

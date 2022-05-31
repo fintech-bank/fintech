@@ -77,7 +77,7 @@ class CustomerTransactionHelper
                 "type" => $type_transaction,
                 "designation" => $designation,
                 "description" => $description,
-                "amount" => $amount,
+                "amount" => 0.00 - (float)$amount,
                 "confirmed" => $confirm,
                 "confirmed_at" => $confirmed_at,
                 "customer_wallet_id" => $wallet

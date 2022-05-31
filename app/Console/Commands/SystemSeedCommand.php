@@ -10,6 +10,7 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerBeneficiaire;
 use App\Models\Customer\CustomerCheck;
 use App\Models\Customer\CustomerCreditCard;
+use App\Models\Customer\CustomerCreditor;
 use App\Models\Customer\CustomerEpargne;
 use App\Models\Customer\CustomerInfo;
 use App\Models\Customer\CustomerPret;
@@ -237,10 +238,18 @@ class SystemSeedCommand extends Command
                 $transactionsSepaTransfers = CustomerTransaction::where('type', 'virement')->where('customer_wallet_id', $wallet_account->id)->get();
 
                 foreach ($transactionsSepa as $sepa) {
-                    CustomerSepa::factory()->create([
+                    $s = CustomerSepa::factory()->create([
                         "amount" => $sepa->amount,
                         "customer_wallet_id" => $wallet_account->id,
                     ]);
+
+                    if(CustomerCreditor::where('name', $s->creditor)->where('customer_wallet_id', $wallet_account->id)->count() == 0) {
+                        CustomerCreditor::query()->create([
+                            'name' => $s->creditor,
+                            'customer_wallet_id' => $s->customer_wallet_id,
+                            'customer_sepa_id' => $s->id
+                        ]);
+                    }
                 }
 
             }
