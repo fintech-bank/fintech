@@ -81,6 +81,13 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                     Route::put('{id}/reject', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'reject'])->name('agent.customer.wallet.sepas.reject');
                     Route::put('{id}/opposit', [\App\Http\Controllers\Agent\CustomerSepaController::class, 'opposit'])->name('agent.customer.wallet.sepas.opposit');
                 });
+
+                Route::prefix('check')->group(function () {
+                    Route::post('/', [\App\Http\Controllers\Agent\CustomerCheckController::class, 'store'])->name('agent.customer.wallet.check.store');
+                    Route::get('{id}', [\App\Http\Controllers\Agent\CustomerCheckController::class, 'info'])->name('agent.customer.wallet.check.info');
+                    Route::put('{id}', [\App\Http\Controllers\Agent\CustomerCheckController::class, 'update'])->name('agent.customer.wallet.check.update');
+                    Route::delete('{id}', [\App\Http\Controllers\Agent\CustomerCheckController::class, 'destroy'])->name('agent.customer.wallet.check.destroy');
+                });
             });
         });
     });
