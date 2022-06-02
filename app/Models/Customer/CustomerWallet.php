@@ -45,17 +45,17 @@ class CustomerWallet extends Model
 
     public function loan()
     {
-        return $this->hasMany(CustomerPret::class);
+        return $this->hasOne(CustomerPret::class);
     }
 
-    public function epargnes()
+    public function epargne()
     {
-        return $this->hasMany(CustomerEpargne::class, 'id');
+        return $this->hasOne(CustomerEpargne::class, 'id');
     }
 
     public function epargne_payment()
     {
-        return $this->hasMany(CustomerEpargne::class);
+        return $this->hasOne(CustomerEpargne::class);
     }
 
     public function checks()

@@ -154,15 +154,7 @@ class CustomerHelper
 
     public static function getCoutAllEpargnes($customer)
     {
-        $calc = 0;
-        $wallets = $customer->wallets()->get();
-
-        foreach ($wallets as $wallet) {
-            $ds = $wallet->epargnes()->get()->count();
-            $calc += $ds;
-        }
-
-        return $calc;
+        return $customer->wallets()->where('type', 'epargne')->get()->count();
     }
 
     public static function getCountAllBeneficiaires($customer)

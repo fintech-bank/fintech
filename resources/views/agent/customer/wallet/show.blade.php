@@ -1140,7 +1140,61 @@
                     @endif
                     @if($wallet->type == 'epargne')
                         <div class="tab-pane fade" id="epargnes" role="tabpanel">
-
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h3 class="card-title">Compte épargne N°{{ $wallet->number_account }}</h3>
+                                    <div class="card-toolbar">
+                                        <button type="button" class="btn btn-sm btn-info">
+                                            Editer les spécificités du compte
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-rounded gy-7 gs-7">
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bolder">Référence du contrat</td>
+                                                <td>{{ $wallet->epargne->reference }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant Initial</td>
+                                                <td>{{ eur($wallet->epargne->initial_payment ) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant prélevé par mois</td>
+                                                <td>{{ eur($wallet->epargne->monthly_payment ) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Jours de prélèvement</td>
+                                                <td>{{ $wallet->epargne->monthly_days }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Plan souscrit</td>
+                                                <td>
+                                                    <strong>{{ $wallet->epargne->plan->name }}</strong><br>
+                                                    Pourcentage de rente: {{ $wallet->epargne->plan->profit_percent }} %<br>
+                                                    Profit acquis au bout de {{ $wallet->epargne->plan->profit_days }} jours<br>
+                                                    Limite du compte: {{ eur($wallet->epargne->plan->limit) }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Intéret acquis depuis le 01/{{ now()->year }}</td>
+                                                <td>
+                                                    @if($wallet->epargne->plan->profit_days == 15)
+                                                        {{ eur(\App\Helper\CustomerEpargneHelper::calcInterest(now()->diffInMonths(\Carbon\Carbon::createFromDate(now()->year, 1, 1)) / 12, $wallet->balance_actual, $wallet->epargne->plan->profit_percent)) }}
+                                                    @else
+                                                        {{ eur(\App\Helper\CustomerEpargneHelper::calcInterest(now()->diffInMonths(\Carbon\Carbon::createFromDate(now()->year, 1, 1)), $wallet->balance_actual, $wallet->epargne->plan->profit_percent)) }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant Prélevé sur le compte</td>
+                                                <td>{{ $wallet->epargne->payment->number_account }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     @endif
                 </div>

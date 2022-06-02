@@ -110,7 +110,9 @@ class CustomerWalletController extends Controller
 
     public function show($customer_id, $wallet_id)
     {
-        $wallet = CustomerWallet::with('cards', 'transactions', 'sepas', 'transfers', 'epargnes', 'checks')->find($wallet_id);
+        $wallet = CustomerWallet::with('cards', 'transactions', 'sepas', 'transfers', 'epargne', 'checks')->find($wallet_id);
+
+        //dd($wallet->epargne->plan);
 
         return view('agent.customer.wallet.show', compact('wallet'));
     }
