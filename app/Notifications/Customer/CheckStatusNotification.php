@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Customer;
 
+use App\Helper\CustomerCheckHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,14 +12,20 @@ class CheckStatusNotification extends Notification
 {
     use Queueable;
 
+    public $customer;
+    public $check;
+
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $customer
+     * @param $check
      */
-    public function __construct()
+    public function __construct($customer, $check)
     {
         //
+        $this->customer = $customer;
+        $this->check = $check;
     }
 
     /**
@@ -41,21 +48,12 @@ class CheckStatusNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject("Votre commande de chéquier")
+            ->view('emails.customer.status_check', [
+                "customer" => $this->customer,
+                "check" => $this->check,
+                "check_status" => CustomerCheckHelper::getStatus($this->check->status)
+            ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
-    }
 }

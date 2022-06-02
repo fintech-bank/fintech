@@ -31,7 +31,8 @@
         modalShowTransaction: document.querySelector('#show_transaction'),
         modalShowTransfer: document.querySelector('#show_transfer'),
         modalEditBeneficiaire: document.querySelector('#edit_beneficiaire'),
-        modalRequestRefundSepa: document.querySelector('#request_refund_sepa')
+        modalRequestRefundSepa: document.querySelector('#request_refund_sepa'),
+        modalEditStatusCheck: document.querySelector('#edit_status_check')
     }
 
     let flatpickr;
@@ -821,6 +822,40 @@
             })
         })
     }
+    if(elements.btnChangeCheck) {
+        elements.btnChangeCheck.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                $.ajax({
+                    url: btn.getAttribute('href'),
+                    success: data => {
+                        console.log(data)
+                        let modal = new bootstrap.Modal(modals.modalEditStatusCheck)
+
+                        modals.modalEditStatusCheck.querySelector("#formEditStatusCheck").setAttribute('action', data.check_edit_status_uri)
+                        modals.modalEditStatusCheck.querySelector('#check_reference').innerHTML = data.check.reference
+                        modals.modalEditStatusCheck.querySelector('#check_actual_status').innerHTML = data.check_status
+
+                        modals.modalEditStatusCheck.querySelector("#inputSelectStatus").innerHTML = `
+                            <div class="mb-10">
+                                <label class="form-label">Etat</label>
+                                <select class="form-select" data-controls="select2" name="status">
+                                    <option value=""></option>
+                                    <option value="manufacture">En cours de fabrication</option>
+                                    <option value="ship">En cours de transport</option>
+                                    <option value="outstanding">Utilisation en cours</option>
+                                    <option value="finish">Chéquier terminé</option>
+                                    <option value="destroy">Chéquier détruit</option>
+                                </select>
+                            </div>
+                        `
+
+                        modal.show()
+                    }
+                })
+            })
+        })
+    }
 
     document.querySelector('[data-kt-sepas-table-filter="search"]').addEventListener("keyup", (function (e) {
         listeSepas.search(e.target.value).draw()
@@ -1140,6 +1175,44 @@
                 }
             }
         })
+    })
+    $("#formEditStatusCheck").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formEditStatusCheck")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le status du chèque à été mis à jours`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
     })
 
     $("#permanent_date").flatpickr({

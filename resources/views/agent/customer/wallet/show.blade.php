@@ -1107,7 +1107,7 @@
                                                     @endif
 
                                                     <div class="menu-item px-3 mb-3">
-                                                        <a href="#" class="menu-link px-3 btnChangeCheck" data-check="{{ $check->id }}" data-wallet="{{ $wallet->id }}">
+                                                        <a href="{{ route('agent.customer.wallet.check.info', [$wallet->customer_id, $wallet->id, $check->id]) }}" class="menu-link px-3 btnChangeCheck" data-check="{{ $check->id }}" data-wallet="{{ $wallet->id }}">
                                                             Changer l'état de la commande
                                                         </a>
                                                     </div>
@@ -1717,6 +1717,44 @@
                     @csrf
                     <div class="modal-body">
                         <p>Vous allez commande un chéquier pour le client <strong>{{ \App\Helper\CustomerHelper::getName($wallet->customer) }}</strong>.</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="edit_status_check">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Changement du status de la commande de chéquier</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditStatusCheck" action="" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                                <tr>
+                                    <td>N° Chéquier</td>
+                                    <td id="check_reference"></td>
+                                </tr>
+                                <tr>
+                                    <td>Etat actuelle</td>
+                                    <td id="check_actual_status"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="inputSelectStatus"></div>
                     </div>
 
                     <div class="modal-footer">
