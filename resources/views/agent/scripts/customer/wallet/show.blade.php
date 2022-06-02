@@ -3,7 +3,8 @@
         tableTransaction: $("#liste_transactions"),
         tableTransfers: $("#liste_transfers"),
         tableBeneficiaire: $("#liste_beneficiaires"),
-        tableSepas: $("#liste_sepas")
+        tableSepas: $("#liste_sepas"),
+        tableCheck: $("#liste_checks"),
     }
 
     let elements = {
@@ -21,13 +22,17 @@
         btnRejectSepas: document.querySelectorAll('.btnRejectSepa'),
         btnOppositSepas: document.querySelectorAll('.btnOppositSepa'),
         btnRefundSepas: document.querySelectorAll('.btnRefundSepa'),
+        btnCancelCheck: document.querySelectorAll('.btnCancelCheck'),
+        btnChangeCheck: document.querySelectorAll('.btnChangeCheck'),
+        btnViewCheck: document.querySelectorAll('.btnViewCheck'),
     }
 
     let modals = {
         modalShowTransaction: document.querySelector('#show_transaction'),
         modalShowTransfer: document.querySelector('#show_transfer'),
         modalEditBeneficiaire: document.querySelector('#edit_beneficiaire'),
-        modalRequestRefundSepa: document.querySelector('#request_refund_sepa')
+        modalRequestRefundSepa: document.querySelector('#request_refund_sepa'),
+        modalEditStatusCheck: document.querySelector('#edit_status_check')
     }
 
     let flatpickr;
@@ -35,6 +40,7 @@
     let maxDate;
     let creditor = document.querySelector('[data-kt-sepas-filter="creditor"]')
     let statusSepa = document.querySelectorAll('[data-kt-sepas-table-filter="status"] [name="status"]')
+    let statusCheck = document.querySelectorAll('[data-kt-checks-table-filter="status"] [name="status"]')
 
     let listeTransaction = tables.tableTransaction.DataTable({
         info: false,
@@ -73,6 +79,16 @@
         columnDefs: [
             {orderable: false, targets: 3},
             {orderable: false, targets: 6},
+        ],
+    })
+
+    let listeCheck = tables.tableCheck.DataTable({
+        info: false,
+        order: [],
+        pageLength: 10,
+        columnDefs: [
+            {orderable: false, targets: 1},
+            {orderable: false, targets: 3},
         ],
     })
 
@@ -130,6 +146,12 @@
         const filterSearch = document.querySelector('[data-kt-beneficiaire-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             listeBeneficiaire.search(e.target.value).draw();
+        });
+    }
+    let handleSearchDatatableCheck = () => {
+        const filterSearch = document.querySelector('[data-kt-checks-table-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            listeCheck.search(e.target.value).draw();
         });
     }
 
@@ -762,6 +784,78 @@
             })
         })
     }
+    if(elements.btnCancelCheck) {
+        elements.btnCancelCheck.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+
+                Swal.fire({
+                    title: 'Annulation de la commande de chéquier',
+                    text: "Voulez-vous annuler la commande du chéquier N°"+e.target.dataset.check,
+                    icon: 'question',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    confirmButtonText:
+                        '<i class="fa-solid fa-check me-2"></i> Supprimer la commande!',
+                    confirmButtonAriaLabel: 'Thumbs up, great!',
+                    cancelButtonText:
+                        '<i class="fa-solid fa-times"></i> Annuler',
+                    cancelButtonAriaLabel: 'Thumbs down'
+                }).then(result => {
+                    if(result.isConfirmed) {
+                        $.ajax({
+                            url: e.target.getAttribute('href'),
+                            method: 'DELETE',
+                            success: () => {
+                                Swal.fire({
+                                    text: "Commande annulé",
+                                    icon: 'success',
+                                }).then(result => {
+                                    if(result.isConfirmed) {
+                                        window.location.reload()
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+            })
+        })
+    }
+    if(elements.btnChangeCheck) {
+        elements.btnChangeCheck.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                $.ajax({
+                    url: btn.getAttribute('href'),
+                    success: data => {
+                        console.log(data)
+                        let modal = new bootstrap.Modal(modals.modalEditStatusCheck)
+
+                        modals.modalEditStatusCheck.querySelector("#formEditStatusCheck").setAttribute('action', data.check_edit_status_uri)
+                        modals.modalEditStatusCheck.querySelector('#check_reference').innerHTML = data.check.reference
+                        modals.modalEditStatusCheck.querySelector('#check_actual_status').innerHTML = data.check_status
+
+                        modals.modalEditStatusCheck.querySelector("#inputSelectStatus").innerHTML = `
+                            <div class="mb-10">
+                                <label class="form-label">Etat</label>
+                                <select class="form-select" data-controls="select2" name="status">
+                                    <option value=""></option>
+                                    <option value="manufacture">En cours de fabrication</option>
+                                    <option value="ship">En cours de transport</option>
+                                    <option value="outstanding">Utilisation en cours</option>
+                                    <option value="finish">Chéquier terminé</option>
+                                    <option value="destroy">Chéquier détruit</option>
+                                </select>
+                            </div>
+                        `
+
+                        modal.show()
+                    }
+                })
+            })
+        })
+    }
 
     document.querySelector('[data-kt-sepas-table-filter="search"]').addEventListener("keyup", (function (e) {
         listeSepas.search(e.target.value).draw()
@@ -776,6 +870,17 @@
 
         const r = a;
         listeSepas.search(r).draw()
+    })
+
+    document.querySelector('[data-kt-checks-table-filter="filter"]').addEventListener('click', () => {
+        let a = "";
+        statusCheck.forEach((c => {
+            c.checked && (a = c.value)
+            "all" === a && (a = "")
+        }));
+
+        const r = a;
+        listeCheck.search(r).draw()
     })
 
     $("#formAddTransaction").on('submit', e => {
@@ -1027,6 +1132,88 @@
 
 
     })
+    $("#formAddCheck").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formAddCheck")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            statusCode: {
+                200: () => {
+                    btn.removeAttr('data-kt-indicator')
+                    toastr.success(`Le Chéquier N°${data.reference} à été commander avec succès`, null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1000)
+                },
+                500: err => {
+                    btn.removeAttr('data-kt-indicator')
+                    toastr.error(err.responseJSON.message, err.responseJSON.error, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                },
+                426: () => {
+                    btn.removeAttr('data-kt-indicator')
+                    toastr.warning('Impossible de commander un chéquier car le client est inscrit au FCC.', null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                },
+                427: () => {
+                    btn.removeAttr('data-kt-indicator')
+                    toastr.warning('Impossible de commander un chéquier car le compte du client n\'est pas actif.', null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                }
+            }
+        })
+    })
+    $("#formEditStatusCheck").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formEditStatusCheck")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le status du chèque à été mis à jours`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
+    })
 
     $("#permanent_date").flatpickr({
         altInput: true,
@@ -1044,6 +1231,7 @@
     handleSearchDatatable()
     handleSearchDatatableTransfers()
     handleSearchDatatableBeneficiaire()
+    handleSearchDatatableCheck()
     handleStatusFilter()
     handleStatusFilterTransfers()
     handleTypeFilterTransfers()
