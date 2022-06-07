@@ -332,7 +332,7 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#createPret" class="menu-link px-3">
+                                        <a href="#createPret" data-bs-toggle="modal" class="menu-link px-3">
                                             Pret Bancaire
                                         </a>
                                     </div>
@@ -1388,6 +1388,104 @@
                             name="monthly_days"
                             type="text"
                             label="Jour de prélèvement" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="createPret">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Nouveau pret bancaire</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
+                        <i class="fas fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formCreatePret" action="{{ route('agent.customer.wallet.store', $customer->id) }}"
+                      method="post">
+                    @csrf
+                    <input type="hidden" name="action" value="pret">
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="loan_plan_id" class="form-label">Type de Pret</label>
+                            <select class="form-select form-select-solid" id="loan_plan_id" name="loan_plan_id" data-dropdown-parent="#createPret" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un type de pret" onchange="getInfoPretPlan(this)">
+                                <option value=""></option>
+                                @foreach(\App\Models\Core\LoanPlan::all() as $loan)
+                                    <option value="{{ $loan->id }}">{{ $loan->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div id="pret_plan_info" class="bg-gray-300">
+                            <table class="table gy-5 gs-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bolder">Montant Minimum</td>
+                                        <td class="min text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Montant Maximum</td>
+                                        <td class="max text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Durée Maximal de remboursement</td>
+                                        <td class="duration text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Interet débiteur</td>
+                                        <td class="interest text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Information supplémentaire</td>
+                                        <td class="instruction text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mb-10">
+                            <label for="wallet_payment_id" class="form-label">Compte de payment</label>
+                            <select class="form-select form-select-solid" id="wallet_payment_id" name="wallet_payment_id" data-dropdown-parent="#createPret" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un compte à débiter">
+                                <option value=""></option>
+                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $wallet->customer_id)->where('type', 'compte')->where('status', 'active')->get() as $wallet)
+                                    <option value="{{ $wallet->id }}">{{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <x-form.input
+                            name="amount_loan"
+                            type="text"
+                            label="Montant du pret"
+                            required="true" />
+
+                        <x-form.input
+                            name="duration"
+                            type="text"
+                            label="Durée du pret (Années)"
+                            required="true" />
+
+                        <x-form.input
+                            name="prlv_day"
+                            type="text"
+                            label="Jour de prélèvement" />
+
+                        <div class="mb-10">
+                            <label for="assurance_type" class="form-label">Type d'assurance</label>
+                            <select class="form-select form-select-solid" id="assurance_type" name="assurance_type" data-dropdown-parent="#createPret" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un type d'assurance">
+                                <option value=""></option>
+                                <option value="D">Décès</option>
+                                <option value="DIM">Décès, Invalidité, Maladie</option>
+                                <option value="DIMC">Décès, Invalidité, Maladie, Travail</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="modal-footer">

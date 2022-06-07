@@ -54,5 +54,9 @@ Route::prefix('epargne')->group(function () {
     Route::get('{plan_id}', [\App\Http\Controllers\Api\Agent\EpargneController::class, 'info']);
 });
 
+Route::prefix('pret')->group(function () {
+    Route::get('{plan_id}', [\App\Http\Controllers\Api\Agent\PretController::class, 'info']);
+});
+
 
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);

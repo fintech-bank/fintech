@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Helper\CustomerHelper;
+use App\Helper\CustomerLoanHelper;
 use App\Helper\CustomerSepaHelper;
 use App\Helper\CustomerSituationHelper;
 use App\Helper\CustomerTransactionHelper;
@@ -11,13 +12,16 @@ use App\Helper\DocumentFile;
 use App\Helper\IbanHelper;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Core\LoanPlan;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerDocument;
 use App\Models\Customer\CustomerEpargne;
+use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerSepa;
 use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\CreateCreditCardNotification;
 use App\Notifications\Agent\Customer\CreateEpargneNotification;
+use App\Notifications\Agent\Customer\CreatePretNotification;
 use App\Notifications\Agent\Customer\CreateWalletNotification;
 use App\Notifications\Customer\CreateWalletNotification as CreateWalletNotificationAlias;
 use App\Notifications\Customer\SendCodeCardNotification;
@@ -181,7 +185,145 @@ class CustomerWalletController extends Controller
             }
         } else {
             try {
+                $wallet->update([
+                    'type' => 'pret'
+                ]);
 
+                $plan = LoanPlan::with('interests')->find($request->get('loan_plan_id'));
+                $amount_interest = CustomerLoanHelper::getLoanInterest($request->get('amount_loan'), $plan->interests[0]->interest);
+                $amount_du = $request->get('amount_loan') + $amount_interest;
+                $mensuality = $amount_du / $request->get('duration');
+
+                $pret = CustomerPret::create([
+                    'uuid' => \Str::uuid(),
+                    'reference' => \Str::upper(\Str::random(8)),
+                    'amount_loan' => $request->get('amount_loan'),
+                    'amount_interest' => $amount_interest,
+                    'amount_du' => $amount_du,
+                    'mensuality' => $mensuality,
+                    'prlv_day' => $request->get('prlv_day'),
+                    'duration' => $request->get('duration'),
+                    'status' => 'open',
+                    'signed_customer' => false,
+                    'signed_bank' => true,
+                    'assurance_type' => $request->get('assurance_type'),
+                    'wallet_loan_id' => $wallet->id,
+                    'wallet_payment_id' => $request->get('wallet_payment_id'),
+                    'loan_plan_id' => $request->get('loan_plan_id'),
+                    'customer_id' => $customer->id
+                ]);
+
+                // Document Contractuel
+                $customer->documents()->create([
+                    'name' => $pret->reference." - Fiche de Dialogue",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => true,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                $customer->documents()->create([
+                    'name' => $pret->reference." - Information Précontractuel Normalisé",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => true,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                $customer->documents()->create([
+                    'name' => $pret->reference." - Assurance Emprunteur",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => false,
+                    'signed_by_client' => false,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                $customer->documents()->create([
+                    'name' => $pret->reference." - Avis de conseil relatif à un produit d'assurance",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => false,
+                    'signed_by_client' => false,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                $doc_pret = $customer->documents()->create([
+                    'name' => $pret->reference." - Offre de contrat de crédit: Pret Personnel",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => true,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                if($request->get('assurance_type') == 'D' || $request->get('assurance_type') == 'DIM' || $request->get('assurance_type') == 'DIMC' ) {
+                    $customer->documents()->create([
+                        'name' => $pret->reference." - Adhésion assurance facultative",
+                        "reference" => \Str::upper(\Str::random(8)),
+                        "signable" => true,
+                        'signed_by_client' => true,
+                        "customer_id" => $customer->id,
+                        'document_category_id' => 3
+                    ]);
+                }
+
+                $customer->documents()->create([
+                    'name' => $pret->reference." - Mandat de prélèvement SEPA",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => true,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                $customer->documents()->create([
+                    'name' => $pret->reference." - Plan d'amortissement",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => false,
+                    'signed_by_client' => false,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                $wallet_retrait = CustomerWallet::find($pret->wallet_payment_id);
+
+                for ($i=1; $i <= $request->get('duration'); $i++) {
+                    CustomerSepa::query()->create([
+                        'uuid' => \Str::uuid(),
+                        'creditor' => CustomerHelper::getName($customer),
+                        'number_mandate' => \Str::upper(\Str::random(8)),
+                        'amount' => - $mensuality,
+                        'status' => 'waiting',
+                        'created_at' => now(),
+                        'updated_at' => now()->addMonths($i),
+                        'customer_wallet_id' => $wallet_retrait->id
+                    ]);
+
+                    CustomerSepa::query()->create([
+                        'uuid' => \Str::uuid(),
+                        'creditor' => CustomerHelper::getName($customer),
+                        'number_mandate' => \Str::upper(\Str::random(8)),
+                        'amount' => $mensuality,
+                        'status' => 'waiting',
+                        'created_at' => now(),
+                        'updated_at' => now()->addMonths($i),
+                        'customer_wallet_id' => $wallet->id
+                    ]);
+                }
+
+
+                // Notification
+                auth()->user()->notify(new CreatePretNotification($customer, $wallet, $doc_pret));
+                $customer->user->notify(new \App\Notifications\Customer\CreatePretNotification($customer, $wallet, $doc_pret, $pret));
+
+                return response()->json([
+                    'wallet' => $wallet,
+                    'pret' => $pret,
+                    'customer' => $customer
+                ]);
             }catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception->getMessage());
                 return response()->json($exception->getMessage());
