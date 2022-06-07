@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Agent;
 
+use App\Helper\CustomerHelper;
+use App\Helper\CustomerSepaHelper;
 use App\Helper\CustomerSituationHelper;
+use App\Helper\CustomerTransactionHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
 use App\Helper\IbanHelper;
@@ -10,8 +13,11 @@ use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerDocument;
+use App\Models\Customer\CustomerEpargne;
+use App\Models\Customer\CustomerSepa;
 use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\CreateCreditCardNotification;
+use App\Notifications\Agent\Customer\CreateEpargneNotification;
 use App\Notifications\Agent\Customer\CreateWalletNotification;
 use App\Notifications\Customer\CreateWalletNotification as CreateWalletNotificationAlias;
 use App\Notifications\Customer\SendCodeCardNotification;
@@ -24,95 +30,170 @@ class CustomerWalletController extends Controller
     {
         $customer = Customer::find($customer_id);
 
-        try {
-            $number_account = rand(10000000000, 99999999999);
-            $ibanC = new Generator($customer->user->agency->code_banque, $number_account, 'FR');
-            $iban = $ibanC->generate();
-            $rib_key = \Str::substr($iban, 18, 2);
+        $number_account = rand(10000000000, 99999999999);
+        $ibanC = new Generator($customer->user->agency->code_banque, $number_account, 'FR');
+        $iban = $ibanC->generate();
+        $rib_key = \Str::substr($iban, 18, 2);
 
-            $wallet = $customer->wallets()->create([
-                "uuid" => \Str::uuid(),
-                "number_account" => $number_account,
-                "iban" => $iban,
-                "rib_key" => $rib_key,
-                "status" => "active",
-                "decouvert" => $request->has('decouvert') ? true : false,
-                "balance_decouvert" => $request->has('decouvert') ? $request->get('balance_decouvert') : 0,
-                "customer_id" => $customer->id
-            ]);
-            $doc_wallet = $customer->documents()->create([
-                'name' => "Contrat Compte bancaire",
-                "reference" => \Str::upper(\Str::random(8)),
-                "signable" => true,
-                'signed_by_client' => false,
-                "customer_id" => $customer->id,
-                'document_category_id' => 3
-            ]);
+        $wallet = $customer->wallets()->create([
+            "uuid" => \Str::uuid(),
+            "number_account" => $number_account,
+            "iban" => $iban,
+            "rib_key" => $rib_key,
+            "status" => "pending",
+            "decouvert" => $request->has('decouvert') ? true : false,
+            "balance_decouvert" => $request->has('decouvert') ? $request->get('balance_decouvert') : 0,
+            "customer_id" => $customer->id
+        ]);
 
-            // Notification de création du compte bancaire (Agent/Client)
-            auth()->user()->notify(new CreateWalletNotification($customer, $wallet, $doc_wallet));
-            $customer->user->notify(new CreateWalletNotificationAlias($customer, $wallet, $doc_wallet));
-
-            if($request->has('decouvert')) {
-                $customer->documents()->create([
-                    'name' => "Contrat Découvert",
+        if($request->get('action') == 'wallet') {
+            try {
+                $doc_wallet = $customer->documents()->create([
+                    'name' => "Contrat Compte bancaire",
                     "reference" => \Str::upper(\Str::random(8)),
                     "signable" => true,
                     'signed_by_client' => false,
                     "customer_id" => $customer->id,
                     'document_category_id' => 3
                 ]);
+                // Notification de création du compte bancaire (Agent/Client)
+                auth()->user()->notify(new CreateWalletNotification($customer, $wallet, $doc_wallet));
+                $customer->user->notify(new CreateWalletNotificationAlias($customer, $wallet, $doc_wallet));
+
+                if($request->has('decouvert')) {
+                    $customer->documents()->create([
+                        'name' => "Contrat Découvert",
+                        "reference" => \Str::upper(\Str::random(8)),
+                        "signable" => true,
+                        'signed_by_client' => false,
+                        "customer_id" => $customer->id,
+                        'document_category_id' => 3
+                    ]);
+                }
+
+                $creditcard = new \Plansky\CreditCard\Generator();
+                $card_number = $creditcard->single();
+                $card_code = rand(1000, 9999);
+
+                $credit_card = $wallet->cards()->create([
+                    "exp_month" => \Str::length(now()->month) <= 1 ? "0" . now()->month : now()->month,
+                    "number" => $card_number,
+                    "support" => $request->get('card_support'),
+                    "debit" => $request->get('card_debit'),
+                    "cvc" => rand(100, 999),
+                    "code" => base64_encode($card_code),
+                    "limit_payment" => \App\Helper\CustomerCreditCard::calcLimitPayment(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
+                    "limit_retrait" => \App\Helper\CustomerCreditCard::calcLimitRetrait(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
+                    "customer_wallet_id" => $wallet->id
+                ]);
+                $doc_cb = $customer->documents()->create([
+                    'name' => "Contrat Carte Bancaire VISA",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => false,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
+
+                // Notification de création de carte (Agent/Client)
+                auth()->user()->notify(new CreateCreditCardNotification($customer, $credit_card, $doc_cb));
+                $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $credit_card, $doc_cb));
+
+                // Envoie du code carte bancaire par SMS
+                $customer->info->notify(new SendCodeCardNotification($customer, $credit_card->code, $credit_card));
+
+                return response()->json([
+                    'wallet' => $wallet,
+                    'card' => $credit_card,
+                    'customer' => $customer
+                ]);
+            }catch (\Exception $exception) {
+                LogHelper::notify('critical', $exception->getMessage());
+                return response()->json($exception->getMessage());
             }
+        } elseif($request->get('action') == 'epargne') {
+            try {
+                $wallet->update([
+                    'type' => 'epargne'
+                ]);
+                $epargne = CustomerEpargne::create([
+                    'uuid' => \Str::uuid(),
+                    'reference' => \Str::upper(\Str::random(8)),
+                    'initial_payment' => $request->get('initial_payment'),
+                    'monthly_payment' => $request->get('monthly_payment'),
+                    'monthly_days' => $request->get('monthly_days'),
+                    'wallet_id' => $wallet->id,
+                    'wallet_payment_id' => $request->get('wallet_payment_id'),
+                    'epargne_plan_id' => $request->get('epargne_plan_id')
+                ]);
 
-            $creditcard = new \Plansky\CreditCard\Generator();
-            $card_number = $creditcard->single();
-            $card_code = rand(1000, 9999);
+                $doc_epargne = $customer->documents()->create([
+                    'name' => "Contrat Compte Epargne",
+                    "reference" => \Str::upper(\Str::random(8)),
+                    "signable" => true,
+                    'signed_by_client' => false,
+                    "customer_id" => $customer->id,
+                    'document_category_id' => 3
+                ]);
 
-            $credit_card = $wallet->cards()->create([
-                "exp_month" => \Str::length(now()->month) <= 1 ? "0" . now()->month : now()->month,
-                "number" => $card_number,
-                "support" => $request->get('card_support'),
-                "debit" => $request->get('card_debit'),
-                "cvc" => rand(100, 999),
-                "code" => base64_encode($card_code),
-                "limit_payment" => \App\Helper\CustomerCreditCard::calcLimitPayment(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
-                "limit_retrait" => \App\Helper\CustomerCreditCard::calcLimitRetrait(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
-                "customer_wallet_id" => $wallet->id
-            ]);
-            $doc_cb = $customer->documents()->create([
-                'name' => "Contrat Carte Bancaire VISA",
-                "reference" => \Str::upper(\Str::random(8)),
-                "signable" => true,
-                'signed_by_client' => false,
-                "customer_id" => $customer->id,
-                'document_category_id' => 3
-            ]);
+                //Retrait Initial du compte bancaire
+                $wallet_retrait = CustomerWallet::find($epargne->wallet_payment_id);
+                CustomerTransactionHelper::create('debit', 'sepa', 'Prélèvement Contrat Epargne - '.$wallet->number_account, $request->get('initial_payment'), $wallet_retrait->id, true, 'Prélèvement Contrat Epargne - '.$wallet->number_account,now());
+                CustomerTransactionHelper::create('credit', 'sepa', 'Prélèvement Contrat Epargne - '.$wallet->number_account, $request->get('initial_payment'), $wallet->id, true, 'Prélèvement Contrat Epargne - '.$wallet->number_account,  now());
 
-            // Notification de création de carte (Agent/Client)
-            auth()->user()->notify(new CreateCreditCardNotification($customer, $credit_card, $doc_cb));
-            $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $credit_card, $doc_cb));
+                // Initialisation des Prélèvements Sepas
+                for ($i=0; $i <= 24; $i++) {
+                    CustomerSepa::query()->create([
+                        'uuid' => \Str::uuid(),
+                        'creditor' => CustomerHelper::getName($customer),
+                        'number_mandate' => \Str::upper(\Str::random(8)),
+                        'amount' => - $request->get('monthly_payment'),
+                        'status' => 'waiting',
+                        'created_at' => now(),
+                        'updated_at' => now()->addMonths($i),
+                        'customer_wallet_id' => $wallet_retrait->id
+                    ]);
 
-            // Envoie du code carte bancaire par SMS
-            $customer->info->notify(new SendCodeCardNotification($customer, $credit_card->code, $credit_card));
+                    CustomerSepa::query()->create([
+                        'uuid' => \Str::uuid(),
+                        'creditor' => CustomerHelper::getName($customer),
+                        'number_mandate' => \Str::upper(\Str::random(8)),
+                        'amount' => $request->get('monthly_payment'),
+                        'status' => 'waiting',
+                        'created_at' => now(),
+                        'updated_at' => now()->addMonths($i),
+                        'customer_wallet_id' => $wallet->id
+                    ]);
+                }
 
-            return response()->json([
-                'wallet' => $wallet,
-                'card' => $credit_card,
-                'customer' => $customer
-            ]);
-        }catch (\Exception $exception) {
-            LogHelper::notify('critical', $exception->getMessage());
-            return response()->json($exception->getMessage());
+                // Notification
+                auth()->user()->notify(new CreateEpargneNotification($customer, $wallet, $doc_epargne));
+                $customer->user->notify(new \App\Notifications\Customer\CreateEpargneNotification($customer, $wallet, $doc_epargne, $epargne));
+
+                return response()->json([
+                    'wallet' => $wallet,
+                    'epargne' => $epargne,
+                    'customer' => $customer
+                ]);
+            }catch (\Exception $exception) {
+                LogHelper::notify('critical', $exception->getMessage());
+                return response()->json($exception->getMessage());
+            }
+        } else {
+            try {
+
+            }catch (\Exception $exception) {
+                LogHelper::notify('critical', $exception->getMessage());
+                return response()->json($exception->getMessage());
+            }
         }
-
-
     }
 
     public function show($customer_id, $wallet_id)
     {
         $wallet = CustomerWallet::with('cards', 'transactions', 'sepas', 'transfers', 'epargne', 'checks')->find($wallet_id);
 
-        //dd($wallet->epargne->plan);
+        //dd($wallet);
 
         return view('agent.customer.wallet.show', compact('wallet'));
     }

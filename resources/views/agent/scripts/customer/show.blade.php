@@ -13,11 +13,13 @@
         modalWriteSms: document.querySelector('#write-sms'),
         modalWriteMail: document.querySelector('#write-mail'),
         modalCreateWallet: document.querySelector('#createWallet'),
+        modalCreateEpargne: document.querySelector('#createEpargne'),
     }
 
     let elements = {
         outstanding: document.querySelector('#outstanding'),
-        tableWallet: $("#liste_wallet")
+        tableWallet: $("#liste_wallet"),
+        epargnePlanInfo: document.querySelector("#epargne_plan_info")
     }
 
     if (buttons.btnVerify) {
@@ -99,6 +101,27 @@
         span.innerHTML = template;
 
         return $(span);
+    }
+
+    let getInfoEpargnePlan = (item) => {
+        let block = new KTBlockUI(elements.epargnePlanInfo)
+        block.block()
+
+        $.ajax({
+            url: '/api/epargne/'+item.value,
+            success: data => {
+                block.release()
+                console.log(data)
+                modals.modalCreateEpargne.querySelector(".profit_percent").innerHTML = data.profit_percent+' %'
+                modals.modalCreateEpargne.querySelector(".lock_days").innerHTML = data.lock_days+' jours'
+                modals.modalCreateEpargne.querySelector(".profit_days").innerHTML = "Montant des interet remis à zero tous les "+data.profit_days+" jours"
+                modals.modalCreateEpargne.querySelector(".init").innerHTML = new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.init)
+                modals.modalCreateEpargne.querySelector(".limit").innerHTML = new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.limit)
+            },
+            error: err => {
+                console.error(err)
+            }
+        })
     }
 
     verifSoldesAllWallets()
@@ -323,6 +346,30 @@
     $("#formCreateWallet").on('submit', e => {
         e.preventDefault()
         let form = $("#formCreateWallet")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                console.log(data)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+                console.error(err)
+            }
+        })
+    })
+
+    $("#formCreateEpargne").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formCreateEpargne")
         let url = form.attr('action')
         let data = form.serializeArray()
         let btn = form.find('.btn-bank')

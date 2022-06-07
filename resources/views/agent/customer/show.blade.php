@@ -309,6 +309,37 @@
                                     de compte</a>
                             </div>
                             <!--end::Menu item-->
+                            <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                                <a href="#" class="menu-link px-5">
+                                    <span class="menu-title">Nouveau Compte</span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+
+                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="#createWallet" data-bs-toggle="modal" class="menu-link px-3">
+                                            Compte Bancaire
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="#createEpargne" data-bs-toggle="modal" class="menu-link px-3">
+                                            Compte Epargne
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="#createPret" class="menu-link px-3">
+                                            Pret Bancaire
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu sub-->
+                            </div>
                         </div>
                         <!--end::Menu-->
                         <!--end::Menu-->
@@ -1238,6 +1269,7 @@
                 <form id="formCreateWallet" action="{{ route('agent.customer.wallet.store', $customer->id) }}"
                       method="post">
                     @csrf
+                    <input type="hidden" name="action" value="wallet">
                     <div class="modal-body">
                         <x-base.underline
                             title="Choix de la carte bancaire" sizeText="fs-2" size="1"/>
@@ -1266,6 +1298,96 @@
                             title="Découvert" sizeText="fs-2" size="1"/>
                         <div id="outstanding"></div>
 
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="createEpargne">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Nouveau compte épargne</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
+                        <i class="fas fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formCreateEpargne" action="{{ route('agent.customer.wallet.store', $customer->id) }}"
+                      method="post">
+                    @csrf
+                    <input type="hidden" name="action" value="epargne">
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="epargne_plan_id" class="form-label">Plan du compte</label>
+                            <select class="form-select form-select-solid" id="epargne_plan_id" name="epargne_plan_id" data-dropdown-parent="#createEpargne" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un plan d'épargne" onchange="getInfoEpargnePlan(this)">
+                                <option value=""></option>
+                                @foreach(\App\Models\Core\EpargnePlan::all() as $epargne)
+                                    <option value="{{ $epargne->id }}">{{ $epargne->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div id="epargne_plan_info" class="bg-gray-300">
+                            <table class="table gy-5 gs-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bolder">Profit par mois %</td>
+                                        <td class="profit_percent text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Durée de blocage des fond</td>
+                                        <td class="lock_days text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Conditionnement</td>
+                                        <td class="profit_days text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Montant initial obligatoire</td>
+                                        <td class="init text-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bolder">Limite du compte</td>
+                                        <td class="limit text-right"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mb-10">
+                            <label for="wallet_payment_id" class="form-label">Compte de retrait</label>
+                            <select class="form-select form-select-solid" id="wallet_payment_id" name="wallet_payment_id" data-dropdown-parent="#createEpargne" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un compte à débiter">
+                                <option value=""></option>
+                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $wallet->customer_id)->where('type', 'compte')->where('status', 'active')->get() as $wallet)
+                                    <option value="{{ $wallet->id }}">{{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <x-form.input
+                            name="initial_payment"
+                            type="text"
+                            label="Montant Initial"
+                            placeholder="Montant initial à déposer sur le compte épargne"
+                            required="true" />
+
+                        <x-form.input
+                            name="monthly_payment"
+                            type="text"
+                            label="Montant par mois"
+                            placeholder="Montant à déposer sur le compte épargne tous les mois"
+                            required="true" />
+
+                        <x-form.input
+                            name="monthly_days"
+                            type="text"
+                            label="Jour de prélèvement" />
                     </div>
 
                     <div class="modal-footer">
