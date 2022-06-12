@@ -2416,7 +2416,7 @@ function initSW() {
   } //register the service worker
 
 
-  navigator.serviceWorker.register('../sw.js').then(function () {
+  navigator.serviceWorker.register('/sw.js').then(function () {
     console.log('serviceWorker installed!');
     initPush();
   })["catch"](function (err) {
@@ -2610,6 +2610,10 @@ inputMasks.forEach(function (input) {
   Inputmask({
     "mask": input.dataset.mask
   }).mask(input);
+});
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl);
 });
 initSW();
 

@@ -18,6 +18,7 @@ class CustomerLoanController extends Controller
      * @param $customer
      * @param $wallet
      * @param $loan
+     * @return \Illuminate\Http\JsonResponse
      */
     public function check($customer, $wallet, $loan)
     {
@@ -126,10 +127,11 @@ class CustomerLoanController extends Controller
      * @param $customer
      * @param $wallet
      * @param $loan
+     * @return \Illuminate\Http\JsonResponse
      */
     public function status(Request $request, $customer, $wallet, $loan)
     {
-        try{
+        try {
             $loan = CustomerPret::find($loan);
             //dd($loan->wallet);
 
@@ -141,21 +143,21 @@ class CustomerLoanController extends Controller
              * si le pret est passer à accepter
              */
 
-            if($request->get('status') == 'accepted') {
+            if ($request->get('status') == 'accepted') {
                 $loan->wallet->update([
                     'status' => 'active'
                 ]);
 
                 CustomerTransactionHelper::create('credit',
                     'autre',
-                    'Attribution de la somme du pret N°'.$loan->reference,
+                    'Attribution de la somme du pret N°' . $loan->reference,
                     $loan->amount_loan,
                     $loan->wallet->id,
                     false,
-                    'Pret N°'.$loan->reference);
+                    'Pret N°' . $loan->reference);
             }
 
-            if($request->get('status') == 'refused') {
+            if ($request->get('status') == 'refused') {
                 $loan->wallet->update([
                     'status' => 'closed'
                 ]);
@@ -164,6 +166,30 @@ class CustomerLoanController extends Controller
             // Notification
             auth()->user()->notify(new UpdateStatusLoanNotification($loan->customer, $loan, $request->get('status')));
             $loan->customer->user->notify(new \App\Notifications\Customer\UpdateStatusLoanNotification($loan->customer, $loan, $request->get('status')));
+
+            return response()->json();
+        } catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
+    }
+
+    /**
+     * Modifie la date de prélèvement d'un pret bancaire
+     * @param Request $request
+     * @param $customer
+     * @param $wallet
+     * @param $loan
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function date(Request $request, $customer, $wallet, $loan)
+    {
+        $loan = CustomerPret::find($loan);
+
+        try {
+            $loan->update([
+                'prlv_day' => $request->get('prlv_day')
+            ]);
 
             return response()->json();
         }catch (\Exception $exception) {

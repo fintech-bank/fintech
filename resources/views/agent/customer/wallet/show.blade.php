@@ -1169,7 +1169,7 @@
 
                                                 <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="#edit_date_loan" data-bs-toggle="modal" class="menu-link px-3">
                                                             Modifier la date de prélèvement
                                                         </a>
                                                     </div>
@@ -1255,7 +1255,9 @@
                                         </tr>
                                         <tr>
                                             <td class="fw-bolder text-right">Date prochaine echéance</td>
-                                            <td>{{ $wallet->loan->first_payment_at->format('d/m/Y') }}</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::create(now()->year, now()->addMonth()->month, $wallet->loan->prlv_day)->format('d/m/Y') }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bolder text-right">Compte Prélevé</td>
@@ -2031,6 +2033,49 @@
                                 <option value="error" @if($wallet->loan->status == 'error') selected @endif>Erreur</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="edit_date_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Changement de la date de Prélèvement</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditDateLoan" action="{{ route('agent.customer.wallet.loan.date', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date de Prélèvement Actuelle</td>
+                                <td id="loan_actual_status">{{ $wallet->loan->prlv_day }} de chaque mois</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <x-form.input
+                            name="prlv_day"
+                            type="text"
+                            label="Date de Prélèvement futur"
+                            help="true"
+                            helpText="La date entrée dans ce champs entrera en vigueur le mois suivant" />
                     </div>
 
                     <div class="modal-footer">
