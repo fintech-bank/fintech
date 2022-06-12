@@ -10,7 +10,7 @@ class CustomerPret extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public $timestamps = false;
+    protected $dates = ['created_at', 'updated_at', 'first_payment_at'];
 
     public function plan()
     {
@@ -24,11 +24,11 @@ class CustomerPret extends Model
 
     public function wallet()
     {
-        return $this->belongsTo(CustomerWallet::class, 'customer_wallet_loan_id');
+        return $this->belongsTo(CustomerWallet::class, 'customer_wallet_id');
     }
 
     public function payment()
     {
-        return $this->belongsTo(CustomerWallet::class, 'customer_wallet_payment_id');
+        return $this->belongsTo(CustomerWallet::class, 'wallet_payment_id');
     }
 }

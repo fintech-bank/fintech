@@ -25,6 +25,7 @@ use App\Notifications\Agent\Customer\CreatePretNotification;
 use App\Notifications\Agent\Customer\CreateWalletNotification;
 use App\Notifications\Customer\CreateWalletNotification as CreateWalletNotificationAlias;
 use App\Notifications\Customer\SendCodeCardNotification;
+use Carbon\Carbon;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
 
@@ -207,10 +208,13 @@ class CustomerWalletController extends Controller
                     'signed_customer' => false,
                     'signed_bank' => true,
                     'assurance_type' => $request->get('assurance_type'),
-                    'wallet_loan_id' => $wallet->id,
+                    'customer_wallet_id' => $wallet->id,
                     'wallet_payment_id' => $request->get('wallet_payment_id'),
                     'loan_plan_id' => $request->get('loan_plan_id'),
-                    'customer_id' => $customer->id
+                    'customer_id' => $customer->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    "first_payment_at" => $request->get('prlv_day') != null ? Carbon::create(now()->year, now()->addMonth()->month, $request->get('prlv_day')) : now()->addMonth()
                 ]);
 
                 // Document Contractuel
@@ -335,7 +339,7 @@ class CustomerWalletController extends Controller
     {
         $wallet = CustomerWallet::with('cards', 'transactions', 'sepas', 'transfers', 'epargne', 'checks')->find($wallet_id);
 
-        //dd($wallet);
+        //dd($wallet->loan);
 
         return view('agent.customer.wallet.show', compact('wallet'));
     }

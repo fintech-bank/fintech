@@ -88,6 +88,11 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                     Route::put('{id}', [\App\Http\Controllers\Agent\CustomerCheckController::class, 'update'])->name('agent.customer.wallet.check.update');
                     Route::delete('{id}', [\App\Http\Controllers\Agent\CustomerCheckController::class, 'destroy'])->name('agent.customer.wallet.check.destroy');
                 });
+
+                Route::prefix('loan')->group(function () {
+                    Route::get('{loan_id}/check', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'check'])->name('agent.customer.wallet.loan.check');
+                    Route::put('{loan_id}/status', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'status'])->name('agent.customer.wallet.loan.status');
+                });
             });
         });
     });

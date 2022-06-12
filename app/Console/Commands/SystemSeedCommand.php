@@ -206,7 +206,7 @@ class SystemSeedCommand extends Command
 
                     foreach ($wallet_prets as $wallet_pret) {
                         CustomerPret::factory()->create([
-                            'wallet_loan_id' => $wallet_pret->id,
+                            'customer_wallet_id' => $wallet_pret->id,
                             "wallet_payment_id" => $wallet_account->id,
                             "customer_id" => $customer->id
                         ]);
