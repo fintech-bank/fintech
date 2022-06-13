@@ -93,6 +93,7 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                     Route::get('{loan_id}/check', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'check'])->name('agent.customer.wallet.loan.check');
                     Route::put('{loan_id}/status', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'status'])->name('agent.customer.wallet.loan.status');
                     Route::put('{loan_id}/date', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'date'])->name('agent.customer.wallet.loan.date');
+                    Route::put('{loan_id}/report', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'report'])->name('agent.customer.wallet.loan.report');
                 });
             });
         });

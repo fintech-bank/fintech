@@ -1177,7 +1177,7 @@
 
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="#report_loan" data-bs-toggle="modal" class="menu-link px-3">
                                                             Report d'échéance
                                                         </a>
                                                     </div>
@@ -2080,6 +2080,43 @@
 
                     <div class="modal-footer">
                         <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="report_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Report d'échéance</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formReportLoan" action="{{ route('agent.customer.wallet.loan.report', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prochaine Echéance</td>
+                                <td id="loan_actual_status">{{ \Carbon\Carbon::create(now()->year, now()->addMonth()->month, $wallet->loan->prlv_day)->format('d/m/Y') }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button text="Reporter l'échéance"/>
                     </div>
                 </form>
             </div>

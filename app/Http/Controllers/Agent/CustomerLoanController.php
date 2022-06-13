@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Agent;
 use App\Helper\CustomerTransactionHelper;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
+use App\Jobs\Agent\Customer\ReportScheduleLoan;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\UpdateStatusLoanNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CustomerLoanController extends Controller
@@ -192,6 +194,20 @@ class CustomerLoanController extends Controller
             ]);
 
             return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
+    }
+
+    public function report(Request $request, $customer, $wallet, $loan)
+    {
+        $loan = CustomerPret::find($loan);
+        $date_prlv = Carbon::create(now()->year, now()->addMonth()->month, $loan->prlv_day);
+        try {
+            dispatch(new ReportScheduleLoan($loan, $date_prlv))->delay($date_prlv);
+
+            return response()->json(['nextDate' => $date_prlv->addMonth()->format('d/m/Y')]);
         }catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json($exception->getMessage());
