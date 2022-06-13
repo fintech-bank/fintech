@@ -94,7 +94,7 @@ class CustomerCreditCard
             'support' => $support,
             'debit' => $debit,
             'cvc' => rand(100,999),
-            'code' => rand(1000,9999),
+            'code' => base64_encode(rand(1000,9999)),
             'limit_retrait' => self::calcLimitRetrait($customer->income->pro_incoming),
             'limit_payment' => self::calcLimitPayment($customer->income->pro_incoming),
             'customer_wallet_id' => $wallet->id
@@ -115,7 +115,7 @@ class CustomerCreditCard
         );
 
         // Notification Code Carte Bleu
-        $customer->info->notify(new SendCodeCardNotification($customer, $card->code, $card));
+        $customer->info->notify(new SendCodeCardNotification($customer, base64_decode($card->code), $card));
 
         auth()->user()->notify(new CreateCreditCardNotification($customer, $card, $doc));
         $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $card, $doc));

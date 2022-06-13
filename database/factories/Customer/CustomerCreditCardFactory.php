@@ -30,7 +30,7 @@ class CustomerCreditCardFactory extends Factory
             "support" => $support[rand(0,2)],
             "debit" => $debit[rand(0,1)],
             "cvc" => rand(100,999),
-            "code" => rand(1000,9999),
+            "code" => base64_encode(rand(1000,9999)),
             "limit_retrait" => rand(100,999),
             "limit_payment" => 2500,
             "facelia" => $this->faker->boolean(33),

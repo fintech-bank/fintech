@@ -7,6 +7,7 @@ use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
+use App\Notifications\Customer\SendCodeCardNotification;
 use Illuminate\Http\Request;
 
 class CustomerCreditCardController extends Controller
@@ -77,6 +78,74 @@ class CustomerCreditCardController extends Controller
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json($exception->getMessage());
+        }
+    }
+
+    public function active($customer, $card)
+    {
+       $card = \App\Models\Customer\CustomerCreditCard::find($card);
+
+        try {
+            $card->update([
+                'status' => 'active'
+            ]);
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(['errors' => $exception->getMessage()]);
+        }
+    }
+
+    public function inactive($customer, $card)
+    {
+        $card = \App\Models\Customer\CustomerCreditCard::find($card);
+
+        try {
+            $card->update([
+                'status' => 'inactive'
+            ]);
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(['errors' => $exception->getMessage()]);
+        }
+    }
+
+    public function canceled($customer, $card)
+    {
+        $card = \App\Models\Customer\CustomerCreditCard::find($card);
+
+        try {
+            $card->update([
+                'status' => 'canceled'
+            ]);
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(['errors' => $exception->getMessage()]);
+        }
+    }
+
+    public function code($customer, $card)
+    {
+        $card = \App\Models\Customer\CustomerCreditCard::find($card);
+
+        try {
+            $new_code = base64_encode(rand(1000,9999));
+
+            $card->update([
+                'code' => $new_code
+            ]);
+
+            $card->wallet->customer->info->notify(new SendCodeCardNotification($card->wallet->customer, $new_code, $card));
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(['errors' => $exception->getMessage()]);
         }
     }
 }

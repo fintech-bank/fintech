@@ -52,7 +52,7 @@
 @endsection
 
 @section("content")
-    <div class="container-fluid">
+    <div class="container-fluid" id="viewCreditCard">
         <div class="d-flex flex-column flex-xl-row">
             <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
                 <!--begin::Card-->
@@ -366,6 +366,33 @@
 
                     <div class="modal-footer">
                         <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="reloadCode">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white"><i class="fa-solid fa-refresh me-2"></i> Réinitialisation du code de la carte bancaire</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times text-white fa-2x"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formReloadCode" action="{{ route('agent.customer.card.code', [$customer->id, $card->id]) }}" method="GET">
+                    @csrf
+
+                    <div class="modal-body">
+                        <p>La réinitialisation du code de la carte bancaire va démarré, un code va être envoyer sur le téléphone du client.</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button text="Renvoyer le code" />
                     </div>
                 </form>
             </div>
