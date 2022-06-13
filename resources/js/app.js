@@ -264,7 +264,7 @@ function initSW() {
     }
 
     //register the service worker
-    navigator.serviceWorker.register('../sw.js')
+    navigator.serviceWorker.register('/sw.js')
         .then(() => {
             console.log('serviceWorker installed!')
             initPush();
@@ -448,6 +448,11 @@ inputMasks.forEach(input => {
     Inputmask({
         "mask": input.dataset.mask
     }).mask(input)
+})
+
+let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
 })
 
 initSW();

@@ -30,7 +30,10 @@ Route::get('/geo/countries', function () {
 Route::post('/geo/cities', [\App\Http\Controllers\Api\GeoController::class, 'cities']);
 Route::get('/geo/cities/{postal}', [\App\Http\Controllers\Api\GeoController::class, 'citiesByPostal']);
 
+Route::get('stats', [\App\Http\Controllers\Api\Agent\StatController::class, 'stat']);
+
 Route::prefix('customer')->group(function () {
+    Route::post('/', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'info']);
     Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
 });
 
@@ -49,5 +52,14 @@ Route::prefix('transfer')->group(function () {
 Route::prefix('bank')->group(function () {
     Route::get('{bank_id}', [\App\Http\Controllers\Api\Agent\BankController::class, 'info']);
 });
+
+Route::prefix('epargne')->group(function () {
+    Route::get('{plan_id}', [\App\Http\Controllers\Api\Agent\EpargneController::class, 'info']);
+});
+
+Route::prefix('pret')->group(function () {
+    Route::get('{plan_id}', [\App\Http\Controllers\Api\Agent\PretController::class, 'info']);
+});
+
 
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);

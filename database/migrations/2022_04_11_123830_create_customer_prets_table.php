@@ -28,11 +28,12 @@ return new class extends Migration
             $table->boolean('signed_bank')->default(false);
             $table->boolean('alert')->default(false);
             $table->enum('assurance_type', ["D", "DIM", "DIMC"])->default('DIM');
-            $table->bigInteger('wallet_loan_id')->unsigned();
+            $table->bigInteger('customer_wallet_id')->unsigned();
             $table->bigInteger('wallet_payment_id')->unsigned();
             $table->timestamps();
+            $table->timestamp('first_payment_at')->nullable();
 
-            $table->foreign('wallet_loan_id')->references('id')->on('customer_wallets')
+            $table->foreign('customer_wallet_id')->references('id')->on('customer_wallets')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 

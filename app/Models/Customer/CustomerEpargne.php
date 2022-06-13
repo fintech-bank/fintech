@@ -14,7 +14,7 @@ class CustomerEpargne extends Model
 
     public function plan()
     {
-        return $this->belongsTo(EpargnePlan::class);
+        return $this->belongsTo(EpargnePlan::class, 'epargne_plan_id');
     }
 
     public function wallet()

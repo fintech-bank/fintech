@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\Agent\Customer\WriteMail;
 use App\Models\Core\Package;
 use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerInfo;
 use App\Notifications\Agent\Customer\ReinitAuthCustomer;
 use App\Notifications\Agent\Customer\ReinitCodeCustomer;
 use App\Notifications\Agent\Customer\ReinitPasswordCustomer;
@@ -20,6 +21,19 @@ use Twilio\Exceptions\TwilioException;
 
 class CustomerController extends Controller
 {
+    public function info(Request $request)
+    {
+        switch ($request->get('call')) {
+            case 'countAllCustomer':
+                return response()->json(Customer::all()->count());
+                break;
+
+            case 'countAllVerifiedCustomer':
+                return response()->json(CustomerInfo::where('isVerified', true)->get()->count());
+                break;
+        }
+    }
+
     public function verifAllSolde($customer_id)
     {
         $customer = Customer::find($customer_id);
@@ -113,9 +127,9 @@ class CustomerController extends Controller
                 "from" => config('twilio-notification-channel.from')
             ]);
 
-            LogHelper::notify('notice', "Envoie d'un message sms au ".$customer->info->mobile);
+            LogHelper::notify('notice', "Envoie d'un message sms au " . $customer->info->mobile);
             return response()->json();
-        }catch (TwilioException $exception) {
+        } catch (TwilioException $exception) {
             LogHelper::notify('error', $exception->getMessage());
             return response()->json($exception->getMessage());
         }
@@ -128,9 +142,9 @@ class CustomerController extends Controller
         try {
             \Mail::to($customer->user->email)->send(new WriteMail($customer, $request->get('message')));
 
-            LogHelper::notify('notice', "Envoie d'un message mail à ".$customer->user->email);
+            LogHelper::notify('notice', "Envoie d'un message mail à " . $customer->user->email);
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('error', $exception->getMessage());
             return response()->json($exception->getMessage());
         }

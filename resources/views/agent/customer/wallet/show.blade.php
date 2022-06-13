@@ -134,11 +134,13 @@
                            href="#transactions">Transactions</a>
                     </li>
                     <!--end:::Tab item-->
-                    <!--begin:::Tab item-->
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#infos">Informations</a>
-                    </li>
-                    <!--end:::Tab item-->
+                    @if($wallet->type == 'compte')
+                        <!--begin:::Tab item-->
+                            <li class="nav-item">
+                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#infos">Informations</a>
+                            </li>
+                            <!--end:::Tab item-->
+                    @endif
                     <!--begin:::Tab item-->
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
@@ -148,10 +150,12 @@
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
                            href="#sepas">Prélèvements</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
-                           href="#checks">Chèques</a>
-                    </li>
+                    @if($wallet->type == 'compte')
+                        <li class="nav-item">
+                            <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+                               href="#checks">Chèques</a>
+                        </li>
+                    @endif
                     @if($wallet->type == 'pret')
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
@@ -1135,12 +1139,197 @@
                     <!--end:::Tab pane-->
                     @if($wallet->type == 'pret')
                         <div class="tab-pane fade" id="prets" role="tabpanel">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h3 class="card-title">Gestion du pret</h3>
+                                    <div class="card-toolbar">
+                                        <button type="button" class="btn btn-sm btn-light" data-kt-menu-trigger="hover" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
+                                            Action
+                                        </button>
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px" data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <div class="menu-content fs-6 text-dark fw-bolder px-3 py-4">Mon pret</div>
+                                            </div>
+                                            <!--end::Menu item-->
 
+                                            <!--begin::Menu separator-->
+                                            <div class="separator mb-3 opacity-75"></div>
+                                            <!--end::Menu separator-->
+
+                                            @if($wallet->loan->status == 'open')
+                                                <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="#startCheckLoan" data-bs-toggle="modal" class="menu-link text-danger px-3">
+                                                            Lancer la vérification du dossier
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+                                            @else
+
+                                                <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="#edit_date_loan" data-bs-toggle="modal" class="menu-link px-3">
+                                                            Modifier la date de prélèvement
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            Report d'échéance
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            Tableau d'amortissement
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            Compte de prélèvement
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="#" class="menu-link px-3">
+                                                            Remboursement par anticipation
+                                                        </a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+                                            @endif
+
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3 pb-3">
+                                                <a href="#edit_status_loan" data-bs-toggle="modal" class="menu-link px-3">
+                                                    Editer le status du pret
+                                                </a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between p-5">
+                                        <div class="">{{ $wallet->loan->plan->name }}: Dossier N° {{ $wallet->loan->reference }}</div>
+                                        <div class="">{!! \App\Helper\CustomerLoanHelper::getStatusLoan($wallet->loan->status) !!}</div>
+                                    </div>
+                                    <table class="table table-striped border gy-6 gs-6">
+                                        <tbody>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Type de pret</td>
+                                            <td>{{ $wallet->loan->plan->name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Capital emprunté</td>
+                                            <td>{{ eur($wallet->loan->amount_loan) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Taux débiteur</td>
+                                            <td>{{ number_format($wallet->loan->plan->interests[0]->interest, 2, ',', ' ') }} %</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Date d'ouverture</td>
+                                            <td>{{ $wallet->loan->created_at->format('d/m/Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Date de fin</td>
+                                            <td>{{ $wallet->loan->created_at->addMonths($wallet->loan->duration)->format('d/m/Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Périodicité</td>
+                                            <td>Mensuelle</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Montant Prochaine Echéance</td>
+                                            <td>{{ eur($wallet->loan->mensuality) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Date prochaine echéance</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::create(now()->year, now()->addMonth()->month, $wallet->loan->prlv_day)->format('d/m/Y') }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Compte Prélevé</td>
+                                            <td>{{ $wallet->loan->payment->number_account }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bolder text-right">Montant Du</td>
+                                            <td>{{ eur($wallet->loan->amount_du) }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
                     @endif
                     @if($wallet->type == 'epargne')
                         <div class="tab-pane fade" id="epargnes" role="tabpanel">
-
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h3 class="card-title">Compte épargne N°{{ $wallet->number_account }}</h3>
+                                    <div class="card-toolbar">
+                                        <button type="button" class="btn btn-sm btn-info">
+                                            Editer les spécificités du compte
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-rounded gy-7 gs-7">
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bolder">Référence du contrat</td>
+                                                <td>{{ $wallet->epargne->reference }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant Initial</td>
+                                                <td>{{ eur($wallet->epargne->initial_payment ) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant prélevé par mois</td>
+                                                <td>{{ eur($wallet->epargne->monthly_payment ) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Jours de prélèvement</td>
+                                                <td>{{ $wallet->epargne->monthly_days }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Plan souscrit</td>
+                                                <td>
+                                                    <strong>{{ $wallet->epargne->plan->name }}</strong><br>
+                                                    Pourcentage de rente: {{ $wallet->epargne->plan->profit_percent }} %<br>
+                                                    Profit acquis au bout de {{ $wallet->epargne->plan->profit_days }} jours<br>
+                                                    Limite du compte: {{ eur($wallet->epargne->plan->limit) }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Intéret acquis depuis le 01/{{ now()->year }}</td>
+                                                <td>
+                                                    @if($wallet->epargne->plan->profit_days == 15)
+                                                        {{ eur(\App\Helper\CustomerEpargneHelper::calcInterest(now()->diffInMonths(\Carbon\Carbon::createFromDate(now()->year, 1, 1)) / 12, $wallet->balance_actual, $wallet->epargne->plan->profit_percent)) }}
+                                                    @else
+                                                        {{ eur(\App\Helper\CustomerEpargneHelper::calcInterest(now()->diffInMonths(\Carbon\Carbon::createFromDate(now()->year, 1, 1)), $wallet->balance_actual, $wallet->epargne->plan->profit_percent)) }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant Prélevé sur le compte</td>
+                                                <td>{{ $wallet->epargne->payment->number_account }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -1764,6 +1953,139 @@
             </div>
         </div>
     </div>
+    @if($wallet->type == 'pret')
+    <div class="modal fade" tabindex="-1" id="startCheckLoan">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Vérification du dossier de pret</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        Le système va maintenant vérifier certaine source afin de voir si le dossier de pret N° {{ $wallet->loan->reference }} est acceptable.<br>
+                        A la fin de la vérification une echelle de 0 à 10 vous sera indiquer pour 0 (Dangereux) et 10 (Sur).
+                    </p>
+                    <div class="changelogCheckLoan bg-gray-300 p-5 d-none">
+                        <div class="status-code fw-bolder fs-2x text-center">8</div>
+                        <div class="status-text fw-bolder fs-1x text-center">Dossier Sur</div>
+                        <div class="status-result"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-bank" data-url="{{ route('agent.customer.wallet.loan.check', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}">
+                        <span class="indicator-label">
+                            Lancer la vérification
+                        </span>
+                        <span class="indicator-progress">
+                            Veuillez patienter... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="edit_status_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Changement du status du pret bancaire</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditStatusLoan" action="{{ route('agent.customer.wallet.loan.status', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Etat actuelle</td>
+                                <td id="loan_actual_status">{!! \App\Helper\CustomerLoanHelper::getStatusLoan($wallet->loan->status) !!}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="mb-10">
+                            <label for="status">Prochaine Etat du pret</label>
+                            <select name="status" id="status" class="form-select form-select-solid" data-parent="#edit_status_loan" data-control="select2" data-placeholder="Selectionner un status">
+                                <option value=""></option>
+                                <option value="open" @if($wallet->loan->status == 'open') selected @endif>Nouveau Dossier</option>
+                                <option value="study" @if($wallet->loan->status == 'study') selected @endif>Traitement de la demande</option>
+                                <option value="accepted" @if($wallet->loan->status == 'accepted') selected @endif>Accepter</option>
+                                <option value="refused" @if($wallet->loan->status == 'refused') selected @endif>Refuser</option>
+                                <option value="progress" @if($wallet->loan->status == 'progress') selected @endif>Utilisation en cours</option>
+                                <option value="terminated" @if($wallet->loan->status == 'terminated') selected @endif>Pret remboursé</option>
+                                <option value="error" @if($wallet->loan->status == 'error') selected @endif>Erreur</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="edit_date_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Changement de la date de Prélèvement</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditDateLoan" action="{{ route('agent.customer.wallet.loan.date', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date de Prélèvement Actuelle</td>
+                                <td id="loan_actual_status">{{ $wallet->loan->prlv_day }} de chaque mois</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <x-form.input
+                            name="prlv_day"
+                            type="text"
+                            label="Date de Prélèvement futur"
+                            help="true"
+                            helpText="La date entrée dans ce champs entrera en vigueur le mois suivant" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection
 
 @section("script")

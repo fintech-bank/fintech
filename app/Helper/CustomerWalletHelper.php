@@ -41,4 +41,9 @@ class CustomerWalletHelper
             }
         }
     }
+
+    public static function getNameAccount($wallet)
+    {
+        return CustomerHelper::getName($wallet->customer).' - Compte courant N°'.$wallet->number_account;
+    }
 }
