@@ -61,4 +61,21 @@ class CustomerCreditCard
             return $number;
         }
     }
+
+    public static function getStatus($status, $labeled = true)
+    {
+        if($labeled == true) {
+            switch ($status) {
+                case 'active': return '<span class="badge badge-pill rounded badge-success">Active</span>'; break;
+                case 'inactive': return '<span class="badge badge-pill rounded badge-danger">Inactive</span>'; break;
+                default: return '<span class="badge badge-pill rounded badge-default">Annuler</span>'; break;
+            }
+        } else {
+            switch ($status) {
+                case 'active': return 'Active'; break;
+                case 'inactive': return 'Inactive'; break;
+                default: return 'Annuler'; break;
+            }
+        }
+    }
 }

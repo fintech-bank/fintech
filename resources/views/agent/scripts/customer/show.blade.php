@@ -20,6 +20,7 @@
     let elements = {
         outstanding: document.querySelector('#outstanding'),
         tableWallet: $("#liste_wallet"),
+        tableCard: $("#liste_card"),
         epargnePlanInfo: document.querySelector("#epargne_plan_info"),
         pretPlanInfo: document.querySelector("#pret_plan_info")
     }
@@ -441,13 +442,23 @@
         info: !1,
         order: []
     })
+    let tableCard = elements.tableCard.DataTable({
+        info: !1,
+        order: []
+    })
 
     document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function (e) {
         tableWallet.search(e.target.value).draw()
     }))
+    document.querySelector('[data-kt-card-table-filter="search"]').addEventListener("keyup", (function (e) {
+        tableCard.search(e.target.value).draw()
+    }))
 
     let type_wallet = document.querySelectorAll('[data-kt-customer-table-filter="type_wallet"] [name="type_wallet"]')
     let status_wallet = document.querySelectorAll('[data-kt-customer-table-filter="status_wallet"] [name="status_wallet"]')
+
+    let status_card = document.querySelectorAll('[data-kt-card-table-filter="status"] [name="status"]')
+    let type_card = document.querySelectorAll('[data-kt-card-table-filter="type"] [name="type"]')
 
     document.querySelector('[data-kt-customer-table-filter="filter"]').addEventListener('click', () => {
         let a = "";
@@ -465,9 +476,28 @@
         const r = a + " "+ h;
         tableWallet.search(r).draw()
     })
+    document.querySelector('[data-kt-card-table-filter="filter"]').addEventListener('click', () => {
+        let a = "";
+        let h = "";
+        type_card.forEach((c => {
+            c.checked && (a = c.value)
+            "all" === a && (a = "")
+        }));
+
+        status_card.forEach((n => {
+            n.checked && (h = n.value)
+            "all" === a && (a = "")
+        }));
+
+        const r = a + " "+ h;
+        tableCard.search(r).draw()
+    })
 
     document.querySelector('[data-kt-customer-table-filter="reset"]').addEventListener("click", (function () {
         type_wallet[0].checked = !0, status_wallet[0].checked = !0, tableWallet.search("").draw()
+    }))
+    document.querySelector('[data-kt-card-table-filter="reset"]').addEventListener("click", (function () {
+        type_card[0].checked = !0, status_card[0].checked = !0, tableCard.search("").draw()
     }))
 
 
