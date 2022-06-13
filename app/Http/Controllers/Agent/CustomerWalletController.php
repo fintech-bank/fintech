@@ -146,31 +146,6 @@ class CustomerWalletController extends Controller
                 CustomerTransactionHelper::create('debit', 'sepa', 'Prélèvement Contrat Epargne - '.$wallet->number_account, $request->get('initial_payment'), $wallet_retrait->id, true, 'Prélèvement Contrat Epargne - '.$wallet->number_account,now());
                 CustomerTransactionHelper::create('credit', 'sepa', 'Prélèvement Contrat Epargne - '.$wallet->number_account, $request->get('initial_payment'), $wallet->id, true, 'Prélèvement Contrat Epargne - '.$wallet->number_account,  now());
 
-                // Initialisation des Prélèvements Sepas
-                /*for ($i=0; $i <= 24; $i++) {
-                    CustomerSepa::query()->create([
-                        'uuid' => \Str::uuid(),
-                        'creditor' => CustomerHelper::getName($customer),
-                        'number_mandate' => \Str::upper(\Str::random(8)),
-                        'amount' => - $request->get('monthly_payment'),
-                        'status' => 'waiting',
-                        'created_at' => now(),
-                        'updated_at' => now()->addMonths($i),
-                        'customer_wallet_id' => $wallet_retrait->id
-                    ]);
-
-                    CustomerSepa::query()->create([
-                        'uuid' => \Str::uuid(),
-                        'creditor' => CustomerHelper::getName($customer),
-                        'number_mandate' => \Str::upper(\Str::random(8)),
-                        'amount' => $request->get('monthly_payment'),
-                        'status' => 'waiting',
-                        'created_at' => now(),
-                        'updated_at' => now()->addMonths($i),
-                        'customer_wallet_id' => $wallet->id
-                    ]);
-                }*/
-
                 // Notification
                 auth()->user()->notify(new CreateEpargneNotification($customer, $wallet, $doc_epargne));
                 $customer->user->notify(new \App\Notifications\Customer\CreateEpargneNotification($customer, $wallet, $doc_epargne, $epargne));
@@ -291,32 +266,6 @@ class CustomerWalletController extends Controller
                     "customer_id" => $customer->id,
                     'document_category_id' => 3
                 ]);
-
-                $wallet_retrait = CustomerWallet::find($pret->wallet_payment_id);
-
-                /*for ($i=1; $i <= $request->get('duration'); $i++) {
-                    CustomerSepa::query()->create([
-                        'uuid' => \Str::uuid(),
-                        'creditor' => CustomerHelper::getName($customer),
-                        'number_mandate' => \Str::upper(\Str::random(8)),
-                        'amount' => - $mensuality,
-                        'status' => 'waiting',
-                        'created_at' => now(),
-                        'updated_at' => now()->addMonths($i),
-                        'customer_wallet_id' => $wallet_retrait->id
-                    ]);
-
-                    CustomerSepa::query()->create([
-                        'uuid' => \Str::uuid(),
-                        'creditor' => CustomerHelper::getName($customer),
-                        'number_mandate' => \Str::upper(\Str::random(8)),
-                        'amount' => $mensuality,
-                        'status' => 'waiting',
-                        'created_at' => now(),
-                        'updated_at' => now()->addMonths($i),
-                        'customer_wallet_id' => $wallet->id
-                    ]);
-                }*/
 
 
                 // Notification

@@ -30,7 +30,10 @@ Route::get('/geo/countries', function () {
 Route::post('/geo/cities', [\App\Http\Controllers\Api\GeoController::class, 'cities']);
 Route::get('/geo/cities/{postal}', [\App\Http\Controllers\Api\GeoController::class, 'citiesByPostal']);
 
+Route::get('stats', [\App\Http\Controllers\Api\Agent\StatController::class, 'stat']);
+
 Route::prefix('customer')->group(function () {
+    Route::post('/', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'info']);
     Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
 });
 
