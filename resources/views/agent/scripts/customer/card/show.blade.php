@@ -13,6 +13,7 @@
     let modals = {
         modalEditCard: document.querySelector("#editCard"),
         modalReloadCode: document.querySelector("#reloadCode"),
+        modalFacelia: document.querySelector("#facelia"),
     }
 
     let block = {
@@ -166,6 +167,40 @@
             success: () => {
                 btn.removeAttr('data-kt-indicator')
                 toastr.success(`Un nouveau code de carte bancaire à été générer et un SMS à été envoyer au client.`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: " + key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+    })
+    modals.modalFacelia.querySelector("#formCreateFacelia").addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("#formCreateFacelia")
+        let url = form.attr('action')
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: form.serializeArray(),
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`La Carte à été lié au crédit renouvelable FACELIA N°${data.reference}`, null, {
                     "positionClass": "toastr-bottom-right",
                 })
                 setTimeout(() => {

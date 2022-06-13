@@ -108,36 +108,22 @@ header .letter-code {
 
 .fs-1 {
   font-size: 0.5rem;
+  text-align: center;
 }
 
 .fs-2 {
   font-size: 0.8rem;
+  text-align: center;
 }
 
 .fs-3 {
   font-size: 1.1rem;
+  text-align: center;
 }
 
 .fs-4 {
   font-size: 1.5rem;
-}
-.fs-5 {
-    font-size: 1.8rem;
-}
-.fs-6 {
-    font-size: 2.1rem;
-}
-.fs-7 {
-    font-size: 2.6rem;
-}
-.fs-8 {
-    font-size: 3rem;
-}
-.fs-9 {
-    font-size: 3.5rem;
-}
-.fs-10 {
-    font-size: 3.9rem;
+  text-align: center;
 }
 
 .util {
@@ -715,8 +701,4 @@ i.icon-bank {
 
 .border-bank {
   border-color: var(--bank);
-}
-
-.fw-bolder {
-    font-weight: bolder;
 }

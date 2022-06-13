@@ -51,6 +51,15 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
         });
+
+        Schema::table('customer_credit_cards', function (Blueprint $table) {
+            $table->foreignId('customer_pret_id')
+                            ->nullable()
+                            ->constrained()
+                            ->cascadeOnUpdate()
+                            ->cascadeOnDelete();
+
+        });
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Helper\LogHelper;
 use App\Helper\UserHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\Customer\WelcomeContract;
+use App\Models\Core\DocumentCategory;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerCreditCard;
 use App\Models\Customer\CustomerInfo;
@@ -148,6 +149,7 @@ class CustomerController extends Controller
             'agency_id' => $user->agency_id
         ]);
 
+
         $info = CustomerInfo::create([
             'type' => $request->get('type'),
             'civility' => $request->get('civility'),
@@ -259,6 +261,11 @@ class CustomerController extends Controller
 
         // Notification mail de Bienvenue
         \Mail::to($user)->send(new WelcomeContract($customer, $document));
+
+        \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
+        foreach (DocumentCategory::all() as $doc) {
+            \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
+        }
     }
 
     private function createWallet($customer)

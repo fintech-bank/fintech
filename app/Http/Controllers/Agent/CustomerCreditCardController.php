@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Helper\CustomerCreditCard;
+use App\Helper\CustomerLoanHelper;
+use App\Helper\CustomerTransactionHelper;
 use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerFacelia;
 use App\Notifications\Customer\SendCodeCardNotification;
 use Illuminate\Http\Request;
 
@@ -42,6 +45,7 @@ class CustomerCreditCardController extends Controller
     public function show($customer, $card)
     {
         $card = \App\Models\Customer\CustomerCreditCard::find($card);
+        //dd($card->pret);
 
         return view('agent.customer.card.show', [
             'card' => $card,
@@ -143,6 +147,36 @@ class CustomerCreditCardController extends Controller
             $card->wallet->customer->info->notify(new SendCodeCardNotification($card->wallet->customer, $new_code, $card));
 
             return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json(['errors' => $exception->getMessage()]);
+        }
+    }
+
+    public function facelia(Request $request, $customer, $card)
+    {
+        $card = \App\Models\Customer\CustomerCreditCard::find($card);
+
+        // Création du pret
+        try {
+            $loan = CustomerLoanHelper::createLoan($card->wallet, $card->wallet->customer, $request->get('amount_available'), 8, 36, 20, 'accepted', $card->id);
+            $card->update([
+                'facelia' => 1,
+                'customer_pret_id' => $loan->id
+            ]);
+
+            CustomerTransactionHelper::create(
+                'credit',
+                'autre',
+                'Libération du montant disponible pour le contrat N°'.$card->facelias->reference,
+                $card->facelias->amount_available,
+                $loan->wallet->id,
+                true,
+                'Libération du montant disponible pour le contrat N°'.$card->facelias->reference,
+                now()
+            );
+
+            return response()->json($card->facelias);
         }catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json(['errors' => $exception->getMessage()]);

@@ -131,9 +131,7 @@ class DocumentFile
         if($pdf == true) {
             $pdf = Pdf::loadView('pdf.agence.'.\Str::slug($name, '_'), [
                 'customer' => $customer,
-                'data' => [
-                    $pdfData
-                ],
+                'data' => $pdfData,
                 'agence' => $customer->user->agency,
                 'title' => $name,
                 "header_type" => "address",

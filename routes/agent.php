@@ -108,6 +108,7 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
             Route::get('{card_id}/inactive', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'inactive'])->name('agent.customer.card.inactive');
             Route::get('{card_id}/canceled', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'inactive'])->name('agent.customer.card.canceled');
             Route::get('{card_id}/code', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'code'])->name('agent.customer.card.code');
+            Route::post('{card_id}/facelia', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'facelia'])->name('agent.customer.card.facelia');
 
             Route::put('{card_id}', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'update'])->name('agent.customer.card.update');
         });

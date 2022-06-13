@@ -2,6 +2,11 @@
 
 namespace Database\Factories\Customer;
 
+use App\Helper\CustomerLoanHelper;
+use App\Http\Controllers\Agent\CustomerLoanController;
+use App\Models\Core\LoanPlan;
+use App\Models\Customer\CustomerPret;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,6 +40,7 @@ class CustomerCreditCardFactory extends Factory
             "limit_payment" => 2500,
             "facelia" => $this->faker->boolean(33),
         ];
+
 
         if($card['debit'] == 'differed') {
             $card += [

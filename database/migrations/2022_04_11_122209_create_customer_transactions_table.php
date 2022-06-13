@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('customer_transactions', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->enum('type', ['depot', 'retrait', 'payment', 'virement', 'sepa', 'frais', 'souscription', 'autre']);
+            $table->enum('type', ['depot', 'retrait', 'payment', 'virement', 'sepa', 'frais', 'souscription', 'autre', 'facelia']);
             $table->string('designation');
             $table->string('description')->nullable();
             $table->float('amount');

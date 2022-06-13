@@ -57,6 +57,12 @@ class LoanPlanSeeder extends Seeder
             "max" => 500000,
             "duration" => 300,
             "instruction" => null
+        ])->create([
+            'name' => "Crédit Renouvelable Facelia",
+            "min" => 500,
+            "max" => 3000,
+            "duration" => 36,
+            "instruction" => null
         ]);
     }
 }

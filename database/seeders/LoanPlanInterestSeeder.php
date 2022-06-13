@@ -43,6 +43,18 @@ class LoanPlanInterestSeeder extends Seeder
             'interest' => 1.25,
             'duration' => 300,
             "loan_plan_id" => 7
+        ])->create([
+            "interest" => 2.39,
+            "duration" => 6,
+            "loan_plan_id" => 8
+        ])->create([
+            "interest" => 7.89,
+            "duration" => 24,
+            "loan_plan_id" => 8
+        ])->create([
+            "interest" => 18.36,
+            "duration" => 36,
+            "loan_plan_id" => 8
         ]);
     }
 }

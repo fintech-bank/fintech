@@ -62,4 +62,9 @@ class CustomerWallet extends Model
     {
         return $this->hasMany(CustomerCheck::class);
     }
+
+    public function facelia()
+    {
+        return $this->hasOne(CustomerFacelia::class);
+    }
 }

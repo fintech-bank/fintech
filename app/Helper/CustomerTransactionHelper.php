@@ -56,6 +56,12 @@ class CustomerTransactionHelper
                             </div>';
                     break;
 
+                case 'facelia':
+                    return '<div class="symbol symbol-50px symbol-circle" data-bs-toggle="tooltip" title="Crédit Facelia">
+                                <div class="symbol-label" style="background-image: url(/storage/transaction/payment.png)"></div>
+                            </div>';
+                    break;
+
                 default:
                     return '<div class="symbol symbol-50px symbol-circle" data-bs-toggle="tooltip" title="Autre">
                                 <div class="symbol-label" style="background-image: url(/storage/transaction/autre.png)"></div>

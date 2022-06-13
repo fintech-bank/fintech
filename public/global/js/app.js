@@ -2611,9 +2611,12 @@ inputMasks.forEach(function (input) {
     "mask": input.dataset.mask
   }).mask(input);
 });
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-  return new bootstrap.Popover(popoverTriggerEl);
+var tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+tooltipElements.forEach(function (tooltip) {
+  console.log(tooltip);
+  new bootstrap.Tooltip(tooltip, {
+    html: true
+  });
 });
 initSW();
 

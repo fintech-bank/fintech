@@ -151,7 +151,7 @@
                 <!--end::Card-->
             </div>
             <div class="flex-lg-row-fluid ms-lg-15">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm mb-10">
                     <div class="card-header">
                         <h3 class="card-title"></h3>
                         <div class="card-toolbar">
@@ -205,11 +205,13 @@
                                         Renvoyer le code secret
                                     </a>
                                 </div>
-                                <div class="menu-item px-3">
-                                    <a href="#facelia" data-bs-toggle="modal" class="menu-link px-3">
-                                        Liaison Facelia
-                                    </a>
-                                </div>
+                                @if($card->facelia == 0)
+                                    <div class="menu-item px-3">
+                                        <a href="#facelia" data-bs-toggle="modal" class="menu-link px-3">
+                                            Liaison Facelia
+                                        </a>
+                                    </div>
+                                @endif
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="{{ route('agent.customer.card.canceled', [$customer->id, $card->id]) }}" class="menu-link text-danger px-3 canceled">
@@ -299,6 +301,124 @@
                         </div>
                     </div>
                 </div>
+                @if($card->facelia == 1)
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h3 class="card-title">Information sur votre pret: Crédit Renouvelable Facelia</h3>
+                            <div class="card-toolbar">
+                                <a href="{{ route('agent.customer.wallet.show', [$customer->id, $card->pret->wallet->id]) }}#pret" class="btn btn-sm btn-primary"><i class="fa-solid fa-exchange me-2"></i> Gérer le crédit</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="bg-gray-600 text-white p-5 fs-1 rounded-3 mb-5">
+                                <strong>Situation</strong> aux {{ now()->format('d/m/Y') }}
+                            </div>
+                            <div class="d-flex flex-row w-100">
+                                <div class="flex-column">
+                                    <div class="d-flex flex-row w-400px justify-content-between align-items-center mb-5">
+                                        <div class="d-flex flex-column fs-2">
+                                            <div class="fw-bolder">Crédit Renouvelable</div>
+                                            <div class="fs-3">N° {{ $card->facelias->reference }}</div>
+                                        </div>
+                                        @if($card->pret->alert == 1)
+                                            <div class="symbol symbol-50px symbol-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="tooltip-dark"
+                                                 title="{{ "Votre dossier présente un retard de paiement de ".eur($card->facelias->amount_du).".Pour éviter une procédure de recouvrement, il est important de régulariser votre situation." }}">
+                                                <div class="symbol-label">
+                                                    <i class="fa-solid fa-exclamation-triangle fa-2x text-warning"></i>
+                                                </div>
+                                            </div>
+
+                                        @endif
+                                    </div>
+                                    <div class="separator my-5 w-400px border-2"></div>
+                                    <div class="d-flex flex-column w-400px">
+                                        <div class="d-flex flex-row justify-content-between p-3 pb-5 fs-3 border-bottom">
+                                            <div class="fw-bolder">Prochain Prélèvement</div>
+                                            <div class="fs-4 text-primary fw-bold">{{ eur($card->facelias->amount_du) }}</div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-between align-items-center p-3 fs-4 border-bottom">
+                                            <div class="fw-bold w-50">
+                                                Vos opérations au comptant
+                                                @if(\App\Helper\CustomerFaceliaHelper::calcComptantMensuality($card->wallet) > 0)
+                                                    <span class="fs-8">Prélevé le {{ $card->facelias->next_expiration->format('d/m/Y') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="fs-5 text-primary fw-bold text-right">{{ eur(\App\Helper\CustomerFaceliaHelper::calcComptantMensuality($card->wallet)) }}</div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-between align-items-center p-3 fs-4 border-bottom border-bottom-4 border-gray-600">
+                                            <div class="fw-bold w-50">
+                                                Vos opérations selon votre mensualité choisie
+                                                @if(\App\Helper\CustomerFaceliaHelper::calcOpsSepaMensuality($card->pret->wallet) > 0)
+                                                    <span class="fs-8">Prélevé le {{ $card->facelias->next_expiration->format('d/m/Y') }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="fs-5 text-primary fw-bold text-right">{{ eur(\App\Helper\CustomerFaceliaHelper::calcOpsSepaMensuality($card->pret->wallet)) }}</div>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-between align-items-center p-3 fs-3 border-bottom">
+                                            <div class="fw-bolder w-50">
+                                                Montant Disponible
+                                            </div>
+                                            <div class="fs-4 text-success fw-bold text-right">{{ eur($card->facelias->amount_available) }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column w-800px ms-5">
+                                    <table class="table border table-striped gs-7 gy-7 gx-7 fs-4">
+                                        <tbody>
+                                            <tr>
+                                                <td class="fw-bolder">Plafond du crédit renouvelable</td>
+                                                <td>{{ eur($card->facelias->pret->amount_loan) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">
+                                                    Montant disponible*<br>
+                                                    <span class="fs-6 fw-normal">*sous réserve des opérations en cours</span>
+                                                </td>
+                                                <td>{{ eur($card->facelias->amount_available) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant utilisé</td>
+                                                <td>{{ eur($card->facelias->amount_du - $card->facelias->amount_available) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Montant restant du</td>
+                                                <td>{{ eur($card->facelias->amount_du) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">
+                                                    Montant de vos opérations au comptant*<br>
+                                                    <span class="fs-6 fw-normal">(achats différés du mois)</span>
+                                                </td>
+                                                <td>{{ eur(\App\Helper\CustomerFaceliaHelper::calcComptantMensuality($card->facelias->wallet)) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Mensualité actuel</td>
+                                                <td>{{ eur($card->facelias->mensuality) }}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-bolder">Date de prélèvement</td>
+                                                <td>
+                                                    @if($card->facelias->mensuality != 0)
+                                                        {{ $card->facelias->nex_expiration->format('d/m/Y') }}
+                                                    @else
+                                                        Aucune Echéance à devoir
+                                                    @endif
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -393,6 +513,44 @@
 
                     <div class="modal-footer">
                         <x-form.button text="Renvoyer le code" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="facelia">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white"><i class="fa-solid fa-refresh me-2"></i> Ouverture Crédit renouvelable Facelia</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times text-white fa-2x"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formCreateFacelia" action="{{ route('agent.customer.card.facelia', [$customer->id, $card->id]) }}" method="POST">
+                    @csrf
+
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="amount_available" class="form-label required">Montant du crédit renouvelable</label>
+                            <select class="form-select" id="amount_available" name="amount_available" data-parent="#facelia" data-control="select2" data-placeholder="Selectionner un montant">
+                                <option value=""></option>
+                                <option value="500">500,00 €</option>
+                                <option value="1000">1 000,00 €</option>
+                                <option value="1500">1 500,00 €</option>
+                                <option value="2000">2 000,00 €</option>
+                                <option value="2500">2 500,00 €</option>
+                                <option value="3000">3 000,00 €</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button text="Lié la carte à Facelia" />
                     </div>
                 </form>
             </div>
