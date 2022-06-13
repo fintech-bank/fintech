@@ -18,6 +18,31 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('telescope:prune')->daily();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
+
+        // Commande
+        $schedule->command('system:execute call=autoAcceptCreditPrlv')
+            ->hourly()
+            ->description("Accepte automatiquement les prélèvement Créditeur toute les heures");
+
+        $schedule->command('system:execute call=verifRequestLoanOpen')
+            ->dailyAt('08:00:00')
+            ->description("Passe tous les pret ouvert en étude");
+
+        $schedule->command('system:execute call=acceptedLoanCharge')
+            ->dailyAt('08:00:00')
+            ->description("Effectue le virement du montant des pret accordées");
+
+        $schedule->command('system:execute call=initPrlvCptEpargne')
+            ->dailyAt('08:00:00')
+            ->description("Initialise tous les prélèvements à effectuer sur les comptes épargne");
+
+        $schedule->command('system:execute call=initPrlvCptPret')
+            ->dailyAt('08:00:00')
+            ->description("Initialise tous les prélèvements à effectuer sur les comptes de pret");
+
+        $schedule->command('system:execute call=executeSepaOrderDay')
+            ->daily()
+            ->description("Exécute tous les ordres de prélèvement sépa journalier");
     }
 
     /**

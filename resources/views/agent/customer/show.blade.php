@@ -1197,7 +1197,7 @@
                                         <!--end::Menu 1-->
                                         <!--end::Filter-->
                                         <!--begin::Add customer-->
-
+                                        <a class="btn btn-bank" data-bs-toggle="modal" href="#add_credit_card"><i class="fa-solid fa-plus-square me-2"></i> Nouvelle Carte Bancaire</a>
                                         <!--end::Add customer-->
                                     </div>
                                     <!--end::Toolbar-->
@@ -1672,6 +1672,70 @@
                                 <option value="DIMC">Décès, Invalidité, Maladie, Travail</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="add_credit_card">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white"><i class="fa-solid fa-credit-card me-2"></i> Nouvelle carte bancaire</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
+                        <i class="fas fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formCreateCard" action="{{ route('agent.customer.card.store', $customer->id) }}"
+                      method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="customer_wallet_id" class="form-label required">Compte Attaché à la carte</label>
+                            <select class="form-select" id="customer_wallet_id" name="customer_wallet_id" data-parent="#add_credit_card" data-control="select2" data-placeholder="Selectionner un compte bancaire" required>
+                                <option value=""></option>
+                                @foreach($customer->wallets()->where('status', 'active')->get() as $wallet)
+                                    <option value="{{ $wallet->id }}">{{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-10">
+                            <label for="type" class="form-label required">Type de carte bancaire</label>
+                            <select class="form-select" id="type" name="type" data-parent="#add_credit_card" data-control="select2" data-placeholder="Selectionner un type de carte" required onchange="getPhysicalInfo(this)">
+                                <option value=""></option>
+                                <option value="physique">Carte Physique</option>
+                                <option value="virtuel">Carte Virtuel</option>
+                            </select>
+                        </div>
+                        <div id="physical_card" class="d-none">
+                            <div class="mb-10">
+                                <label for="support" class="form-label required">Catégorie de la carte bancaire</label>
+                                <select class="form-select" id="support" name="support" data-parent="#add_credit_card" data-placeholder="Selectionner un type de carte">
+                                    <option value=""></option>
+                                    <option value="classic" data-card-img="/storage/card/classic.png">Carte Visa Classic</option>
+                                    <option value="premium" data-card-img="/storage/card/premium.png">Carte Visa Premium</option>
+                                    <option value="infinite" data-card-img="/storage/card/infinite.png">Carte Visa Infinite</option>
+                                </select>
+                            </div>
+                            <div class="mb-10">
+                                <label for="debit" class="form-label required">Type de débit de la carte bancaire</label>
+                                <select class="form-select" id="debit" name="debit" data-parent="#add_credit_card" data-control="select2" data-placeholder="Selectionner un type de débit">
+                                    <option value=""></option>
+                                    <option value="immediate">Débit Immédiat</option>
+                                    <option value="differed">Débit différé</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="virtual_card"></div>
                     </div>
 
                     <div class="modal-footer">

@@ -228,8 +228,6 @@ class ExecuteSystem extends Command
         }
 
         \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Execution des ordres SEPA en date du " . now()->format('d/m/Y') . "<br>Nombre d'ordre executer: " . $i));
-
-
     }
 
 

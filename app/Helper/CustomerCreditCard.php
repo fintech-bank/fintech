@@ -4,6 +4,11 @@
 namespace App\Helper;
 
 
+use App\Models\Customer\CustomerDocument;
+use App\Notifications\Agent\Customer\CreateCreditCardNotification;
+use App\Notifications\Customer\SendCodeCardNotification;
+use Plansky\CreditCard\Generator;
+
 class CustomerCreditCard
 {
     public static function dataDebitCard()
@@ -68,7 +73,7 @@ class CustomerCreditCard
             switch ($status) {
                 case 'active': return '<span class="badge badge-pill rounded badge-success">Active</span>'; break;
                 case 'inactive': return '<span class="badge badge-pill rounded badge-danger">Inactive</span>'; break;
-                default: return '<span class="badge badge-pill rounded badge-default">Annuler</span>'; break;
+                default: return '<span class="badge badge-pill rounded badge-secondary">Annuler</span>'; break;
             }
         } else {
             switch ($status) {
@@ -77,5 +82,43 @@ class CustomerCreditCard
                 default: return 'Annuler'; break;
             }
         }
+    }
+
+    public static function createCard($customer, $wallet, $type = 'physique', $support = 'classic', $debit = 'immediate')
+    {
+        $card_generator = new Generator();
+        $card = $wallet->cards()->create([
+            'exp_month' => now()->month,
+            'number' => $card_generator->single('40', 16),
+            'type' => $type,
+            'support' => $support,
+            'debit' => $debit,
+            'cvc' => rand(100,999),
+            'code' => rand(1000,9999),
+            'limit_retrait' => self::calcLimitRetrait($customer->income->pro_incoming),
+            'limit_payment' => self::calcLimitPayment($customer->income->pro_incoming),
+            'customer_wallet_id' => $wallet->id
+        ]);
+
+        // Génération des contrat
+        $doc = DocumentFile::createDoc(
+            $customer,
+            'Convention CB Physique',
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            $card
+        );
+
+        // Notification Code Carte Bleu
+        $customer->info->notify(new SendCodeCardNotification($customer, $card->code, $card));
+
+        auth()->user()->notify(new CreateCreditCardNotification($customer, $card, $doc));
+        $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $card, $doc));
+
+        return $card;
     }
 }

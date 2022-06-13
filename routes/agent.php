@@ -100,6 +100,10 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                 });
             });
         });
+
+        Route::prefix('{customer}/cards')->group(function () {
+            Route::post('/', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'store'])->name('agent.customer.card.store');
+        });
     });
 });
 

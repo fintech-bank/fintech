@@ -15,6 +15,7 @@
         modalCreateWallet: document.querySelector('#createWallet'),
         modalCreateEpargne: document.querySelector('#createEpargne'),
         modalCreatePret: document.querySelector('#createPret'),
+        modalCreateCard: document.querySelector("#add_credit_card")
     }
 
     let elements = {
@@ -146,6 +147,14 @@
                 console.error(err)
             }
         })
+    }
+
+    let getPhysicalInfo = (item) => {
+        if(item.value == 'physique') {
+            modals.modalCreateCard.querySelector('#physical_card').classList.remove('d-none')
+        } else {
+            modals.modalCreateCard.querySelector('#physical_card').classList.add('d-none')
+        }
     }
 
     verifSoldesAllWallets()
@@ -355,6 +364,42 @@
             }
         })
     })
+    modals.modalCreateCard.querySelector('#formCreateCard').addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("#formCreateCard")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Une nouvelle carte bancaire à été créer avec succès`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+    })
 
 
     $("#country").select2({
@@ -363,6 +408,11 @@
     })
 
     $("#card_support").select2({
+        templateSelection: cardsOptions,
+        templateResult: cardsOptions
+    })
+
+    $("#formCreateCard").find('#support').select2({
         templateSelection: cardsOptions,
         templateResult: cardsOptions
     })
