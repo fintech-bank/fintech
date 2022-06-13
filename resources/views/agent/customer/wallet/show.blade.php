@@ -1185,7 +1185,7 @@
 
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="{{ route('agent.customer.wallet.loan.table', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" target="_blank" class="menu-link px-3">
                                                             Tableau d'amortissement
                                                         </a>
                                                     </div>

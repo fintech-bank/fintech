@@ -194,12 +194,21 @@ class CustomerLoanController extends Controller
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json($exception->getMessage());
         }
     }
 
+    /**
+     * Reporte la prochaine échéance d'un pret bancaire
+     *
+     * @param Request $request
+     * @param $customer
+     * @param $wallet
+     * @param $loan
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function report(Request $request, $customer, $wallet, $loan)
     {
         $loan = CustomerPret::find($loan);
@@ -208,9 +217,10 @@ class CustomerLoanController extends Controller
             dispatch(new ReportScheduleLoan($loan, $date_prlv))->delay($date_prlv);
 
             return response()->json(['nextDate' => $date_prlv->addMonth()->format('d/m/Y')]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json($exception->getMessage());
         }
     }
+
 }

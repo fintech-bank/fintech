@@ -24,7 +24,7 @@
         <div class="date">Le {{ $document->created_at->format('d/m/Y') }}</div>
         <div class="address_customer">
             @if($customer->info->type == 'part')
-                {{ $customer->info->civility }}. {{ $customer->info->lastname }} {{ $customer->info->firstname }}
+                {{ $customer->info->civility }}. {{ $customer->info->lastname }} {{ $customer->info->firstname }}<br>
             @else
                 {{ $customer->info->company }}<br>
             @endif
