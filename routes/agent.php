@@ -103,6 +103,12 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
 
         Route::prefix('{customer}/cards')->group(function () {
             Route::post('/', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'store'])->name('agent.customer.card.store');
+            Route::get('{card_id}', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'show'])->name('agent.customer.card.show');
+            Route::get('{card_id}/active', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'active'])->name('agent.customer.card.active');
+            Route::get('{card_id}/inactive', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'inactive'])->name('agent.customer.card.inactive');
+            Route::get('{card_id}/canceled', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'inactive'])->name('agent.customer.card.canceled');
+
+            Route::put('{card_id}', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'update'])->name('agent.customer.card.update');
         });
     });
 });

@@ -115,10 +115,10 @@ class DocumentFile
         return null;
     }
 
-    public static function createDoc($customer, $name, $category = 3, $reference = null, $signable = false, $signed_bank = false, $signed_client = false, $pdf = false, $pdfData = [])
+    public static function createDoc($customer, $name, $nameless = null, $category = 3, $reference = null, $signable = false, $signed_bank = false, $signed_client = false, $pdf = false, $pdfData = [])
     {
         $document = CustomerDocument::create([
-            'name' => $name,
+            'name' => $nameless == null ? $name : $nameless,
             'reference' => $reference == null ? \Str::upper(\Str::random(8)) : $reference,
             'signable' => $signable,
             'signed_by_client' => $signed_client,
@@ -129,7 +129,7 @@ class DocumentFile
         ]);
 
         if($pdf == true) {
-            $pdf = Pdf::loadView('pdf.agence.'.\Str::camel($name), [
+            $pdf = Pdf::loadView('pdf.agence.'.\Str::slug($name, '_'), [
                 'customer' => $customer,
                 'data' => [
                     $pdfData

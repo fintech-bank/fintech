@@ -104,13 +104,14 @@ class CustomerCreditCard
         $doc = DocumentFile::createDoc(
             $customer,
             'Convention CB Physique',
+            null,
             3,
             null,
             true,
             true,
             false,
             true,
-            $card
+            ['card' => $card]
         );
 
         // Notification Code Carte Bleu
@@ -120,5 +121,16 @@ class CustomerCreditCard
         $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $card, $doc));
 
         return $card;
+    }
+
+    public static function getExpiration($card)
+    {
+        if($card->exp_month <= 9) {
+            $month = '0'.$card->exp_month;
+        } else {
+            $month = $card->exp_month;
+        }
+
+        return $month.'/'.$card->exp_year;
     }
 }

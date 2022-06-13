@@ -30,6 +30,10 @@ return new class extends Migration
             $table->string('code');
             $table->float('limit_retrait');
             $table->float('limit_payment');
+            $table->float('differed_limit')->default(0);
+            $table->boolean('facelia')->default(false);
+            $table->boolean('visa_spec')->default(false);
+            $table->boolean('warranty')->default(false);
 
             $table->foreignId('customer_wallet_id')
                             ->constrained()

@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->float('amount');
             $table->boolean('confirmed');
+            $table->boolean('differed')->default(false);
             $table->timestamp('confirmed_at')->nullable();
+            $table->time('differed_at')->nullable();
             $table->timestamps();
 
             $table->foreignId('customer_wallet_id')

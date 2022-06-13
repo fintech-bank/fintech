@@ -19,7 +19,8 @@ class CustomerCreditCardFactory extends Factory
         $status = ['active','inactive','canceled'];
         $support = ['classic','premium','infinite'];
         $debit = ['immediate','differed'];
-        return [
+        $diff_limit = [500,1000,1500,2000,2500,3000];
+        $card = [
             "currency" => "EUR",
             "exp_month" => now()->month,
             "exp_year" => now()->addYears(3)->year,
@@ -31,7 +32,35 @@ class CustomerCreditCardFactory extends Factory
             "cvc" => rand(100,999),
             "code" => rand(1000,9999),
             "limit_retrait" => rand(100,999),
-            "limit_payment" => 2500
+            "limit_payment" => 2500,
+            "facelia" => $this->faker->boolean(33),
         ];
+
+        if($card['debit'] == 'differed') {
+            $card += [
+                "differed_limit" => $diff_limit[rand(0,5)],
+            ];
+        }
+
+        if($card['support'] == 'premium') {
+            $card += [
+                "visa_spec" => true,
+                "payment_abroad" => true
+            ];
+        } elseif($card['support'] == 'infinite') {
+            $card += [
+                "visa_spec" => true,
+                "warranty" => true,
+                "payment_abroad" => true
+            ];
+        } else {
+            $card += [
+                "visa_spec" => false,
+                "warranty" => false,
+                "payment_abroad" => false
+            ];
+        }
+
+        return $card;
     }
 }

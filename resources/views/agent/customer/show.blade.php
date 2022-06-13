@@ -1249,7 +1249,7 @@
                                                 </td>
                                                 <!--begin::Action=-->
                                                 <td class="text-end">
-                                                    <a href="{{ route('agent.customer.wallet.show', [$customer->id, $wallet->id]) }}" class="btn btn-sm btn-circle btn-icon btn-bank" data-bs-toggle="tooltip" data-bs-placement="left" title="Détail"><i class="fa fa-desktop"></i> </a>
+                                                    <a href="{{ route('agent.customer.card.show', [$customer->id, $card->id]) }}" class="btn btn-sm btn-circle btn-icon btn-bank" data-bs-toggle="tooltip" data-bs-placement="left" title="Détail"><i class="fa fa-desktop"></i> </a>
                                                 </td>
                                                 <!--end::Action=-->
                                             </tr>

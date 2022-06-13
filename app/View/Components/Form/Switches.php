@@ -9,6 +9,10 @@ class Switches extends Component
     public $name;
     public $label;
     public $value;
+    /**
+     * @var bool
+     */
+    public $checked;
 
     /**
      * Create a new component instance.
@@ -16,13 +20,15 @@ class Switches extends Component
      * @param $name
      * @param $label
      * @param $value
+     * @param bool $checked
      */
-    public function __construct($name, $label, $value)
+    public function __construct($name, $label, $value, $checked = false)
     {
         //
         $this->name = $name;
         $this->label = $label;
         $this->value = $value;
+        $this->checked = $checked;
     }
 
     /**
