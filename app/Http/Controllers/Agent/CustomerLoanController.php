@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Agent;
 
+use App\Helper\CustomerLoanHelper;
 use App\Helper\CustomerTransactionHelper;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
+use App\Jobs\Agent\Customer\RembLoan;
 use App\Jobs\Agent\Customer\ReportScheduleLoan;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPret;
+use App\Models\Customer\CustomerSepa;
 use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\UpdateStatusLoanNotification;
 use Carbon\Carbon;
@@ -218,6 +221,62 @@ class CustomerLoanController extends Controller
 
             return response()->json(['nextDate' => $date_prlv->addMonth()->format('d/m/Y')]);
         } catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
+    }
+
+    /**
+     * Changement du compte de prélèvement d'un pret bancaire
+     *
+     * @param Request $request
+     * @param $customer
+     * @param $wallet
+     * @param $loan
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function compte(Request $request, $customer, $wallet, $loan)
+    {
+        $loan = CustomerPret::find($loan);
+
+        try {
+            $loan->update([
+                'wallet_payment_id' => $request->get('wallet_payment_id')
+            ]);
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
+    }
+
+    public function remb(Request $request, $customer, $wallet, $loan)
+    {
+        $loan = CustomerPret::find($loan);
+
+        try {
+            $restant = CustomerLoanHelper::calcRestantDu($loan, false);
+
+            if($request->get('amount') > $restant) {
+                return response()->json(['error' => "Le montant instruit est supérieur au restant dù"], 500);
+            } else {
+                $sepa = CustomerSepa::create([
+                    'uuid' => \Str::uuid(),
+                    'creditor' => config('app.name'),
+                    'number_mandate' => \Str::upper(\Str::random(8)),
+                    'amount' => - $request->get('amount'),
+                    'status' => 'waiting',
+                    'created_at' => now(),
+                    'updated_at' => now()->addDay(),
+                    'customer_wallet_id' => $loan->wallet_payment_id
+                ]);
+
+                dispatch(new RembLoan($loan, $sepa))->delay(now()->addDay()->startOfDay());
+
+                return response()->json();
+            }
+        }catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
             return response()->json($exception->getMessage());
         }
