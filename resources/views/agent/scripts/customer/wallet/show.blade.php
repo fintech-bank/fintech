@@ -1353,6 +1353,120 @@
 
 
     })
+    $("#formReportLoan").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formReportLoan")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Ce Prélèvement à été reporté au ${data.nextDate}`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
+    })
+    $("#formEditCptLoan").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formEditCptLoan")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le compte de prélèvement à été mise à jours`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
+    })
+    $("#formRembLoan").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formRembLoan")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Le montant va être prélever sur le compte de remboursement dans les 24H`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+
+
+    })
 
     $("#permanent_date").flatpickr({
         altInput: true,

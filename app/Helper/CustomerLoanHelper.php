@@ -4,6 +4,8 @@
 namespace App\Helper;
 
 
+use App\Models\Customer\CustomerSepa;
+
 class CustomerLoanHelper
 {
     public static function getLoanInterest($amount_loan, $interest_percent)
@@ -66,6 +68,19 @@ class CustomerLoanHelper
                     return "Erreur";
                     break;
             }
+        }
+    }
+
+    public static function calcRestantDu($loan, $euro = true)
+    {
+        if($euro == true) {
+            $prlv_effect = CustomerSepa::query()->where('status', 'processed')->where('creditor', config('app.name'))->sum('amount');
+            $calc = $loan->amount_du - $prlv_effect;
+
+            return eur($calc);
+        } else {
+            $prlv_effect = CustomerSepa::query()->where('status', 'processed')->where('creditor', config('app.name'))->sum('amount');
+            return $loan->amount_du - $prlv_effect;
         }
     }
 }

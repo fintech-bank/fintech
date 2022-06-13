@@ -1177,7 +1177,7 @@
 
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="#report_loan" data-bs-toggle="modal" class="menu-link px-3">
                                                             Report d'échéance
                                                         </a>
                                                     </div>
@@ -1185,7 +1185,7 @@
 
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="{{ route('agent.customer.wallet.loan.table', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" target="_blank" class="menu-link px-3">
                                                             Tableau d'amortissement
                                                         </a>
                                                     </div>
@@ -1193,7 +1193,7 @@
 
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="#edit_cpt_loan" data-bs-toggle="modal" class="menu-link px-3">
                                                             Compte de prélèvement
                                                         </a>
                                                     </div>
@@ -1201,7 +1201,7 @@
 
                                                     <!--begin::Menu item-->
                                                     <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
+                                                        <a href="#remb_loan" data-bs-toggle="modal" class="menu-link px-3">
                                                             Remboursement par anticipation
                                                         </a>
                                                     </div>
@@ -2076,6 +2076,131 @@
                             label="Date de Prélèvement futur"
                             help="true"
                             helpText="La date entrée dans ce champs entrera en vigueur le mois suivant" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="edit_cpt_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Changement du compte de prélèvement</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formEditCptLoan" action="{{ route('agent.customer.wallet.loan.compte', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Compte de prélèvement actuel</td>
+                                <td id="loan_actual_status">Compte Chèque N°{{ $wallet->loan->payment->number_account }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="mb-10">
+                            <label for="wallet_payment_id">Nouveau compte de prélèvement</label>
+                            <select id="wallet_payment_id" name="wallet_payment_id" class="form-select form-select-solid" data-parent="#edit_cpt_loan" data-control="select2" data-placeholder="Selectionner un nouveau compte">
+                                <option value=""></option>
+                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $wallet->customer_id)->where('type', 'compte')->where('status', 'active')->where('id', '!=', $wallet->loan->payment->id)->get() as $wallet)
+                                    <option value="{{ $wallet->id }}">Compte Chèque N°{{ $wallet->number_account }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="report_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Report d'échéance</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formReportLoan" action="{{ route('agent.customer.wallet.loan.report', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prochaine Echéance</td>
+                                <td id="loan_actual_status">{{ \Carbon\Carbon::create(now()->year, now()->addMonth()->month, $wallet->loan->prlv_day)->format('d/m/Y') }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button text="Reporter l'échéance"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="remb_loan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Remboursement par anticipation du pret n°{{ $wallet->loan->reference }}</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formRembLoan" action="{{ route('agent.customer.wallet.loan.remb', [$wallet->customer_id, $wallet->id, $wallet->loan->id]) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-bordered mb-10">
+                            <tbody>
+                            <tr>
+                                <td>N° Pret</td>
+                                <td id="check_reference">{{ $wallet->loan->reference }}</td>
+                            </tr>
+                            <tr>
+                                <td>Montant Restant du</td>
+                                <td id="loan_actual_status">{{ \App\Helper\CustomerLoanHelper::calcRestantDu($wallet->loan) }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <x-form.input
+                            name="amount"
+                            type="text"
+                            label="Montant à remboursé" />
                     </div>
 
                     <div class="modal-footer">
