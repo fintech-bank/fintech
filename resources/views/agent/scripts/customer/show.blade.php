@@ -1,10 +1,12 @@
 <script type="text/javascript">
+    let messageOverlay = '<div class="blockui-message"><span class="spinner-border text-primary"></span> Chargements...</div>'
     let buttons = {
         btnVerify: document.querySelector('#btnVerify'),
         btnPass: document.querySelector('#btnPass'),
         btnCode: document.querySelector('#btnCode'),
         btnAuth: document.querySelector('#btnAuth'),
         btnCreateWallet: document.querySelector('#btnCreateWallet'),
+        btnSigns: document.querySelectorAll('.sign')
     }
 
     let modals = {
@@ -15,11 +17,13 @@
         modalCreateWallet: document.querySelector('#createWallet'),
         modalCreateEpargne: document.querySelector('#createEpargne'),
         modalCreatePret: document.querySelector('#createPret'),
+        modalCreateCard: document.querySelector("#add_credit_card")
     }
 
     let elements = {
         outstanding: document.querySelector('#outstanding'),
         tableWallet: $("#liste_wallet"),
+        tableCard: $("#liste_card"),
         epargnePlanInfo: document.querySelector("#epargne_plan_info"),
         pretPlanInfo: document.querySelector("#pret_plan_info")
     }
@@ -143,6 +147,32 @@
             },
             error: err => {
                 console.error(err)
+            }
+        })
+    }
+
+    let getPhysicalInfo = (item) => {
+        if(item.value == 'physique') {
+            modals.modalCreateCard.querySelector('#physical_card').classList.remove('d-none')
+        } else {
+            modals.modalCreateCard.querySelector('#physical_card').classList.add('d-none')
+        }
+    }
+
+    let getFileFromCategory = (item) => {
+        console.log(item.dataset)
+        let block = new KTBlockUI(document.querySelector('.showFiles'), {message: messageOverlay})
+        block.block()
+
+        $.ajax({
+            url: `/agence/customers/${item.dataset.customer}/files/${item.dataset.category}`,
+            success: data => {
+                block.release()
+                console.log(data)
+            },
+            error: err => {
+                block.release()
+                console.log(err)
             }
         })
     }
@@ -354,6 +384,67 @@
             }
         })
     })
+    modals.modalCreateCard.querySelector('#formCreateCard').addEventListener('submit', e => {
+        e.preventDefault()
+        let form = $("#formCreateCard")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+                toastr.success(`Une nouvelle carte bancaire à été créer avec succès`, null, {
+                    "positionClass": "toastr-bottom-right",
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key][0], "Champs: "+key, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+    })
+    document.querySelectorAll('.callCategory').forEach(call => {
+        call.addEventListener('click', e => {
+            e.preventDefault();
+            let showFile = document.querySelector('.showFiles')
+
+            $.ajax({
+                url: `/agence/customers/${call.dataset.customer}/files/${call.dataset.category}`,
+                method: 'POST',
+                success: data => {
+                    showFile.querySelector('.content').innerHTML = ``
+                    if(data.count === 0) {
+                        showFile.querySelector(".empty").classList.remove('d-none')
+                    } else {
+                        showFile.querySelector(".empty").classList.add('d-none')
+                        showFile.querySelector('.content').innerHTML = data.html
+                    }
+                    console.log(data)
+                },
+                error: err => {
+                    console.log(err)
+                }
+            })
+        })
+    })
+
 
 
     $("#country").select2({
@@ -362,6 +453,11 @@
     })
 
     $("#card_support").select2({
+        templateSelection: cardsOptions,
+        templateResult: cardsOptions
+    })
+
+    $("#formCreateCard").find('#support').select2({
         templateSelection: cardsOptions,
         templateResult: cardsOptions
     })
@@ -441,13 +537,23 @@
         info: !1,
         order: []
     })
+    let tableCard = elements.tableCard.DataTable({
+        info: !1,
+        order: []
+    })
 
     document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function (e) {
         tableWallet.search(e.target.value).draw()
     }))
+    document.querySelector('[data-kt-card-table-filter="search"]').addEventListener("keyup", (function (e) {
+        tableCard.search(e.target.value).draw()
+    }))
 
     let type_wallet = document.querySelectorAll('[data-kt-customer-table-filter="type_wallet"] [name="type_wallet"]')
     let status_wallet = document.querySelectorAll('[data-kt-customer-table-filter="status_wallet"] [name="status_wallet"]')
+
+    let status_card = document.querySelectorAll('[data-kt-card-table-filter="status"] [name="status"]')
+    let type_card = document.querySelectorAll('[data-kt-card-table-filter="type"] [name="type"]')
 
     document.querySelector('[data-kt-customer-table-filter="filter"]').addEventListener('click', () => {
         let a = "";
@@ -465,9 +571,28 @@
         const r = a + " "+ h;
         tableWallet.search(r).draw()
     })
+    document.querySelector('[data-kt-card-table-filter="filter"]').addEventListener('click', () => {
+        let a = "";
+        let h = "";
+        type_card.forEach((c => {
+            c.checked && (a = c.value)
+            "all" === a && (a = "")
+        }));
+
+        status_card.forEach((n => {
+            n.checked && (h = n.value)
+            "all" === a && (a = "")
+        }));
+
+        const r = a + " "+ h;
+        tableCard.search(r).draw()
+    })
 
     document.querySelector('[data-kt-customer-table-filter="reset"]').addEventListener("click", (function () {
         type_wallet[0].checked = !0, status_wallet[0].checked = !0, tableWallet.search("").draw()
+    }))
+    document.querySelector('[data-kt-card-table-filter="reset"]').addEventListener("click", (function () {
+        type_card[0].checked = !0, status_card[0].checked = !0, tableCard.search("").draw()
     }))
 
 

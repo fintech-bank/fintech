@@ -114,4 +114,33 @@ class DocumentFile
 
         return null;
     }
+
+    public static function createDoc($customer, $name, $nameless = null, $category = 3, $reference = null, $signable = false, $signed_bank = false, $signed_client = false, $pdf = false, $pdfData = [])
+    {
+        $document = CustomerDocument::create([
+            'name' => $nameless == null ? $name : $nameless,
+            'reference' => $reference == null ? \Str::upper(\Str::random(8)) : $reference,
+            'signable' => $signable,
+            'signed_by_client' => $signed_client,
+            'signed_by_bank' => $signed_bank,
+            'signed_at' => $signable == true ? now() : null,
+            'customer_id' => $customer->id,
+            'document_category_id' => $category
+        ]);
+
+        if($pdf == true) {
+            $pdf = Pdf::loadView('pdf.agence.'.\Str::slug($name, '_'), [
+                'customer' => $customer,
+                'data' => $pdfData,
+                'agence' => $customer->user->agency,
+                'title' => $name,
+                "header_type" => "address",
+                "document" => $document
+            ]);
+
+            $pdf->save(public_path('/storage/gdd/'.$customer->id.'/'.$category.'/'.$nameless.'.pdf'));
+        }
+
+        return $document;
+    }
 }

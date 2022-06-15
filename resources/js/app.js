@@ -450,9 +450,10 @@ inputMasks.forEach(input => {
     }).mask(input)
 })
 
-let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    return new bootstrap.Popover(popoverTriggerEl)
+let tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+tooltipElements.forEach(tooltip => {
+    console.log(tooltip)
+    new bootstrap.Tooltip(tooltip, {html: true})
 })
 
 initSW();

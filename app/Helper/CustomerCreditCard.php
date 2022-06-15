@@ -4,6 +4,11 @@
 namespace App\Helper;
 
 
+use App\Models\Customer\CustomerDocument;
+use App\Notifications\Agent\Customer\CreateCreditCardNotification;
+use App\Notifications\Customer\SendCodeCardNotification;
+use Plansky\CreditCard\Generator;
+
 class CustomerCreditCard
 {
     public static function dataDebitCard()
@@ -60,5 +65,72 @@ class CustomerCreditCard
         } else {
             return $number;
         }
+    }
+
+    public static function getStatus($status, $labeled = true)
+    {
+        if($labeled == true) {
+            switch ($status) {
+                case 'active': return '<span class="badge badge-pill rounded badge-success">Active</span>'; break;
+                case 'inactive': return '<span class="badge badge-pill rounded badge-danger">Inactive</span>'; break;
+                default: return '<span class="badge badge-pill rounded badge-secondary">Annuler</span>'; break;
+            }
+        } else {
+            switch ($status) {
+                case 'active': return 'Active'; break;
+                case 'inactive': return 'Inactive'; break;
+                default: return 'Annuler'; break;
+            }
+        }
+    }
+
+    public static function createCard($customer, $wallet, $type = 'physique', $support = 'classic', $debit = 'immediate')
+    {
+        $card_generator = new Generator();
+        $card = $wallet->cards()->create([
+            'exp_month' => now()->month,
+            'number' => $card_generator->single('40', 16),
+            'type' => $type,
+            'support' => $support,
+            'debit' => $debit,
+            'cvc' => rand(100,999),
+            'code' => base64_encode(rand(1000,9999)),
+            'limit_retrait' => self::calcLimitRetrait($customer->income->pro_incoming),
+            'limit_payment' => self::calcLimitPayment($customer->income->pro_incoming),
+            'customer_wallet_id' => $wallet->id
+        ]);
+
+        // Génération des contrat
+        $doc = DocumentFile::createDoc(
+            $customer,
+            'Convention CB Physique',
+            null,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            ['card' => $card]
+        );
+
+        // Notification Code Carte Bleu
+        $customer->info->notify(new SendCodeCardNotification($customer, base64_decode($card->code), $card));
+
+        auth()->user()->notify(new CreateCreditCardNotification($customer, $card, $doc));
+        $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $card, $doc));
+
+        return $card;
+    }
+
+    public static function getExpiration($card)
+    {
+        if($card->exp_month <= 9) {
+            $month = '0'.$card->exp_month;
+        } else {
+            $month = $card->exp_month;
+        }
+
+        return $month.'/'.$card->exp_year;
     }
 }

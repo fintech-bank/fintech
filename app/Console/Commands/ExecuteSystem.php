@@ -21,7 +21,7 @@ class ExecuteSystem extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->agents = User::where('agent', 1)->get();
+        //$this->agents = User::where('agent', 1)->get();
         $this->date = now()->format('d/m/Y');
     }
 
@@ -228,8 +228,6 @@ class ExecuteSystem extends Command
         }
 
         \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Execution des ordres SEPA en date du " . now()->format('d/m/Y') . "<br>Nombre d'ordre executer: " . $i));
-
-
     }
 
 

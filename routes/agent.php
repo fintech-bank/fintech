@@ -100,6 +100,24 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
                 });
             });
         });
+
+        Route::prefix('{customer}/cards')->group(function () {
+            Route::post('/', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'store'])->name('agent.customer.card.store');
+            Route::get('{card_id}', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'show'])->name('agent.customer.card.show');
+            Route::get('{card_id}/active', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'active'])->name('agent.customer.card.active');
+            Route::get('{card_id}/inactive', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'inactive'])->name('agent.customer.card.inactive');
+            Route::get('{card_id}/canceled', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'inactive'])->name('agent.customer.card.canceled');
+            Route::get('{card_id}/code', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'code'])->name('agent.customer.card.code');
+            Route::post('{card_id}/facelia', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'facelia'])->name('agent.customer.card.facelia');
+
+            Route::put('{card_id}', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'update'])->name('agent.customer.card.update');
+        });
+
+        Route::prefix('{customer}/files')->group(function () {
+            Route::post('{category}', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'show']);
+            Route::get('{file}/sign', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'signRequest'])->name('agent.customer.file.signRequest');
+            Route::post('{file}/sign', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'sign'])->name('agent.customer.file.sign');
+        });
     });
 });
 

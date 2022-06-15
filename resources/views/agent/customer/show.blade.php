@@ -1075,12 +1075,233 @@
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
                     <div class="tab-pane fade" id="cards" role="tabpanel">
+                        <div class="card">
+                            <!--begin::Card header-->
+                            <div class="card-header border-0 pt-6">
+                                <!--begin::Card title-->
+                                <div class="card-title">
+                                    <!--begin::Search-->
+                                    <div class="d-flex align-items-center position-relative my-1">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                        <input type="text" data-kt-card-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Rechercher une carte bancaire" />
+                                    </div>
+                                    <!--end::Search-->
+                                </div>
+                                <!--begin::Card title-->
+                                <!--begin::Card toolbar-->
+                                <div class="card-toolbar">
+                                    <!--begin::Toolbar-->
+                                    <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                        <!--begin::Filter-->
+                                        <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
+                                                </svg>
+                                            </span>
+                                            Filtrer
+                                        </button>
+                                        <!--begin::Menu 1-->
+                                        <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
+                                            <!--begin::Header-->
+                                            <div class="px-7 py-5">
+                                                <div class="fs-4 text-dark fw-bolder">Options de filtre</div>
+                                            </div>
+                                            <!--end::Header-->
+                                            <!--begin::Separator-->
+                                            <div class="separator border-gray-200"></div>
+                                            <!--end::Separator-->
+                                            <!--begin::Content-->
+                                            <div class="px-7 py-5">
+                                                <!--begin::Input group-->
+                                                <div class="mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fs-5 fw-bold mb-3">Status de la carte:</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Options-->
+                                                    <div class="d-flex flex-column flex-wrap fw-bold" data-kt-card-table-filter="status">
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="status" value="all" checked="checked" />
+                                                            <span class="form-check-label text-gray-600">Tous</span>
+                                                        </label>
+                                                        <!--end::Option-->
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="status" value="active" />
+                                                            <span class="form-check-label text-gray-600">Carte Active</span>
+                                                        </label>
+                                                        <!--end::Option-->
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="status" value="inactive" />
+                                                            <span class="form-check-label text-gray-600">Carte Inactive</span>
+                                                        </label>
+                                                        <!--end::Option-->
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="status" value="canceled" />
+                                                            <span class="form-check-label text-gray-600">Carte Annuler</span>
+                                                        </label>
+                                                        <!--end::Option-->
+                                                        <!--end::Option-->
+                                                    </div>
+                                                    <!--end::Options-->
+                                                </div>
+                                                <div class="mb-10">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label fs-5 fw-bold mb-3">Type de carte:</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Options-->
+                                                    <div class="d-flex flex-column flex-wrap fw-bold" data-kt-card-table-filter="type">
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="type" value="all" checked="checked" />
+                                                            <span class="form-check-label text-gray-600">Tous</span>
+                                                        </label>
+                                                        <!--end::Option-->
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="type" value="physique" />
+                                                            <span class="form-check-label text-gray-600">Physique</span>
+                                                        </label>
+                                                        <!--end::Option-->
 
+                                                        <!--begin::Option-->
+                                                        <label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+                                                            <input class="form-check-input" type="radio" name="type" value="virtuel" />
+                                                            <span class="form-check-label text-gray-600">Virtuel</span>
+                                                        </label>
+                                                        <!--end::Option-->
+                                                        <!--end::Option-->
+                                                    </div>
+                                                    <!--end::Options-->
+                                                </div>
+                                                <!--begin::Actions-->
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-card-table-filter="reset">Réinitialiser</button>
+                                                    <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-card-table-filter="filter">Appliquer</button>
+                                                </div>
+                                                <!--end::Actions-->
+                                            </div>
+                                            <!--end::Content-->
+                                        </div>
+                                        <!--end::Menu 1-->
+                                        <!--end::Filter-->
+                                        <!--begin::Add customer-->
+                                        <a class="btn btn-bank" data-bs-toggle="modal" href="#add_credit_card"><i class="fa-solid fa-plus-square me-2"></i> Nouvelle Carte Bancaire</a>
+                                        <!--end::Add customer-->
+                                    </div>
+                                    <!--end::Toolbar-->
+                                </div>
+                                <!--end::Card toolbar-->
+                            </div>
+                            <!--end::Card header-->
+                            <!--begin::Card body-->
+                            <div class="card-body pt-0">
+                                <!--begin::Table-->
+                                <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_card">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                    <!--begin::Table row-->
+                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                        <th class="min-w-125px"></th>
+                                        <th class="min-w-125px">Numéro de la carte</th>
+                                        <th class="min-w-125px">Compte</th>
+                                        <th class="min-w-125px">Expiration</th>
+                                        <th class="min-w-125px">Status</th>
+                                        <th class="min-w-125px">Type</th>
+                                        <th class="text-end min-w-70px">Actions</th>
+                                    </tr>
+                                    <!--end::Table row-->
+                                    </thead>
+                                    <!--end::Table head-->
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-bold text-gray-600">
+                                    @foreach($customer->wallets as $wallet)
+                                        @foreach($wallet->cards as $card)
+                                            <tr>
+                                                <!--begin::Name=-->
+                                                <td>
+                                                    <div class="symbol symbol-50px symbol-2by3" data-bs-toggle="tooltip" title="{{ Str::ucfirst($card->support) }}">
+                                                        <img src="/storage/card/{{ $card->support }}.png" alt=""/>
+                                                    </div>
+                                                </td>
+                                                <td>{{ \App\Helper\CustomerCreditCard::getCreditCard($card->number) }}</td>
+                                                <td>{{ $card->wallet->number_account }}</td>
+                                                <td>{{ $card->exp_month }}/{{ $card->exp_year }}</td>
+                                                <!--end::Name=-->
+                                                <!--begin::Email=-->
+                                                <td data-filter="{{ $card->status }}">
+                                                    {!! \App\Helper\CustomerCreditCard::getStatus($card->status) !!}
+                                                </td>
+
+                                                <td data-filter="{{ $card->type }}">
+                                                    {{ \App\Helper\CustomerCreditCard::getType($card->type) }}
+                                                </td>
+                                                <!--begin::Action=-->
+                                                <td class="text-end">
+                                                    <a href="{{ route('agent.customer.card.show', [$customer->id, $card->id]) }}" class="btn btn-sm btn-circle btn-icon btn-bank" data-bs-toggle="tooltip" data-bs-placement="left" title="Détail"><i class="fa fa-desktop"></i> </a>
+                                                </td>
+                                                <!--end::Action=-->
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Card body-->
+                        </div>
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
                     <div class="tab-pane fade" id="files" role="tabpanel">
-
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-rounded menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-5 fw-bold" id="#kt_aside_menu" data-kt-menu="true">
+                                            <div class="menu-item">
+                                                <div class="menu-content pb-2">
+                                                    <span class="menu-section text-muted text-uppercase fs-7 fw-bolder">Documents</span>
+                                                </div>
+                                            </div>
+                                            @foreach(\App\Models\Core\DocumentCategory::all() as $category)
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link border-3 border-start border-transparent callCategory" data-customer="{{ $customer->id }}" data-category="{{ $category->id }}">
+                                                    <span class="menu-title">{{ $category->name }}</span>
+                                                    <span class="menu-badge fs-7 fw-normal text-muted">{{ $customer->documents()->where('document_category_id', $category->id)->get()->count() }}</span>
+                                                </a>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        <!--end::Menu-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="card shadow-sm">
+                                    <div class="card-body showFiles">
+                                        <div class="d-flex flex-column flex-center empty d-none">
+                                            <i class="fa-solid fa-exclamation-triangle fa-5x text-warning mb-3"></i>
+                                            <div class="fs-1 fw-bolder">Aucun fichier disponible dans cette catégorie</div>
+                                        </div>
+                                        <div class="content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
@@ -1486,6 +1707,70 @@
                                 <option value="DIMC">Décès, Invalidité, Maladie, Travail</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="add_credit_card">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white"><i class="fa-solid fa-credit-card me-2"></i> Nouvelle carte bancaire</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
+                        <i class="fas fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formCreateCard" action="{{ route('agent.customer.card.store', $customer->id) }}"
+                      method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="customer_wallet_id" class="form-label required">Compte Attaché à la carte</label>
+                            <select class="form-select" id="customer_wallet_id" name="customer_wallet_id" data-parent="#add_credit_card" data-control="select2" data-placeholder="Selectionner un compte bancaire" required>
+                                <option value=""></option>
+                                @foreach($customer->wallets()->where('status', 'active')->get() as $wallet)
+                                    <option value="{{ $wallet->id }}">{{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-10">
+                            <label for="type" class="form-label required">Type de carte bancaire</label>
+                            <select class="form-select" id="type" name="type" data-parent="#add_credit_card" data-control="select2" data-placeholder="Selectionner un type de carte" required onchange="getPhysicalInfo(this)">
+                                <option value=""></option>
+                                <option value="physique">Carte Physique</option>
+                                <option value="virtuel">Carte Virtuel</option>
+                            </select>
+                        </div>
+                        <div id="physical_card" class="d-none">
+                            <div class="mb-10">
+                                <label for="support" class="form-label required">Catégorie de la carte bancaire</label>
+                                <select class="form-select" id="support" name="support" data-parent="#add_credit_card" data-placeholder="Selectionner un type de carte">
+                                    <option value=""></option>
+                                    <option value="classic" data-card-img="/storage/card/classic.png">Carte Visa Classic</option>
+                                    <option value="premium" data-card-img="/storage/card/premium.png">Carte Visa Premium</option>
+                                    <option value="infinite" data-card-img="/storage/card/infinite.png">Carte Visa Infinite</option>
+                                </select>
+                            </div>
+                            <div class="mb-10">
+                                <label for="debit" class="form-label required">Type de débit de la carte bancaire</label>
+                                <select class="form-select" id="debit" name="debit" data-parent="#add_credit_card" data-control="select2" data-placeholder="Selectionner un type de débit">
+                                    <option value=""></option>
+                                    <option value="immediate">Débit Immédiat</option>
+                                    <option value="differed">Débit différé</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="virtual_card"></div>
                     </div>
 
                     <div class="modal-footer">

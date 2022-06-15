@@ -161,4 +161,5 @@ class CustomerHelper
     {
         return $customer->beneficiaires()->count();
     }
+
 }

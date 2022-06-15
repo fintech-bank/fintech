@@ -31,4 +31,14 @@ class CustomerPret extends Model
     {
         return $this->belongsTo(CustomerWallet::class, 'wallet_payment_id');
     }
+
+    public function card()
+    {
+        return $this->hasOne(CustomerCreditCard::class);
+    }
+
+    public function facelia()
+    {
+        return $this->hasOne(CustomerFacelia::class);
+    }
 }
