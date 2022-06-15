@@ -114,7 +114,9 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         });
 
         Route::prefix('{customer}/files')->group(function () {
-            Route::get('{category}', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'show']);
+            Route::post('{category}', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'show']);
+            Route::get('{file}/sign', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'signRequest'])->name('agent.customer.file.signRequest');
+            Route::post('{file}/sign', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'sign'])->name('agent.customer.file.sign');
         });
     });
 });

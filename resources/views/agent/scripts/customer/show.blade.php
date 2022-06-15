@@ -6,6 +6,7 @@
         btnCode: document.querySelector('#btnCode'),
         btnAuth: document.querySelector('#btnAuth'),
         btnCreateWallet: document.querySelector('#btnCreateWallet'),
+        btnSigns: document.querySelectorAll('.sign')
     }
 
     let modals = {
@@ -426,6 +427,7 @@
 
             $.ajax({
                 url: `/agence/customers/${call.dataset.customer}/files/${call.dataset.category}`,
+                method: 'POST',
                 success: data => {
                     showFile.querySelector('.content').innerHTML = ``
                     if(data.count === 0) {
@@ -442,6 +444,7 @@
             })
         })
     })
+
 
 
     $("#country").select2({
