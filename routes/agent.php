@@ -112,6 +112,10 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
 
             Route::put('{card_id}', [\App\Http\Controllers\Agent\CustomerCreditCardController::class, 'update'])->name('agent.customer.card.update');
         });
+
+        Route::prefix('{customer}/files')->group(function () {
+            Route::get('{category}', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'show']);
+        });
     });
 });
 

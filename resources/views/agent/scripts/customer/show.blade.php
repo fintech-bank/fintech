@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    let messageOverlay = '<div class="blockui-message"><span class="spinner-border text-primary"></span> Chargements...</div>'
     let buttons = {
         btnVerify: document.querySelector('#btnVerify'),
         btnPass: document.querySelector('#btnPass'),
@@ -155,6 +156,24 @@
         } else {
             modals.modalCreateCard.querySelector('#physical_card').classList.add('d-none')
         }
+    }
+
+    let getFileFromCategory = (item) => {
+        console.log(item.dataset)
+        let block = new KTBlockUI(document.querySelector('.showFiles'), {message: messageOverlay})
+        block.block()
+
+        $.ajax({
+            url: `/agence/customers/${item.dataset.customer}/files/${item.dataset.category}`,
+            success: data => {
+                block.release()
+                console.log(data)
+            },
+            error: err => {
+                block.release()
+                console.log(err)
+            }
+        })
     }
 
     verifSoldesAllWallets()
@@ -398,6 +417,29 @@
                     })
                 })
             }
+        })
+    })
+    document.querySelectorAll('.callCategory').forEach(call => {
+        call.addEventListener('click', e => {
+            e.preventDefault();
+            let showFile = document.querySelector('.showFiles')
+
+            $.ajax({
+                url: `/agence/customers/${call.dataset.customer}/files/${call.dataset.category}`,
+                success: data => {
+                    showFile.querySelector('.content').innerHTML = ``
+                    if(data.count === 0) {
+                        showFile.querySelector(".empty").classList.remove('d-none')
+                    } else {
+                        showFile.querySelector(".empty").classList.add('d-none')
+                        showFile.querySelector('.content').innerHTML = data.html
+                    }
+                    console.log(data)
+                },
+                error: err => {
+                    console.log(err)
+                }
+            })
         })
     })
 

@@ -1266,7 +1266,42 @@
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
                     <div class="tab-pane fade" id="files" role="tabpanel">
-
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <!--begin::Menu-->
+                                        <div class="menu menu-rounded menu-column menu-active-bg menu-hover-bg menu-title-gray-700 fs-5 fw-bold" id="#kt_aside_menu" data-kt-menu="true">
+                                            <div class="menu-item">
+                                                <div class="menu-content pb-2">
+                                                    <span class="menu-section text-muted text-uppercase fs-7 fw-bolder">Documents</span>
+                                                </div>
+                                            </div>
+                                            @foreach(\App\Models\Core\DocumentCategory::all() as $category)
+                                            <div class="menu-item">
+                                                <a href="#" class="menu-link border-3 border-start border-transparent callCategory" data-customer="{{ $customer->id }}" data-category="{{ $category->id }}">
+                                                    <span class="menu-title">{{ $category->name }}</span>
+                                                    <span class="menu-badge fs-7 fw-normal text-muted">{{ $customer->documents()->where('document_category_id', $category->id)->get()->count() }}</span>
+                                                </a>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        <!--end::Menu-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="card shadow-sm">
+                                    <div class="card-body showFiles">
+                                        <div class="d-flex flex-column flex-center empty d-none">
+                                            <i class="fa-solid fa-exclamation-triangle fa-5x text-warning mb-3"></i>
+                                            <div class="fs-1 fw-bolder">Aucun fichier disponible dans cette catégorie</div>
+                                        </div>
+                                        <div class="content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->

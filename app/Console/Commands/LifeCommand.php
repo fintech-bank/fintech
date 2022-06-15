@@ -284,6 +284,7 @@ class LifeCommand extends Command
             }
         }
 
-        return $nb;
+        $this->line("Nombre de nouveau client: ".$nb);
+        return null;
     }
 }

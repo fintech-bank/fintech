@@ -138,7 +138,7 @@ class DocumentFile
                 "document" => $document
             ]);
 
-            $pdf->save(public_path('/storage/gdd/'.$customer->id.'/'.$category.'/'.$name.'.pdf'));
+            $pdf->save(public_path('/storage/gdd/'.$customer->id.'/'.$category.'/'.$nameless.'.pdf'));
         }
 
         return $document;

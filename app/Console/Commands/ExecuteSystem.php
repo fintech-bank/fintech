@@ -21,7 +21,7 @@ class ExecuteSystem extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->agents = User::where('agent', 1)->get();
+        //$this->agents = User::where('agent', 1)->get();
         $this->date = now()->format('d/m/Y');
     }
 
