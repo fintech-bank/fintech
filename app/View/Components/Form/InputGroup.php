@@ -18,6 +18,10 @@ class InputGroup extends Component
      */
     public $required;
     public $placement;
+    /**
+     * @var null
+     */
+    public $placeholder;
 
     /**
      * Create a new component instance.
@@ -28,8 +32,9 @@ class InputGroup extends Component
      * @param $placement
      * @param null $value
      * @param bool $required
+     * @param null $placeholder
      */
-    public function __construct($name, $label, $symbol, $placement,  $value = null, $required = false)
+    public function __construct($name, $label, $symbol, $placement,  $value = null, $required = false, $placeholder = null)
     {
         //
         $this->name = $name;
@@ -38,6 +43,7 @@ class InputGroup extends Component
         $this->value = $value;
         $this->required = $required;
         $this->placement = $placement;
+        $this->placeholder = $placeholder;
     }
 
     /**

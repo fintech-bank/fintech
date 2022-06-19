@@ -25,7 +25,7 @@
         tableWallet: $("#liste_wallet"),
         tableCard: $("#liste_card"),
         epargnePlanInfo: document.querySelector("#epargne_plan_info"),
-        pretPlanInfo: document.querySelector("#pret_plan_info")
+        pretPlanInfo: document.querySelector("#pret_plan_info"),
     }
 
     if (buttons.btnVerify) {

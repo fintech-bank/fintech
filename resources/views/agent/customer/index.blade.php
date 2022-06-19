@@ -241,7 +241,7 @@
                     </td>
                     <!--end::Payment method=-->
                     <!--begin::Date=-->
-                    <td>{{ $customer->user->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $customer->user->created_at->format('d/m/Y H:i') }}</td>
                     <!--end::Date=-->
                     <!--begin::Action=-->
                     <td class="text-end">

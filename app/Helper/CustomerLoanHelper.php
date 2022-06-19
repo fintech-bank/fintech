@@ -246,4 +246,26 @@ class CustomerLoanHelper
 
         return $loan;
     }
+
+    public static function calcMensuality($total_amount, $duration, $plan, $assurance = 'D')
+    {
+        $ass = self::getLoanInsurance($assurance);
+
+        $subtotal = $total_amount + ($ass*$duration);
+        $subInterest = self::getLoanInterest($total_amount, $plan->interests[0]->interest);
+        $int_mensuality = $subInterest / $duration;
+
+        return ($subtotal / $duration) + $int_mensuality;
+    }
+
+    public static function getLoanInsurance($insurance)
+    {
+        switch ($insurance) {
+            case 'D': $ass = 3.50;break;
+            case 'DIM': $ass = 4.90;break;
+            default: $ass = 7.90;break;
+        }
+
+        return $ass;
+    }
 }

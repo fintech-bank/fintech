@@ -58,6 +58,7 @@ Route::prefix('epargne')->group(function () {
 });
 
 Route::prefix('pret')->group(function () {
+    Route::post('simulate', [\App\Http\Controllers\Api\Agent\PretController::class, 'simulate']);
     Route::get('{plan_id}', [\App\Http\Controllers\Api\Agent\PretController::class, 'info']);
 });
 

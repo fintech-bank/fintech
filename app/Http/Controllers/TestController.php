@@ -16,11 +16,7 @@ class TestController extends Controller
 {
     public function test()
     {
-        $call = new BankFintech();
-        $obj = (object)[
-            "bank_id" => 56
-        ];
-        dd($call->callRefundSepa($obj));
+        dd(json_decode(\App\Models\Core\LoanPlan::query()->select('name')->get()->toJson(), true));
     }
 
     public function home()
