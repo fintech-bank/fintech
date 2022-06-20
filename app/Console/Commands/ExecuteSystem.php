@@ -30,7 +30,7 @@ class ExecuteSystem extends Command
      *
      * @var string
      */
-    protected $signature = 'system:execute {call}';
+    protected $signature = 'system:execute {action}';
 
     /**
      * The console command description.
@@ -46,7 +46,7 @@ class ExecuteSystem extends Command
      */
     public function handle()
     {
-        switch ($this->argument('call')) {
+        switch ($this->argument('action')) {
             case 'autoAcceptCreditPrlv':
                 return $this->autoAcceptCreditPrlv();
                 break;
