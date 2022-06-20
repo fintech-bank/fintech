@@ -34,7 +34,7 @@ class LifeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'life {call}';
+    protected $signature = 'life {--call}';
 
     /**
      * The console command description.
@@ -50,10 +50,13 @@ class LifeCommand extends Command
      */
     public function handle()
     {
-        switch ($this->argument('call')) {
+        switch ($this->option('call')) {
             case 'generateCustomer':
                 return $this->generateCustomer();
                 break;
+
+            default:
+               return $this->generateCustomer();
         }
     }
 

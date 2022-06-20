@@ -25,7 +25,7 @@
         tableWallet: $("#liste_wallet"),
         tableCard: $("#liste_card"),
         epargnePlanInfo: document.querySelector("#epargne_plan_info"),
-        pretPlanInfo: document.querySelector("#pret_plan_info")
+        pretPlanInfo: document.querySelector("#pret_plan_info"),
     }
 
     if (buttons.btnVerify) {
@@ -533,10 +533,71 @@
         })
     })
 
+    $("#formLoanSimulate").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formLoanSimulate")
+        let url = form.attr('action')
+        let data = form.serializeArray()
+        let btn = form.find('.btn-bank')
+
+        let simulateResult = document.querySelector("#simulateResult")
+        let blockUI = new KTBlockUI(simulateResult, {
+            message: '<div class="blockui-message"><span class="spinner-border text-primary"></span> Chargement...</div>',
+        });
+
+        simulateResult.querySelector('table').classList.add('d-none')
+        blockUI.block()
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: data,
+            success: data => {
+                btn.removeAttr('data-kt-indicator')
+                console.log(data)
+                blockUI.release()
+                blockUI.destroy()
+                simulateResult.querySelector('table').classList.remove('d-none')
+                form.find('[data-result="type_loan"]').html(data.type_loan)
+                form.find('[data-result="amount_loan"]').html(data.amount_loan)
+                form.find('[data-result="duration"]').html(data.duration+' mois')
+                form.find('[data-result="mensuality"]').html(data.mensuality+' / par mois')
+                form.find('[data-result="amount_interest"]').html(data.interest)
+                form.find('[data-result="amount_insurance"]').html(data.insurance_du+` (${data.insurance_mensuality} / par mois)`)
+                form.find('[data-result="amount_du"]').html(data.amount_du)
+                form.find('[data-result="request_project"]').html(data.check_pret.resultat)
+
+                if(data.check_pret.resultat <= 4) {
+                    form.find('[data-result="request_project"]').addClass('text-danger')
+                } else if(data.check_pret.resultat >= 5 && data.check_pret.resultat <= 7) {
+                    form.find('[data-result="request_project"]').addClass('text-warning')
+                } else {
+                    form.find('[data-result="request_project"]').addClass('text-success')
+                }
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+                blockUI.release()
+                blockUI.destroy()
+
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key],null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+    })
+
     let tableWallet = elements.tableWallet.DataTable({
         info: !1,
         order: []
     })
+
     let tableCard = elements.tableCard.DataTable({
         info: !1,
         order: []
@@ -545,6 +606,7 @@
     document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function (e) {
         tableWallet.search(e.target.value).draw()
     }))
+
     document.querySelector('[data-kt-card-table-filter="search"]').addEventListener("keyup", (function (e) {
         tableCard.search(e.target.value).draw()
     }))

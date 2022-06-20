@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('loan_plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->float('min');
-            $table->float('max');
+            $table->float('minimum');
+            $table->float('maximum');
             $table->integer('duration')->comment("En Mois");
             $table->text('instruction')->nullable();
         });

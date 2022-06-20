@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         // Commande
-
+        $schedule->command('life')->hourly();
     }
 
     /**
