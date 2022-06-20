@@ -7,7 +7,7 @@
         <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
             <!--begin::Symbol-->
             <div class="symbol symbol-50px">
-                <img src="{{ \Creativeorange\Gravatar\Facades\Gravatar::get(request()->user()->email) }}" alt="" />
+                <img src="{{ \Creativeorange\Gravatar\Facades\Gravatar::exists(request()->user()->email) == true ? \Creativeorange\Gravatar\Facades\Gravatar::exists(request()->user()->email) : '/assets/media/avatars/blank.png' }}" alt="" />
             </div>
             <!--end::Symbol-->
             <!--begin::Wrapper-->

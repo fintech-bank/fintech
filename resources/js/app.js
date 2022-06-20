@@ -266,7 +266,6 @@ function initSW() {
     //register the service worker
     navigator.serviceWorker.register('/sw.js')
         .then(() => {
-            console.log('serviceWorker installed!')
             initPush();
         })
         .catch((err) => {
@@ -309,7 +308,6 @@ function subscribeUser() {
             return registration.pushManager.subscribe(subscribeOptions);
         })
         .then((pushSubscription) => {
-            console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
             storePushSubscription(pushSubscription);
         });
 }
@@ -343,8 +341,7 @@ function storePushSubscription(pushSubscription) {
         .then((res) => {
             return res.json();
         })
-        .then((res) => {
-            console.log(res)
+        .then(() => {
         })
         .catch((err) => {
             console.log(err)
@@ -452,7 +449,6 @@ inputMasks.forEach(input => {
 
 let tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 tooltipElements.forEach(tooltip => {
-    console.log(tooltip)
     new bootstrap.Tooltip(tooltip, {html: true})
 })
 

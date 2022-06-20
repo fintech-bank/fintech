@@ -1310,11 +1310,14 @@
                             <div class="card-header">
                                 <h3 class="card-title">Simulation</h3>
                             </div>
-                            <form action="">
+                            <form id="formLoanSimulate" action="/api/pret/simulate" method="POST">
+                                @csrf
                                 <div class="card-body">
+                                    <input type="hidden" name="customer_id" value="{{ $customer->id }}">
+                                    <input type="hidden" name="wallet_id" value="{{ $customer->wallets()->where('type', 'compte')->first()->id }}">
                                     <x-form.select
                                         name="loan_plan_id"
-                                        :datas="\App\Models\Core\LoanPlan::query()->select('name')->get()->toJson()"
+                                        :datas="\App\Models\Core\LoanPlan::query()->select('name', 'id')->get()->toJson()"
                                         label="Type de Pret" />
 
                                     <x-form.input-group
@@ -1332,7 +1335,7 @@
 
                                     <div id="simulateResult" class="bg-gray-300 text-white fs-5 rounded-2 p-10">
                                         <h3 class="pb-10">Résultat de la simulation</h3>
-                                        <table class="table gx-5 gy-3 mb-10 border-gray-400 tableSimulateResult w-600px table-rounded table-striped border border-2 me-auto ms-auto">
+                                        <table class="table gx-5 gy-3 mb-10 border-gray-400 tableSimulateResult w-600px table-rounded table-striped border border-2 me-auto ms-auto d-none">
                                             <tbody>
                                                 <tr>
                                                     <td class="fw-bolder">Type de pret</td>
@@ -1348,11 +1351,19 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="fw-bolder">Montant de la mensualité</td>
-                                                    <td data-result="mensuality"></td>
+                                                    <td class="fw-bolder" data-result="mensuality"></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="fw-bolder">Montant des interets</td>
                                                     <td data-result="amount_interest"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bolder">Assurance</td>
+                                                    <td data-result="amount_insurance"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bolder">Montant à devoir</td>
+                                                    <td class="fw-bolder" data-result="amount_du"></td>
                                                 </tr>
                                                 <tr>
                                                     <td class="fw-bolder">Faisabilité du projet</td>
@@ -1363,7 +1374,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-
+                                    <x-form.button />
                                 </div>
                             </form>
                         </div>

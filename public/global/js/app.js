@@ -2417,7 +2417,6 @@ function initSW() {
 
 
   navigator.serviceWorker.register('/sw.js').then(function () {
-    console.log('serviceWorker installed!');
     initPush();
   })["catch"](function (err) {
     console.log(err);
@@ -2454,7 +2453,6 @@ function subscribeUser() {
     };
     return registration.pushManager.subscribe(subscribeOptions);
   }).then(function (pushSubscription) {
-    console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
     storePushSubscription(pushSubscription);
   });
 }
@@ -2484,9 +2482,7 @@ function storePushSubscription(pushSubscription) {
     }
   }).then(function (res) {
     return res.json();
-  }).then(function (res) {
-    console.log(res);
-  })["catch"](function (err) {
+  }).then(function () {})["catch"](function (err) {
     console.log(err);
   });
 }
@@ -2613,7 +2609,6 @@ inputMasks.forEach(function (input) {
 });
 var tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 tooltipElements.forEach(function (tooltip) {
-  console.log(tooltip);
   new bootstrap.Tooltip(tooltip, {
     html: true
   });

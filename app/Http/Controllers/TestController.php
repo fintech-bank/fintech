@@ -16,7 +16,7 @@ class TestController extends Controller
 {
     public function test()
     {
-        dd(json_decode(\App\Models\Core\LoanPlan::query()->select('name')->get()->toJson(), true));
+        dd(json_decode(\App\Models\Core\LoanPlan::query()->select('name', 'id')->get()->toJson(), true));
     }
 
     public function home()
