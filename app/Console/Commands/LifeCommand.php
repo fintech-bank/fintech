@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helper\CustomerFaceliaHelper;
 use App\Helper\CustomerLoanHelper;
+use App\Helper\CustomerTransactionHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
 use App\Helper\UserHelper;
@@ -34,7 +35,7 @@ class LifeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'life {--call}';
+    protected $signature = 'life {action}';
 
     /**
      * The console command description.
@@ -50,9 +51,17 @@ class LifeCommand extends Command
      */
     public function handle()
     {
-        switch ($this->option('call')) {
+        switch ($this->argument('action')) {
             case 'generateCustomer':
                 return $this->generateCustomer();
+                break;
+
+            case 'generateSalary':
+                return $this->generateSalary();
+                break;
+
+            case 'generateDebit':
+                return $this->generateDebit();
                 break;
 
             default:
@@ -293,5 +302,86 @@ class LifeCommand extends Command
 
         $this->line("Nombre de nouveau client: ".$nb);
         return null;
+    }
+
+    private function generateSalary()
+    {
+        $customers = Customer::where('status_open_account', 'terminated')->get();
+
+        foreach ($customers as $customer) {
+            $wallet = $customer->wallets()->where('type', 'compte')->first();
+
+            CustomerTransactionHelper::create(
+                'credit',
+                'virement',
+            'Virement Salaire '.now()->monthName,
+            $customer->income->pro_incoming,
+            $wallet->id,
+            true,
+                'Virement Salaire '.now()->monthName,
+            now());
+        }
+
+        $this->line("Check des virements des salaires terminer");
+
+        return 0;
+    }
+
+    private function generateDebit()
+    {
+        $customers = Customer::where('status_open_account', 'terminated')->get();
+
+        foreach ($customers as $customer) {
+            $nb = rand(0,1);
+            $wallet = $customer->wallets()->where('type', 'compte')->first();
+            $select = [0,2];
+
+            if($nb == 1) {
+                try {
+                    switch ($select) {
+                        case 0:
+                            CustomerTransactionHelper::create(
+                                'credit',
+                                'depot',
+                                'Dépot sur votre compte',
+                                rand(100,900),
+                                $wallet->id,
+                                true,
+                                'Dépot sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                now());
+                            break;
+
+                        case 1:
+                            CustomerTransactionHelper::create(
+                                'debit',
+                                'retrait',
+                                'Retrait sur votre compte',
+                                rand(100,900),
+                                $wallet->id,
+                                true,
+                                'Retrait sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                now());
+                            break;
+
+                        case 2:
+                            CustomerTransactionHelper::create(
+                                'debit',
+                                'payment',
+                                'Paiement par Carte Bancaire',
+                                rand(100,900),
+                                $wallet->id,
+                                true,
+                                'Paiement par Carte Bancaire | Ref: '.Str::upper(Str::random(8)),
+                                now());
+                            break;
+                    }
+                    $this->line("Génération des Transactions.");
+                }catch (\Exception $exception) {
+                    $this->error($exception->getMessage());
+                }
+            }
+        }
+
+        return 0;
     }
 }
