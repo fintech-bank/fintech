@@ -21,6 +21,13 @@ class Kernel extends ConsoleKernel
 
         // Commande
         $schedule->command('life')->hourly();
+        $schedule->command('system:execute call=autoAcceptCreditPrlv')->dailyAt('08:00:00');
+        $schedule->command('system:execute call=acceptedLoanCharge')->dailyAt('08:00:00');
+        $schedule->command('system:execute call=initPrlvCptEpargne')->dailyAt('08:00:00');
+        $schedule->command('system:execute call=initPrlvCptPret')->dailyAt('08:00:00');
+        $schedule->command('bank:execute call=virement')->dailyAt('08:00:00');
+        $schedule->command('system:execute call=executeSepaOrderDay')->everySixHours();
+        $schedule->command('system:execute call=verifRequestLoanOpen')->everySixHours();
     }
 
     /**

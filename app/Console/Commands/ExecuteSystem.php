@@ -60,15 +60,15 @@ class ExecuteSystem extends Command
                 break;
 
             case 'executeSepaOrderDay':
-                $this->executeSepaOrderDay();
+                return $this->executeSepaOrderDay();
                 break;
 
             case 'initPrlvCptEpargne':
-                $this->initPrlvCptEpargne();
+                return $this->initPrlvCptEpargne();
                 break;
 
             case 'initPrlvCptPret':
-                $this->initPrlvCptPret();
+                return $this->initPrlvCptPret();
                 break;
         }
     }
