@@ -330,58 +330,66 @@ class LifeCommand extends Command
     private function generateDebit()
     {
         $customers = Customer::where('status_open_account', 'terminated')->get();
+        $nb = 0;
 
         foreach ($customers as $customer) {
-            $nb = rand(0,1);
-            $wallet = $customer->wallets()->where('type', 'compte')->first();
-            $select = [0,2];
+            $wallet = $customer->wallets()->where('type', 'compte')->where('status', 'active')->first();
+            if(isset($wallet)) {
+                $select = rand(0,2);
+                $balance_wallet = $wallet->balance_actual + $wallet->balance_decouvert;
+                if(rand(0,1) == 1) {
+                    try {
+                        if($balance_wallet > 0) {
+                            $confirmed = rand(0,1);
+                            switch ($select) {
+                                case 0:
+                                    CustomerTransactionHelper::create(
+                                        'credit',
+                                        'depot',
+                                        'Dépot sur votre compte',
+                                        rand(100,900),
+                                        $wallet->id,
+                                        $confirmed == 1 ? true : false,
+                                        'Dépot sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                        $confirmed == 1 ? now() : null,
+                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    break;
 
-            if($nb == 1) {
-                try {
-                    switch ($select) {
-                        case 0:
-                            CustomerTransactionHelper::create(
-                                'credit',
-                                'depot',
-                                'Dépot sur votre compte',
-                                rand(100,900),
-                                $wallet->id,
-                                true,
-                                'Dépot sur votre compte | Ref: '.Str::upper(Str::random(8)),
-                                now());
-                            break;
+                                case 1:
+                                    CustomerTransactionHelper::create(
+                                        'debit',
+                                        'retrait',
+                                        'Retrait sur votre compte',
+                                        rand(100,900),
+                                        $wallet->id,
+                                        $confirmed == 1 ? true : false,
+                                        'Retrait sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                        $confirmed == 1 ? now() : null,
+                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    break;
 
-                        case 1:
-                            CustomerTransactionHelper::create(
-                                'debit',
-                                'retrait',
-                                'Retrait sur votre compte',
-                                rand(100,900),
-                                $wallet->id,
-                                true,
-                                'Retrait sur votre compte | Ref: '.Str::upper(Str::random(8)),
-                                now());
-                            break;
-
-                        case 2:
-                            CustomerTransactionHelper::create(
-                                'debit',
-                                'payment',
-                                'Paiement par Carte Bancaire',
-                                rand(100,900),
-                                $wallet->id,
-                                true,
-                                'Paiement par Carte Bancaire | Ref: '.Str::upper(Str::random(8)),
-                                now());
-                            break;
+                                case 2:
+                                    CustomerTransactionHelper::create(
+                                        'debit',
+                                        'payment',
+                                        'Paiement par Carte Bancaire',
+                                        rand(100,900),
+                                        $wallet->id,
+                                        $confirmed == 1 ? true : false,
+                                        'Paiement par Carte Bancaire | Ref: '.Str::upper(Str::random(8)),
+                                        $confirmed == 1 ? now() : null,
+                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    break;
+                            }
+                            $nb++;
+                        }
+                    }catch (\Exception $exception) {
+                        $this->error($exception->getMessage());
                     }
-                    $this->line("Génération des Transactions.");
-                }catch (\Exception $exception) {
-                    $this->error($exception->getMessage());
                 }
             }
         }
-
+        $this->line("Génération des Transactions: ".$nb);
         return 0;
     }
 }

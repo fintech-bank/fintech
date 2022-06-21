@@ -12,7 +12,6 @@ class CustomerController extends Controller
     {
         $customer = auth()->user()->customers;
 
-
         return view('customer.dashboard', ['customer' => $customer]);
     }
 }

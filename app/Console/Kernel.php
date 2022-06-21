@@ -23,16 +23,17 @@ class Kernel extends ConsoleKernel
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         // Commande
-        $schedule->command('life generateCustomer')->hourly()->emailOutputTo('test@test.com');
-        $schedule->command('life generateDebit')->everyTenMinutes()->emailOutputTo('test@test.com');
-        $schedule->command('life generateSalary')->monthlyOn(rand(1,5), '02:00:00')->emailOutputTo('test@test.com');
-        $schedule->command('system:execute autoAcceptCreditPrlv')->dailyAt('08:00:00')->emailOutputTo('test@test.com');
-        $schedule->command('system:execute acceptedLoanCharge')->dailyAt('08:00:00')->emailOutputTo('test@test.com');
-        $schedule->command('system:execute initPrlvCptEpargne')->dailyAt('08:00:00')->emailOutputTo('test@test.com');
-        $schedule->command('system:execute initPrlvCptPret')->dailyAt('08:00:00')->emailOutputTo('test@test.com');
-        $schedule->command('bank:execute virement')->dailyAt('08:00:00')->emailOutputTo('test@test.com');
-        $schedule->command('system:execute executeSepaOrderDay')->everySixHours()->emailOutputTo('test@test.com');
-        $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->emailOutputTo('test@test.com');
+        $schedule->command('life generateCustomer')->hourly()->description('generateCustomer');
+        $schedule->command('life generateDebit')->everyTenMinutes()->description('generateDebit');
+        $schedule->command('life generateSalary')->monthlyOn(rand(1,5), '02:00:00')->description('generateSalary');
+        $schedule->command('system:execute autoAcceptCreditPrlv')->dailyAt('08:00:00')->description('autoAcceptCreditPrlv');
+        $schedule->command('system:execute acceptedLoanCharge')->dailyAt('08:00:00')->description('acceptedLoanCharge');
+        $schedule->command('system:execute initPrlvCptEpargne')->dailyAt('08:00:00')->description('initPrlvCptEpargne');
+        $schedule->command('system:execute initPrlvCptPret')->dailyAt('08:00:00')->description('initPrlvCptPret');
+        $schedule->command('bank:execute virement')->dailyAt('08:00:00')->description('virement');
+        $schedule->command('system:execute executeSepaOrderDay')->everySixHours()->description('executeSepaOrderDay');
+        $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->description('verifRequestLoanOpen');
+        $schedule->command('system:execute executeTransactionComing')->everySixHours()->description('executeTransactionComing');
     }
 
     /**

@@ -155,14 +155,28 @@ class CustomerController extends Controller
         $password = \Str::random(8);
         $customer = Customer::find($customer_id);
 
-        $customer->user->update([
-            'password' => $password
-        ]);
+        try {
+            $customer->user()->update([
+                'password' => \Hash::make($password)
+            ]);
 
-        // Envoie du pass par sms
-        $customer->info->notify(new ReinitPasswordCustomer($password));
+            // Envoie du pass par sms
+            try {
+                if(config('app.env') == 'local') {
+                    $customer->user->notify(new ReinitPasswordCustomer($password));
+                } else {
+                    $customer->info->notify(new ReinitPasswordCustomer($password));
+                }
+            }catch (\Exception $exception) {
+                LogHelper::notify('error', $exception->getMessage());
+                return response()->json($exception->getMessage(), 500);
+            }
+        }catch (\Exception $exception) {
+            LogHelper::notify('error', $exception->getMessage());
+            return response()->json($exception->getMessage(), 500);
+        }
 
-        return response()->json();
+        return response()->json($password);
     }
 
     public function reinitCode(Request $request, $customer_id)

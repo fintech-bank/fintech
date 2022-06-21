@@ -96,13 +96,13 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_transaction">
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
-                        @foreach($wallet->transactions()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->get() as $transaction)
+                        @foreach($wallet->transactions()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', true)->orderBy('created_at', 'desc')->get() as $transaction)
                             <tr>
                                 <td>
                                     {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
                                 </td>
                                 <td>
-                                    <div class="fw-bolder fs-5">{{ $transaction->designation }}</div>
+                                    <div class="fw-bolder fs-5">{{ $transaction->description }}</div>
                                     <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="text-end">
@@ -120,7 +120,31 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="coming" role="tabpanel">
-                    ...
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_transaction_coming">
+                        <!--begin::Table body-->
+                        <tbody class="fw-bold text-gray-600">
+                        @foreach($wallet->transactions()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', false)->orderBy('created_at', 'desc')->get() as $transaction)
+                            <tr>
+                                <td>
+                                    {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
+                                </td>
+                                <td>
+                                    <div class="fw-bolder fs-5">{{ $transaction->description }}</div>
+                                    <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
+                                </td>
+                                <td class="text-end">
+                                    @if($transaction->amount < 0)
+                                        <span class="text-danger">{{ eur($transaction->amount) }}</span>
+                                    @else
+                                        <span class="text-success">+ {{ eur($transaction->amount) }}</span>
+                                    @endif
+                                </td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
                 </div>
             </div>
         </div>

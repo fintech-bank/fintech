@@ -75,7 +75,7 @@ class CustomerTransactionHelper
         }
     }
 
-    public static function create($type, $type_transaction, $description, $amount, $wallet, $confirm = true, $designation = null, $confirmed_at = null)
+    public static function create($type, $type_transaction, $description, $amount, $wallet, $confirm = true, $designation = null, $confirmed_at = null, $updated_at = null)
     {
         if($type == 'debit') {
             CustomerTransaction::create([
@@ -86,7 +86,8 @@ class CustomerTransactionHelper
                 "amount" => 0.00 - (float)$amount,
                 "confirmed" => $confirm,
                 "confirmed_at" => $confirmed_at,
-                "customer_wallet_id" => $wallet
+                "customer_wallet_id" => $wallet,
+                "updated_at" => $updated_at
             ]);
             $transaction = CustomerTransaction::with('wallet')->latest()->first();
 
@@ -107,7 +108,8 @@ class CustomerTransactionHelper
                 "amount" => $amount,
                 "confirmed" => $confirm,
                 "confirmed_at" => $confirmed_at,
-                "customer_wallet_id" => $wallet
+                "customer_wallet_id" => $wallet,
+                "updated_at" => $updated_at
             ]);
             $transaction = CustomerTransaction::with('wallet')->latest()->first();
 
@@ -124,5 +126,18 @@ class CustomerTransactionHelper
 
 
         return $transaction;
+    }
+
+    public static function updated($transaction)
+    {
+        $transaction->wallet->update([
+            'balance_actual' => $transaction->wallet->balance_actual + $transaction->amount,
+            'balance_coming' => $transaction->wallet->balance_coming + $transaction->amount
+        ]);
+
+        $transaction->update([
+            'confirmed' => true,
+            'confirmed_at' => now()
+        ]);
     }
 }
