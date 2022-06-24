@@ -35,7 +35,7 @@
     <h3 class="fw-bolder fs-2 mb-10">TOUS MES COMPTES</h3>
     <div class="mb-3 fs-4">Comptes Courants</div>
     @foreach($customer->wallets()->where('type', 'compte')->get() as $wallet)
-    <div class="d-flex flex-row justify-content-between align-items-center bg-white h-100px p-5 text-dark rounded-2 mb-5 account" data-account="{{ $wallet->id }}" style="cursor: pointer">
+    <div class="d-flex flex-row justify-content-between align-items-center bg-white h-100px p-5 text-dark rounded-2 mb-5" data-account="{{ $wallet->id }}" style="cursor: pointer">
         <div class="fw-bolder">Compte Individuel</div>
         <div class="d-flex flex-column">
             <div class="fw-bolder">{{ \App\Helper\CustomerHelper::getName($customer) }}</div>
@@ -43,12 +43,12 @@
             <div class="text-muted">Prochaines opérations: {{ eur($wallet->balance_coming) }}</div>
             @endif
         </div>
-        <button type="button" class="btn btn-sm btn-rounded btn-outline btn-outline-bank rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
+        <button type="button" class="btn btn-sm btn-rounded btn-outline btn-outline-bank rotate" data-kt-menu-trigger="hover" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
             Gérez <i class="fa-solid fa-caret-down ms-3"></i>
         </button>
         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-250px pt-5 pb-5" data-kt-menu="true">
             <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3">
+                <a data-wallet="{{ $wallet->id }}" class="menu-link px-3 showRib">
                     Afficher le RIB / IBAN
                 </a>
             </div>
@@ -63,12 +63,12 @@
                 </a>
             </div>
             <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3">
+                <a data-wallet="{{ $wallet->id }}" class="menu-link px-3 showExport">
                     Télécharger les opérations
                 </a>
             </div>
             <div class="menu-item px-3">
-                <a href="#" class="menu-link px-3">
+                <a href="{{ route('customer.wallet.index', $wallet->id) }}" class="menu-link px-3">
                     Voir le détail du compte
                 </a>
             </div>
@@ -145,6 +145,84 @@
             @endif
         </div>
     @endforeach
+    <div class="modal fade" tabindex="-1" id="show_rib">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Afficher RIB / IBAN</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="text-center mb-10">
+                        <div class="fs-1" data-div="type"></div>
+                        <div class="fs-3">
+                            <span data-div="number_account"></span>
+                            <span data-div="agency"></span> -
+                            <span data-div="customer"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-between align-items-center mb-5 border-bottom">
+                        <div class="d-flex flex-column">
+                            <div class="fs-2">IBAN</div>
+                            <div class="fs-4" data-div="iban"></div>
+                        </div>
+                        <!-- COPY -->
+                    </div>
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div class="d-flex flex-column">
+                            <div class="fs-2">BIC</div>
+                            <div class="fs-4" data-div="bic"></div>
+                        </div>
+                        <!-- COPY -->
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex flex-wrap">
+                    <a href="" target="_blank" class="btn btn-bank w-100">Télécharger</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="export_account">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h5 class="modal-title text-white">Export d'écriture</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-times fa-lg text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formExportAccount" action="/api/wallet/{{ $wallet->id }}/exportAccount" method="POST">
+                    <div class="modal-body">
+                        <x-form.input-date
+                            name="start"
+                            type="text"
+                            label="Date de début" />
+
+                        <x-form.input-date
+                            name="end"
+                            type="text"
+                            label="Date de fin" />
+                    </div>
+
+                    <div class="modal-footer d-flex flex-wrap">
+                        <button type="submit" class="btn btn-bank w-100">Télécharger</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section("script")

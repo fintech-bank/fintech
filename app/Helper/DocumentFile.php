@@ -74,6 +74,7 @@ class DocumentFile
     {
         $agence = $customer->user->agency;
         $document = $document_id != null ? CustomerDocument::find($document_id) : null;
+        $document_name = $document != null ? $document->name : 'Document';
 
         $pdf = PDF::loadView('pdf.' . $view, [
             "data" => $data,
@@ -95,19 +96,19 @@ class DocumentFile
         ]);
 
         if ($download == true) {
-            $pdf->download($document->name . ' - CUS' . $customer->user->identifiant . '.pdf');
+            $pdf->download($document_name . ' - CUS' . $customer->user->identifiant . '.pdf');
         } else {
-            return $pdf->stream($document->name . ' - CUS' . $customer->user->identifiant . '.pdf');
+            return $pdf->stream($document_name . ' - CUS' . $customer->user->identifiant . '.pdf');
         }
 
         if ($save == true) {
-            $pdf->save($savePath . '/' . $document->name . ' - CUS' . $customer->user->identifiant . '.pdf');
+            $pdf->save($savePath . '/' . $document_name . ' - CUS' . $customer->user->identifiant . '.pdf');
         } else {
-            return $pdf->stream($document->name . ' - CUS' . $customer->user->identifiant . '.pdf');
+            return $pdf->stream($document_name . ' - CUS' . $customer->user->identifiant . '.pdf');
         }
 
         if ($stream == true) {
-            return $pdf->stream($document->name . ' - CUS' . $customer->user->identifiant . '.pdf');
+            return $pdf->stream($document_name . ' - CUS' . $customer->user->identifiant . '.pdf');
         } else {
             return $pdf->render();
         }

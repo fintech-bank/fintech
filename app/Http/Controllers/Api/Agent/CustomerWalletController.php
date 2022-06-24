@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Api\Agent;
 
+use App\Helper\CustomerHelper;
+use App\Helper\CustomerWalletHelper;
+use App\Helper\DocumentFile;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerBeneficiaire;
 use App\Models\Customer\CustomerWallet;
@@ -72,5 +75,48 @@ class CustomerWalletController extends Controller
         $wallet = CustomerWallet::query()->find($request->get('wallet'));
 
         return response()->json(['beneficiaire' => $beneficiaire, 'url' => route('agent.customer.wallet.beneficiaire.update', [$wallet->customer_id, $wallet->id, $beneficiaire->id])]);
+    }
+
+    public function info($wallet_id)
+    {
+        $wallet = CustomerWallet::find($wallet_id);
+
+
+        return response()->json([
+            'wallet' => $wallet,
+            'type' => CustomerWalletHelper::getTypeWallet($wallet->type),
+            'agency' => $wallet->customer->user->agency,
+            'customer' => \Str::limit(CustomerHelper::getName($wallet->customer), 15, '...'),
+            'rib' => '/api/wallet/'.$wallet_id.'/rib'
+        ]);
+    }
+
+    public function rib($wallet_id, DocumentFile $documentFile)
+    {
+        $wallet = CustomerWallet::find($wallet_id);
+
+        return $documentFile->generatePDF('agence.rib', $wallet->customer, null, ['wallet' => $wallet]);
+    }
+
+    public function export(Request $request, $wallet, DocumentFile $documentFile)
+    {
+        $start = Carbon::createFromTimestamp(strtotime($request->get('start')));
+        $end = Carbon::createFromTimestamp(strtotime($request->get('end')));
+        $wallet = CustomerWallet::find($wallet);
+
+        $transactions = $wallet->transactions()->whereBetween('created_at', [$start, $end])->orderBy('created_at', 'desc')->get();
+        $sum_first = $wallet->balance_actual - $wallet->transactions()->whereBetween('created_at', [$start, $end])->sum('amount');
+        $first = $wallet->transactions()->whereBetween('created_at', [$start, $end])->orderBy('created_at', 'asc')->first();
+
+        return $documentFile->generatePDF('agence.exportTransaction', $wallet->customer, null, [
+            'transactions' => $transactions,
+            "wallet" => $wallet,
+            "sum_first" => $sum_first,
+            "sum_first_name" => $sum_first < 0 ? 'debiteur' : 'crediteur',
+            'first' => $first,
+            'start' => $start,
+            'end' => $end,
+            'sum_last_name' => $wallet->balance_actual < 0 ? 'debiteur' : 'crediteur'
+        ]);
     }
 }
