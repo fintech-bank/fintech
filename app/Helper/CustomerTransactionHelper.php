@@ -81,7 +81,7 @@ class CustomerTransactionHelper
             CustomerTransaction::create([
                 "uuid" => \Str::uuid(),
                 "type" => $type_transaction,
-                "designation" => $designation,
+                "designation" => $designation == null ? $description : $designation,
                 "description" => $description == null ? $designation : $description,
                 "amount" => 0.00 - (float)$amount,
                 "confirmed" => $confirm,
@@ -103,7 +103,7 @@ class CustomerTransactionHelper
             CustomerTransaction::create([
                 "uuid" => \Str::uuid(),
                 "type" => $type_transaction,
-                "designation" => $designation,
+                "designation" => $designation == null ? $description : $designation,
                 "description" => $description == null ? $designation : $description,
                 "amount" => $amount,
                 "confirmed" => $confirm,

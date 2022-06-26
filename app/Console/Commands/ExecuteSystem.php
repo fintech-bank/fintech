@@ -88,7 +88,7 @@ class ExecuteSystem extends Command
             CustomerTransactionHelper::create(
                 'credit',
                 'sepa',
-                "Prélèvement " . $sepas->creditor,
+                "Prélèvement " . $sepa->creditor,
                 $sepa->amount,
                 $sepa->customer_wallet_id,
                 true,

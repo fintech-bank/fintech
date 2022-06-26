@@ -104,7 +104,7 @@ class CustomerWalletController extends Controller
         $end = Carbon::createFromTimestamp(strtotime($request->get('end')));
         $wallet = CustomerWallet::find($wallet);
 
-        $transactions = $wallet->transactions()->whereBetween('created_at', [$start, $end])->orderBy('created_at', 'desc')->get();
+        $transactions = $wallet->transactions()->whereBetween('created_at', [$start, $end])->orderBy('created_at', 'asc')->get();
         $sum_first = $wallet->balance_actual - $wallet->transactions()->whereBetween('created_at', [$start, $end])->sum('amount');
         $first = $wallet->transactions()->whereBetween('created_at', [$start, $end])->orderBy('created_at', 'asc')->first();
 
