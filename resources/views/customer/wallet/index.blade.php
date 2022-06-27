@@ -102,7 +102,7 @@
                                     {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
                                 </td>
                                 <td>
-                                    <div class="fw-bolder fs-5">{{ $transaction->description }}</div>
+                                    <div class="fw-bolder fs-5">{{ $transaction->designation }}</div>
                                     <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="text-end">
@@ -129,7 +129,7 @@
                                     {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
                                 </td>
                                 <td>
-                                    <div class="fw-bolder fs-5">{{ $transaction->description }}</div>
+                                    <div class="fw-bolder fs-5">{{ $transaction->designation }}</div>
                                     <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="text-end">

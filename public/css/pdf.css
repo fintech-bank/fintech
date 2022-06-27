@@ -702,11 +702,3 @@ i.icon-bank {
 .border-bank {
   border-color: var(--bank);
 }
-
-.courier {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 10px;
-}
-.uppercase {
-    text-transform: uppercase;
-}

@@ -151,7 +151,7 @@ class LifeCommand extends Command
                         ["card" => $card]
                     );
 
-                    foreach (CustomerCreditCard::query()->where('facelia', 1)->get() as $card) {
+                    foreach (CustomerCreditCard::query()->where('facelia', 1)->where('customer_wallet_id', $account->id)->get() as $card) {
                         $amount = [500,1000,1500,2000,2500,3000];
                         $amount_loan = $amount[rand(0,5)];
                         $interest = CustomerLoanHelper::getLoanInterest($amount_loan, LoanPlan::find(8)->interests[0]->interest);
@@ -293,6 +293,30 @@ class LifeCommand extends Command
                             true,
                             ["loan" => $pr]
                         );
+                    }
+
+                    // Transfers du salaire
+                    CustomerTransactionHelper::create(
+                        'credit',
+                        'virement',
+                        'Virement Salaire '.now()->monthName,
+                        $customer->income->pro_incoming,
+                        $account->id,
+                        true,
+                        'Virement Salaire '.now()->monthName,
+                        now());
+
+                    // Prise de la souscription
+                    if($customer->package->price > 0) {
+                        CustomerTransactionHelper::create(
+                            'debit',
+                            'souscription',
+                            'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
+                            $customer->package->price,
+                            $account->id,
+                            true,
+                            'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
+                            now());
                     }
                 }
             }
