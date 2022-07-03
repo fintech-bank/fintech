@@ -29,6 +29,7 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
 
     Route::prefix('profil')->group(function () {
         Route::get('/', [\App\Http\Controllers\Customer\ProfilController::class, 'index'])->name('customer.profil.index');
+        Route::get('/password', [\App\Http\Controllers\Customer\ProfilController::class, 'requestPassword'])->name('customer.profil.requestPassword');
 
         Route::put('/', [\App\Http\Controllers\Customer\ProfilController::class, 'update'])->name('customer.profil.update');
     });

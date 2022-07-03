@@ -228,6 +228,20 @@ class CustomerController extends Controller
         }
     }
 
+    public function verifSecure(Request $request, $code)
+    {
+        //dd($request->all(), $code);
+        $customer = Customer::find($request->get('customer_id'));
+        $code_customer = base64_decode($customer->auth_code);
+
+
+        if($code == $code_customer) {
+            return response()->json();
+        } else {
+            return response()->json(["errors" => ["Le code SECURPASS est invalide"]], 401);
+        }
+    }
+
     private function PhoneVerification($customer)
     {
         try {

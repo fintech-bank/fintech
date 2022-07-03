@@ -68,17 +68,7 @@
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="" class="menu-link px-5">Mot de passe</a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-5">
-                                <a href="" class="menu-link px-5">Fonctions Avancés</a>
-                            </div>
-                            <!--end::Menu item-->
-                            <!--begin::Menu item-->
-                            <div class="menu-item px-5">
-                                <a href="" class="menu-link px-5">Virement Instantané</a>
+                                <a href="{{ route('customer.profil.requestPassword') }}" class="menu-link px-5">Mot de passe</a>
                             </div>
                             <!--end::Menu item-->
 

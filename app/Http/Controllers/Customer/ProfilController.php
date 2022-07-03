@@ -9,6 +9,8 @@ use App\Models\Customer\Customer;
 use App\Services\Stripe;
 use App\Services\Twillo;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
+use Laravel\Fortify\Rules\Password;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Lookups;
 
@@ -24,7 +26,7 @@ class ProfilController extends Controller
                     'customer_id' => Customer::where('user_id', auth()->user()->id)->first()->id,
                     'previous_url' => url()->previous(true)
                 ]
-            ])->client_secret
+            ])->client_secret,
         ]);
     }
 
@@ -76,9 +78,51 @@ class ProfilController extends Controller
                 }
                 break;
 
+            case 'updatePassword':
+                $request->validate([
+                    'new_password' => new Password
+                ]);
+
+                try {
+                    $request->user()->update([
+                        'password' => \Hash::make($request->get('new_password'))
+                    ]);
+
+                    return response()->json();
+                }catch (\Exception $exception) {
+                    LogHelper::notify('critical', $exception);
+                    return response()->json(['errors' => $exception], 500);
+                }
+                break;
+
+            case 'updateSecurpass':
+                $request->validate([
+                    'auth_code' => 'numeric'
+                ]);
+
+                try {
+                    $request->user()->customers->update([
+                        'auth_code' => base64_encode($request->get('auth_code'))
+                    ]);
+
+                    return response()->json();
+                }catch (\Exception $exception) {
+                    LogHelper::notify('critical', $exception);
+                    return response()->json(['errors' => $exception], 500);
+                }
+                break;
+
             default:
                 return response()->json(null, 404);
         }
+    }
+
+    public function requestPassword()
+    {
+        return view('customer.profil.password', [
+            'customer' => auth()->user()->customers,
+            'agent' => new Agent()
+        ]);
     }
 
     private function phoneVerificationToken($mobile)

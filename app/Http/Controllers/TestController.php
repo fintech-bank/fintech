@@ -11,6 +11,7 @@ use App\Services\Twillo;
 use Auth;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 use Twilio\Rest\Lookups;
 
 
@@ -18,9 +19,9 @@ class TestController extends Controller
 {
     public function test()
     {
-        $customer = Customer::find(139);
+        $agent = new Agent();
 
-        dd(base64_decode($customer->auth_code));
+        dd($agent->isDesktop());
     }
 
     public function home()
