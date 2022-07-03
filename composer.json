@@ -19,6 +19,7 @@
         "google/cloud-vision": "^1.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/validation": "^3.1",
+        "jenssegers/agent": "^2.6",
         "jschaedl/iban": "^1.3",
         "kylekatarnls/vicopo": "^1.2",
         "laravel-notification-channels/authy": "^9.1",
