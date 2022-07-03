@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Agent;
 
 use App\Helper\CustomerTransactionHelper;
+use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerTransaction;
 use Carbon\Carbon;
@@ -24,5 +25,19 @@ class TransactionController extends Controller
             'date' => $transaction->updated_at->locale('fr_FR')->format('j F Y'),
             'reference' => $transaction->uuid
         ]);
+    }
+
+    public function delete($transaction)
+    {
+        $transaction = CustomerTransaction::find($transaction);
+
+        try {
+            CustomerTransactionHelper::deleteTransaction($transaction);
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception);
+            return response()->json(['errors' => $exception], 500);
+        }
     }
 }

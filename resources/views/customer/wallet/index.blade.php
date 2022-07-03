@@ -142,7 +142,18 @@
                                                     <span class="text-success">+ {{ eur($transaction->amount) }}</span>
                                                 @endif
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                @if($transaction->type == 'sepa')
+                                                    @if($transaction->updated_at->startOfDay() == now()->startOfDay())
+                                                        <button class="btn btn-icon btn-circle btn-danger btn-sm reject" data-transaction="{{ $transaction->id }}" data-bs-toggle="tooltip" title="Rejeter la transaction"><i class="fa-solid fa-xmark"></i> </button>
+                                                    @endif
+                                                @endif
+                                                @if($transaction->type == 'payment')
+                                                    @if($transaction->updated_at->startOfDay() == now()->startOfDay())
+                                                        <button class="btn btn-icon btn-circle btn-danger btn-sm reject" data-transaction="{{ $transaction->id }}" data-bs-toggle="tooltip" title="Rejeter la transaction"><i class="fa-solid fa-xmark"></i> </button>
+                                                    @endif
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                     </tbody>

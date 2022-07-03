@@ -48,6 +48,7 @@ Route::prefix('wallet')->group(function () {
 
 Route::prefix('transaction')->group(function () {
     Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'info']);
+    Route::delete('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'delete']);
 });
 
 Route::prefix('transfer')->group(function () {

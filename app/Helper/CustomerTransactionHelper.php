@@ -140,4 +140,20 @@ class CustomerTransactionHelper
             'confirmed_at' => now()
         ]);
     }
+
+    public static function deleteTransaction($transaction)
+    {
+        if($transaction->confirmed == 0) {
+            $transaction->wallet->update([
+                'balance_coming' => $transaction->wallet->balance_coming - $transaction->amount
+            ]);
+        } else {
+            $transaction->wallet->update([
+                'balance_actual' => $transaction->wallet->balance_actual - $transaction->amount
+            ]);
+        }
+
+        $transaction->delete();
+
+    }
 }

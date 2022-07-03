@@ -19,9 +19,7 @@ class TestController extends Controller
 {
     public function test()
     {
-        $agent = new Agent();
-
-        dd($agent->isDesktop());
+        dd(base64_decode(Customer::find(13)->auth_code));
     }
 
     public function home()

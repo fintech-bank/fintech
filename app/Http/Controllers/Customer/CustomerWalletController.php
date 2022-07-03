@@ -11,7 +11,8 @@ class CustomerWalletController extends Controller
     public function index($wallet_id)
     {
         $wallet = CustomerWallet::find($wallet_id);
+        $customer = $wallet->customer;
 
-        return view('customer.wallet.index', compact('wallet'));
+        return view('customer.wallet.index', compact('wallet', 'customer'));
     }
 }

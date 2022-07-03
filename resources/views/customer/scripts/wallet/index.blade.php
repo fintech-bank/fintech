@@ -7,6 +7,7 @@
         btnShowRib: document.querySelectorAll('.showRib'),
         btnShowExport: document.querySelectorAll('.showExport'),
         app: document.querySelector('#kt_content_container'),
+        btnRejectOps: document.querySelectorAll('.reject'),
     }
     let modals = {
         modalShowRib: document.querySelector('#show_rib'),
@@ -117,6 +118,71 @@
                             })
                         })
                     }
+                })
+            })
+        })
+    }
+    if(elements.btnRejectOps) {
+        elements.btnRejectOps.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+
+                Swal.fire({
+                    title: 'Authentification de l\'opération',
+                    text: "Tapez votre code SECURPASS",
+                    input: 'text',
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Valider',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (code) => {
+                        $.ajax({
+                            url: '/api/customer/verifSecure/'+code,
+                            method: 'POST',
+                            data: {'customer_id': {{ $customer->id }}},
+                            success: data => {
+                                console.log(data)
+                                $.ajax({
+                                    url: '/api/transaction/'+e.target.dataset.transaction,
+                                    method: 'DELETE',
+                                    success: () => {
+
+                                        toastr.success(`La transaction à été rejeter`, null, {
+                                            "positionClass": "toastr-bottom-right",
+                                        })
+
+                                        setTimeout(() => {
+                                            window.location.reload()
+                                        }, 1000)
+                                    },
+                                    error: err => {
+
+                                        const errors = err.responseJSON.errors
+
+                                        Object.keys(errors).forEach(key => {
+                                            toastr.error(errors[key][0], "Champs: "+key, {
+                                                "positionClass": "toastr-bottom-right",
+                                            })
+                                        })
+                                    }
+                                })
+                            },
+                            error: err => {
+                                const errors = err.responseJSON.errors
+
+                                Object.keys(errors).forEach(key => {
+                                    toastr.error(errors[key], null, {
+                                        "positionClass": "toastr-bottom-right",
+                                    })
+                                })
+                            }
+                        })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    console.log(result)
                 })
             })
         })

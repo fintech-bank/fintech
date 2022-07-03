@@ -39,7 +39,7 @@ class CustomerPretFactory extends Factory
             "signed_customer" => $sts == 'accepted' || $sts == 'progress' || $sts == 'terminated',
             "signed_bank" => $sts == 'accepted' || $sts == 'progress' || $sts == 'terminated',
             "assurance_type" => $ass_type[rand(0,2)],
-            "loan_plan_id" => LoanPlan::all()->random()->id,
+            "loan_plan_id" => LoanPlan::all()->where('id', '!=', 8)->random()->id,
         ];
     }
 }
