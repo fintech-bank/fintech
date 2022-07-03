@@ -14,4 +14,12 @@ use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 |
 */
 
-Route::get('/logout', [AuthenticatedSessionController::class, 'destroy']);
+Route::get('/logout', function () {
+    auth()->guard()->logout();
+
+    session()->invalidate();
+
+    session()->regenerateToken();
+
+    return redirect()->route('home');
+});

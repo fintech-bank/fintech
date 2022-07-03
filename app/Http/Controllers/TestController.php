@@ -18,10 +18,9 @@ class TestController extends Controller
 {
     public function test()
     {
-        $twilio = new Twillo();
-        $look = new Lookups($twilio->client);
+        $customer = Customer::find(139);
 
-        dd($look->phoneNumbers('+33249063652')->fetch());
+        dd(base64_decode($customer->auth_code));
     }
 
     public function home()

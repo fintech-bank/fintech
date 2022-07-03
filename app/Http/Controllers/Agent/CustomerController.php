@@ -177,7 +177,7 @@ class CustomerController extends Controller
         if ($authyUser->ok()) {
             $info->authy_id = $authyUser->id();
         } else {
-            LogHelper::notify('critical', $authyUser->errors());
+            LogHelper::notify('critical', "Erreur d'authentification AUTHYID");
         }
 
         $info->save();
