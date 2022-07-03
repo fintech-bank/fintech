@@ -7,16 +7,21 @@ use App\Helper\DocumentFile;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
 use App\Services\BankFintech;
+use App\Services\Twillo;
 use Auth;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
+use Twilio\Rest\Lookups;
 
 
 class TestController extends Controller
 {
     public function test()
     {
-        dd(json_decode(\App\Models\Core\LoanPlan::query()->select('name', 'id')->get()->toJson(), true));
+        $twilio = new Twillo();
+        $look = new Lookups($twilio->client);
+
+        dd($look->phoneNumbers('+33249063652')->fetch());
     }
 
     public function home()
