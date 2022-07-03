@@ -27,6 +27,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
     Route::get('/', [\App\Http\Controllers\Customer\CustomerController::class, 'dashboard'])->name('customer.dashboard');
 
+    Route::prefix('profil')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Customer\ProfilController::class, 'index'])->name('customer.profil.index');
+
+        Route::put('/', [\App\Http\Controllers\Customer\ProfilController::class, 'update'])->name('customer.profil.update');
+    });
+
     Route::prefix('wallets')->group(function () {
         Route::get('{wallet_id}', [\App\Http\Controllers\Customer\CustomerWalletController::class, 'index'])->name('customer.wallet.index');
     });

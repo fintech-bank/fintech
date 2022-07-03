@@ -46,7 +46,7 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="{{ \Creativeorange\Gravatar\Facades\Gravatar::get(request()->user()->email) }}" />
+                                        <img alt="Logo" src="{{ \Creativeorange\Gravatar\Facades\Gravatar::exists(request()->user()->email) == true ? \Creativeorange\Gravatar\Facades\Gravatar::exists(request()->user()->email) : '/assets/media/avatars/blank.png' }}" />
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
@@ -63,12 +63,22 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="" class="menu-link px-5">Profil</a>
+                                <a href="{{ route('customer.profil.index') }}" class="menu-link px-5">Profil et données personnelles</a>
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
                                 <a href="" class="menu-link px-5">Mot de passe</a>
+                            </div>
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5">
+                                <a href="" class="menu-link px-5">Fonctions Avancés</a>
+                            </div>
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-5">
+                                <a href="" class="menu-link px-5">Virement Instantané</a>
                             </div>
                             <!--end::Menu item-->
 
@@ -99,7 +109,7 @@
             <!--begin::Menu-->
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('agent.customer.index') }}">
+                    <a class="menu-link" href="{{ route('customer.dashboard') }}">
 						<span class="menu-icon">
 							<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
                             <i class="fa-solid fa-wallet fa-lg"></i>

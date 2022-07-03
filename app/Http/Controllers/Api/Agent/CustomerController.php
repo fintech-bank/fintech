@@ -15,6 +15,7 @@ use App\Notifications\Agent\Customer\ReinitCodeCustomer;
 use App\Notifications\Agent\Customer\ReinitPasswordCustomer;
 use App\Notifications\Agent\Customer\UpdateStatusAccountNotification;
 use App\Notifications\Agent\Customer\UpdateTypeAccountNotification;
+use App\Notifications\Customer\PhoneVerificationNotification;
 use App\Services\Twillo;
 use Illuminate\Http\Request;
 use Twilio\Exceptions\TwilioException;
@@ -162,16 +163,16 @@ class CustomerController extends Controller
 
             // Envoie du pass par sms
             try {
-                if(config('app.env') == 'local') {
+                if (config('app.env') == 'local') {
                     $customer->user->notify(new ReinitPasswordCustomer($password));
                 } else {
                     $customer->info->notify(new ReinitPasswordCustomer($password));
                 }
-            }catch (\Exception $exception) {
+            } catch (\Exception $exception) {
                 LogHelper::notify('error', $exception->getMessage());
                 return response()->json($exception->getMessage(), 500);
             }
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('error', $exception->getMessage());
             return response()->json($exception->getMessage(), 500);
         }
@@ -206,5 +207,36 @@ class CustomerController extends Controller
         // Notification client
         $customer->user->notify(new ReinitAuthCustomer($customer));
         return response()->json();
+    }
+
+    public function verifUser($customer_id)
+    {
+        $customer = Customer::find($customer_id);
+
+        try {
+            $customer->info->update([
+                'isVerified' => 1
+            ]);
+
+            $this->PhoneVerification($customer);
+
+            LogHelper::notify('notice', "Client Vérifier");
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::notify('error', $exception->getMessage());
+            return response()->json($exception->getMessage());
+        }
+    }
+
+    private function PhoneVerification($customer)
+    {
+        try {
+            $customer->info->notify(new PhoneVerificationNotification('sms', true));
+
+            return null;
+        }catch (\Exception $exception) {
+            LogHelper::notify('error', $exception);
+            return response()->json($exception->getMessage());
+        }
     }
 }

@@ -35,6 +35,7 @@ Route::get('stats', [\App\Http\Controllers\Api\Agent\StatController::class, 'sta
 Route::prefix('customer')->group(function () {
     Route::post('/', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'info']);
     Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
+    Route::get('{customer_id}/verifUser', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifUser']);
 });
 
 Route::prefix('wallet')->group(function () {
