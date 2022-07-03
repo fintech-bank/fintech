@@ -492,7 +492,7 @@
                                                 <div class="fs-6">Débit Moyen</div>
                                             </div>
                                             <div class="d-flex flex-column flex-center bg-light-info p-5 rounded text-center mb-3">
-                                                <span class="fw-bolder fs-2">0,00 €</span>
+                                                <span class="fw-bolder fs-2">{{ eur($wallet->balance_decouvert) }}</span>
                                                 <div class="fs-6">Découvert Autorisé</div>
                                             </div>
                                         </div>
@@ -1117,7 +1117,7 @@
                                                     </div>
 
                                                     <div class="menu-item px-3 mb-3">
-                                                        <a href="#" class="menu-link px-3 btnViewCheck" data-sepas="{{ $transaction->id }}" data-wallet="{{ $wallet->id }}">
+                                                        <a href="#" class="menu-link px-3 btnViewCheck" data-sepas="{{ $check->id }}" data-wallet="{{ $wallet->id }}">
                                                             Information
                                                         </a>
                                                     </div>
