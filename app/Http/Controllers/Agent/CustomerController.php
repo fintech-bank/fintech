@@ -143,7 +143,7 @@ class CustomerController extends Controller
         $code_auth = rand(1000, 9999);
         $customer = Customer::create([
             'status_open_account' => "terminated",
-            'auth_code' => $code_auth,
+            'auth_code' => base64_encode($code_auth),
             'user_id' => $user->id,
             'package_id' => $request->get('package_id'),
             'agency_id' => $user->agency_id
