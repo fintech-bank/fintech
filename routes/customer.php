@@ -42,6 +42,16 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
     Route::prefix('transfers')->group(function () {
         Route::get('/', [\App\Http\Controllers\Customer\TransferController::class, 'index'])->name('customer.transfer.index');
         Route::post('/', [\App\Http\Controllers\Customer\TransferController::class, 'store'])->name('customer.transfer.store');
+        Route::get('/history', [\App\Http\Controllers\Customer\TransferController::class, 'history'])->name('customer.transfer.history');
+
+        Route::put('/{transfer_id}', [\App\Http\Controllers\Customer\TransferController::class, 'update'])->name('customer.transfer.update');
+        Route::delete('/{transfer_id}', [\App\Http\Controllers\Customer\TransferController::class, 'delete'])->name('customer.transfer.delete');
+
+        Route::get('/{transfer_id}/print', [\App\Http\Controllers\Customer\TransferController::class, 'print'])->name('customer.transfer.print');
+    });
+
+    Route::prefix('beneficiaire')->group(function () {
+
     });
 });
 

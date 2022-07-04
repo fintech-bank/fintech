@@ -120,7 +120,40 @@
                 </form>
             </div>
         </div>
-        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <a href="{{ route('customer.transfer.history') }}" class="card shadow-sm mb-5">
+                        <div class="card-body d-flex flex-row justify-content-between align-items-center text-hover-bank">
+                            <div class="symbol symbol-50px me-5">
+                                <div class="symbol-label fs-2 text-bank"><i class="fa-solid fa-file"></i> </div>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div class="fw-bolder">Historique des virements</div>
+                                <div class="fs-6">Immédiats, différés et permanents</div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <i class="fa-solid fa-arrow-circle-right fa-lg"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="" class="card shadow-sm">
+                        <div class="card-body d-flex flex-row justify-content-between align-items-center text-hover-bank">
+                            <div class="symbol symbol-50px me-5">
+                                <div class="symbol-label fs-2 text-bank"><i class="fa-solid fa-users"></i> </div>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div class="fw-bolder">Mes Bénéficiaires</div>
+                                <div class="fs-6">Ajout & Gestion</div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <i class="fa-solid fa-arrow-circle-right fa-lg"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

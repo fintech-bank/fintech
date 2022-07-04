@@ -6,12 +6,14 @@ use App\Helper\CustomerHelper;
 use App\Helper\CustomerTransferHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerTransfer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TransferController extends Controller
 {
     public function info($id)
     {
+        Carbon::setLocale('fr_FR');
         $transfer = CustomerTransfer::query()->find($id);
 
         if ($transfer->type == 'permanent') {
@@ -41,7 +43,8 @@ class TransferController extends Controller
                     'start' => $transfer->recurring_start->locale('fr_FR')->format('j F Y'),
                     'end' => $transfer->recurring_end->locale('fr_FR')->format('j F Y'),
                 ],
-                'typeText' => $transfer->type
+                'typeText' => $transfer->type,
+                'id' => $transfer->id
             ]);
         } else {
             return response()->json([
@@ -67,7 +70,8 @@ class TransferController extends Controller
                 'reason' => $transfer->reason,
                 'type' => CustomerTransferHelper::getTypeTransfer($transfer->type),
                 'date' => $transfer->transfer_date->locale('fr_FR')->format('j F Y'),
-                'typeText' => $transfer->type
+                'typeText' => $transfer->type,
+                'id' => $transfer->id
             ]);
         }
     }

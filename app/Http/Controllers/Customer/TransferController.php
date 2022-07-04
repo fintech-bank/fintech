@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Helper\CustomerTransactionHelper;
 use App\Helper\CustomerTransferHelper;
+use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerBeneficiaire;
+use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerTransfer;
 use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\InitTransferNotification;
@@ -48,6 +51,56 @@ class TransferController extends Controller
         } else {
             return $this->permanentTransfer($request, $beneficiaire, $wallet);
         }
+    }
+
+    public function history()
+    {
+        return view('customer.transfer.history', [
+            'customer' => \request()->user()->customers
+        ]);
+    }
+
+    public function print($transfer_id)
+    {
+        $transfer = CustomerTransfer::find($transfer_id);
+        $document = new DocumentFile();
+
+        try {
+            return $document->generatePDF('agence.transfer', $transfer->wallet->customer, null, ['transfer' => $transfer], false, false, null, true, null);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
+
+    public function update(Request $request, $transfer)
+    {
+        $transfer = CustomerTransfer::find($transfer);
+
+        try {
+            $transfer->update([
+                'recurring_end' => $request->get('recurring_end') != $transfer->recurring_end ? $request->get('recurring_end') : $transfer->recurring_end,
+                'amount' => $request->get('amount') != $transfer->amount ? $request->get('amount') : $transfer->amount
+            ]);
+
+            return response()->json();
+        } catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception);
+            return response()->json(['errors' => $exception], 500);
+        }
+    }
+
+    public function delete($transfer)
+    {
+        $transfer = CustomerTransfer::find($transfer);
+        $transactions = CustomerTransaction::where('designation', 'LIKE', '%Virement vers '.CustomerTransferHelper::getNameBeneficiaire($transfer->beneficiaire).'%')->whereBetween('updated_at', [$transfer->recurring_start, $transfer->recurring_end])->get();
+
+        foreach ($transactions as $transaction) {
+            CustomerTransactionHelper::deleteTransaction($transaction);
+        }
+
+        $transfer->delete();
+
+        return response()->json();
     }
 
     private function immediatTransfer($request, $beneficiaire, $wallet)
