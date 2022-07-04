@@ -55,6 +55,10 @@ Route::prefix('transfer')->group(function () {
     Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransferController::class, 'info']);
 });
 
+Route::prefix('beneficiaire')->group(function () {
+    Route::get('{beneficiaire_id}', [\App\Http\Controllers\Api\Agent\BeneficiaireController::class, 'info']);
+});
+
 Route::prefix('bank')->group(function () {
     Route::get('{bank_id}', [\App\Http\Controllers\Api\Agent\BankController::class, 'info']);
 });

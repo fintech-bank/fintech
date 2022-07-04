@@ -2416,7 +2416,7 @@ function initSW() {
   } //register the service worker
 
 
-  navigator.serviceWorker.register('/sw.js').then(function () {
+  navigator.serviceWorker.register(location.protocol + "//" + location.host + '/sw.js').then(function () {
     initPush();
   })["catch"](function (err) {
     console.log(err);
@@ -2615,7 +2615,7 @@ tooltipElements.forEach(function (tooltip) {
 });
 window.addEventListener('load', function () {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register('/sw_customer.js');
+    navigator.serviceWorker.register(location.protocol + "//" + location.host + '/sw_customer.js');
     initSW();
   }
 });

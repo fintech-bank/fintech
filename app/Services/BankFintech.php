@@ -10,4 +10,9 @@ class BankFintech
     {
         return \Http::get('http://bank.fintech.io/refund_request?bank_id='.$sepa)->object();
     }
+
+    public function callStatusBank($bank_name)
+    {
+        return \Http::get('http://bank.fintech.io/status_request?bank_name='.$bank_name)->object();
+    }
 }

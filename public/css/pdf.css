@@ -702,3 +702,19 @@ i.icon-bank {
 .border-bank {
   border-color: var(--bank);
 }
+
+.fw-normal {
+    font-weight: normal;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fw-bolder {
+    font-weight: bolder;
+}
+
+.text-underline {
+    text-decoration: solid;
+}

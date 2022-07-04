@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helper\CustomerCreditCard;
+use App\Helper\CustomerTransferHelper;
 use App\Helper\DocumentFile;
 use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerTransfer;
 use App\Models\Customer\CustomerWallet;
 use App\Services\BankFintech;
 use App\Services\Twillo;
@@ -19,7 +21,8 @@ class TestController extends Controller
 {
     public function test()
     {
-        dd(base64_decode(Customer::find(13)->auth_code));
+        $transfer = CustomerTransfer::find(6);
+        dd(CustomerTransferHelper::programTransfer($transfer->id));
     }
 
     public function home()

@@ -264,7 +264,7 @@ function initSW() {
     }
 
     //register the service worker
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register(location.protocol + "//" + location.host+'/sw.js')
         .then(() => {
             initPush();
         })
@@ -454,7 +454,7 @@ tooltipElements.forEach(tooltip => {
 
 window.addEventListener('load', () => {
     if("serviceWorker" in navigator) {
-        navigator.serviceWorker.register('/sw_customer.js');
+        navigator.serviceWorker.register(location.protocol + "//" + location.host+'/sw_customer.js');
         initSW();
     }
 })

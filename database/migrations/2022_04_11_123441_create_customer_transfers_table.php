@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamp('recurring_start')->nullable();
             $table->timestamp('recurring_end')->nullable();
             $table->enum('status', ['paid', 'pending', 'in_transit', 'canceled', 'failed'])->default('pending');
+            $table->integer('transaction_id')->nullable();
 
             $table->foreignId('customer_wallet_id')
                             ->constrained()
