@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('system:execute acceptedLoanCharge')->dailyAt('08:00:00')->description('acceptedLoanCharge');
         $schedule->command('system:execute initPrlvCptEpargne')->dailyAt('08:00:00')->description('initPrlvCptEpargne');
         $schedule->command('system:execute initPrlvCptPret')->dailyAt('08:00:00')->description('initPrlvCptPret');
-        $schedule->command('bank:execute virement')->dailyAt('08:00:00')->description('virement');
+        $schedule->command('bank:execute virement')->everySixHours()->description('virement');
         $schedule->command('system:execute executeSepaOrderDay')->everySixHours()->description('executeSepaOrderDay');
         $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->description('verifRequestLoanOpen');
         $schedule->command('system:execute executeTransactionComing')->everySixHours()->description('executeTransactionComing');

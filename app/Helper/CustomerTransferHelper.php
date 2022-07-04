@@ -129,12 +129,13 @@ class CustomerTransferHelper
                             true, $transfer->reference.' - '.$transfer->reason,
                             now(), now());
 
-                        CustomerTransactionHelper::create('debit',
+                        $t = CustomerTransactionHelper::create('debit',
                             'virement', $transfer->reason, $transfer->amount, $transfer->customer_wallet_id,
                             true, $transfer->reference.' - '.$transfer->reason,
                             now(), now());
 
                         $transfer->status = 'paid';
+                        $transfer->transaction_id = $t->id;
                         $transfer->save();
 
                         return $transfer;
@@ -144,12 +145,13 @@ class CustomerTransferHelper
                             false, $transfer->reference.' - '.$transfer->reason,
                             null, now());
 
-                        CustomerTransactionHelper::create('debit',
+                        $t = CustomerTransactionHelper::create('debit',
                             'virement', $transfer->reason, $transfer->amount, $transfer->customer_wallet_id,
                             false, $transfer->reference.' - '.$transfer->reason,
                             null, now());
 
                         $transfer->status = 'pending';
+                        $transfer->transaction_id = $t->id;
                         $transfer->save();
 
                         return $transfer;
@@ -164,34 +166,37 @@ class CustomerTransferHelper
             } else {
 
                 if($transfer->amount >= CustomerWalletHelper::getSoldeRemaining($transfer->wallet)) {
-                    CustomerTransactionHelper::create('debit',
+                    $t = CustomerTransactionHelper::create('debit',
                         'virement', $transfer->reason, $transfer->amount, $transfer->customer_wallet_id,
                         true, $transfer->reference.' - '.$transfer->reason,
                         now(), now());
 
                     $transfer->status = 'paid';
+                    $transfer->transaction_id = $t->id;
                     $transfer->save();
 
                     return $transfer;
                 } else {
-                    CustomerTransactionHelper::create('debit',
+                    $t = CustomerTransactionHelper::create('debit',
                         'virement', $transfer->reason, $transfer->amount, $transfer->customer_wallet_id,
                         false, $transfer->reference.' - '.$transfer->reason,
                         null, now());
 
                     $transfer->status = 'pending';
+                    $transfer->transaction_id = $t->id;
                     $transfer->save();
 
                     return $transfer;
                 }
             }
         } else {
-            CustomerTransactionHelper::create('debit',
+            $t = CustomerTransactionHelper::create('debit',
                 'virement', $transfer->reason, $transfer->amount, $transfer->customer_wallet_id,
                 false, $transfer->reference.' - '.$transfer->reason,
                 null, $transfer->transfer_date);
 
             $transfer->status = 'pending';
+            $transfer->transaction_id = $t->id;
             $transfer->save();
             return $transfer;
         }

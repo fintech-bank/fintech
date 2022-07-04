@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('amount');
             $table->enum('status', ['waiting', 'processed', 'rejected', 'return', 'refunded']);
             $table->timestamps();
+            $table->integer('transaction_id')->nullable();
 
             $table->foreignId('customer_wallet_id')
                             ->constrained()

@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Helper\CustomerTransactionHelper;
 use App\Helper\CustomerTransferHelper;
+use App\Helper\CustomerWalletHelper;
+use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerTransfer;
 use Illuminate\Console\Command;
 
@@ -40,22 +43,51 @@ class ExecuteVirement extends Command
 
     private function executeVirements()
     {
-        $virements = CustomerTransfer::query()->where('status', 'in_transit')->get();
+        $virements = CustomerTransfer::query()->where('status', 'in_transit')->orWhere('status', 'pending')->get();
 
         foreach ($virements as $virement) {
+            $transaction = CustomerTransaction::find($virement->transaction_id);
             switch ($virement->type) {
                 case 'immediat':
-                    return CustomerTransferHelper::executeTransfer($virement->id);
+                    // Vérifie que le solde est disponible
+                    if($virement->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
+                        // Met à jour la transaction
+                        CustomerTransactionHelper::updated($transaction);
+
+                        // Met à jour le transfer
+                        $virement->status = 'paid';
+                        $virement->save();
+                    } else {
+                        CustomerTransactionHelper::deleteTransaction($transaction);
+
+                        $virement->status = 'failed';
+                        $virement->save();
+                    }
                     break;
 
                 case 'differed':
-                    return CustomerTransferHelper::initTransfer($virement->id);
+                    if($virement->transfer_date->startOfDay() == now()->startOfDay()) {
+                        // Met à jour la transaction
+                        CustomerTransactionHelper::updated($transaction);
+
+                        // Met à jour le transfer
+                        $virement->status = 'paid';
+                        $virement->save();
+                    }
                     break;
 
                 default:
-                    return CustomerTransferHelper::programTransfer($virement->id);
+                    if($transaction->updated_at->startOfDay() == now()->startOfDay()) {
+                        // Met à jour la transaction
+                        CustomerTransactionHelper::updated($transaction);
+
+                        // Met à jour le transfer
+                        $virement->status = 'paid';
+                        $virement->save();
+                    }
                     break;
             }
         }
+
     }
 }
