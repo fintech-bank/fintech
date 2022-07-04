@@ -11,4 +11,7 @@
             <span class="input-group-text" id="basic-addon1">{!! $symbol !!}</span>
         @endif
     </div>
+    @if($text)
+        <p class="text-muted">{!! $text !!}</p>
+    @endif
 </div>

@@ -53,7 +53,7 @@
             <div class="d-flex flex-column justify-content-end fs-4">
                 <div class="d-flex flex-row justify-content-between w-400px">
                     <div class="fw-bolder">Prochaines Opérations</div>
-                    <div class="text-end">{{ eur($wallet->balance_coming) }}</div>
+                    <div class="text-end">{{ \App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet) >= 0 ? '+ '.eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet)) :  eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet))}}</div>
                 </div>
                 <div class="d-flex flex-row justify-content-between w-400px">
                     <div class="fw-bolder">Titulaire</div>
@@ -99,7 +99,7 @@
                                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_transaction">
                                     <!--begin::Table body-->
                                     <tbody class="fw-bold text-gray-600">
-                                    @foreach($wallet->transactions()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', true)->orderBy('created_at', 'desc')->get() as $transaction)
+                                    @foreach($wallet->transactions()->whereBetween('confirmed_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', true)->orderBy('confirmed_at', 'desc')->get() as $transaction)
                                         <tr>
                                             <td>
                                                 {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
@@ -126,14 +126,14 @@
                                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="liste_transaction_coming">
                                     <!--begin::Table body-->
                                     <tbody class="fw-bold text-gray-600">
-                                    @foreach($wallet->transactions()->whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', false)->orderBy('created_at', 'desc')->get() as $transaction)
+                                    @foreach($wallet->transactions()->whereBetween('updated_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', false)->orderBy('updated_at', 'desc')->get() as $transaction)
                                         <tr>
                                             <td>
                                                 {!! \App\Helper\CustomerTransactionHelper::getTypeTransaction($transaction->type, false, true) !!}
                                             </td>
                                             <td>
                                                 <div class="fw-bolder fs-5">{{ $transaction->designation }}</div>
-                                                <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
+                                                <div class="text-muted">{{ $transaction->updated_at->format('d/m/Y') }}</div>
                                             </td>
                                             <td class="text-end">
                                                 @if($transaction->amount < 0)
@@ -296,7 +296,7 @@
                                             </td>
                                             <td>
                                                 <div class="fw-bolder fs-5">{{ $transaction->designation }}</div>
-                                                <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
+                                                <div class="text-muted">{{ $transaction->updated_at->format('d/m/Y') }}</div>
                                             </td>
                                             <td class="text-end">
                                                 @if($transaction->amount < 0)

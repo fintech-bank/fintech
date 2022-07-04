@@ -77,7 +77,7 @@ class Customer extends Model
 
     public function agent()
     {
-        return $this->hasOne(User::class, 'agent_id');
+        return $this->hasOne(User::class, 'id');
     }
 
     public function prets()

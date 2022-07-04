@@ -83,4 +83,14 @@ class CustomerWalletHelper
 
         return $wallet;
     }
+
+    public static function getSoldeRemaining($wallet)
+    {
+        return $wallet->balance_actual + $wallet->balance_decouvert;
+    }
+
+    public static function getSumMonthOperation($wallet)
+    {
+        return $wallet->transactions()->whereBetween('updated_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', false)->orderBy('updated_at', 'desc')->sum('amount');
+    }
 }

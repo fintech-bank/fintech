@@ -38,5 +38,10 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
     Route::prefix('wallets')->group(function () {
         Route::get('{wallet_id}', [\App\Http\Controllers\Customer\CustomerWalletController::class, 'index'])->name('customer.wallet.index');
     });
+
+    Route::prefix('transfers')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Customer\TransferController::class, 'index'])->name('customer.transfer.index');
+        Route::post('/', [\App\Http\Controllers\Customer\TransferController::class, 'store'])->name('customer.transfer.store');
+    });
 });
 
