@@ -109,7 +109,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('agent.customer.index') }}">
+                    <a class="menu-link" href="{{ route('customer.transfer.index') }}">
 						<span class="menu-icon">
 							<i class="fa-solid fa-exchange fa-lg"></i>
 						</span>

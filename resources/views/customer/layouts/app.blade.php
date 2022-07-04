@@ -20,6 +20,7 @@ License: For each use you must have a valid license purchased only from above li
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="manifest" href="{{ asset('manifest_customer.json') }}">
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">

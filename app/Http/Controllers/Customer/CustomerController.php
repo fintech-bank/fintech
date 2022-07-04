@@ -14,4 +14,9 @@ class CustomerController extends Controller
 
         return view('customer.dashboard', ['customer' => $customer]);
     }
+
+    public function offline()
+    {
+        return view('customer.offline');
+    }
 }
