@@ -7,16 +7,19 @@ use App\Helper\DocumentFile;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
 use App\Services\BankFintech;
+use App\Services\Twillo;
 use Auth;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
+use Twilio\Rest\Lookups;
 
 
 class TestController extends Controller
 {
     public function test()
     {
-        dd(json_decode(\App\Models\Core\LoanPlan::query()->select('name', 'id')->get()->toJson(), true));
+        dd(base64_decode(Customer::find(13)->auth_code));
     }
 
     public function home()

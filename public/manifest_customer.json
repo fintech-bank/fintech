@@ -1,0 +1,17 @@
+{
+    "name": "FINTECH Bank",
+    "icons": [
+        {
+            "src": "/storage/icons/512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/storage/icons/192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "start_url": "/customer?source=pwa",
+    "display": "standalone"
+}

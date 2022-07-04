@@ -19,4 +19,7 @@ mix.js('resources/js/app.js', 'public/global/js')
     .sass('resources/scss/pdf.scss', 'public/css/pdf.css');
 
 mix.disableNotifications()
-mix.browserSync('fintech.io');
+mix.browserSync({
+    proxy: 'fintech.io',
+    https: true
+});

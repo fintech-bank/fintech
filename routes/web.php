@@ -17,7 +17,9 @@ include("auth.php");
 include("front.php");
 include("admin.php");
 include("agent.php");
+include("customer.php");
 
+Route::get('/redirect', [\App\Http\Controllers\Front\HomeController::class, 'redirect']);
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'test']);
 Route::get('/home', [\App\Http\Controllers\TestController::class, 'home']);
 Route::post('/push',[\App\Http\Controllers\TestController::class, 'pushStore']);

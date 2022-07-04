@@ -8,6 +8,7 @@ use App\Mail\Agent\ExecuteSystemMail;
 use App\Models\Customer\CustomerEpargne;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerSepa;
+use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,7 +22,7 @@ class ExecuteSystem extends Command
     public function __construct()
     {
         parent::__construct();
-        //$this->agents = User::where('agent', 1)->get();
+        $this->agents = User::where('agent', 1)->get();
         $this->date = now()->format('d/m/Y');
     }
 
@@ -30,7 +31,7 @@ class ExecuteSystem extends Command
      *
      * @var string
      */
-    protected $signature = 'system:execute {call}';
+    protected $signature = 'system:execute {action}';
 
     /**
      * The console command description.
@@ -46,7 +47,7 @@ class ExecuteSystem extends Command
      */
     public function handle()
     {
-        switch ($this->argument('call')) {
+        switch ($this->argument('action')) {
             case 'autoAcceptCreditPrlv':
                 return $this->autoAcceptCreditPrlv();
                 break;
@@ -60,15 +61,19 @@ class ExecuteSystem extends Command
                 break;
 
             case 'executeSepaOrderDay':
-                $this->executeSepaOrderDay();
+                return $this->executeSepaOrderDay();
                 break;
 
             case 'initPrlvCptEpargne':
-                $this->initPrlvCptEpargne();
+                return $this->initPrlvCptEpargne();
                 break;
 
             case 'initPrlvCptPret':
-                $this->initPrlvCptPret();
+                return $this->initPrlvCptPret();
+                break;
+
+            case 'executeTransactionComing':
+                return $this->executeTransactionComing();
                 break;
         }
     }
@@ -83,7 +88,7 @@ class ExecuteSystem extends Command
             CustomerTransactionHelper::create(
                 'credit',
                 'sepa',
-                "Prélèvement " . $sepas->creditor,
+                "Prélèvement " . $sepa->creditor,
                 $sepa->amount,
                 $sepa->customer_wallet_id,
                 true,
@@ -228,6 +233,24 @@ class ExecuteSystem extends Command
         }
 
         \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Execution des ordres SEPA en date du " . now()->format('d/m/Y') . "<br>Nombre d'ordre executer: " . $i));
+    }
+
+    private function executeTransactionComing()
+    {
+        $transactions = CustomerTransaction::where('confirmed', false)->get();
+        $v = 0;
+
+        try {
+            foreach ($transactions as $transaction) {
+                if($transaction->updated_at <= now()->between(now()->startOfDay(), now()->endOfDay())) {
+                    CustomerTransactionHelper::updated($transaction);
+                    $v++;
+                }
+            }
+            $this->line("Nombre de transaction passée: ".$v);
+        }catch (\Exception $exception) {
+            $this->error($exception->getMessage());
+        }
     }
 
 

@@ -11,4 +11,15 @@ class HomeController extends Controller
     {
         return view('front.index');
     }
+
+    public function redirect()
+    {
+        if(auth()->user()->admin == 1) {
+            return redirect()->route('admin.dashboard');
+        } elseif(auth()->user()->agent == 1) {
+            return redirect()->route('agent.dashboard');
+        } else {
+            return redirect()->route('customer.dashboard');
+        }
+    }
 }

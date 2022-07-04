@@ -2613,7 +2613,12 @@ tooltipElements.forEach(function (tooltip) {
     html: true
   });
 });
-initSW();
+window.addEventListener('load', function () {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register('/sw_customer.js');
+    initSW();
+  }
+});
 
 /***/ }),
 

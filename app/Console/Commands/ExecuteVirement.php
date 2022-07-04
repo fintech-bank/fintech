@@ -25,14 +25,16 @@ class ExecuteVirement extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|void
      */
     public function handle()
     {
         switch ($this->argument('call')) {
             case 'virement':
-                    $this->executeVirements();
+                    return $this->executeVirements();
                 break;
+
+            default: return $this->executeVirements();
         }
     }
 
@@ -43,15 +45,15 @@ class ExecuteVirement extends Command
         foreach ($virements as $virement) {
             switch ($virement->type) {
                 case 'immediat':
-                    CustomerTransferHelper::executeTransfer($virement->id);
+                    return CustomerTransferHelper::executeTransfer($virement->id);
                     break;
 
                 case 'differed':
-                    CustomerTransferHelper::initTransfer($virement->id);
+                    return CustomerTransferHelper::initTransfer($virement->id);
                     break;
 
                 default:
-                    CustomerTransferHelper::programTransfer($virement->id);
+                    return CustomerTransferHelper::programTransfer($virement->id);
                     break;
             }
         }

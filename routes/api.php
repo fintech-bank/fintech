@@ -34,15 +34,21 @@ Route::get('stats', [\App\Http\Controllers\Api\Agent\StatController::class, 'sta
 
 Route::prefix('customer')->group(function () {
     Route::post('/', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'info']);
+    Route::post('verifSecure/{code}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifSecure']);
     Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
+    Route::get('{customer_id}/verifUser', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifUser']);
 });
 
 Route::prefix('wallet')->group(function () {
     Route::get('{id}/chartSummary', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'chartSummary']);
+    Route::get('{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'info']);
+    Route::get('{id}/rib', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'rib']);
+    Route::post('{id}/exportAccount', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'export']);
 });
 
 Route::prefix('transaction')->group(function () {
     Route::get('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'info']);
+    Route::delete('{id}', [\App\Http\Controllers\Api\Agent\TransactionController::class, 'delete']);
 });
 
 Route::prefix('transfer')->group(function () {

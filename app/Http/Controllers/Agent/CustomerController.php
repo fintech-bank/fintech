@@ -143,7 +143,7 @@ class CustomerController extends Controller
         $code_auth = rand(1000, 9999);
         $customer = Customer::create([
             'status_open_account' => "terminated",
-            'auth_code' => $code_auth,
+            'auth_code' => base64_encode($code_auth),
             'user_id' => $user->id,
             'package_id' => $request->get('package_id'),
             'agency_id' => $user->agency_id
@@ -177,7 +177,7 @@ class CustomerController extends Controller
         if ($authyUser->ok()) {
             $info->authy_id = $authyUser->id();
         } else {
-            LogHelper::notify('critical', $authyUser->errors());
+            LogHelper::notify('critical', "Erreur d'authentification AUTHYID");
         }
 
         $info->save();
@@ -213,7 +213,7 @@ class CustomerController extends Controller
         ]);
 
         $wallet = $this->createWallet($customer);
-        $this->createCreditCard($request, $wallet);
+        $card = $this->createCreditCard($request, $wallet);
 
         // Envoie du mot de passe provisoire par SMS avec identifiant
         $info->notify(new SendPasswordSms($user, $password));
@@ -225,39 +225,17 @@ class CustomerController extends Controller
          * - Convention Carte Bleu
          * - Condition Générale
          */
-        $document = new DocumentFile();
-        $document->createDocument('Convention relation particulier - CUS' . $customer->user->identifiant,
-            $customer,
-            3,
-            "CNT" . \Str::upper(\Str::random(6)),
-            true,
-            false,
-            false,
-            null,
-            true,
-            'agence.convention_part');
 
-        $document->createDocument('Releve Identité Bancaire - CUS' . $customer->user->identifiant,
-            $customer,
-            5,
-            null,
-            false,
-            false,
-            false,
-            null,
-            true,
-            'agence.rib');
+        $document = DocumentFile::createDoc($customer, 'Convention Part', 'Convention relation particulier - CUS' . $customer->user->identifiant,
+        3, "CNT" . \Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet]);
 
-        $document->createDocument('Convention Carte Bancaire VISA Physique - CUS' . $customer->user->identifiant,
-            $customer,
-            3,
-            "CNT" . \Str::upper(\Str::random(6)),
-            true,
-            false,
-            false,
-            null,
-            true,
-            'agence.convention_cb_physique');
+
+        DocumentFile::createDoc($customer, 'RIB', 'Relever Identité Bancaire - CUS' . $customer->user->identifiant,
+            3, null, false, false, false, true, ['wallet' => $wallet]);
+
+
+        DocumentFile::createDoc($customer, 'Convention CB Physique', 'Convention CB Visa Physique - CUS' . $customer->user->identifiant,
+            3, "CNT" . \Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet, 'card' => $card]);
 
         // Notification mail de Bienvenue
         \Mail::to($user)->send(new WelcomeContract($customer, $document));

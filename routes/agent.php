@@ -119,5 +119,10 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
             Route::post('{file}/sign', [\App\Http\Controllers\Agent\CustomerDocumentController::class, 'sign'])->name('agent.customer.file.sign');
         });
     });
+
+    Route::prefix('loan')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'all'])->name('agent.loan.all');
+        Route::get('{loan_id}', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'show'])->name('agent.loan.show');
+    });
 });
 

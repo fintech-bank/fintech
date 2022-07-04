@@ -38,6 +38,17 @@ return [
     'stripe' => [
         'api_key' => env('STRIPE_API_KEY'),
         'api_secret' => env('STRIPE_API_SECRET'),
+    ],
+
+    'authy' => [
+        'secret' => env('AUTHY_SECRET'),
+    ],
+
+    'twilio' => [
+        'auth_token' => env('TWILIO_AUTH_TOKEN'),
+        'account_sid' => env('TWILIO_ACCOUNT_SID'),
+        'from' => env('TWILIO_FROM'),
+        'debug' => env('TWILIO_DEBUG_TO'),
     ]
 
 ];

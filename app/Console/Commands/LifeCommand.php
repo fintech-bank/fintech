@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helper\CustomerFaceliaHelper;
 use App\Helper\CustomerLoanHelper;
+use App\Helper\CustomerTransactionHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
 use App\Helper\UserHelper;
@@ -34,7 +35,7 @@ class LifeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'life {--call}';
+    protected $signature = 'life {action}';
 
     /**
      * The console command description.
@@ -50,9 +51,17 @@ class LifeCommand extends Command
      */
     public function handle()
     {
-        switch ($this->option('call')) {
+        switch ($this->argument('action')) {
             case 'generateCustomer':
                 return $this->generateCustomer();
+                break;
+
+            case 'generateSalary':
+                return $this->generateSalary();
+                break;
+
+            case 'generateDebit':
+                return $this->generateDebit();
                 break;
 
             default:
@@ -142,7 +151,7 @@ class LifeCommand extends Command
                         ["card" => $card]
                     );
 
-                    foreach (CustomerCreditCard::query()->where('facelia', 1)->get() as $card) {
+                    foreach (CustomerCreditCard::query()->where('facelia', 1)->where('customer_wallet_id', $account->id)->get() as $card) {
                         $amount = [500,1000,1500,2000,2500,3000];
                         $amount_loan = $amount[rand(0,5)];
                         $interest = CustomerLoanHelper::getLoanInterest($amount_loan, LoanPlan::find(8)->interests[0]->interest);
@@ -285,6 +294,30 @@ class LifeCommand extends Command
                             ["loan" => $pr]
                         );
                     }
+
+                    // Transfers du salaire
+                    CustomerTransactionHelper::create(
+                        'credit',
+                        'virement',
+                        'Virement Salaire '.now()->monthName,
+                        $customer->income->pro_incoming,
+                        $account->id,
+                        true,
+                        'Virement Salaire '.now()->monthName,
+                        now());
+
+                    // Prise de la souscription
+                    if($customer->package->price > 0) {
+                        CustomerTransactionHelper::create(
+                            'debit',
+                            'souscription',
+                            'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
+                            $customer->package->price,
+                            $account->id,
+                            true,
+                            'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
+                            now());
+                    }
                 }
             }
         }catch (\Exception $exception) {
@@ -293,5 +326,94 @@ class LifeCommand extends Command
 
         $this->line("Nombre de nouveau client: ".$nb);
         return null;
+    }
+
+    private function generateSalary()
+    {
+        $customers = Customer::where('status_open_account', 'terminated')->get();
+
+        foreach ($customers as $customer) {
+            $wallet = $customer->wallets()->where('type', 'compte')->first();
+
+            CustomerTransactionHelper::create(
+                'credit',
+                'virement',
+            'Virement Salaire '.now()->monthName,
+            $customer->income->pro_incoming,
+            $wallet->id,
+            true,
+                'Virement Salaire '.now()->monthName,
+            now());
+        }
+
+        $this->line("Check des virements des salaires terminer");
+
+        return 0;
+    }
+
+    private function generateDebit()
+    {
+        $customers = Customer::where('status_open_account', 'terminated')->get();
+        $nb = 0;
+
+        foreach ($customers as $customer) {
+            $wallet = $customer->wallets()->where('type', 'compte')->where('status', 'active')->first();
+            if(isset($wallet)) {
+                $select = rand(0,2);
+                $balance_wallet = $wallet->balance_actual + $wallet->balance_decouvert;
+                if(rand(0,1) == 1) {
+                    try {
+                        if($balance_wallet > 0) {
+                            $confirmed = rand(0,1);
+                            switch ($select) {
+                                case 0:
+                                    CustomerTransactionHelper::create(
+                                        'credit',
+                                        'depot',
+                                        'Dépot sur votre compte',
+                                        rand(100,900),
+                                        $wallet->id,
+                                        $confirmed == 1 ? true : false,
+                                        'Dépot sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                        $confirmed == 1 ? now() : null,
+                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    break;
+
+                                case 1:
+                                    CustomerTransactionHelper::create(
+                                        'debit',
+                                        'retrait',
+                                        'Retrait sur votre compte',
+                                        rand(100,900),
+                                        $wallet->id,
+                                        $confirmed == 1 ? true : false,
+                                        'Retrait sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                        $confirmed == 1 ? now() : null,
+                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    break;
+
+                                case 2:
+                                    CustomerTransactionHelper::create(
+                                        'debit',
+                                        'payment',
+                                        'Paiement par Carte Bancaire',
+                                        rand(100,900),
+                                        $wallet->id,
+                                        $confirmed == 1 ? true : false,
+                                        'Paiement par Carte Bancaire | Ref: '.Str::upper(Str::random(8)),
+                                        $confirmed == 1 ? now() : null,
+                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    break;
+                            }
+                            $nb++;
+                        }
+                    }catch (\Exception $exception) {
+                        $this->error($exception->getMessage());
+                    }
+                }
+            }
+        }
+        $this->line("Génération des Transactions: ".$nb);
+        return 0;
     }
 }

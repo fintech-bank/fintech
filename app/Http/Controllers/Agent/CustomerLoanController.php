@@ -18,6 +18,20 @@ use Illuminate\Http\Request;
 
 class CustomerLoanController extends Controller
 {
+    public function all()
+    {
+        $loans = CustomerPret::all();
+
+        return view('agent.loan.index', compact('loans'));
+    }
+
+    public function show($loan)
+    {
+        $loan = CustomerPret::find($loan);
+
+        return view('agent.loan.show', compact('loan'));
+    }
+
     /**
      * Vérification Primaire de la demande de pret
      * @param $customer

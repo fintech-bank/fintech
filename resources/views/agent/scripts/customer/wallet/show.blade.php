@@ -51,7 +51,6 @@
         columnDefs: [
             {orderable: false, targets: 4},
         ],
-
     });
 
     let listeTransfer = tables.tableTransfers.DataTable({

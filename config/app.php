@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Jenssegers\Agent\AgentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -199,6 +200,7 @@ return [
         'Insee' => NSpehler\LaravelInsee\Facades\Insee::class,
         'AWS' => Aws\Laravel\AwsFacade::class,
         'PDF' => \Barryvdh\DomPDF\Facade\Pdf::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ])->toArray(),
 
 ];

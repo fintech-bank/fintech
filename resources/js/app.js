@@ -452,7 +452,12 @@ tooltipElements.forEach(tooltip => {
     new bootstrap.Tooltip(tooltip, {html: true})
 })
 
-initSW();
+window.addEventListener('load', () => {
+    if("serviceWorker" in navigator) {
+        navigator.serviceWorker.register('/sw_customer.js');
+        initSW();
+    }
+})
 
 
 

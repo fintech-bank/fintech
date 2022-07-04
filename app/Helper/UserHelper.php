@@ -41,4 +41,11 @@ class UserHelper
     {
         return "ID".\Str::upper(\Str::random(6))."I".rand(0,9);
     }
+
+    public static function emailObscurate($email)
+    {
+        $pattern = "/^([\w_]{1})(.+)([\w_]{1}@)/u";
+        $replacement = "$1*$3***$4";
+        return preg_replace($pattern, $replacement, $email);
+    }
 }
