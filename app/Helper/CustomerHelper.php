@@ -71,12 +71,20 @@ class CustomerHelper
         }
     }
 
-    public static function getName($customer)
+    public static function getName($customer, $first = false)
     {
-        if ($customer->info->type == 'part') {
-            return $customer->info->civility.'. '.$customer->info->lastname.' '.$customer->info->firstname;
+        if($first == true) {
+            if ($customer->info->type == 'part') {
+                return $customer->info->lastname.' '.$customer->info->firstname;
+            } else {
+                return $customer->info->company;
+            }
         } else {
-            return $customer->info->company;
+            if ($customer->info->type == 'part') {
+                return $customer->info->civility.'. '.$customer->info->lastname.' '.$customer->info->firstname;
+            } else {
+                return $customer->info->company;
+            }
         }
     }
 

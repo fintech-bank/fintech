@@ -51,7 +51,7 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
     });
 
     Route::prefix('beneficiaire')->group(function () {
-
+        Route::get('/', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'index'])->name('customer.beneficiaire.index');
     });
 });
 
