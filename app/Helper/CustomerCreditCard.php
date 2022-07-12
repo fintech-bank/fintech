@@ -84,41 +84,56 @@ class CustomerCreditCard
         }
     }
 
-    public static function createCard($customer, $wallet, $type = 'physique', $support = 'classic', $debit = 'immediate')
+    public static function createCard($customer, $wallet, $type = 'physique', $support = 'classic', $debit = 'immediate', $limit_payment = 0)
     {
         $card_generator = new Generator();
-        $card = $wallet->cards()->create([
-            'exp_month' => now()->month,
-            'number' => $card_generator->single('40', 16),
-            'type' => $type,
-            'support' => $support,
-            'debit' => $debit,
-            'cvc' => rand(100,999),
-            'code' => base64_encode(rand(1000,9999)),
-            'limit_retrait' => self::calcLimitRetrait($customer->income->pro_incoming),
-            'limit_payment' => self::calcLimitPayment($customer->income->pro_incoming),
-            'customer_wallet_id' => $wallet->id
-        ]);
+        if($type == 'physique') {
+            $card = $wallet->cards()->create([
+                'exp_month' => now()->month,
+                'number' => $card_generator->single('40', 16),
+                'type' => $type,
+                'support' => $support,
+                'debit' => $debit,
+                'cvc' => rand(100,999),
+                'code' => base64_encode(rand(1000,9999)),
+                'limit_retrait' => self::calcLimitRetrait($customer->income->pro_incoming),
+                'limit_payment' => self::calcLimitPayment($customer->income->pro_incoming),
+                'customer_wallet_id' => $wallet->id
+            ]);
 
-        // Génération des contrat
-        $doc = DocumentFile::createDoc(
-            $customer,
-            'Convention CB Physique',
-            null,
-            3,
-            null,
-            true,
-            true,
-            false,
-            true,
-            ['card' => $card]
-        );
+            // Génération des contrat
+            $doc = DocumentFile::createDoc(
+                $customer,
+                'Convention CB Physique',
+                null,
+                3,
+                null,
+                true,
+                true,
+                false,
+                true,
+                ['card' => $card]
+            );
 
-        // Notification Code Carte Bleu
-        $customer->info->notify(new SendCodeCardNotification($customer, base64_decode($card->code), $card));
+            // Notification Code Carte Bleu
+            $customer->info->notify(new SendCodeCardNotification($customer, base64_decode($card->code), $card));
 
-        auth()->user()->notify(new CreateCreditCardNotification($customer, $card, $doc));
-        $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $card, $doc));
+            auth()->user()->notify(new CreateCreditCardNotification($customer, $card, $doc));
+            $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $card, $doc));
+        } else {
+            $card = $wallet->cards()->create([
+                'exp_month' => now()->month,
+                'number' => $card_generator->single('41', 16),
+                'type' => $type,
+                'support' => $support,
+                'debit' => $debit,
+                'cvc' => rand(100,999),
+                'code' => base64_encode(rand(1000,9999)),
+                'limit_retrait' => 0,
+                'limit_payment' => $limit_payment,
+                'customer_wallet_id' => $wallet->id
+            ]);
+        }
 
         return $card;
     }
