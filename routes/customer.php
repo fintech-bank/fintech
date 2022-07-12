@@ -52,6 +52,9 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
 
     Route::prefix('beneficiaire')->group(function () {
         Route::get('/', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'index'])->name('customer.beneficiaire.index');
+        Route::post('/', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'store'])->name('customer.beneficiaire.store');
+        Route::put('{beneficiaire_id}', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'update'])->name('customer.beneficiaire.update');
+        Route::delete('{beneficiaire_id}', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'delete'])->name('customer.beneficiaire.delete');
     });
 });
 

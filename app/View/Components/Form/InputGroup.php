@@ -26,20 +26,25 @@ class InputGroup extends Component
      * @var null
      */
     public $text;
+    /**
+     * @var null
+     */
+    public $class;
 
     /**
      * Create a new component instance.
      *
      * @param $name
-     * @param $label
      * @param $symbol
      * @param $placement
+     * @param $label
      * @param null $value
      * @param bool $required
      * @param null $placeholder
      * @param null $text
+     * @param null $class
      */
-    public function __construct($name, $label, $symbol, $placement,  $value = null, $required = false, $placeholder = null, $text = null)
+    public function __construct($name, $symbol, $placement, $label = null,  $value = null, $required = false, $placeholder = null, $text = null, $class = null)
     {
         //
         $this->name = $name;
@@ -50,6 +55,7 @@ class InputGroup extends Component
         $this->placement = $placement;
         $this->placeholder = $placeholder;
         $this->text = $text;
+        $this->class = $class;
     }
 
     /**
