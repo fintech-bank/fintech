@@ -32,6 +32,14 @@
 @endsection
 
 @section("content")
+    @isset($refund_success)
+    <x-base.alert
+        type="basic"
+        color="success"
+        icon="check"
+        title="Approvisionnement du compte bancaire"
+        content="Votre compte à été approvisionner avec succès" />
+    @endif
     <a href="{{ route('customer.dashboard') }}" class="d-flex flex-row align-items-center text-dark mb-5">
         <i class="fa-solid fa-arrow-left me-2"></i>
         Retour
@@ -169,6 +177,13 @@
                     <div class="card-body">
                         <!--begin::Menu-->
                         <div class="menu menu-rounded menu-column menu-gray-600 menu-state-bg fw-bold " data-kt-menu="true">
+                            <!--begin::Menu item-->
+                            <div class="menu-item">
+                                <a href="#RefundAccount" data-bs-toggle="modal" class="menu-link py-3">
+                                    <span class="menu-title">Approvisionner mon compte</span>
+                                </a>
+                            </div>
+                            <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item">
                                 <a href="#" data-wallet="{{ $wallet->id }}" class="menu-link py-3 showRib">
@@ -396,6 +411,35 @@
 
                     <div class="modal-footer d-flex flex-wrap">
                         <button type="submit" class="btn btn-bank w-100">Télécharger</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="RefundAccount">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Approvisionner mon compte</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmarks fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formRefundAccount" action="{{ route('customer.wallet.refund', $wallet->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <x-form.input
+                            name="amount"
+                            type="text"
+                            label="Montant à approvisionner" required="required"/>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
                     </div>
                 </form>
             </div>

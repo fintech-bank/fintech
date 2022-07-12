@@ -67,4 +67,9 @@ class CustomerWallet extends Model
     {
         return $this->hasOne(CustomerFacelia::class);
     }
+
+    public function refunds()
+    {
+        return $this->hasMany(CustomerRefundAccount::class);
+    }
 }

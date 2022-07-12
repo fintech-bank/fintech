@@ -188,6 +188,38 @@
         })
     }
 
+    $("#formRefundAccount").on('submit', e => {
+        e.preventDefault()
+        let form = $("#formRefundAccount")
+        let url = form.attr('action')
+        let btn = form.find('.btn-bank')
+        const dataform = form.serializeArray()
+
+        btn.attr('data-kt-indicator', 'on')
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: dataform,
+            success: data => {
+                console.log(data)
+                btn.removeAttr('data-kt-indicator')
+
+                window.location.href=data.url
+            },
+            error: err => {
+                btn.removeAttr('data-kt-indicator')
+                const errors = err.responseJSON.errors
+
+                Object.keys(errors).forEach(key => {
+                    toastr.error(errors[key], null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                })
+            }
+        })
+    })
+
     handleSearchDatatable()
     handleSearchDatatableComing()
 </script>
