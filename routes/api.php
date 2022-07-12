@@ -56,6 +56,7 @@ Route::prefix('transfer')->group(function () {
 });
 
 Route::prefix('beneficiaire')->group(function () {
+    Route::post('/search', [\App\Http\Controllers\Api\Agent\BeneficiaireController::class, 'search']);
     Route::get('{beneficiaire_id}', [\App\Http\Controllers\Api\Agent\BeneficiaireController::class, 'info']);
 });
 

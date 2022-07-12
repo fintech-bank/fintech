@@ -32,6 +32,14 @@
 @endsection
 
 @section("content")
+    @isset($refund_success)
+    <x-base.alert
+        type="basic"
+        color="success"
+        icon="check"
+        title="Approvisionnement du compte bancaire"
+        content="Votre compte à été approvisionner avec succès" />
+    @endif
     <a href="{{ route('customer.dashboard') }}" class="d-flex flex-row align-items-center text-dark mb-5">
         <i class="fa-solid fa-arrow-left me-2"></i>
         Retour
@@ -73,11 +81,11 @@
                             <div class="d-flex align-items-center position-relative my-1">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                 <span class="svg-icon svg-icon-1 position-absolute ms-6">
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
-							<path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
-						</svg>
-					</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                                    </svg>
+                                </span>
                                 <!--end::Svg Icon-->
                                 <input type="text" data-kt-transaction-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Rechercher une transaction" />
                             </div>
@@ -169,6 +177,13 @@
                     <div class="card-body">
                         <!--begin::Menu-->
                         <div class="menu menu-rounded menu-column menu-gray-600 menu-state-bg fw-bold " data-kt-menu="true">
+                            <!--begin::Menu item-->
+                            <div class="menu-item">
+                                <a href="#RefundAccount" data-bs-toggle="modal" class="menu-link py-3">
+                                    <span class="menu-title">Approvisionner mon compte</span>
+                                </a>
+                            </div>
+                            <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item">
                                 <a href="#" data-wallet="{{ $wallet->id }}" class="menu-link py-3 showRib">
@@ -396,6 +411,35 @@
 
                     <div class="modal-footer d-flex flex-wrap">
                         <button type="submit" class="btn btn-bank w-100">Télécharger</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="RefundAccount">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Approvisionner mon compte</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmarks fa-2x text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form id="formRefundAccount" action="{{ route('customer.wallet.refund', $wallet->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <x-form.input
+                            name="amount"
+                            type="text"
+                            label="Montant à approvisionner" required="required"/>
+                    </div>
+
+                    <div class="modal-footer">
+                        <x-form.button />
                     </div>
                 </form>
             </div>

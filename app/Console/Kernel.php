@@ -34,6 +34,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('system:execute executeSepaOrderDay')->everySixHours()->description('executeSepaOrderDay');
         $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->description('verifRequestLoanOpen');
         $schedule->command('system:execute executeTransactionComing')->everySixHours()->description('executeTransactionComing');
+
+        $schedule->command("system:verif alertDebit")->daily()->description("Vérification des comptes au solde négatif")->emailOutputTo(config('mail.from.address'));
+        $schedule->command("system:verif accountReopen")->daily()->description("Vérification des comptes au solde de nouveau positif")->emailOutputTo(config('mail.from.address'));
+        $schedule->command("system:verif alertFee")->daily()->description("Vérification des comptes au solde n&gatif depuis 15 jours")->emailOutputTo(config('mail.from.address'));
+        $schedule->command("system:verif accountSuspended")->daily()->description("Vérification des comptes au solde n&gatif depuis 30 jours et suspend le comptes")->emailOutputTo(config('mail.from.address'));
     }
 
     /**

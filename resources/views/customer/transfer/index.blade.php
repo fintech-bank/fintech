@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="" class="card shadow-sm">
+                    <a href="{{ route('customer.beneficiaire.index') }}" class="card shadow-sm">
                         <div class="card-body d-flex flex-row justify-content-between align-items-center text-hover-bank">
                             <div class="symbol symbol-50px me-5">
                                 <div class="symbol-label fs-2 text-bank"><i class="fa-solid fa-users"></i> </div>

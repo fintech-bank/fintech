@@ -37,6 +37,9 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
 
     Route::prefix('wallets')->group(function () {
         Route::get('{wallet_id}', [\App\Http\Controllers\Customer\CustomerWalletController::class, 'index'])->name('customer.wallet.index');
+        Route::post('{wallet_id}/refund', [\App\Http\Controllers\Customer\CustomerWalletController::class, 'refund'])->name('customer.wallet.refund');
+        Route::get('{wallet_id}/refund/success', [\App\Http\Controllers\Customer\CustomerWalletController::class, 'refundSuccess'])->name('customer.wallet.refundSuccess');
+        Route::get('{wallet_id}/refund/cancel', [\App\Http\Controllers\Customer\CustomerWalletController::class, 'refundCancel'])->name('customer.wallet.refundCancel');
     });
 
     Route::prefix('transfers')->group(function () {
@@ -51,7 +54,10 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
     });
 
     Route::prefix('beneficiaire')->group(function () {
-
+        Route::get('/', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'index'])->name('customer.beneficiaire.index');
+        Route::post('/', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'store'])->name('customer.beneficiaire.store');
+        Route::put('{beneficiaire_id}', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'update'])->name('customer.beneficiaire.update');
+        Route::delete('{beneficiaire_id}', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'delete'])->name('customer.beneficiaire.delete');
     });
 });
 

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helper\CustomerFaceliaHelper;
+use App\Helper\CustomerHelper;
 use App\Helper\CustomerLoanHelper;
 use App\Helper\CustomerTransactionHelper;
 use App\Helper\DocumentFile;
@@ -132,6 +133,10 @@ class SystemSeedCommand extends Command
 
             CustomerInfo::factory()->create([
                 "customer_id" => $customer->id,
+            ]);
+
+            $user->update([
+                'name' => CustomerHelper::getName($customer, true)
             ]);
 
             CustomerSetting::factory()->create([

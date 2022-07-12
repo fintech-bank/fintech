@@ -14,6 +14,14 @@ class Radio extends Component
      * @var bool
      */
     public $checked;
+    /**
+     * @var null
+     */
+    public $function;
+    /**
+     * @var null
+     */
+    public $nameFunction;
 
     /**
      * Create a new component instance.
@@ -23,8 +31,10 @@ class Radio extends Component
      * @param $for
      * @param $label
      * @param bool $checked
+     * @param null $function
+     * @param null $nameFunction
      */
-    public function __construct($name, $value, $for, $label, $checked = false)
+    public function __construct($name, $value, $for, $label, $checked = false, $function = null, $nameFunction = null)
     {
         //
         $this->name = $name;
@@ -32,6 +42,8 @@ class Radio extends Component
         $this->for = $for;
         $this->label = $label;
         $this->checked = $checked;
+        $this->function = $function;
+        $this->nameFunction = $nameFunction;
     }
 
     /**

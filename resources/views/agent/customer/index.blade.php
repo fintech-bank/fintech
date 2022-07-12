@@ -222,6 +222,7 @@
                                     <a href="#" class="text-dark fw-bolder text-hover-{{ random_color() }} fs-6">{{ $customer->info->company }}</a>
                                     <span class="text-muted d-block fw-bold">Professionnel</span>
                                 @endif
+                                <span class="text-muted"><i>{{ $customer->user->email }}</i></span>
                             </div>
                             <!--end::Text-->
                         </div>
