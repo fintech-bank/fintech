@@ -59,5 +59,11 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
         Route::put('{beneficiaire_id}', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'update'])->name('customer.beneficiaire.update');
         Route::delete('{beneficiaire_id}', [\App\Http\Controllers\Customer\BeneficiaireController::class, 'delete'])->name('customer.beneficiaire.delete');
     });
+
+    Route::prefix('payment')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Customer\PaymentController::class, 'index'])->name('customer.payment.index');
+        Route::post('/', [\App\Http\Controllers\Customer\PaymentController::class, 'store'])->name('customer.payment.store');
+        Route::get('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'show'])->name('customer.payment.show');
+    });
 });
 

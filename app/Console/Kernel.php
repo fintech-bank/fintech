@@ -23,17 +23,17 @@ class Kernel extends ConsoleKernel
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
 
         // Commande
-        $schedule->command('life generateCustomer')->hourly()->description('generateCustomer');
-        $schedule->command('life generateDebit')->everyTenMinutes()->description('generateDebit');
-        $schedule->command('life generateSalary')->monthlyOn(rand(1,5), '02:00:00')->description('generateSalary');
-        $schedule->command('system:execute autoAcceptCreditPrlv')->dailyAt('08:00:00')->description('autoAcceptCreditPrlv');
-        $schedule->command('system:execute acceptedLoanCharge')->dailyAt('08:00:00')->description('acceptedLoanCharge');
-        $schedule->command('system:execute initPrlvCptEpargne')->dailyAt('08:00:00')->description('initPrlvCptEpargne');
-        $schedule->command('system:execute initPrlvCptPret')->dailyAt('08:00:00')->description('initPrlvCptPret');
-        $schedule->command('bank:execute virement')->everySixHours()->description('virement');
-        $schedule->command('system:execute executeSepaOrderDay')->everySixHours()->description('executeSepaOrderDay');
-        $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->description('verifRequestLoanOpen');
-        $schedule->command('system:execute executeTransactionComing')->everySixHours()->description('executeTransactionComing');
+        $schedule->command('life generateCustomer')->hourly()->description('Génération aléatoire de client')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('life generateDebit')->everyTenMinutes()->description('Génération Aléatoire des débits')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('life generateSalary')->monthlyOn(rand(1,5), '02:00:00')->description('Génération des salaires')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute autoAcceptCreditPrlv')->dailyAt('08:00:00')->description('Acceptation automatique des Prélèvement SEPA')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute acceptedLoanCharge')->dailyAt('08:00:00')->description('Libération du montant du pret bancaire')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute initPrlvCptEpargne')->dailyAt('08:00:00')->description('Initialise les prélèvements des comptes épargnes')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute initPrlvCptPret')->dailyAt('08:00:00')->description('Initialise les prélèvements des pret Bancaire')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('bank:execute virement')->everySixHours()->description('Vérification et execution des virements bancaires')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute executeSepaOrderDay')->everySixHours()->description('Execution des prélèvements bancaires')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->description('Vérification des pret ouvert et les met en étude')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute executeTransactionComing')->everySixHours()->description('Execuion des transactions entrente')->emailOutputTo(config('mail.from.address'));
 
         $schedule->command("system:verif alertDebit")->daily()->description("Vérification des comptes au solde négatif")->emailOutputTo(config('mail.from.address'));
         $schedule->command("system:verif accountReopen")->daily()->description("Vérification des comptes au solde de nouveau positif")->emailOutputTo(config('mail.from.address'));
