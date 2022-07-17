@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\CustomerCreditCard;
+use App\Helper\CustomerFaceliaHelper;
 use App\Helper\CustomerTransferHelper;
 use App\Helper\DocumentFile;
 use App\Models\Customer\Customer;
@@ -21,8 +22,10 @@ class TestController extends Controller
 {
     public function test()
     {
-        $transfer = CustomerTransfer::find(6);
-        dd(CustomerTransferHelper::programTransfer($transfer->id));
+        $customer = Customer::find(3);
+        $card = \App\Models\Customer\CustomerCreditCard::find(1);
+
+        dd(CustomerFaceliaHelper::verifCompatibility($customer, $card));
     }
 
     public function home()

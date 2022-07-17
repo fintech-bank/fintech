@@ -86,7 +86,7 @@
                                 <!--begin::Toolbar-->
                                 <div class="d-flex my-3 ms-9">
                                     <!--begin::Edit-->
-                                    <a href="{{ route('customer.payment.show', $card->id) }}" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_new_card">
+                                    <a href="{{ route('customer.payment.show', $card->id) }}" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3">
 										<span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Voir la carte">
 											<i class="fa-solid fa-eye"></i>
 										</span>
@@ -150,6 +150,12 @@
         </div>
         <!--end::Card body-->
     </div>
+    <x-base.underline
+        title="Prélèvement" />
+    <a href="" class="d-flex flex-row justify-content-between align-items-center bg-white rounded-1 p-5 fs-3 text-dark">
+        <span class="">Prélèvements reçus</span>
+        <i class="fa-solid fa-angle-right"></i>
+    </a>
     <div class="modal fade" tabindex="-1" id="AddCard">
         <div class="modal-dialog">
             <div class="modal-content">
