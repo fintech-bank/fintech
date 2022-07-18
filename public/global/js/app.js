@@ -2613,12 +2613,12 @@ tooltipElements.forEach(function (tooltip) {
     html: true
   });
 });
-window.addEventListener('load', function () {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register(location.protocol + "//" + location.host + '/sw_customer.js');
-    initSW();
-  }
-});
+/*window.addEventListener('load', () => {
+    if("serviceWorker" in navigator) {
+        navigator.serviceWorker.register(location.protocol + "//" + location.host+'/sw_customer.js');
+        initSW();
+    }
+})*/
 
 /***/ }),
 

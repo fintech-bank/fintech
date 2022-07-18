@@ -43,7 +43,15 @@
             method: 'POST',
             data: dataform,
             success: data => {
-                console.log(data)
+                if(data.facelia === false) {
+                    toastr.error(`Le crédit renouvellable FACELIA à été refuser`, null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                } else {
+                    toastr.success(`Le crédit renouvellable FACELIA à été accepter`, null, {
+                        "positionClass": "toastr-bottom-right",
+                    })
+                }
                 btn.removeAttr('data-kt-indicator')
 
                 toastr.success(`Un Carte Bancaire à été commander avec succès`, null, {
@@ -52,7 +60,7 @@
 
                 setTimeout(() => {
                     window.location.reload()
-                }, 1000)
+                }, 1500)
             },
             error: err => {
                 btn.removeAttr('data-kt-indicator')

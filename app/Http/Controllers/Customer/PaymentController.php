@@ -6,6 +6,7 @@ use App\Helper\CustomerCreditCard;
 use App\Helper\CustomerFaceliaHelper;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class PaymentController extends Controller
                     $request->get('debit')
                 );
 
-                if ($request->has('facelia')) {
+                if ($request->get('facelia') == 1) {
                     // Vérification pour crédit facelia
                     if (CustomerFaceliaHelper::verifCompatibility($wallet->customer, $card) >= 2) {
                         // Inscription pour crédit facelia
@@ -49,7 +50,12 @@ class PaymentController extends Controller
                         $card->update([
                             'facelia' => 1
                         ]);
+                        $facelia = true;
+                    } else {
+                        $facelia = false;
                     }
+                } else {
+                    $facelia = false;
                 }
             } else {
                 $card = CustomerCreditCard::createCard(
@@ -60,12 +66,24 @@ class PaymentController extends Controller
                     'immediate',
                     $request->get('amount')
                 );
+                $facelia = false;
             }
 
-            return response()->json();
+            return response()->json([
+                "card" => $card,
+                "facelia" => $facelia
+            ]);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
             return response()->json($exception->getMessage(), 500);
         }
+    }
+
+    public function show($card)
+    {
+        return view('customer.payment.show', [
+            'card' => \App\Models\Customer\CustomerCreditCard::find($card),
+            'customer' => auth()->user()->customers
+        ]);
     }
 }

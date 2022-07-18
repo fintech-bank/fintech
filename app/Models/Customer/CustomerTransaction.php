@@ -16,4 +16,9 @@ class CustomerTransaction extends Model
     {
         return $this->belongsTo(CustomerWallet::class, 'customer_wallet_id');
     }
+
+    public function card()
+    {
+        return $this->belongsTo(CustomerCreditCard::class, 'customer_credit_card_id');
+    }
 }

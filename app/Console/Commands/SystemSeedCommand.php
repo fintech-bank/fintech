@@ -183,7 +183,6 @@ class SystemSeedCommand extends Command
                     ['wallet' => $wallet_account]);
 
 
-
                 if ($epargne == 1) {
                     $wallet_epargnes = CustomerWallet::factory($nb_epargne)->create([
                         'type' => 'epargne',
@@ -262,168 +261,172 @@ class SystemSeedCommand extends Command
                 ]);
 
                 // Carte Bancaire Physique
-                $cards = CustomerCreditCard::factory(rand(1, 3))->create([
+                $card = CustomerCreditCard::factory()->create([
                     "customer_wallet_id" => $wallet_account->id,
-                    'facelia' => rand(0, 1)
+                    'status' => 'active'
                 ]);
 
-                foreach ($cards as $card) {
+                if($card->support == 'premium' || $card->support == 'infinite') {
+                    $card->update([
+                        'facelia' => rand(0,1)
+                    ]);
+                }
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'convention cb physique',
+                    'Convention CB Visa Physique',
+                    3,
+                    null,
+                    true,
+                    true,
+                    false,
+                    true,
+                    ['wallet' => $wallet_account, 'card' => $card]
+                );
+
+                if ($card->facelia == 1) {
+                    $amount = [500, 1000, 1500, 2000, 2500, 3000];
+                    $amount_loan = $amount[rand(0, 5)];
+                    $interest = CustomerLoanHelper::getLoanInterest($amount_loan, LoanPlan::find(8)->interests[0]->interest);
+                    $du = $amount_loan + $interest;
+
+                    $number_account = random_numeric(9);
+                    $ibanG = new Generator($customer->user->agency->code_banque, $number_account, 'fr');
+
+                    $cpt_pret = CustomerWallet::query()->create([
+                        'uuid' => Str::uuid(),
+                        'number_account' => $number_account,
+                        'iban' => $ibanG->generate($customer->user->agency->code_banque, $number_account, 'fr'),
+                        'rib_key' => $ibanG->getBban($customer->user->agency->code_banque, $number_account),
+                        'type' => 'pret',
+                        'status' => 'active',
+                        'balance_actual' => $amount_loan,
+                        'customer_id' => $customer->id
+                    ]);
+
+                    $pr = CustomerPret::factory()->create([
+                        'amount_loan' => $amount_loan,
+                        'amount_interest' => $interest,
+                        'amount_du' => $du,
+                        'mensuality' => $du / 36,
+                        'prlv_day' => 30,
+                        'duration' => 36,
+                        'status' => 'accepted',
+                        'customer_wallet_id' => $cpt_pret->id,
+                        'wallet_payment_id' => $card->wallet->id,
+                        'first_payment_at' => Carbon::create(now()->year, now()->addMonth()->month, 30),
+                        'loan_plan_id' => 8,
+                        'customer_id' => $customer->id
+                    ]);
+
+                    $card->update([
+                        'customer_pret_id' => $pr->id
+                    ]);
+
+                    CustomerFacelia::query()->create([
+                        'reference' => CustomerFaceliaHelper::generateReference(),
+                        'amount_available' => $amount_loan,
+                        'amount_interest' => 0,
+                        'amount_du' => 0,
+                        'mensuality' => 0,
+                        'next_expiration' => null,
+                        'customer_pret_id' => $pr->id,
+                        'customer_credit_card_id' => $card->id,
+                        'customer_wallet_id' => $cpt_pret->id,
+                        'wallet_payment_id' => $card->wallet->id
+                    ]);
+
                     DocumentFile::createDoc(
                         $customer,
-                        'convention cb physique',
-                        'Convention CB Visa Physique',
+                        'Plan d\'amortissement',
+                        $pr->reference . " - Plan d'amortissement",
+                        3,
+                        null,
+                        false,
+                        false,
+                        false,
+                        true,
+                        ["loan" => $pr]
+                    );
+
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Assurance Emprunteur',
+                        $pr->reference . " - Assurance Emprunteur",
+                        3,
+                        null,
+                        false,
+                        false,
+                        false,
+                        true,
+                        []
+                    );
+
+                    DocumentFile::createDoc(
+                        $customer,
+                        "Avis de conseil relatif assurance",
+                        $pr->reference . " - Avis de conseil Relatif au assurance emprunteur",
+                        3,
+                        null,
+                        false,
+                        false,
+                        false,
+                        true,
+                        []
+                    );
+
+                    DocumentFile::createDoc(
+                        $customer,
+                        'contrat de credit facelia',
+                        $pr->reference . " - Contrat de Crédit FACELIA",
                         3,
                         null,
                         true,
                         true,
                         false,
                         true,
-                        ['wallet' => $wallet_account, 'card' => $card]
+                        ["loan" => $pr]
                     );
 
-                    if ($card->facelia == 1) {
-                        $amount = [500, 1000, 1500, 2000, 2500, 3000];
-                        $amount_loan = $amount[rand(0, 5)];
-                        $interest = CustomerLoanHelper::getLoanInterest($amount_loan, LoanPlan::find(8)->interests[0]->interest);
-                        $du = $amount_loan + $interest;
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Fiche de dialogue',
+                        $pr->reference . " - Fiche de Dialogue",
+                        3,
+                        null,
+                        false,
+                        false,
+                        false,
+                        true,
+                        []
+                    );
 
-                        $number_account = random_numeric(9);
-                        $ibanG = new Generator($customer->user->agency->code_banque, $number_account, 'fr');
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Information précontractuel normalise',
+                        $pr->reference . " - Information Précontractuel Normalisé",
+                        3,
+                        null,
+                        true,
+                        true,
+                        false,
+                        true,
+                        ["loan" => $pr]
+                    );
 
-                        $cpt_pret = CustomerWallet::query()->create([
-                            'uuid' => Str::uuid(),
-                            'number_account' => $number_account,
-                            'iban' => $ibanG->generate($customer->user->agency->code_banque, $number_account, 'fr'),
-                            'rib_key' => $ibanG->getBban($customer->user->agency->code_banque, $number_account),
-                            'type' => 'pret',
-                            'status' => 'active',
-                            'balance_actual' => $amount_loan,
-                            'customer_id' => $customer->id
-                        ]);
-
-                        $pr = CustomerPret::factory()->create([
-                            'amount_loan' => $amount_loan,
-                            'amount_interest' => $interest,
-                            'amount_du' => $du,
-                            'mensuality' => $du / 36,
-                            'prlv_day' => 30,
-                            'duration' => 36,
-                            'status' => 'accepted',
-                            'customer_wallet_id' => $cpt_pret->id,
-                            'wallet_payment_id' => $card->wallet->id,
-                            'first_payment_at' => Carbon::create(now()->year, now()->addMonth()->month, 30),
-                            'loan_plan_id' => 8,
-                            'customer_id' => $customer->id
-                        ]);
-
-                        $card->update([
-                            'customer_pret_id' => $pr->id
-                        ]);
-
-                        CustomerFacelia::query()->create([
-                            'reference' => CustomerFaceliaHelper::generateReference(),
-                            'amount_available' => $amount_loan,
-                            'amount_interest' => 0,
-                            'amount_du' => 0,
-                            'mensuality' => 0,
-                            'next_expiration' => null,
-                            'customer_pret_id' => $pr->id,
-                            'customer_credit_card_id' => $card->id,
-                            'customer_wallet_id' => $cpt_pret->id,
-                            'wallet_payment_id' => $card->wallet->id
-                        ]);
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            'Plan d\'amortissement',
-                            $pr->reference . " - Plan d'amortissement",
-                            3,
-                            null,
-                            false,
-                            false,
-                            false,
-                            true,
-                            ["loan" => $pr]
-                        );
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            'Assurance Emprunteur',
-                            $pr->reference . " - Assurance Emprunteur",
-                            3,
-                            null,
-                            false,
-                            false,
-                            false,
-                            true,
-                            []
-                        );
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            "Avis de conseil relatif assurance",
-                            $pr->reference . " - Avis de conseil Relatif au assurance emprunteur",
-                            3,
-                            null,
-                            false,
-                            false,
-                            false,
-                            true,
-                            []
-                        );
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            'contrat de credit facelia',
-                            $pr->reference . " - Contrat de Crédit FACELIA",
-                            3,
-                            null,
-                            true,
-                            true,
-                            false,
-                            true,
-                            ["loan" => $pr]
-                        );
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            'Fiche de dialogue',
-                            $pr->reference . " - Fiche de Dialogue",
-                            3,
-                            null,
-                            false,
-                            false,
-                            false,
-                            true,
-                            []
-                        );
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            'Information précontractuel normalise',
-                            $pr->reference . " - Information Précontractuel Normalisé",
-                            3,
-                            null,
-                            true,
-                            true,
-                            false,
-                            true,
-                            ["loan" => $pr]
-                        );
-
-                        DocumentFile::createDoc(
-                            $customer,
-                            'Mandat Prélevement sepa',
-                            $pr->reference . " - Mandat Prélèvement SEPA",
-                            3,
-                            null,
-                            false,
-                            false,
-                            false,
-                            true,
-                            ["loan" => $pr]
-                        );
-                    }
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Mandat Prélevement sepa',
+                        $pr->reference . " - Mandat Prélèvement SEPA",
+                        3,
+                        null,
+                        false,
+                        false,
+                        false,
+                        true,
+                        ["loan" => $pr]
+                    );
                 }
 
                 $transactionsSepa = CustomerTransaction::where('type', 'sepa')->where('customer_wallet_id', $wallet_account->id)->get();
@@ -497,7 +500,7 @@ class SystemSeedCommand extends Command
                     ]);
                 }
 
-                $this->generateTransactions(rand(10,100), $wallet_account);
+                $this->generateTransactions(rand(10, 100), $wallet_account);
 
             }
 
@@ -514,16 +517,17 @@ class SystemSeedCommand extends Command
             $type = rand(0, 1) == 0 ? 'debit' : 'credit';
             $transpac = ['depot', 'retrait', 'payment', 'virement', 'sepa', 'frais', 'souscription', 'autre'];
             $transpac_choice = $transpac[rand(0, 7)];
-            $confirm = rand(0,1);
+            $confirm = rand(0, 1);
+            $card_id = $transpac_choice == 'payment' ? $wallet->cards()->where('status', 'active')->first()->id : null;
             CustomerTransactionHelper::create(
                 $type,
-                $transpac[rand(0, 7)],
+                $transpac_choice,
                 $this->choiceDescription($transpac_choice),
                 $this->amount($transpac_choice, $wallet),
                 $wallet->id,
                 $confirm == 1 ? true : false,
                 $this->choiceDescription($transpac_choice),
-            $confirm == 1 ? now() : null, now());
+                $confirm == 1 ? now() : null, now(), $card_id);
         }
     }
 
@@ -539,7 +543,7 @@ class SystemSeedCommand extends Command
                 break;
 
             case 'payment':
-                return "Payment CB Ref:".Str::upper(Str::random(8));
+                return "Payment CB Ref:" . Str::upper(Str::random(8));
                 break;
 
             case 'virement':
@@ -568,43 +572,43 @@ class SystemSeedCommand extends Command
     {
         switch ($choice) {
             case 'depot':
-                return rand(100,9000);
+                return rand(100, 9000);
                 break;
 
             case 'retrait':
-                return - rand(1000, $wallet->cards()->first()->limit_retrait);
+                return -rand(1000, $wallet->cards()->first()->limit_retrait);
                 break;
 
             case 'payment':
-                return - rand(1, $wallet->cards()->first()->limit_payment);
+                return -rand(1, $wallet->cards()->first()->limit_payment);
                 break;
 
             case 'virement':
-                if(rand(0,1) == 0) {
-                    return - rand(10,90000);
+                if (rand(0, 1) == 0) {
+                    return -rand(10, 90000);
                 } else {
-                    return rand(10,90000);
+                    return rand(10, 90000);
                 }
                 break;
 
             case 'sepa':
-                return - rand(10,90000);
+                return -rand(10, 90000);
                 break;
 
             case 'frais':
-                return - rand(10,99) / 10;
+                return -rand(10, 99) / 10;
                 break;
 
             case 'souscription':
-                $ar = [0,4.99,9.99];
-                return $ar[rand(0,2)];
+                $ar = [0, 4.99, 9.99];
+                return $ar[rand(0, 2)];
                 break;
 
             default:
-                if(rand(0,1) == 0) {
-                    return - rand(1,9000);
+                if (rand(0, 1) == 0) {
+                    return -rand(1, 9000);
                 } else {
-                    return rand(1,9000);
+                    return rand(1, 9000);
                 }
                 break;
         }

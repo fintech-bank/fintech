@@ -3,7 +3,7 @@
 @section("content")
     <div class="fs-4 fw-bolder text-center mb-10">
         CONTRAT CARTE CB-VISA {{ Str::upper($data['card']->support) }}
-        @if($data['card']->support == "ELECTRON")
+        @if($data['card']->support == "classic")
             A AUTORISATION SYSTEMATIQUE
         @else
             A AUTORISATION QUASI-SYSTEMATIQUE
