@@ -15,3 +15,4 @@ yarn-error.log
 /.vagrant
 /.vagrant/
 package-lock.json
+phpstan.neon

@@ -361,6 +361,7 @@ class LifeCommand extends Command
             if(isset($wallet)) {
                 $select = rand(0,2);
                 $balance_wallet = $wallet->balance_actual + $wallet->balance_decouvert;
+
                 if(rand(0,1) == 1) {
                     try {
                         if($balance_wallet > 0) {
