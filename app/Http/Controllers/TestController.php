@@ -22,10 +22,9 @@ class TestController extends Controller
 {
     public function test()
     {
-        $customer = Customer::find(3);
-        $card = \App\Models\Customer\CustomerCreditCard::find(1);
+        $card = \App\Models\Customer\CustomerCreditCard::find(17);
 
-        dd(CustomerFaceliaHelper::verifCompatibility($customer, $card));
+        dd(CustomerCreditCard::getTransactionsMonthPayment($card));
     }
 
     public function home()

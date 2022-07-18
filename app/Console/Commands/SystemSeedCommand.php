@@ -518,7 +518,7 @@ class SystemSeedCommand extends Command
             $transpac = ['depot', 'retrait', 'payment', 'virement', 'sepa', 'frais', 'souscription', 'autre'];
             $transpac_choice = $transpac[rand(0, 7)];
             $confirm = rand(0, 1);
-            $card_id = $transpac_choice == 'payment' ? $wallet->cards()->where('status', 'active')->first()->id : null;
+            $card_id = $transpac_choice == 'payment' || $transpac_choice == 'retrait' || $transpac_choice == 'depot' ? $wallet->cards()->where('status', 'active')->first()->id : null;
             CustomerTransactionHelper::create(
                 $type,
                 $transpac_choice,
