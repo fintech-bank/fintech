@@ -64,6 +64,7 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
         Route::get('/', [\App\Http\Controllers\Customer\PaymentController::class, 'index'])->name('customer.payment.index');
         Route::post('/', [\App\Http\Controllers\Customer\PaymentController::class, 'store'])->name('customer.payment.store');
         Route::get('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'show'])->name('customer.payment.show');
+        Route::put('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'update'])->name('customer.payment.update');
     });
 });
 

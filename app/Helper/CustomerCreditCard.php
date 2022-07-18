@@ -32,7 +32,7 @@ class CustomerCreditCard
 
     public static function getDebit($debit): string
     {
-        return $debit == 'DIFFERED' ? "Différé" : "Immédiat";
+        return $debit == 'differed' ? "Différé" : "Immédiat";
     }
 
     public static function getType($type)
@@ -62,7 +62,7 @@ class CustomerCreditCard
         }
     }
 
-    public static function getStatus($status, $labeled = true)
+    public static function getStatus($status, $labeled = true): string
     {
         if ($labeled == true) {
             switch ($status) {
@@ -145,7 +145,7 @@ class CustomerCreditCard
         return $card;
     }
 
-    public static function getExpiration($card)
+    public static function getExpiration($card): string
     {
         if ($card->exp_month <= 9) {
             $month = '0' . $card->exp_month;
@@ -175,7 +175,7 @@ class CustomerCreditCard
                         ->get()
                         ->sum('amount');
 
-            return $card->limit_retrait * 100 / $tran;
+            return $tran * 100 / $card->limit_retrait;
         }
     }
 
@@ -201,7 +201,26 @@ class CustomerCreditCard
             if($tran == 0) {
                 return 0;
             } else {
-                return $card->limit_payment * 100 / $tran;
+                return $tran * 100 / $card->limit_payment;
+            }
+        }
+    }
+
+    public static function getRestantDiffered($card)
+    {
+        return $card->differed_limit - $card->transactions()->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount');
+    }
+
+    public static function getUsedDiffered($card, $percent = false)
+    {
+        if(!$percent) {
+            return $card->transactions()->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount');
+        } else {
+            $used = $card->transactions()->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount');
+            if($used != 0) {
+                return self::getRestantDiffered($card) * 100 / $card->differed_limit;
+            } else {
+                return 0;
             }
         }
     }
