@@ -452,12 +452,12 @@ tooltipElements.forEach(tooltip => {
     new bootstrap.Tooltip(tooltip, {html: true})
 })
 
-window.addEventListener('load', () => {
+/*window.addEventListener('load', () => {
     if("serviceWorker" in navigator) {
         navigator.serviceWorker.register(location.protocol + "//" + location.host+'/sw_customer.js');
         initSW();
     }
-})
+})*/
 
 
 
