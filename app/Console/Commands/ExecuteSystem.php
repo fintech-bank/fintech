@@ -99,9 +99,9 @@ class ExecuteSystem extends Command
             $i++;
         }
 
-        \Mail::to(auth()->user())->send(new ExecuteSystemMail('autoAcceptCreditPrlv', $i));
+        $this->info('Acceptation automatique des prélèvement SEPA en crédit');
+        $this->line('Nombre de prélèvement: '.$i);
 
-        return $sepas;
     }
 
     private function verifRequestLoanOpen()
@@ -116,7 +116,8 @@ class ExecuteSystem extends Command
             $i++;
         }
 
-        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Passage des pret <strong>ouvert</strong> à <strong>en étude</strong> en date du " . $this->date . "<br>Nombre d'enregistrement: " . $i));
+        $this->info('Passage des pret bancaire ouvert à en étude');
+        $this->line('Nombre de pret bancaire: '.$i);
     }
 
     private function acceptedLoanCharge()
@@ -134,7 +135,8 @@ class ExecuteSystem extends Command
             }
         }
 
-        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Virement du montant des pret accordée en date du " . $this->date . "<br>Nombre de virement executer: " . $i));
+        $this->info('Virement du montant des pret bancaire en date du '.$this->date);
+        $this->line('Nombre de virement executer: '.$i);
     }
 
     private function initPrlvCptEpargne()
@@ -173,7 +175,8 @@ class ExecuteSystem extends Command
             }
         }
 
-        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Création des prélèvements des comptes épargnes en date du " . $this->date . ".<br>Nombre d'initialisation: " . $i));
+        $this->info('Création des prélèvements des comptes épargnes en date du '.$this->date);
+        $this->line("Nombre d'initialisation': ".$i);
     }
 
     private function initPrlvCptPret()
@@ -214,6 +217,8 @@ class ExecuteSystem extends Command
         }
 
         \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Création des prélèvements des mensualité de pret en date du " . $this->date . ".<br>Nombre d'initialisation: " . $i));
+        $this->info('Création des prélèvements des mensualité de pret en date du '.$this->date);
+        $this->line("Nombre d'initialisation': ".$i);
     }
 
     private function executeSepaOrderDay()
@@ -233,6 +238,8 @@ class ExecuteSystem extends Command
         }
 
         \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Execution des ordres SEPA en date du " . now()->format('d/m/Y') . "<br>Nombre d'ordre executer: " . $i));
+        $this->info('Execution des ordres SEPA en date du '.$this->date);
+        $this->line("Nombre d'ordre executer': ".$i);
     }
 
     private function executeTransactionComing()
