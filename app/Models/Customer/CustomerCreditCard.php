@@ -25,4 +25,9 @@ class CustomerCreditCard extends Model
     {
         return $this->hasOne(CustomerFacelia::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(CustomerTransaction::class);
+    }
 }

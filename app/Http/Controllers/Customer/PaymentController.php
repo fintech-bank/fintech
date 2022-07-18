@@ -6,6 +6,7 @@ use App\Helper\CustomerCreditCard;
 use App\Helper\CustomerFaceliaHelper;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
 use Illuminate\Http\Request;
 
@@ -76,5 +77,13 @@ class PaymentController extends Controller
             LogHelper::notify('critical', $exception);
             return response()->json($exception->getMessage(), 500);
         }
+    }
+
+    public function show($card)
+    {
+        return view('customer.payment.show', [
+            'card' => \App\Models\Customer\CustomerCreditCard::find($card),
+            'customer' => auth()->user()->customers
+        ]);
     }
 }

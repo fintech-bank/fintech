@@ -31,6 +31,10 @@ return new class extends Migration
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
 
+            $table->foreignId('customer_credit_card_id')
+                ->nullable()
+                ->constrained();
+
         });
     }
 
