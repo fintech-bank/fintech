@@ -75,3 +75,4 @@ Route::prefix('pret')->group(function () {
 
 
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
+Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);

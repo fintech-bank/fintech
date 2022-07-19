@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Agent;
 
 use App\Helper\CustomerHelper;
+use App\Helper\CustomerSepaHelper;
+use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
@@ -240,6 +242,28 @@ class CustomerController extends Controller
         } else {
             return response()->json(["errors" => ["Le code SECURPASS est invalide"]], 401);
         }
+    }
+
+    public function listeSepas($customer)
+    {
+        $customer = Customer::find($customer);
+        $arr = [];
+
+        foreach ($customer->wallets as $wallet) {
+            foreach ($wallet->sepas as $sepa) {
+                $arr[] = [
+                    'id' => $sepa->id,
+                    'account' => CustomerWalletHelper::getNameAccount($wallet),
+                    'categorie' => "Europrélèvement",
+                    'creditor' => $sepa->creditor,
+                    'mandat' => $sepa->number_mandate,
+                    'montant' => eur($sepa->amount),
+                    'status' => CustomerSepaHelper::getStatus($sepa->status, true)
+                ];
+            }
+        }
+
+        return response()->json($arr);
     }
 
     private function PhoneVerification($customer)

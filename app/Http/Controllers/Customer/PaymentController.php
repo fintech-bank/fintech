@@ -14,6 +14,8 @@ class PaymentController extends Controller
 {
     public function index()
     {
+        //dd(auth()->user()->customers->wallets()->where('customer_id', auth()->user()->customers->id)->where('type', '!=', 'pret')->where('status', 'active')->get());
+
         return view('customer.payment.index', [
             'customer' => auth()->user()->customers
         ]);

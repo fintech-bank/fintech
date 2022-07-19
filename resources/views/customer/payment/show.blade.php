@@ -366,6 +366,7 @@
                     </div>
                 </div>
                 <!--end:::Tab pane-->
+                @if($card->facelia == 1)
                 <div class="tab-pane fade" id="facelia" role="tabpanel">
                     <div class="card card-flush shadow-sm">
                         <div class="card-header">
@@ -487,6 +488,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+                @if($card->debit == 'differed')
                 <div class="tab-pane fade" id="differed" role="tabpanel">
                     <div class="card card-flush h-md-50 mb-xl-10">
                         <!--begin::Header-->
@@ -534,6 +537,7 @@
                         <!--end::Card body-->
                     </div>
                 </div>
+                @endif
             </div>
             <!--end:::Tab content-->
         </div>
