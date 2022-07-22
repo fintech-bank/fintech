@@ -166,8 +166,3 @@
   background: #FF9800;
   box-shadow: 0 20px 20px -10px rgba(255, 152, 0, 0.5);
 }
-
-.btn-xs {
-    height: calc(1.2em + 1rem + 1px);
-    width: calc(1.2em + 1rem + 1px);
-}

@@ -23,8 +23,8 @@ class TestController extends Controller
     public function test()
     {
         $card = \App\Models\Customer\CustomerCreditCard::find(17);
-
-        dd(CustomerCreditCard::getTransactionsMonthPayment($card));
+        $customer = Customer::find(5);
+        dd($customer->wallets->where('status', 'active')->where('type', 'compte'));
     }
 
     public function home()

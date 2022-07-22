@@ -4,9 +4,11 @@ namespace App\Console\Commands;
 
 use App\Helper\CustomerFaceliaHelper;
 use App\Helper\CustomerLoanHelper;
+use App\Helper\CustomerSepaHelper;
 use App\Helper\CustomerTransactionHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
+use App\Helper\LogHelper;
 use App\Helper\UserHelper;
 use App\Models\Core\DocumentCategory;
 use App\Models\Core\LoanPlan;
@@ -14,15 +16,18 @@ use App\Models\Core\Package;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerBeneficiaire;
 use App\Models\Customer\CustomerCreditCard;
+use App\Models\Customer\CustomerCreditor;
 use App\Models\Customer\CustomerFacelia;
 use App\Models\Customer\CustomerInfo;
 use App\Models\Customer\CustomerPret;
+use App\Models\Customer\CustomerSepa;
 use App\Models\Customer\CustomerSetting;
 use App\Models\Customer\CustomerSituation;
 use App\Models\Customer\CustomerSituationCharge;
 use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
+use App\Notifications\Customer\Automate\NewPrlvPresented;
 use Carbon\Carbon;
 use IbanGenerator\Generator;
 use Illuminate\Console\Command;
@@ -54,24 +59,21 @@ class LifeCommand extends Command
         switch ($this->argument('action')) {
             case 'generateCustomer':
                 return $this->generateCustomer();
-                break;
 
             case 'generateSalary':
                 return $this->generateSalary();
-                break;
 
             case 'generateDebit':
                 return $this->generateDebit();
-                break;
 
-            default:
-               return $this->generateCustomer();
+            case 'generatePrlvSepa':
+                return $this->generatePrlvSepa();
         }
     }
 
     private function generateCustomer()
     {
-        $nb = rand(0,5);
+        $nb = rand(0, 5);
 
         $users = User::factory($nb)->create([
             'identifiant' => UserHelper::generateID(),
@@ -86,9 +88,9 @@ class LifeCommand extends Command
                     'agent_id' => 2,
                 ]);
 
-                \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
+                \Storage::disk('public')->makeDirectory('gdd/' . $customer->id);
                 foreach (DocumentCategory::all() as $doc) {
-                    \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
+                    \Storage::disk('public')->makeDirectory('gdd/' . $customer->id . '/' . $doc->id);
                 }
 
                 CustomerInfo::factory()->create([
@@ -111,7 +113,7 @@ class LifeCommand extends Command
                     "customer_id" => $customer->id,
                 ]);
 
-                if($customer->status_open_account == 'terminated') {
+                if ($customer->status_open_account == 'terminated') {
                     $account = CustomerWallet::factory()->create([
                         'type' => 'compte',
                         'customer_id' => $customer->id
@@ -130,7 +132,7 @@ class LifeCommand extends Command
                         ['wallet' => $account]
                     );
 
-                    CustomerBeneficiaire::factory(rand(1,10))->create([
+                    CustomerBeneficiaire::factory(rand(1, 10))->create([
                         "customer_id" => $customer->id,
                     ]);
 
@@ -152,8 +154,8 @@ class LifeCommand extends Command
                     );
 
                     foreach (CustomerCreditCard::query()->where('facelia', 1)->where('customer_wallet_id', $account->id)->get() as $card) {
-                        $amount = [500,1000,1500,2000,2500,3000];
-                        $amount_loan = $amount[rand(0,5)];
+                        $amount = [500, 1000, 1500, 2000, 2500, 3000];
+                        $amount_loan = $amount[rand(0, 5)];
                         $interest = CustomerLoanHelper::getLoanInterest($amount_loan, LoanPlan::find(8)->interests[0]->interest);
                         $du = $amount_loan + $interest;
 
@@ -206,7 +208,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             'Plan d\'amortissement',
-                            $pr->reference." - Plan d'amortissement",
+                            $pr->reference . " - Plan d'amortissement",
                             3,
                             null,
                             false,
@@ -219,7 +221,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             'Assurance Emprunteur',
-                            $pr->reference." - Assurance Emprunteur",
+                            $pr->reference . " - Assurance Emprunteur",
                             3,
                             null,
                             false,
@@ -232,7 +234,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             "Avis de conseil relatif assurance",
-                            $pr->reference." - Avis de conseil Relatif au assurance emprunteur",
+                            $pr->reference . " - Avis de conseil Relatif au assurance emprunteur",
                             3,
                             null,
                             false,
@@ -245,7 +247,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             'contrat de credit facelia',
-                            $pr->reference." - Contrat de Crédit FACELIA",
+                            $pr->reference . " - Contrat de Crédit FACELIA",
                             3,
                             null,
                             true,
@@ -258,7 +260,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             'Fiche de dialogue',
-                            $pr->reference." - Fiche de Dialogue",
+                            $pr->reference . " - Fiche de Dialogue",
                             3,
                             null,
                             false,
@@ -271,7 +273,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             'Information précontractuel normalise',
-                            $pr->reference." - Information Précontractuel Normalisé",
+                            $pr->reference . " - Information Précontractuel Normalisé",
                             3,
                             null,
                             true,
@@ -284,7 +286,7 @@ class LifeCommand extends Command
                         DocumentFile::createDoc(
                             $customer,
                             'Mandat Prélevement sepa',
-                            $pr->reference." - Mandat Prélèvement SEPA",
+                            $pr->reference . " - Mandat Prélèvement SEPA",
                             3,
                             null,
                             false,
@@ -299,32 +301,32 @@ class LifeCommand extends Command
                     CustomerTransactionHelper::create(
                         'credit',
                         'virement',
-                        'Virement Salaire '.now()->monthName,
+                        'Virement Salaire ' . now()->monthName,
                         $customer->income->pro_incoming,
                         $account->id,
                         true,
-                        'Virement Salaire '.now()->monthName,
+                        'Virement Salaire ' . now()->monthName,
                         now());
 
                     // Prise de la souscription
-                    if($customer->package->price > 0) {
+                    if ($customer->package->price > 0) {
                         CustomerTransactionHelper::create(
                             'debit',
                             'souscription',
-                            'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
+                            'Cotisation Pack' . $customer->package->name . ' - ' . now()->monthName,
                             $customer->package->price,
                             $account->id,
                             true,
-                            'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
+                            'Cotisation Pack' . $customer->package->name . ' - ' . now()->monthName,
                             now());
                     }
                 }
             }
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->error($exception->getMessage());
         }
 
-        $this->line("Nombre de nouveau client: ".$nb);
+        $this->line("Nombre de nouveau client: " . $nb);
         return null;
     }
 
@@ -338,12 +340,12 @@ class LifeCommand extends Command
             CustomerTransactionHelper::create(
                 'credit',
                 'virement',
-            'Virement Salaire '.now()->monthName,
-            $customer->income->pro_incoming,
-            $wallet->id,
-            true,
-                'Virement Salaire '.now()->monthName,
-            now());
+                'Virement Salaire ' . now()->monthName,
+                $customer->income->pro_incoming,
+                $wallet->id,
+                true,
+                'Virement Salaire ' . now()->monthName,
+                now());
         }
 
         $this->line("Check des virements des salaires terminer");
@@ -358,26 +360,26 @@ class LifeCommand extends Command
 
         foreach ($customers as $customer) {
             $wallet = $customer->wallets()->where('type', 'compte')->where('status', 'active')->first();
-            if(isset($wallet)) {
-                $select = rand(0,2);
+            if (isset($wallet)) {
+                $select = rand(0, 2);
                 $balance_wallet = $wallet->balance_actual + $wallet->balance_decouvert;
 
-                if(rand(0,1) == 1) {
+                if (rand(0, 1) == 1) {
                     try {
-                        if($balance_wallet > 0) {
-                            $confirmed = rand(0,1);
+                        if ($balance_wallet > 0) {
+                            $confirmed = rand(0, 1);
                             switch ($select) {
                                 case 0:
                                     CustomerTransactionHelper::create(
                                         'credit',
                                         'depot',
                                         'Dépot sur votre compte',
-                                        rand(100,900),
+                                        rand(100, 900),
                                         $wallet->id,
                                         $confirmed == 1 ? true : false,
-                                        'Dépot sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                        'Dépot sur votre compte | Ref: ' . Str::upper(Str::random(8)),
                                         $confirmed == 1 ? now() : null,
-                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                        $confirmed == 0 ? now()->addDays(rand(1, 5)) : now());
                                     break;
 
                                 case 1:
@@ -385,36 +387,92 @@ class LifeCommand extends Command
                                         'debit',
                                         'retrait',
                                         'Retrait sur votre compte',
-                                        rand(100,900),
+                                        rand(100, 900),
                                         $wallet->id,
                                         $confirmed == 1 ? true : false,
-                                        'Retrait sur votre compte | Ref: '.Str::upper(Str::random(8)),
+                                        'Retrait sur votre compte | Ref: ' . Str::upper(Str::random(8)),
                                         $confirmed == 1 ? now() : null,
-                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                        $confirmed == 0 ? now()->addDays(rand(1, 5)) : now());
                                     break;
 
                                 case 2:
-                                    CustomerTransactionHelper::create(
-                                        'debit',
-                                        'payment',
-                                        'Paiement par Carte Bancaire',
-                                        rand(100,900),
-                                        $wallet->id,
-                                        $confirmed == 1 ? true : false,
-                                        'Paiement par Carte Bancaire | Ref: '.Str::upper(Str::random(8)),
-                                        $confirmed == 1 ? now() : null,
-                                        $confirmed == 0 ? now()->addDays(rand(1,5)) : now());
+                                    if ($wallet->cards()->first()->debit == 'differed') {
+                                        $differed = rand(0, 1);
+                                        CustomerTransactionHelper::create(
+                                            'debit',
+                                            'payment',
+                                            'Paiement par Carte Bancaire',
+                                            rand(100, 900),
+                                            $wallet->id,
+                                            $confirmed == 1 ? true : false,
+                                            'Paiement par Carte Bancaire | Ref: ' . Str::upper(Str::random(8)),
+                                            $confirmed == 1 ? now() : null,
+                                            $confirmed == 0 ? now()->addDays(rand(1, 5)) : now(), $wallet->cards()->first()->id,
+                                            $differed == 1 ? true : false);
+                                    } else {
+                                        CustomerTransactionHelper::create(
+                                            'debit',
+                                            'payment',
+                                            'Paiement par Carte Bancaire',
+                                            rand(100, 900),
+                                            $wallet->id,
+                                            $confirmed == 1 ? true : false,
+                                            'Paiement par Carte Bancaire | Ref: ' . Str::upper(Str::random(8)),
+                                            $confirmed == 1 ? now() : null,
+                                            $confirmed == 0 ? now()->addDays(rand(1, 5)) : now(), $wallet->cards()->first()->id);
+                                    }
                                     break;
                             }
                             $nb++;
                         }
-                    }catch (\Exception $exception) {
+                    } catch (\Exception $exception) {
                         $this->error($exception->getMessage());
                     }
                 }
             }
         }
-        $this->line("Génération des Transactions: ".$nb);
+        $this->line("Génération des Transactions: " . $nb);
         return 0;
+    }
+
+    private function generatePrlvSepa()
+    {
+        $customers = Customer::where('status_open_account', 'terminated')->get();
+
+        foreach ($customers as $customer) {
+            foreach ($customer->wallets->where('status', 'active')->where('type', 'compte') as $wallet) {
+                if(rand(0,1) == 1) {
+                    try {
+                        $sepas = CustomerSepa::factory(rand(1,5))->create([
+                            'amount' => - rand(5,3500),
+                            'customer_wallet_id' => $wallet->id,
+                            'updated_at' => now()->addDays(rand(1,5)),
+                            'status' => 'waiting'
+                        ]);
+                    }catch (\Exception $exception) {
+                        LogHelper::notify('critical', $exception);
+                    }
+
+                    foreach ($sepas as $sepa) {
+                        try {
+                            $creditor = CustomerCreditor::where('name', 'LIKE', '%'.$sepa->creditor.'%')->count();
+                            if($creditor == 0) {
+                                CustomerCreditor::create([
+                                    'name' => $sepa->creditor,
+                                    'customer_wallet_id' => $wallet->id,
+                                    'customer_sepa_id' => $sepa->id
+                                ]);
+                            }
+                        }catch (\Exception $exception) {
+                            LogHelper::notify('critical', $exception);
+                        }
+
+                        if($customer->setting->notif_mail == 1) {
+                            $customer->user->notify(new NewPrlvPresented($sepa));
+                        }
+                    }
+                }
+            }
+        }
     }
 }

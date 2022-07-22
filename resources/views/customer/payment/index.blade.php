@@ -366,14 +366,16 @@
                                             @isset($sepa->creditor->name)
                                                 {{ $sepa->creditor->name }}
                                             @else
-                                                {{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}
+                                                {{ $sepa->creditor }}
                                             @endisset
                                         </td>
                                         <td>{{ $sepa->number_mandate }}</td>
                                         <td>{{ eur($sepa->amount) }}</td>
                                         <td>{!! \App\Helper\CustomerSepaHelper::getStatus($sepa->status) !!}</td>
                                         <td>
-                                            <a href="" class="btn btn-sm btn-outline btn-outline-danger btn-icon" data-bs-toggle="tooltip" title="Opposition"><i class="fa-solid fa-flag"></i></a>
+                                            @if($sepa->status == 'waiting')
+                                                <a href="" class="btn btn-sm btn-outline btn-outline-danger btn-icon" data-bs-toggle="tooltip" title="Opposition"><i class="fa-solid fa-flag"></i></a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

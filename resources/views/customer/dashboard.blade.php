@@ -42,7 +42,7 @@
                     <div class="d-flex flex-column">
                         <div class="fw-bolder">{{ \App\Helper\CustomerHelper::getName($customer) }}</div>
                         @if($wallet->balance_coming != 0)
-                            <div class="text-muted">Prochaines opérations: {{ eur($wallet->balance_coming) }}</div>
+                            <div class="text-muted">Prochaines opérations: {{ \App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet) >= 0 ? '+ '.eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet)) :  eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet))}}</div>
                         @endif
                     </div>
                     <button type="button" class="btn btn-sm btn-rounded btn-outline btn-outline-bank rotate" data-kt-menu-trigger="hover" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
@@ -91,7 +91,7 @@
                     <div class="d-flex flex-column">
                         <div class="fw-bolder">{{ \App\Helper\CustomerHelper::getName($customer) }}</div>
                         @if($wallet->balance_coming != 0)
-                            <div class="text-muted">Prochaines opérations: {{ eur($wallet->balance_coming) }}</div>
+                            <div class="text-muted">Prochaines opérations: {{ \App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet) >= 0 ? '+ '.eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet)) :  eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet))}}</div>
                         @endif
                     </div>
                     <button type="button" class="btn btn-sm btn-rounded btn-outline btn-outline-bank rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
@@ -135,7 +135,7 @@
                     <div class="d-flex flex-column">
                         <div class="fw-bolder">{{ \App\Helper\CustomerHelper::getName($customer) }}</div>
                         @if($wallet->balance_coming != 0)
-                            <div class="text-muted">Prochaines opérations: {{ eur($wallet->balance_coming) }}</div>
+                            <div class="text-muted">Prochaines opérations: {{ \App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet) >= 0 ? '+ '.eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet)) :  eur(\App\Helper\CustomerWalletHelper::getSumMonthOperation($wallet))}}</div>
                         @endif
                     </div>
                     <!--end::Menu-->

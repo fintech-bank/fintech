@@ -228,7 +228,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="fw-bolder fs-5">{{ $transaction->designation }}</div>
-                                                    <div class="text-muted">{{ $transaction->created_at->format('d/m/Y') }}</div>
+                                                    <div class="text-muted">
+                                                        {{ $transaction->created_at->format('d/m/Y') }}
+                                                        @if($transaction->differed)
+                                                            - Différé au {{ $transaction->differed_at->format('d/m/Y') }}
+                                                        @endif
+                                                    </div>
                                                 </td>
                                                 <td class="text-end">
                                                     @if($transaction->amount < 0)
