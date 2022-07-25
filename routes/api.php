@@ -73,6 +73,12 @@ Route::prefix('pret')->group(function () {
     Route::get('{plan_id}', [\App\Http\Controllers\Api\Agent\PretController::class, 'info']);
 });
 
+Route::prefix('card')->group(function () {
+    Route::get('{card}/desactivate', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'desactivate']);
+    Route::get('{card}/activate', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'activate']);
+    Route::get('{card}/opposit', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'opposit']);
+});
+
 
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
 Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);

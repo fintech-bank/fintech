@@ -396,30 +396,32 @@ class LifeCommand extends Command
                                     break;
 
                                 case 2:
-                                    if ($wallet->cards()->first()->debit == 'differed') {
-                                        $differed = rand(0, 1);
-                                        CustomerTransactionHelper::create(
-                                            'debit',
-                                            'payment',
-                                            'Paiement par Carte Bancaire',
-                                            rand(100, 900),
-                                            $wallet->id,
-                                            $confirmed == 1 ? true : false,
-                                            'Paiement par Carte Bancaire | Ref: ' . Str::upper(Str::random(8)),
-                                            $confirmed == 1 ? now() : null,
-                                            $confirmed == 0 ? now()->addDays(rand(1, 5)) : now(), $wallet->cards()->first()->id,
-                                            $differed == 1 ? true : false);
-                                    } else {
-                                        CustomerTransactionHelper::create(
-                                            'debit',
-                                            'payment',
-                                            'Paiement par Carte Bancaire',
-                                            rand(100, 900),
-                                            $wallet->id,
-                                            $confirmed == 1 ? true : false,
-                                            'Paiement par Carte Bancaire | Ref: ' . Str::upper(Str::random(8)),
-                                            $confirmed == 1 ? now() : null,
-                                            $confirmed == 0 ? now()->addDays(rand(1, 5)) : now(), $wallet->cards()->first()->id);
+                                    if ($wallet->cards()->first()->status == 'active') {
+                                        if ($wallet->cards()->first()->debit == 'differed') {
+                                            $differed = rand(0, 1);
+                                            CustomerTransactionHelper::create(
+                                                'debit',
+                                                'payment',
+                                                'Paiement par Carte Bancaire',
+                                                rand(100, 900),
+                                                $wallet->id,
+                                                $confirmed == 1 ? true : false,
+                                                'Paiement par Carte Bancaire | Ref: ' . Str::upper(Str::random(8)),
+                                                $confirmed == 1 ? now() : null,
+                                                $confirmed == 0 ? now()->addDays(rand(1, 5)) : now(), $wallet->cards()->first()->id,
+                                                $differed == 1 ? true : false);
+                                        } else {
+                                            CustomerTransactionHelper::create(
+                                                'debit',
+                                                'payment',
+                                                'Paiement par Carte Bancaire',
+                                                rand(100, 900),
+                                                $wallet->id,
+                                                $confirmed == 1 ? true : false,
+                                                'Paiement par Carte Bancaire | Ref: ' . Str::upper(Str::random(8)),
+                                                $confirmed == 1 ? now() : null,
+                                                $confirmed == 0 ? now()->addDays(rand(1, 5)) : now(), $wallet->cards()->first()->id);
+                                        }
                                     }
                                     break;
                             }
@@ -441,33 +443,33 @@ class LifeCommand extends Command
 
         foreach ($customers as $customer) {
             foreach ($customer->wallets->where('status', 'active')->where('type', 'compte') as $wallet) {
-                if(rand(0,1) == 1) {
+                if (rand(0, 1) == 1) {
                     try {
-                        $sepas = CustomerSepa::factory(rand(1,5))->create([
-                            'amount' => - rand(5,3500),
+                        $sepas = CustomerSepa::factory(rand(1, 5))->create([
+                            'amount' => -rand(5, 3500),
                             'customer_wallet_id' => $wallet->id,
-                            'updated_at' => now()->addDays(rand(1,5)),
+                            'updated_at' => now()->addDays(rand(1, 5)),
                             'status' => 'waiting'
                         ]);
-                    }catch (\Exception $exception) {
+                    } catch (\Exception $exception) {
                         LogHelper::notify('critical', $exception);
                     }
 
                     foreach ($sepas as $sepa) {
                         try {
-                            $creditor = CustomerCreditor::where('name', 'LIKE', '%'.$sepa->creditor.'%')->count();
-                            if($creditor == 0) {
+                            $creditor = CustomerCreditor::where('name', 'LIKE', '%' . $sepa->creditor . '%')->count();
+                            if ($creditor == 0) {
                                 CustomerCreditor::create([
                                     'name' => $sepa->creditor,
                                     'customer_wallet_id' => $wallet->id,
                                     'customer_sepa_id' => $sepa->id
                                 ]);
                             }
-                        }catch (\Exception $exception) {
+                        } catch (\Exception $exception) {
                             LogHelper::notify('critical', $exception);
                         }
 
-                        if($customer->setting->notif_mail == 1) {
+                        if ($customer->setting->notif_mail == 1) {
                             $customer->user->notify(new NewPrlvPresented($sepa));
                         }
                     }

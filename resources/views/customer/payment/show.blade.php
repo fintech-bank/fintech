@@ -339,6 +339,16 @@
                                     </div>
                                 </div>
                                 <div class="col-4 border p-5">
+                                    <div class="card card-flush shadow-sm mb-10">
+                                        <div class="card-body py-5 d-flex flex-wrap">
+                                            @if($card->status == 'active')
+                                                <button class="btn btn-danger w-100 rounded mb-3" data-action="desactivated" data-card-id="{{ $card->id }}"> Désactivez ma carte bancaire</button>
+                                            @else
+                                                <button class="btn btn-success w-100 rounded mb-3" data-action="activated" data-card-id="{{ $card->id }}"> Activez ma carte bancaire</button>
+                                            @endif
+                                                <button class="btn btn-info w-100 rounded mb-3" data-action="opposit" data-card-id="{{ $card->id }}"> Faire Opposition</button>
+                                        </div>
+                                    </div>
                                     <div class="fs-3 fw-bold mb-3">Configuration</div>
                                     <form action="{{ route('customer.payment.update', $card->id) }}" method="post" id="formUpdateState">
                                         @csrf
@@ -579,6 +589,63 @@
                             value="{{ $card->limit_payment }}"
                             text="Limite Maximal: {{ eur(round($card->limit_payment * 1.23, -2)) }}" />
 
+                    </div>
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="Opposit">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h3 class="modal-title text-white">Opposition à la carte bancaire</h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <form id="formOpposit" action="/api/card/{{ $card->id }}/opposit" method="GET">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="" class="form-label">Type d'opposition</label>
+                            <select class="form-select form-select-solid" data-control="select2" name="type_opposit" data-dropdown-parent="#Opposit" data-placeholder="Select an option" data-allow-clear="true" onchange="changeOppositValue(this)">
+                                <option></option>
+                                <option value="vol">Vol</option>
+                                <option value="perte">Perte</option>
+                                <option value="operation">Opération Frauduleuse sur votre compte</option>
+                            </select>
+                        </div>
+
+                        <div id="vol" class="d-none">
+                            <x-base.alert
+                                type="solid"
+                                color="primary"
+                                icon="person-through-window"
+                                title="La fabrication de votre nouvelle carte sera facturée conformément aux conditions tarifaires en vigueur."
+                                content="Vous avez la possibilité d'obtenir un remboursement de ces frais en suivant les modalités décrites dans votre contrat d'assurance moyens de paiement « Sécuriplus »." />
+                        </div>
+                        <div id="perte" class="d-none">
+                            <x-base.alert
+                                type="solid"
+                                color="primary"
+                                icon="person-through-window"
+                                title="La fabrication de votre nouvelle carte sera facturée conformément aux conditions tarifaires en vigueur."
+                                content="Vous avez la possibilité d'obtenir un remboursement de ces frais en suivant les modalités décrites dans votre contrat d'assurance moyens de paiement « Sécuriplus »." />
+                        </div>
+                        <div id="operation" class="d-none">
+                            <x-base.alert
+                                type="solid"
+                                color="primary"
+                                icon="person-through-window"
+                                title="La fabrication de votre nouvelle carte sera facturée conformément aux conditions tarifaires en vigueur."
+                                content="Vous avez la possibilité d'obtenir un remboursement de ces frais en suivant les modalités décrites dans votre contrat d'assurance moyens de paiement « Sécuriplus »." />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <x-form.button />
