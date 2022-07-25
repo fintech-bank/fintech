@@ -27,6 +27,7 @@ use App\Models\Customer\CustomerSituationCharge;
 use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
+use App\Notifications\Customer\Automate\GenerateMensualReleverNotification;
 use App\Notifications\Customer\Automate\NewPrlvPresented;
 use Carbon\Carbon;
 use IbanGenerator\Generator;
@@ -68,6 +69,8 @@ class LifeCommand extends Command
 
             case 'generatePrlvSepa':
                 return $this->generatePrlvSepa();
+            case 'generateMensualReleve':
+                return $this->generateMensualReleve();
         }
     }
 
@@ -476,5 +479,33 @@ class LifeCommand extends Command
                 }
             }
         }
+    }
+
+    private function generateMensualReleve()
+    {
+        $wallets = CustomerWallet::where('type', 'compte')->where('status', 'active')->get();
+        $i = 0;
+
+        foreach ($wallets as $wallet) {
+            $file = DocumentFile::createDoc(
+                $wallet->customer,
+                'Relever Mensuel',
+                'Relever Mensuel '.now()->monthName,
+                2,
+                null,
+                false,
+                false,
+                false,
+                true,
+                [
+                    "wallet" => $wallet,
+                ]
+            );
+
+            $wallet->customer->user->notify(new GenerateMensualReleverNotification($file));
+            $i++;
+        }
+
+        $this->info("Nombre de relevé généré: ".$i);
     }
 }
