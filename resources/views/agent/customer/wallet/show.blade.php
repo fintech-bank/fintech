@@ -133,15 +133,11 @@
                         <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
                            href="#transactions">Transactions</a>
                     </li>
-                    <!--end:::Tab item-->
-                    @if($wallet->type == 'compte')
-                        <!--begin:::Tab item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#infos">Informations</a>
-                            </li>
-                            <!--end:::Tab item-->
-                    @endif
                     <!--begin:::Tab item-->
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#infos">Informations</a>
+                    </li>
+                    <!--end:::Tab item-->
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
                            href="#transfers">Virements</a>
