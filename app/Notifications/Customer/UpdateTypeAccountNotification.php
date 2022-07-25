@@ -3,6 +3,7 @@
 namespace App\Notifications\Customer;
 
 use App\Helper\CustomerHelper;
+use App\Helper\CustomerLoanHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -64,7 +65,11 @@ class UpdateTypeAccountNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'icon' => 'fa-box',
+            'color' => 'primary',
+            'title' => 'Votre compte en ligne',
+            'text' => "Votre compte est passée à l'offre ".$this->type->name." à " .eur($this->type->price),
+            'time' => now()->shortAbsoluteDiffForHumans()
         ];
     }
 }

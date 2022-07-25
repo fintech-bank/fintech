@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Customer;
 
+use App\Helper\CustomerHelper;
 use App\Helper\CustomerLoanHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -68,8 +69,11 @@ class UpdateStatusLoanNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => "Le status de votre pret bancaire N°".$this->loan->reference." est passée à: ".CustomerLoanHelper::getStatusLoan($this->status)
+            'icon' => 'fa-certificate',
+            'color' => 'primary',
+            'title' => 'Votre pret bancaire',
+            'text' => "Le status de votre pret bancaire N°".$this->loan->reference." est passée à: ".CustomerLoanHelper::getStatusLoan($this->status),
+            'time' => now()->shortAbsoluteDiffForHumans()
         ];
     }
 }
