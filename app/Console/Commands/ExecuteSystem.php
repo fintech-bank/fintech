@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Helper\CustomerHelper;
 use App\Helper\CustomerTransactionHelper;
+use App\Helper\CustomerWalletHelper;
 use App\Models\Customer\CustomerEpargne;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerSepa;
@@ -247,7 +248,6 @@ class ExecuteSystem extends Command
             }
         }
 
-        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Execution des ordres SEPA en date du " . now()->format('d/m/Y') . "<br>Nombre d'ordre executer: " . $i));
         $this->info('Execution des ordres SEPA en date du '.$this->date);
         $this->line("Nombre d'ordre executer': ".$i);
     }
@@ -259,9 +259,11 @@ class ExecuteSystem extends Command
 
         try {
             foreach ($transactions as $transaction) {
-                if($transaction->updated_at <= now()->between(now()->startOfDay(), now()->endOfDay())) {
-                    CustomerTransactionHelper::updated($transaction);
-                    $v++;
+                if($transaction->updated_at->between(now()->startOfDay(), now()->endOfDay())) {
+                    if($transaction->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
+                        CustomerTransactionHelper::updated($transaction);
+                        $v++;
+                    }
                 }
             }
             $this->line("Nombre de transaction passée: ".$v);

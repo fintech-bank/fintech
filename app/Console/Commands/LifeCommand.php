@@ -69,8 +69,10 @@ class LifeCommand extends Command
 
             case 'generatePrlvSepa':
                 return $this->generatePrlvSepa();
+
             case 'generateMensualReleve':
                 return $this->generateMensualReleve();
+
         }
     }
 
