@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Http\Controllers\Front\HomeController;
 use App\Models\User;
 use Hash;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -30,7 +31,7 @@ class FortifyServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 $url = url()->previous();
-                return response()->json($url);
+                return redirect()->action([HomeController::class, 'redirect']);
             }
         });
 
@@ -38,7 +39,8 @@ class FortifyServiceProvider extends ServiceProvider
 
             public function toResponse($request)
             {
-                return response()->json();
+                $url = url()->previous();
+                return redirect()->route('home');
             }
         });
     }

@@ -9,6 +9,40 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Core\Agency
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $bic
+ * @property string $code_banque
+ * @property string $code_agence
+ * @property string $address
+ * @property string $postal
+ * @property string $city
+ * @property string $country
+ * @property string $phone
+ * @property int $online
+ * @property-read \Illuminate\Database\Eloquent\Collection|DocumentTransmiss[] $documents
+ * @property-read int|null $documents_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereBic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereCodeAgence($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereCodeBanque($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency whereOnline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Agency wherePostal($value)
+ * @mixin \Eloquent
+ */
 class Agency extends Model
 {
     use HasFactory;

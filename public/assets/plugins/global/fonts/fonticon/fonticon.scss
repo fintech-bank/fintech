@@ -2,11 +2,11 @@ $flaticon-font: "flaticon";
 
 @font-face {
     font-family: $flaticon-font;
-    src: url("./flaticon.ttf?44df81452722ee16b4871221b3a52b25") format("truetype"),
-url("./flaticon.woff?44df81452722ee16b4871221b3a52b25") format("woff"),
-url("./flaticon.woff2?44df81452722ee16b4871221b3a52b25") format("woff2"),
-url("./flaticon.eot?44df81452722ee16b4871221b3a52b25#iefix") format("embedded-opentype"),
-url("./flaticon.svg?44df81452722ee16b4871221b3a52b25#flaticon") format("svg");
+    src: url("./flaticon.ttf?a8916bb98b41e9f4ae8514e7dfadee17") format("truetype"),
+url("./flaticon.woff?a8916bb98b41e9f4ae8514e7dfadee17") format("woff"),
+url("./flaticon.woff2?a8916bb98b41e9f4ae8514e7dfadee17") format("woff2"),
+url("./flaticon.eot?a8916bb98b41e9f4ae8514e7dfadee17#iefix") format("embedded-opentype"),
+url("./flaticon.svg?a8916bb98b41e9f4ae8514e7dfadee17#flaticon") format("svg");
 }
 
 i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
@@ -56,21 +56,16 @@ $flaticon-map: (
     "attachments": "\f121",
     "attachment": "\f122",
     "dogecoin": "\f123",
-    "bitcoin": "\f124",
-    "setting": "\f125",
-    "headset": "\f126",
-    "play": "\f127",
-    "pause": "\f128",
-    "next": "\f129",
-    "back": "\f12a",
-    "shuffle": "\f12b",
-    "repeat": "\f12c",
-    "outgoing-call": "\f12d",
-    "incoming-call": "\f12e",
-    "cash-payment": "\f12f",
-    "mobile-payment": "\f130",
-    "card-payment": "\f131",
-    "card": "\f132",
+    "ethereum": "\f124",
+    "bitcoin": "\f125",
+    "setting": "\f126",
+    "headset": "\f127",
+    "play": "\f128",
+    "pause": "\f129",
+    "next": "\f12a",
+    "back": "\f12b",
+    "shuffle": "\f12c",
+    "repeat": "\f12d",
 );
 
 .flaticon-delivery:before {
@@ -178,6 +173,9 @@ $flaticon-map: (
 .flaticon-dogecoin:before {
     content: map-get($flaticon-map, "dogecoin");
 }
+.flaticon-ethereum:before {
+    content: map-get($flaticon-map, "ethereum");
+}
 .flaticon-bitcoin:before {
     content: map-get($flaticon-map, "bitcoin");
 }
@@ -204,22 +202,4 @@ $flaticon-map: (
 }
 .flaticon-repeat:before {
     content: map-get($flaticon-map, "repeat");
-}
-.flaticon-outgoing-call:before {
-    content: map-get($flaticon-map, "outgoing-call");
-}
-.flaticon-incoming-call:before {
-    content: map-get($flaticon-map, "incoming-call");
-}
-.flaticon-cash-payment:before {
-    content: map-get($flaticon-map, "cash-payment");
-}
-.flaticon-mobile-payment:before {
-    content: map-get($flaticon-map, "mobile-payment");
-}
-.flaticon-card-payment:before {
-    content: map-get($flaticon-map, "card-payment");
-}
-.flaticon-card:before {
-    content: map-get($flaticon-map, "card");
 }

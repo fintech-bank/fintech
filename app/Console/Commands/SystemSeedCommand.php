@@ -266,9 +266,9 @@ class SystemSeedCommand extends Command
                     'status' => 'active'
                 ]);
 
-                if($card->support == 'premium' || $card->support == 'infinite') {
+                if ($card->support == 'premium' || $card->support == 'infinite') {
                     $card->update([
-                        'facelia' => rand(0,1)
+                        'facelia' => rand(0, 1)
                     ]);
                 }
 
@@ -518,16 +518,70 @@ class SystemSeedCommand extends Command
             $transpac = ['depot', 'retrait', 'payment', 'virement', 'sepa', 'frais', 'souscription', 'autre'];
             $transpac_choice = $transpac[rand(0, 7)];
             $confirm = rand(0, 1);
-            $card_id = $transpac_choice == 'payment' ? $wallet->cards()->where('status', 'active')->first()->id : null;
-            CustomerTransactionHelper::create(
-                $type,
-                $transpac_choice,
-                $this->choiceDescription($transpac_choice),
-                $this->amount($transpac_choice, $wallet),
-                $wallet->id,
-                $confirm == 1 ? true : false,
-                $this->choiceDescription($transpac_choice),
-                $confirm == 1 ? now() : null, now(), $card_id);
+            $card = $transpac_choice == 'payment' || $transpac_choice == 'retrait' || $transpac_choice == 'depot' ? $wallet->cards()->where('status', 'active')->first() : null;
+            $amount = $this->amount($transpac_choice, $wallet);
+
+
+            if ($transpac_choice == 'retrait') {
+                if (\App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($card, true) < 100 && $amount < \App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($card)) {
+                    CustomerTransactionHelper::create(
+                        $type,
+                        $transpac_choice,
+                        $this->choiceDescription($transpac_choice),
+                        $amount,
+                        $wallet->id,
+                        $confirm == 1 ? true : false,
+                        $this->choiceDescription($transpac_choice),
+                        $confirm == 1 ? now() : null, now(), $card->id);
+                }
+            } elseif ($transpac_choice == 'payment') {
+                if (\App\Helper\CustomerCreditCard::getTransactionsMonthPayment($card, true) < 100 && $amount < \App\Helper\CustomerCreditCard::getTransactionsMonthPayment($card)) {
+                    if($wallet->cards()->first()->debit == 'differed') {
+                        if(($amount+$wallet->transactions()->where('type', 'payment')->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount')) < $wallet->cards()->first()->differed_limit) {
+                            $differed = rand(0,1);
+                            CustomerTransactionHelper::create(
+                                $type,
+                                $transpac_choice,
+                                $this->choiceDescription($transpac_choice),
+                                $amount,
+                                $wallet->id,
+                                $confirm == 1 ? true : false,
+                                $this->choiceDescription($transpac_choice),
+                                $confirm == 1 ? now() : null, now(), $card->id, $differed);
+                        }
+                    } else {
+                        CustomerTransactionHelper::create(
+                            $type,
+                            $transpac_choice,
+                            $this->choiceDescription($transpac_choice),
+                            $amount,
+                            $wallet->id,
+                            $confirm == 1 ? true : false,
+                            $this->choiceDescription($transpac_choice),
+                            $confirm == 1 ? now() : null, now(), $card->id);
+                    }
+                }
+            } elseif($transpac_choice == 'depot') {
+                CustomerTransactionHelper::create(
+                    $type,
+                    $transpac_choice,
+                    $this->choiceDescription($transpac_choice),
+                    $amount,
+                    $wallet->id,
+                    $confirm == 1 ? true : false,
+                    $this->choiceDescription($transpac_choice),
+                    $confirm == 1 ? now() : null, now(), $card->id);
+            } else {
+                CustomerTransactionHelper::create(
+                    $type,
+                    $transpac_choice,
+                    $this->choiceDescription($transpac_choice),
+                    $amount,
+                    $wallet->id,
+                    $confirm == 1 ? true : false,
+                    $this->choiceDescription($transpac_choice),
+                    $confirm == 1 ? now() : null, now());
+            }
         }
     }
 

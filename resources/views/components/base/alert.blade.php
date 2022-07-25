@@ -8,7 +8,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column">
             <!--begin::Title-->
-            <h4 class="mb-1 text-dark">{{ $title }}</h4>
+            <h4 class="mb-1 text-white">{{ $title }}</h4>
             <!--end::Title-->
             <!--begin::Content-->
             <span>{{ $content }}</span>
@@ -28,7 +28,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column text-light pe-0 pe-sm-10">
             <!--begin::Title-->
-            <h4 class="mb-2 light">{{ $title }}</h4>
+            <h4 class="mb-2 text-white">{{ $title }}</h4>
             <!--end::Title-->
 
             <!--begin::Content-->
@@ -55,7 +55,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column text-light pe-0 pe-sm-10">
             <!--begin::Title-->
-            <h4 class="mb-2 light">{{ $title }}</h4>
+            <h4 class="mb-2 text-white">{{ $title }}</h4>
             <!--end::Title-->
 
             <!--begin::Content-->
@@ -87,7 +87,7 @@
         <!--begin::Wrapper-->
         <div class="text-center">
             <!--begin::Title-->
-            <h1 class="fw-bolder mb-5">{{ $title }}</h1>
+            <h1 class="fw-bolder mb-5 text-white">{{ $title }}</h1>
             <!--end::Title-->
 
             <!--begin::Separator-->
@@ -95,7 +95,7 @@
             <!--end::Separator-->
 
             <!--begin::Content-->
-            <div class="mb-9 text-dark">
+            <div class="mb-9 text-white">
                 {!! $content !!}
             </div>
             <!--end::Content-->

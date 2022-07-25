@@ -22,10 +22,9 @@ class TestController extends Controller
 {
     public function test()
     {
-        $customer = Customer::find(3);
-        $card = \App\Models\Customer\CustomerCreditCard::find(1);
-
-        dd(CustomerFaceliaHelper::verifCompatibility($customer, $card));
+        $card = \App\Models\Customer\CustomerCreditCard::find(17);
+        $customer = Customer::find(5);
+        dd($customer->wallets->where('status', 'active')->where('type', 'compte'));
     }
 
     public function home()

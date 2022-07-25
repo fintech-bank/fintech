@@ -1,10 +1,10 @@
 @font-face {
     font-family: "fonticon";
-    src: url("./fonticon.ttf?44df81452722ee16b4871221b3a52b25") format("truetype"),
-url("./fonticon.woff?44df81452722ee16b4871221b3a52b25") format("woff"),
-url("./fonticon.woff2?44df81452722ee16b4871221b3a52b25") format("woff2"),
-url("./fonticon.eot?44df81452722ee16b4871221b3a52b25#iefix") format("embedded-opentype"),
-url("./fonticon.svg?44df81452722ee16b4871221b3a52b25#fonticon") format("svg");
+    src: url("./fonticon.ttf?8c99757ffa673e941699f68d7b9547b2") format("truetype"),
+url("./fonticon.woff?8c99757ffa673e941699f68d7b9547b2") format("woff"),
+url("./fonticon.woff2?8c99757ffa673e941699f68d7b9547b2") format("woff2"),
+url("./fonticon.eot?8c99757ffa673e941699f68d7b9547b2#iefix") format("embedded-opentype"),
+url("./fonticon.svg?8c99757ffa673e941699f68d7b9547b2#fonticon") format("svg");
 }
 
 i[class^="fonticon-"]:before, i[class*=" fonticon-"]:before {
@@ -14,6 +14,8 @@ i[class^="fonticon-"]:before, i[class*=" fonticon-"]:before {
     font-variant: normal;
     text-transform: none;
     line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -162,9 +164,72 @@ i[class^="fonticon-"]:before, i[class*=" fonticon-"]:before {
 .fonticon-mobile-payment:before {
     content: "\f130";
 }
-.fonticon-card-payment:before {
+.fonticon-card:before {
     content: "\f131";
 }
-.fonticon-card:before {
+.fonticon-like-1:before {
     content: "\f132";
+}
+.fonticon-bank:before {
+    content: "\f133";
+}
+.fonticon-telegram:before {
+    content: "\f134";
+}
+.fonticon-drive:before {
+    content: "\f135";
+}
+.fonticon-remote-control:before {
+    content: "\f136";
+}
+.fonticon-house:before {
+    content: "\f137";
+}
+.fonticon-image:before {
+    content: "\f138";
+}
+.fonticon-app-store:before {
+    content: "\f139";
+}
+.fonticon-email:before {
+    content: "\f13a";
+}
+.fonticon-stats:before {
+    content: "\f13b";
+}
+.fonticon-notification:before {
+    content: "\f13c";
+}
+.fonticon-send:before {
+    content: "\f13d";
+}
+.fonticon-insurance:before {
+    content: "\f13e";
+}
+.fonticon-hourglass:before {
+    content: "\f13f";
+}
+.fonticon-calendar:before {
+    content: "\f140";
+}
+.fonticon-alarm:before {
+    content: "\f141";
+}
+.fonticon-layers:before {
+    content: "\f142";
+}
+.fonticon-facebook:before {
+    content: "\f143";
+}
+.fonticon-instagram:before {
+    content: "\f144";
+}
+.fonticon-linkedin:before {
+    content: "\f145";
+}
+.fonticon-globe:before {
+    content: "\f146";
+}
+.fonticon-equalizer:before {
+    content: "\f147";
 }

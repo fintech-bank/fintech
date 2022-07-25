@@ -1,8 +1,29 @@
 <script type="text/javascript">
-    let tables = {}
+    "use strict";
+    let tables = {
+        tableSepas: $("#liste_sepas")
+    }
     let elements = {}
-    let modals = {}
+    let modals = {
+        modalSepas: document.querySelector("#sepas")
+    }
 
+    let blocks = {
+        blockSepa: new KTBlockUI(modals.modalSepas)
+    }
+
+    let account = document.querySelector('[data-kt-sepas-filter="account"]')
+    let creditor = document.querySelector('[data-kt-sepas-filter="creditor"]')
+
+    let listeSepas = tables.tableSepas.DataTable({
+        info: false,
+        order: [],
+        pageLength: 10,
+        columnDefs: [
+            {orderable: false, targets: 3},
+            {orderable: false, targets: 6},
+        ],
+    })
 
     let showPhysique = () => {
         let input = document.querySelector('input[name="type"]:checked').value
@@ -27,6 +48,40 @@
             document.querySelector('#formAddCard').querySelector("#physique").querySelector("[name='facelia']").classList.remove('d-none')
         }
     }
+
+    let handleSearchDatatable = () => {
+        const filterSearch = document.querySelector('[data-kt-sepa-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            listeTransaction.search(e.target.value).draw();
+        });
+    }
+    let handleAccountFilter = () => {
+        const filterAccount = document.querySelector('[data-kt-sepas-filter="account"]');
+        $(filterAccount).on('change', e => {
+            let value = e.target.value;
+            if (value === 'all') {
+                value = '';
+            }
+            listeSepas.column(1).search(value).draw();
+        });
+    }
+    let handleCreditorFilter = () => {
+        const filterCreditor = document.querySelector('[data-kt-sepas-filter="creditor"]');
+        $(filterCreditor).on('change', e => {
+            let value = e.target.value;
+            if (value === 'all') {
+                value = '';
+            }
+            listeSepas.column(4).search(value).draw();
+        });
+    }
+
+
+    document.querySelector('[data-kt-sepa-filter="search"]').addEventListener("keyup", (function (e) {
+        listeSepas.search(e.target.value).draw()
+    }))
+
+
 
 
     $("#formAddCard").on('submit', e => {
@@ -74,4 +129,6 @@
             }
         })
     })
+
+
 </script>

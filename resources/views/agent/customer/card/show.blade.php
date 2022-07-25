@@ -327,7 +327,6 @@
                                                     <i class="fa-solid fa-exclamation-triangle fa-2x text-warning"></i>
                                                 </div>
                                             </div>
-
                                         @endif
                                     </div>
                                     <div class="separator my-5 w-400px border-2"></div>

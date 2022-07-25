@@ -4,20 +4,22 @@ namespace App\Console\Commands;
 
 use App\Helper\CustomerHelper;
 use App\Helper\CustomerTransactionHelper;
-use App\Mail\Agent\ExecuteSystemMail;
 use App\Models\Customer\CustomerEpargne;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerSepa;
 use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
+use App\Notifications\Customer\Automate\AcceptedLoanChargeNotification;
+use App\Notifications\Customer\Automate\AutoAcceptCreditPrlvNotification;
+use App\Notifications\Customer\Automate\VerifRequestLoanOpenNotification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class ExecuteSystem extends Command
 {
-    private $agents;
-    private $date;
+    private object $agents;
+    private string $date;
 
     public function __construct()
     {
@@ -50,31 +52,24 @@ class ExecuteSystem extends Command
         switch ($this->argument('action')) {
             case 'autoAcceptCreditPrlv':
                 return $this->autoAcceptCreditPrlv();
-                break;
 
             case 'verifRequestLoanOpen':
                 return $this->verifRequestLoanOpen();
-                break;
 
             case 'acceptedLoanCharge':
                 return $this->acceptedLoanCharge();
-                break;
 
             case 'executeSepaOrderDay':
                 return $this->executeSepaOrderDay();
-                break;
 
             case 'initPrlvCptEpargne':
                 return $this->initPrlvCptEpargne();
-                break;
 
             case 'initPrlvCptPret':
                 return $this->initPrlvCptPret();
-                break;
 
             case 'executeTransactionComing':
                 return $this->executeTransactionComing();
-                break;
         }
     }
 
@@ -85,7 +80,7 @@ class ExecuteSystem extends Command
         $i = 0;
 
         foreach ($sepas as $sepa) {
-            CustomerTransactionHelper::create(
+            $transaction = CustomerTransactionHelper::create(
                 'credit',
                 'sepa',
                 "Prélèvement " . $sepa->creditor,
@@ -95,6 +90,11 @@ class ExecuteSystem extends Command
                 null,
                 now()
             );
+
+            if($transaction->wallet->customer->setting->notif_mail) {
+                $transaction->wallet->customer->user->notify(new AutoAcceptCreditPrlvNotification($transaction->wallet->customer, $sepa, $sepa->status));
+            }
+
 
             $i++;
         }
@@ -113,6 +113,11 @@ class ExecuteSystem extends Command
             $loan->update([
                 'status' => 'study'
             ]);
+
+            if($loan->customer->setting->notif_mail) {
+                $loan->customer->user->notify(new VerifRequestLoanOpenNotification($loan));
+            }
+
             $i++;
         }
 
@@ -131,6 +136,11 @@ class ExecuteSystem extends Command
                     'balance_coming' => $loan->wallet->balance_coming - $loan->amount_loan,
                     'balance_actual' => $loan->wallet->balance_actual + $loan->amount_loan
                 ]);
+
+                if($loan->customer->setting->notif_mail) {
+                    $loan->customer->user->notify(new AcceptedLoanChargeNotification($loan));
+                }
+
                 $i++;
             }
         }

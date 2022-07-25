@@ -1,0 +1,4 @@
+.btn-group-sm>.btn.btn-icon, .btn.btn-icon.btn-xs {
+    height: calc(1.2em + 1rem + 1px);
+    width: calc(1.2em + 1rem + 1px);
+}

@@ -75,7 +75,7 @@ class CustomerTransactionHelper
         }
     }
 
-    public static function create($type, $type_transaction, $description, $amount, $wallet, $confirm = true, $designation = null, $confirmed_at = null, $updated_at = null, $card_id = null)
+    public static function create($type, $type_transaction, $description, $amount, $wallet, $confirm = true, $designation = null, $confirmed_at = null, $updated_at = null, $card_id = null, $differed = false)
     {
         if($type == 'debit') {
             CustomerTransaction::create([
@@ -88,7 +88,9 @@ class CustomerTransactionHelper
                 "confirmed_at" => $confirmed_at,
                 "customer_wallet_id" => $wallet,
                 "updated_at" => $updated_at,
-                "customer_credit_card_id" => $card_id != null ? $card_id : null
+                "customer_credit_card_id" => $card_id != null ? $card_id : null,
+                "differed" => $differed ? 1 : 0,
+                "differed_at" => $differed ? now()->endOfMonth() : null
             ]);
             $transaction = CustomerTransaction::with('wallet')->latest()->first();
 
