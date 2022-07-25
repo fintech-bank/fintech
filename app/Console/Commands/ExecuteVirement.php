@@ -7,6 +7,7 @@ use App\Helper\CustomerTransferHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerTransfer;
+use App\Notifications\Customer\Automate\UpdateStatusVirementNotification;
 use Illuminate\Console\Command;
 
 class ExecuteVirement extends Command
@@ -87,6 +88,8 @@ class ExecuteVirement extends Command
                     }
                     break;
             }
+
+            $transaction->wallet->customer->user->notify(new UpdateStatusVirementNotification($virement, $virement->status));
         }
 
     }
