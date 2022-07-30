@@ -36,6 +36,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('system:execute verifRequestLoanOpen')->everySixHours()->description('Vérification des pret ouvert et les met en étude')->emailOutputTo(config('mail.from.address'));
         $schedule->command('system:execute executeTransactionComing')->everySixHours()->description('Execution des transactions entrente')->emailOutputTo(config('mail.from.address'));
         $schedule->command('life generateMensualReleve')->monthlyOn(1)->description("Génération des relevé mensuel")->emailOutputTo(config('mail.from.address'));
+        $schedule->command('system:execute executeActiveAccount')->everySixHours()->description("Passage des compte accepté à terminer")->emailOutputTo(config('mail.from.address'));
 
         $schedule->command("system:verif alertDebit")->daily()->description("Vérification des comptes au solde négatif")->emailOutputTo(config('mail.from.address'));
         $schedule->command("system:verif accountReopen")->daily()->description("Vérification des comptes au solde de nouveau positif")->emailOutputTo(config('mail.from.address'));

@@ -203,7 +203,7 @@
                 <!--end::Table head-->
                 <!--begin::Table body-->
                 <tbody class="fw-bold text-gray-600">
-                @foreach(\App\Models\Customer\Customer::where('agency_id', auth()->user()->agency_id)->get() as $customer)
+                @foreach(\App\Models\Customer\Customer::all() as $customer)
                 <tr>
                     <!--begin::Name=-->
                     <td>

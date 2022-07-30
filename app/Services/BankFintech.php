@@ -15,4 +15,9 @@ class BankFintech
     {
         return \Http::get('http://bank.fintech.io/status_request?bank_name='.$bank_name)->object();
     }
+
+    public function callInter()
+    {
+        return \Http::get('http://bank.fintech.io/inter')->object();
+    }
 }

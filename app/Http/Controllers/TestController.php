@@ -22,9 +22,8 @@ class TestController extends Controller
 {
     public function test()
     {
-        $card = \App\Models\Customer\CustomerCreditCard::find(17);
-        $customer = Customer::find(5);
-        dd($customer->wallets->where('status', 'active')->where('type', 'compte'));
+        $ban = new BankFintech();
+        dd($ban->callInter());
     }
 
     public function home()

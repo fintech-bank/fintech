@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->float('price');
             $table->enum('type_prlv', ['mensual', 'trim', 'sem', 'annual']);
+            $table->enum('type_cpt', ['part', 'pro', 'orga'])->default('part');
             $table->boolean('visa_classic')->default(true);
             $table->boolean('check_deposit')->default(true);
             $table->boolean('payment_withdraw')->default(true);
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->boolean('check')->default(false);
             $table->integer("nb_carte_physique")->default(1);
             $table->integer("nb_carte_virtuel")->default(1);
+            $table->integer('subaccount')->default(0);
         });
     }
 

@@ -1305,6 +1305,7 @@
                     </div>
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
+                    @if($customer->status_open_account == 'terminate')
                     <div class="tab-pane fade" id="simulate" role="tabpanel">
                         <div class="card shadow-sm">
                             <div class="card-header">
@@ -1379,6 +1380,7 @@
                             </form>
                         </div>
                     </div>
+                    @endif
                     <!--end:::Tab pane-->
                     <!--begin:::Tab pane-->
                     <div class="tab-pane fade" id="support" role="tabpanel">
