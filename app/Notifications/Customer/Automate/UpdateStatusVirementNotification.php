@@ -1,32 +1,31 @@
 <?php
 
-namespace App\Notifications\Customer;
+namespace App\Notifications\Customer\Automate;
 
-use App\Helper\CustomerHelper;
-use App\Helper\CustomerLoanHelper;
+use App\Helper\CustomerTransferHelper;
+use App\Models\Customer\CustomerTransfer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UpdateTypeAccountNotification extends Notification
+class UpdateStatusVirementNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
-    public $type;
+    private CustomerTransfer $virement;
+    private string $status;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $type
+     * @param $virement
+     * @param $status
      */
-    public function __construct($customer, $type)
+    public function __construct($virement, $status)
     {
-        //
-        $this->customer = $customer;
-        $this->type = $type;
+        $this->virement = $virement;
+        $this->status = $status;
     }
 
     /**
@@ -49,10 +48,10 @@ class UpdateTypeAccountNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre compte en ligne")
-            ->view('emails.customer.update_type_account', [
-                "customer" => $this->customer,
-                "type" => $this->type
+            ->subject('Votre virement bancaire')
+            ->view('emails.customer.update_status_virement', [
+                "virement" => $this->virement,
+                "status" => CustomerTransferHelper::getStatusTransfer($this->status)
             ]);
     }
 
@@ -65,10 +64,10 @@ class UpdateTypeAccountNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'icon' => 'fa-box',
+            'icon' => 'fa-money-bill-transfer',
             'color' => 'primary',
-            'title' => 'Votre compte en ligne',
-            'text' => "Votre compte est passée à l'offre ".$this->type->name." à " .eur($this->type->price),
+            'title' => 'Virement Bancaire',
+            'text' => "L'état de votre virement N°".$this->virement->reference." à été mise à jours",
             'time' => now()->shortAbsoluteDiffForHumans()
         ];
     }

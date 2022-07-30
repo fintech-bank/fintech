@@ -44,3 +44,49 @@
 .form-check.form-check-solid .form-check-input:checked {
     background-color: #0c27a3;
 }
+
+:root {
+    --circle-size: clamp(1.5rem, 5vw, 3rem);
+    --spacing: clamp(0.25rem, 2vw, 0.5rem);
+}
+
+.c-stepper__item {
+    position: relative;
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 4rem;
+}
+.c-stepper__item:before {
+    content: "";
+    flex: 0 0 var(--circle-size);
+    height: var(--circle-size);
+    border-radius: 50%;
+    background-color: lightgrey;
+}
+.c-stepper__item:not(:last-child):after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: calc(var(--circle-size) + var(--spacing));
+    bottom: var(--spacing);
+    z-index: -1;
+    transform: translateX(calc(var(--circle-size) / 2));
+    width: 2px;
+    background-color: #e0e0e0;
+}
+
+.c-stepper__title {
+    font-weight: bold;
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    margin-bottom: clamp(0.85rem, 2vmax, 1rem);
+}
+
+.c-stepper__desc {
+    color: grey;
+    font-size: clamp(0.85rem, 2vmax, 1rem);
+}
+
+.c-stepper__content {
+    max-width: 700px;
+}
+

@@ -5,7 +5,7 @@
 @endsection
 
 @section("content")
-    <!--begin::Heading-->
+
     <div class="text-center mb-17">
         <!--begin::Title-->
         <h3 class="fs-2hx text-dark mb-5" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">How it Works</h3>

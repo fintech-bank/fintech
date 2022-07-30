@@ -203,7 +203,7 @@
                 <!--end::Table head-->
                 <!--begin::Table body-->
                 <tbody class="fw-bold text-gray-600">
-                @foreach(\App\Models\Customer\Customer::where('agency_id', auth()->user()->agency_id)->get() as $customer)
+                @foreach(\App\Models\Customer\Customer::all() as $customer)
                 <tr>
                     <!--begin::Name=-->
                     <td>
@@ -216,7 +216,7 @@
                             <!--begin::Text-->
                             <div class="flex-grow-1">
                                 @if($customer->info->type == 'part')
-                                    <a href="#" class="text-dark fw-bolder text-hover-{{ random_color() }} fs-6">{{ $customer->info->civility }}. {{ $customer->info->lastname }} {{ $customer->info->civility }}</a>
+                                    <a href="#" class="text-dark fw-bolder text-hover-{{ random_color() }} fs-6">{{ $customer->info->civility }}. {{ $customer->info->lastname }} {{ $customer->info->firstname }}</a>
                                     <span class="text-muted d-block fw-bold">Particulier</span>
                                 @else
                                     <a href="#" class="text-dark fw-bolder text-hover-{{ random_color() }} fs-6">{{ $customer->info->company }}</a>

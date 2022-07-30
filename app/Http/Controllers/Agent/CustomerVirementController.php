@@ -28,7 +28,7 @@ class CustomerVirementController extends Controller
             switch ($request->get('type')) {
                 case 'immediat':
                     if($wallet->balance_actual <= 0) {
-                        $wallet->transfers()->create([
+                        $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
@@ -40,7 +40,7 @@ class CustomerVirementController extends Controller
                             'customer_beneficiaire_id' => $beneficiaire->id
                         ]);
                     } else {
-                        $wallet->transfers()->create([
+                        $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
@@ -52,12 +52,15 @@ class CustomerVirementController extends Controller
                             'customer_beneficiaire_id' => $beneficiaire->id
                         ]);
                     }
-                    CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), '-'.$request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
+                    $transaction = CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), $request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
+                    $trans->update([
+                        'transaction_id' =>  $transaction->id
+                    ]);
                     break;
 
                 case 'differed':
                     if($wallet->balance_actual <= 0) {
-                        $wallet->transfers()->create([
+                        $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
@@ -69,7 +72,7 @@ class CustomerVirementController extends Controller
                             'customer_beneficiaire_id' => $beneficiaire->id
                         ]);
                     } else {
-                        $wallet->transfers()->create([
+                        $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
@@ -81,12 +84,16 @@ class CustomerVirementController extends Controller
                             'customer_beneficiaire_id' => $beneficiaire->id
                         ]);
                     }
-                    CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), '-'.$request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
+
+                    $transaction = CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), $request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
+                    $trans->update([
+                        'transaction_id' => $transaction->id
+                    ]);
                     break;
 
                 case 'permanent':
                     if($wallet->balance_actual <= 0) {
-                        $wallet->transfers()->create([
+                        $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
@@ -99,7 +106,7 @@ class CustomerVirementController extends Controller
                             'customer_beneficiaire_id' => $beneficiaire->id
                         ]);
                     } else {
-                        $wallet->transfers()->create([
+                        $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
@@ -112,7 +119,10 @@ class CustomerVirementController extends Controller
                             'customer_beneficiaire_id' => $beneficiaire->id
                         ]);
                     }
-                    CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), '-'.$request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
+                    $transaction = CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), $request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
+                    $trans->update([
+                        'transaction_id' => $transaction->id
+                    ]);
                     break;
             }
 

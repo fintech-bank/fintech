@@ -62,8 +62,11 @@ class InitTransferController extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => "Un virement de ".eur($this->transfer->amount)." à été initié pour ".CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire)
+            'icon' => 'fa-arrow-right-arrow-left',
+            'color' => 'success',
+            'title' => 'Virement Bancaire',
+            'text' => "Un virement de ".eur($this->transfer->amount)." à été initié pour ".CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire),
+            'time' => now()->shortAbsoluteDiffForHumans()
         ];
     }
 }

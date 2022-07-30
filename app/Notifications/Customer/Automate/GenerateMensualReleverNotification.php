@@ -1,32 +1,29 @@
 <?php
 
-namespace App\Notifications\Customer;
+namespace App\Notifications\Customer\Automate;
 
 use App\Helper\CustomerHelper;
-use App\Helper\CustomerLoanHelper;
+use App\Models\Customer\CustomerDocument;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UpdateTypeAccountNotification extends Notification
+class GenerateMensualReleverNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
-    public $type;
+    public CustomerDocument $file;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $type
+     * @param $file
      */
-    public function __construct($customer, $type)
+    public function __construct($file)
     {
         //
-        $this->customer = $customer;
-        $this->type = $type;
+        $this->file = $file;
     }
 
     /**
@@ -49,11 +46,8 @@ class UpdateTypeAccountNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre compte en ligne")
-            ->view('emails.customer.update_type_account', [
-                "customer" => $this->customer,
-                "type" => $this->type
-            ]);
+                    ->greeting("Bonjour ".CustomerHelper::getName($this->file->customer))
+                    ->line("Votre relever du mois ".now()->monthName." est disponible sur votre espace");
     }
 
     /**
@@ -65,10 +59,10 @@ class UpdateTypeAccountNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'icon' => 'fa-box',
+            'icon' => 'fa-file-pdf',
             'color' => 'primary',
-            'title' => 'Votre compte en ligne',
-            'text' => "Votre compte est passée à l'offre ".$this->type->name." à " .eur($this->type->price),
+            'title' => 'Relevé Bancaire',
+            'text' => 'Votre relevé bancaire de '.now()->monthName." est disponible",
             'time' => now()->shortAbsoluteDiffForHumans()
         ];
     }

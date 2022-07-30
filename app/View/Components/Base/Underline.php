@@ -19,6 +19,7 @@ class Underline extends Component
      * @var string
      */
     public $sizeText;
+    public string $class;
 
     /**
      * Create a new component instance.
@@ -27,14 +28,16 @@ class Underline extends Component
      * @param int $size
      * @param string $color
      * @param string $sizeText
+     * @param string $class
      */
-    public function __construct($title, $size = 8, $color = 'primary', $sizeText = 'fs-2tx')
+    public function __construct($title, $size = 8, $color = 'primary', $sizeText = 'fs-2tx', $class = 'w-250px mt-5 mb-5')
     {
         //
         $this->title = $title;
         $this->size = $size;
         $this->color = $color;
         $this->sizeText = $sizeText;
+        $this->class = $class;
     }
 
     /**

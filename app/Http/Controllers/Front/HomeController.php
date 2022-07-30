@@ -19,7 +19,12 @@ class HomeController extends Controller
         } elseif(auth()->user()->agent == 1) {
             return redirect()->route('agent.dashboard');
         } else {
-            return redirect()->route('customer.dashboard');
+            if(auth()->user()->customers->status_open_account == 'terminated') {
+                return redirect()->route('customer.dashboard');
+            } else {
+                session()->put(['user' => auth()->user()]);
+                return redirect()->route('register.terminate');
+            }
         }
     }
 }

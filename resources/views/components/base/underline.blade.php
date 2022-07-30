@@ -1,4 +1,4 @@
-<div class="w-250px mt-5 mb-5">
+<div class="{{ $class }}">
     <span class="d-inline-block position-relative ms-2">
         <span class="d-inline-block mb-2 {{ $sizeText }} fw-bolder">
             {{ $title }}

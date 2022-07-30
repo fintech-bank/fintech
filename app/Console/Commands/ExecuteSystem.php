@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Helper\CustomerHelper;
 use App\Helper\CustomerTransactionHelper;
+use App\Helper\CustomerWalletHelper;
+use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerEpargne;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerSepa;
@@ -13,8 +15,10 @@ use App\Models\User;
 use App\Notifications\Customer\Automate\AcceptedLoanChargeNotification;
 use App\Notifications\Customer\Automate\AutoAcceptCreditPrlvNotification;
 use App\Notifications\Customer\Automate\VerifRequestLoanOpenNotification;
+use App\Notifications\Customer\UpdateStatusAccountNotification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use PHPUnit\Exception;
 
 class ExecuteSystem extends Command
 {
@@ -70,6 +74,9 @@ class ExecuteSystem extends Command
 
             case 'executeTransactionComing':
                 return $this->executeTransactionComing();
+
+            case 'executeActiveAccount':
+                return $this->executeActiveAccount();
         }
     }
 
@@ -247,7 +254,6 @@ class ExecuteSystem extends Command
             }
         }
 
-        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Execution des ordres SEPA en date du " . now()->format('d/m/Y') . "<br>Nombre d'ordre executer: " . $i));
         $this->info('Execution des ordres SEPA en date du '.$this->date);
         $this->line("Nombre d'ordre executer': ".$i);
     }
@@ -259,12 +265,35 @@ class ExecuteSystem extends Command
 
         try {
             foreach ($transactions as $transaction) {
-                if($transaction->updated_at <= now()->between(now()->startOfDay(), now()->endOfDay())) {
-                    CustomerTransactionHelper::updated($transaction);
-                    $v++;
+                if($transaction->updated_at->between(now()->startOfDay(), now()->endOfDay())) {
+                    if($transaction->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
+                        CustomerTransactionHelper::updated($transaction);
+                        $v++;
+                    }
                 }
             }
             $this->line("Nombre de transaction passée: ".$v);
+        }catch (\Exception $exception) {
+            $this->error($exception->getMessage());
+        }
+    }
+
+    private function executeActiveAccount()
+    {
+        $accounts = Customer::where('status_open_account', 'accepted')->get();
+        $i = 0;
+
+        try {
+            foreach ($accounts as $account) {
+                $account->update([
+                    'status_open_account' => 'terminated'
+                ]);
+
+                $account->user->notify(new UpdateStatusAccountNotification($account, $account->status_open_account));
+                $i++;
+            }
+
+            $this->line('Nombre de compte passé à TERMINER: '.$i);
         }catch (\Exception $exception) {
             $this->error($exception->getMessage());
         }

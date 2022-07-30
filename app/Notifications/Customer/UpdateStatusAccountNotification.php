@@ -3,6 +3,7 @@
 namespace App\Notifications\Customer;
 
 use App\Helper\CustomerHelper;
+use App\Helper\CustomerTransferHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -88,9 +89,12 @@ class UpdateStatusAccountNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            "type" => "notice",
-            "message" => "Le status de votre compte est passée à: ".CustomerHelper::getStatusOpenAccount($this->status)
+       return [
+            'icon' => 'fa-euro-sign',
+            'color' => 'primary',
+            'title' => 'Votre compte bancaire',
+            'text' => "Le status de votre compte est passée à: ".CustomerHelper::getStatusOpenAccount($this->status),
+            'time' => now()->shortAbsoluteDiffForHumans()
         ];
     }
 }

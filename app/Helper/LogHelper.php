@@ -10,9 +10,14 @@ use App\Notifications\Admin\LogNotification;
 class LogHelper
 {
 
+    /**
+     * @param $type
+     * @param $message
+     * @return void
+     */
     public static function notify($type, $message)
     {
-        $users = User::where('admin', 1)->get();
+        $users = User::where('admin', 1)->orWhere("agent", 1)->get();
 
         foreach ($users as $user) {
             \Log::$type($message);
