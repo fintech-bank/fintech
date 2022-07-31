@@ -88,6 +88,7 @@ License: For each use you must have a valid license purchased only from above li
 <script src="/assets/js/scripts.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
+<script src="//code.tidio.co/et1dkherzl4eyesbwuluuxbvsvwvvzxz.js" async></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

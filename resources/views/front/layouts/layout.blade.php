@@ -1240,6 +1240,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Global Javascript Bundle(used by all pages)-->
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
+<script src="//code.tidio.co/et1dkherzl4eyesbwuluuxbvsvwvvzxz.js" async></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Vendors Javascript(used by this page)-->
 <script src="/assets/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
