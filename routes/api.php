@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +19,7 @@ Route::get('/geo/countries', function () {
     foreach ($result as $item) {
         $json[] = [
             'id' => $item->iso,
-            'name' => $item->name
+            'name' => $item->name,
         ];
     }
 
@@ -78,7 +77,6 @@ Route::prefix('card')->group(function () {
     Route::get('{card}/activate', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'activate']);
     Route::get('{card}/opposit', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'opposit']);
 });
-
 
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
 Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);

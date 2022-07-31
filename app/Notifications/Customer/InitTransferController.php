@@ -2,10 +2,8 @@
 
 namespace App\Notifications\Customer;
 
-use App\Helper\CustomerHelper;
 use App\Helper\CustomerTransferHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -46,10 +44,10 @@ class InitTransferController extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre virement bancaire")
-            ->view("emails.customer.init_transfer", [
-                "customer" => $this->transfer->wallet->customer,
-                "transfer" => $this->transfer
+            ->subject('Votre virement bancaire')
+            ->view('emails.customer.init_transfer', [
+                'customer' => $this->transfer->wallet->customer,
+                'transfer' => $this->transfer,
             ]);
     }
 
@@ -65,8 +63,8 @@ class InitTransferController extends Notification
             'icon' => 'fa-arrow-right-arrow-left',
             'color' => 'success',
             'title' => 'Virement Bancaire',
-            'text' => "Un virement de ".eur($this->transfer->amount)." à été initié pour ".CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire),
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'text' => 'Un virement de '.eur($this->transfer->amount).' à été initié pour '.CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire),
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

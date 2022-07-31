@@ -2,10 +2,8 @@
 
 namespace App\Notifications\Customer;
 
-use App\Helper\CustomerHelper;
 use App\Helper\CustomerLoanHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,7 +12,9 @@ class UpdateStatusLoanNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $loan;
+
     public $status;
 
     /**
@@ -52,11 +52,11 @@ class UpdateStatusLoanNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre Pret bancaire N°".$this->loan->reference)
+            ->subject('Votre Pret bancaire N°'.$this->loan->reference)
             ->view('emails.customer.status_loan', [
                 'customer' => $this->customer,
                 'loan' => $this->loan,
-                'status' => $this->status
+                'status' => $this->status,
             ]);
     }
 
@@ -72,8 +72,8 @@ class UpdateStatusLoanNotification extends Notification
             'icon' => 'fa-certificate',
             'color' => 'primary',
             'title' => 'Votre pret bancaire',
-            'text' => "Le status de votre pret bancaire N°".$this->loan->reference." est passée à: ".CustomerLoanHelper::getStatusLoan($this->status),
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'text' => 'Le status de votre pret bancaire N°'.$this->loan->reference.' est passée à: '.CustomerLoanHelper::getStatusLoan($this->status),
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

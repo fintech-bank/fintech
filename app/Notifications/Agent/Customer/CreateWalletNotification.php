@@ -5,7 +5,6 @@ namespace App\Notifications\Agent\Customer;
 use App\Helper\CustomerHelper;
 use App\Helper\CustomerWalletHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -16,7 +15,9 @@ class CreateWalletNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $wallet;
+
     public $document;
 
     /**
@@ -54,7 +55,7 @@ class CreateWalletNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Nouveau compte bancaire pour un client")
+            ->subject('Nouveau compte bancaire pour un client')
             ->line('Un nouveau compte bancaire à été créer pour le client :'.CustomerHelper::getName($this->customer))
             ->line('Compte N°'.$this->wallet->number_account)
             ->line('Type: '.CustomerWalletHelper::getTypeWallet($this->wallet->type))
@@ -70,15 +71,15 @@ class CreateWalletNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => 'Un nouveau compte bancaire à été créer pour le client :'.CustomerHelper::getName($this->customer)
+            'type' => 'notice',
+            'message' => 'Un nouveau compte bancaire à été créer pour le client :'.CustomerHelper::getName($this->customer),
         ];
     }
 
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title("Nouveau compte bancaire pour un client")
+            ->title('Nouveau compte bancaire pour un client')
             ->icon('/storage/log/notice.png')
             ->body('Un nouveau compte bancaire à été créer pour le client :'.CustomerHelper::getName($this->customer));
     }

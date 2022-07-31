@@ -6,7 +6,6 @@ use App\Helper\CustomerHelper;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerCreditCard;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,7 +14,9 @@ class RequestOppositCardNotification extends Notification
     use Queueable;
 
     public Customer $customer;
+
     public CustomerCreditCard $card;
+
     public string $type;
 
     /**
@@ -53,8 +54,8 @@ class RequestOppositCardNotification extends Notification
     {
         return (new MailMessage)
                     ->subject("Nouvelle demande d'opposition de carte bancaire")
-                    ->line("Client: ".CustomerHelper::getName($this->customer))
+                    ->line('Client: '.CustomerHelper::getName($this->customer))
                     ->line("Type d'opposition: ".$this->type)
-                    ->line("Carte Bancaire :".\App\Helper\CustomerCreditCard::getCreditCard($this->card->number, false));
+                    ->line('Carte Bancaire :'.\App\Helper\CustomerCreditCard::getCreditCard($this->card->number, false));
     }
 }

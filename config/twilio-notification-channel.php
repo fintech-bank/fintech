@@ -34,5 +34,5 @@ return [
         21408, // Permission to send an SMS has not been enabled for the region indicated by the 'To' number
     ],
 
-    'authy_secret' => env('AUTHY_SECRET')
+    'authy_secret' => env('AUTHY_SECRET'),
 ];

@@ -48,6 +48,7 @@
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
         "laravel/homestead": "^13.2",
+        "laravel/pint": "^1.1",
         "laravel/sail": "^1.0.1",
         "laravel/telescope": "^4.9",
         "mockery/mockery": "^1.4.4",

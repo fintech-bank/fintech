@@ -21,7 +21,7 @@ class CmsSubcategoryController extends Controller
 
         ob_start();
         foreach ($subs as $sub) {
-        ?>
+            ?>
         <tr>
             <td><?= $sub->name ?></td>
             <td>
@@ -39,7 +39,7 @@ class CmsSubcategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @param $category_id
      * @return void
      */
@@ -48,12 +48,11 @@ class CmsSubcategoryController extends Controller
         //
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
      * @param $category_id
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($category_id, $id)

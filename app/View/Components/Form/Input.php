@@ -7,36 +7,46 @@ use Illuminate\View\Component;
 class Input extends Component
 {
     public $name;
+
     public $type;
+
     public $label;
+
     /**
      * @var string
      */
     public $value;
+
     /**
      * @var bool
      */
     public $required;
+
     /**
      * @var bool
      */
     public $autofocus;
+
     /**
      * @var null
      */
     public $placeholder;
+
     /**
      * @var bool
      */
     public $help;
+
     /**
      * @var null
      */
     public $helpText;
+
     /**
      * @var null
      */
     public $text;
+
     /**
      * @var null
      */
@@ -47,20 +57,20 @@ class Input extends Component
      *
      * @param $name
      * @param $type
-     * @param string $label
-     * @param string $value
-     * @param bool $required
-     * @param bool $autofocus
-     * @param null $placeholder
-     * @param bool $help
-     * @param null $helpText
-     * @param null $text
-     * @param null $class
+     * @param  string  $label
+     * @param  string  $value
+     * @param  bool  $required
+     * @param  bool  $autofocus
+     * @param  null  $placeholder
+     * @param  bool  $help
+     * @param  null  $helpText
+     * @param  null  $text
+     * @param  null  $class
      */
     public function __construct($name, $type, $label = '',
-                                $value = '', $required = false, $autofocus = false,
-                                $placeholder = null, $help = false, $helpText = null,
-                                $text = null, $class = null)
+        $value = '', $required = false, $autofocus = false,
+        $placeholder = null, $help = false, $helpText = null,
+        $text = null, $class = null)
     {
         $this->name = $name;
         $this->type = $type;

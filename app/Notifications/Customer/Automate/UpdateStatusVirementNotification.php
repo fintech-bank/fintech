@@ -5,7 +5,6 @@ namespace App\Notifications\Customer\Automate;
 use App\Helper\CustomerTransferHelper;
 use App\Models\Customer\CustomerTransfer;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,6 +13,7 @@ class UpdateStatusVirementNotification extends Notification
     use Queueable;
 
     private CustomerTransfer $virement;
+
     private string $status;
 
     /**
@@ -50,8 +50,8 @@ class UpdateStatusVirementNotification extends Notification
         return (new MailMessage)
             ->subject('Votre virement bancaire')
             ->view('emails.customer.update_status_virement', [
-                "virement" => $this->virement,
-                "status" => CustomerTransferHelper::getStatusTransfer($this->status)
+                'virement' => $this->virement,
+                'status' => CustomerTransferHelper::getStatusTransfer($this->status),
             ]);
     }
 
@@ -67,8 +67,8 @@ class UpdateStatusVirementNotification extends Notification
             'icon' => 'fa-money-bill-transfer',
             'color' => 'primary',
             'title' => 'Virement Bancaire',
-            'text' => "L'état de votre virement N°".$this->virement->reference." à été mise à jours",
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'text' => "L'état de votre virement N°".$this->virement->reference.' à été mise à jours',
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

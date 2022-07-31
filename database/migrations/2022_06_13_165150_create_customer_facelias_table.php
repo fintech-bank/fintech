@@ -42,8 +42,6 @@ return new class extends Migration
             $table->foreign('wallet_payment_id')->references('id')->on('customer_wallets')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-
-
         });
     }
 

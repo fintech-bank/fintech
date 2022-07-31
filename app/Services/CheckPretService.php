@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 class CheckPretService
 {
@@ -96,8 +94,8 @@ class CheckPretService
         $result = $v;
 
         return [
-            "resultat" => $result,
-            "text" => $text
+            'resultat' => $result,
+            'text' => $text,
         ];
     }
 }

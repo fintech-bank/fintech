@@ -17,8 +17,8 @@ class CustomerSituationIncomeFactory extends Factory
     public function definition()
     {
         return [
-            "pro_incoming" => rand(500,9999),
-            "patrimoine" => $this->faker->boolean(20) == true ? rand(1000,99999) : 0,
+            'pro_incoming' => rand(500, 9999),
+            'patrimoine' => $this->faker->boolean(20) == true ? rand(1000, 99999) : 0,
         ];
     }
 }

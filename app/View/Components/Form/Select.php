@@ -7,12 +7,16 @@ use Illuminate\View\Component;
 class Select extends Component
 {
     public $name;
+
     public $datas;
+
     public $label;
+
     /**
      * @var null
      */
     public $placeholder;
+
     /**
      * @var bool
      */
@@ -24,8 +28,8 @@ class Select extends Component
      * @param $name
      * @param $datas
      * @param $label
-     * @param null $placeholder
-     * @param bool $required
+     * @param  null  $placeholder
+     * @param  bool  $required
      */
     public function __construct($name, $datas, $label, $placeholder = null, $required = true)
     {

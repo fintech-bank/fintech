@@ -3,7 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,8 +11,11 @@ class CreateEpargneNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $wallet;
+
     public $document;
+
     public $epargne;
 
     /**
@@ -53,12 +55,12 @@ class CreateEpargneNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre nouveau compte épargne est disponible")
-            ->view("emails.customer.create_epargne", [
-                "customer" => $this->customer,
-                "wallet" => $this->wallet,
-                "document" => $this->document,
-                "epargne" => $this->epargne
+            ->subject('Votre nouveau compte épargne est disponible')
+            ->view('emails.customer.create_epargne', [
+                'customer' => $this->customer,
+                'wallet' => $this->wallet,
+                'document' => $this->document,
+                'epargne' => $this->epargne,
             ]);
     }
 }

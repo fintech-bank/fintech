@@ -5,7 +5,6 @@ namespace App\Models\Core;
 use App\Helper\CountryHelper;
 use App\Models\Document\DocumentTransmiss;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $documents_count
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
  * @property-read int|null $users_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Agency newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Agency newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Agency query()
@@ -42,11 +42,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Agency wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Agency wherePostal($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperAgency
  */
 class Agency extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function documents()

@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $process_time
  * @property-read \Illuminate\Database\Eloquent\Collection|CustomerBeneficiaire[] $beneficiaires
  * @property-read int|null $beneficiaires_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Bank newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bank newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bank query()
@@ -32,11 +33,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Bank wherePrimaryColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bank whereProcessTime($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperBank
  */
 class Bank extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function beneficiaires()

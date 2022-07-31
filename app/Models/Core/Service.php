@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type_prlv
  * @property int|null $package_id
  * @property-read \App\Models\Core\Package|null $package
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Service newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Service newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Service query()
@@ -23,26 +24,29 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Service wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Service whereTypePrlv($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperService
  */
 class Service extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
-    public function package()
+    public function package(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Package::class);
     }
 
-    public function getTypePrlvAttribute($value)
+    public function getTypePrlvAttribute($value): string
     {
-        switch ($value) {
-            case 'mensual': return 'Mensuel';break;
-            case 'trim': return 'Trimestriel';break;
-            case 'sem': return 'Semestriel';break;
-            case 'ponctual': return 'Ponctuel';break;
-            default: return 'Annuel';break;
-        }
+        return match ($value) {
+            'mensual' => 'Mensuel',
+            'trim' => 'Trimestriel',
+            'sem' => 'Semestriel',
+            'ponctual' => 'Ponctuel',
+            default => 'Annuel',
+        };
     }
 }

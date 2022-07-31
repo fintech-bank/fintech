@@ -32,7 +32,7 @@ return [
     ],
 
     'google' => [
-        'api_key' => env("GOOGLE_CLOUD_KEY")
+        'api_key' => env('GOOGLE_CLOUD_KEY'),
     ],
 
     'stripe' => [
@@ -49,6 +49,6 @@ return [
         'account_sid' => env('TWILIO_ACCOUNT_SID'),
         'from' => env('TWILIO_FROM'),
         'debug' => env('TWILIO_DEBUG_TO'),
-    ]
+    ],
 
 ];

@@ -7,15 +7,22 @@ use Illuminate\View\Component;
 class InputDialer extends Component
 {
     public $name;
+
     public $label;
+
     public $min;
+
     public $max;
+
     public $step;
+
     public $value;
+
     /**
      * @var null
      */
     public $prefix;
+
     /**
      * @var bool
      */
@@ -30,8 +37,8 @@ class InputDialer extends Component
      * @param $max
      * @param $step
      * @param $value
-     * @param null $prefix
-     * @param bool $required
+     * @param  null  $prefix
+     * @param  bool  $required
      */
     public function __construct($name, $label, $min, $max, $step, $value, $prefix = null, $required = false)
     {

@@ -17,7 +17,7 @@ class CustomerSepaController extends Controller
 
         return response()->json([
             'sepa' => $sepa,
-            'url_refund' => route('agent.customer.wallet.sepas.refund', [$sepa->wallet->customer->id, $sepa->wallet->id, $sepa->id])
+            'url_refund' => route('agent.customer.wallet.sepas.refund', [$sepa->wallet->customer->id, $sepa->wallet->id, $sepa->id]),
         ]);
     }
 
@@ -26,28 +26,28 @@ class CustomerSepaController extends Controller
         $sepa = CustomerSepa::query()->find($sepa);
         $call = $bankFintech->callRefundSepa($sepa->id);
 
-        if($call == 1) {
+        if ($call == 1) {
             try {
                 // Remboursement
-                if($sepa->amount <= 0) {
+                if ($sepa->amount <= 0) {
                     CustomerTransactionHelper::create(
                         'credit',
                         'sepa',
-                        "Remboursement ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
-                        - $sepa->amount,
+                        'Remboursement '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
+                        -$sepa->amount,
                         $sepa->customer_wallet_id,
                         true,
-                        "Remboursement ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                        'Remboursement '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
                         now());
                 } else {
                     CustomerTransactionHelper::create(
                         'debit',
                         'sepa',
-                        "Remboursement ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
-                        "-".$sepa->amount,
+                        'Remboursement '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
+                        '-'.$sepa->amount,
                         $sepa->customer_wallet_id,
                         true,
-                        "Remboursement ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                        'Remboursement '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
                         now());
                 }
 
@@ -55,12 +55,11 @@ class CustomerSepaController extends Controller
                 $sepa->save();
 
                 return response()->json();
-            }catch (\Exception $exception) {
+            } catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception->getMessage());
+
                 return response()->json(null, 500);
             }
-
-
         } else {
             return response()->json(null, 426);
         }
@@ -71,25 +70,25 @@ class CustomerSepaController extends Controller
         $sepa = CustomerSepa::query()->find($sepa);
 
         try {
-            if($sepa->amount <= 0) {
+            if ($sepa->amount <= 0) {
                 CustomerTransactionHelper::create(
                     'debit',
                     'sepa',
-                    "Prélèvement bancaire - ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
-                    - $sepa->amount,
+                    'Prélèvement bancaire - '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
+                    -$sepa->amount,
                     $sepa->customer_wallet_id,
                     true,
-                    "Prélèvement bancaire - ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    'Prélèvement bancaire - '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
                     now());
             } else {
                 CustomerTransactionHelper::create(
                     'credit',
                     'sepa',
-                    "Prélèvement bancaire -  ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    'Prélèvement bancaire -  '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
                     $sepa->amount,
                     $sepa->customer_wallet_id,
                     true,
-                    "Prélèvement bancaire -  ".$sepa->creditor." | ".$sepa->updated_at->format('d/m/Y'),
+                    'Prélèvement bancaire -  '.$sepa->creditor.' | '.$sepa->updated_at->format('d/m/Y'),
                     now());
             }
 
@@ -97,42 +96,45 @@ class CustomerSepaController extends Controller
             $sepa->save();
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(null, 500);
         }
     }
+
     public function reject($customer, $wallet, $sepa)
     {
         $sepa = CustomerSepa::query()->find($sepa);
 
         try {
-
             $sepa->status = 'return';
             $sepa->save();
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(null, 500);
         }
     }
+
     public function opposit($customer, $wallet, $sepa)
     {
         $sepa = CustomerSepa::find($sepa);
 
         try {
-
             $sepa->creditor()->update([
-                'opposit' => true
+                'opposit' => true,
             ]);
 
             $sepa->status = 'rejected';
             $sepa->save();
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(null, 500);
         }
     }

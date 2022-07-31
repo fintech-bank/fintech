@@ -4,7 +4,6 @@ namespace App\Notifications\Agent\Customer;
 
 use App\Helper\CustomerHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -15,7 +14,9 @@ class CreateBeneficiaireNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $beneficiaire;
+
     public $wallet;
 
     /**
@@ -57,7 +58,7 @@ class CreateBeneficiaireNotification extends Notification
             ->view('emails.agent.transfers.add_beneficiaire', [
                 'customer' => $this->customer,
                 'beneficiaire' => $this->beneficiaire,
-                'wallet' => $this->wallet
+                'wallet' => $this->wallet,
             ]);
     }
 
@@ -70,15 +71,15 @@ class CreateBeneficiaireNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => 'Un nouveau bénéficiaire à été ajouté pour le client :'.CustomerHelper::getName($this->customer)
+            'type' => 'notice',
+            'message' => 'Un nouveau bénéficiaire à été ajouté pour le client :'.CustomerHelper::getName($this->customer),
         ];
     }
 
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title("Nouveau bénéficiaire pour un client")
+            ->title('Nouveau bénéficiaire pour un client')
             ->icon('/storage/log/notice.png')
             ->body('Un nouveau bnéficiaire à été créer pour le client :'.CustomerHelper::getName($this->customer));
     }

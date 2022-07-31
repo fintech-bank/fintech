@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repository\Core;
-
 
 use App\Models\Core\LoanPlan;
 

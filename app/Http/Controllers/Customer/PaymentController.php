@@ -17,19 +17,19 @@ class PaymentController extends Controller
         //dd(auth()->user()->customers->wallets()->where('customer_id', auth()->user()->customers->id)->where('type', '!=', 'pret')->where('status', 'active')->get());
 
         return view('customer.payment.index', [
-            'customer' => auth()->user()->customers
+            'customer' => auth()->user()->customers,
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'type' => "required",
-            'wallet_id' => "required"
+            'type' => 'required',
+            'wallet_id' => 'required',
         ]);
 
         $request->merge([
-            'debit' => $request->get('debit') != null ? $request->get('debit') : 'immediate'
+            'debit' => $request->get('debit') != null ? $request->get('debit') : 'immediate',
         ]);
 
         $wallet = CustomerWallet::find($request->get('wallet_id'));
@@ -50,7 +50,7 @@ class PaymentController extends Controller
                         // Inscription pour crédit facelia
                         CustomerFaceliaHelper::create($wallet, $wallet->customer, 500, $card);
                         $card->update([
-                            'facelia' => 1
+                            'facelia' => 1,
                         ]);
                         $facelia = true;
                     } else {
@@ -72,11 +72,12 @@ class PaymentController extends Controller
             }
 
             return response()->json([
-                "card" => $card,
-                "facelia" => $facelia
+                'card' => $card,
+                'facelia' => $facelia,
             ]);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json($exception->getMessage(), 500);
         }
     }
@@ -85,7 +86,7 @@ class PaymentController extends Controller
     {
         return view('customer.payment.show', [
             'card' => \App\Models\Customer\CustomerCreditCard::find($card),
-            'customer' => auth()->user()->customers
+            'customer' => auth()->user()->customers,
         ]);
     }
 
@@ -114,12 +115,13 @@ class PaymentController extends Controller
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json([
                 'errors' => [
-                    $exception->getMessage()
-                ]
+                    $exception->getMessage(),
+                ],
             ], 500);
         }
     }
@@ -129,26 +131,28 @@ class PaymentController extends Controller
         $limit_retrait_max = round($card->limit_retrait * 3, -2);
         $limit_payment_max = round($card->limit_payment * 1.23, -2);
 
-        if($request->get('limit_retrait') > $limit_retrait_max) {
-            return response()->json(['errors' => ["Le Plafond de retrait est limité à ".eur($limit_retrait_max)]], 500);
+        if ($request->get('limit_retrait') > $limit_retrait_max) {
+            return response()->json(['errors' => ['Le Plafond de retrait est limité à '.eur($limit_retrait_max)]], 500);
         }
 
-        if($request->get('limit_payment') > $limit_payment_max) {
-            return response()->json(['errors' => ["Le Plafond de paiement est limité à ".eur($limit_payment_max)]], 500);
+        if ($request->get('limit_payment') > $limit_payment_max) {
+            return response()->json(['errors' => ['Le Plafond de paiement est limité à '.eur($limit_payment_max)]], 500);
         }
 
         try {
             $card->update([
                 'limit_retrait' => $request->get('limit_retrait'),
-                'limit_payment' => $request->get('limit_payment')
+                'limit_payment' => $request->get('limit_payment'),
             ]);
+
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json([
                 'errors' => [
-                    $exception->getMessage()
-                ]
+                    $exception->getMessage(),
+                ],
             ], 500);
         }
     }

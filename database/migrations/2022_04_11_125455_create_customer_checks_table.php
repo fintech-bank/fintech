@@ -18,14 +18,13 @@ return new class extends Migration
             $table->string('reference');
             $table->integer('tranche_start');
             $table->integer('tranche_end');
-            $table->enum("status", ["checkout", "manufacture", "ship", "outstanding", "finish", "destroy"])->default('checkout');
+            $table->enum('status', ['checkout', 'manufacture', 'ship', 'outstanding', 'finish', 'destroy'])->default('checkout');
             $table->timestamps();
 
             $table->foreignId('customer_wallet_id')
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
         });
     }
 

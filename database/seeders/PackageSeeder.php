@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Core\Package;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PackageSeeder extends Seeder
@@ -16,7 +15,7 @@ class PackageSeeder extends Seeder
     public function run()
     {
         Package::query()->create([
-            'name' => "Cristal",
+            'name' => 'Cristal',
             'price' => 0,
             'type_prlv' => 'mensual',
             'type_cpt' => 'part',
@@ -31,11 +30,11 @@ class PackageSeeder extends Seeder
             'check' => 0,
             'nb_carte_physique' => 1,
             'nb_carte_virtuel' => 0,
-            'subaccount' => 0
+            'subaccount' => 0,
         ]);
 
         Package::query()->create([
-            'name' => "Gold",
+            'name' => 'Gold',
             'price' => 4.99,
             'type_prlv' => 'mensual',
             'type_cpt' => 'part',
@@ -50,11 +49,11 @@ class PackageSeeder extends Seeder
             'check' => 1,
             'nb_carte_physique' => 1,
             'nb_carte_virtuel' => 5,
-            'subaccount' => 0
+            'subaccount' => 0,
         ]);
 
         Package::query()->create([
-            'name' => "Platine",
+            'name' => 'Platine',
             'price' => 9.99,
             'type_prlv' => 'mensual',
             'type_cpt' => 'part',
@@ -69,11 +68,11 @@ class PackageSeeder extends Seeder
             'check' => 1,
             'nb_carte_physique' => 5,
             'nb_carte_virtuel' => 5,
-            'subaccount' => 1
+            'subaccount' => 1,
         ]);
 
         Package::query()->create([
-            'name' => "Pro Metal",
+            'name' => 'Pro Metal',
             'price' => 0,
             'type_prlv' => 'mensual',
             'type_cpt' => 'pro',
@@ -88,11 +87,11 @@ class PackageSeeder extends Seeder
             'check' => 0,
             'nb_carte_physique' => 1,
             'nb_carte_virtuel' => 0,
-            'subaccount' => 0
+            'subaccount' => 0,
         ]);
 
         Package::query()->create([
-            'name' => "Pro Gold",
+            'name' => 'Pro Gold',
             'price' => 9.90,
             'type_prlv' => 'mensual',
             'type_cpt' => 'pro',
@@ -107,7 +106,7 @@ class PackageSeeder extends Seeder
             'check' => 1,
             'nb_carte_physique' => 5,
             'nb_carte_virtuel' => 5,
-            'subaccount' => 1
+            'subaccount' => 1,
         ]);
     }
 }

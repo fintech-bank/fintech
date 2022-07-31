@@ -3,7 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,7 +11,9 @@ class CreateWalletNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $wallet;
+
     public $document;
 
     /**
@@ -50,12 +51,11 @@ class CreateWalletNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject("Votre nouveau compte bancaire est disponible")
-                    ->view("emails.customer.create_wallet", [
-                        "customer" => $this->customer,
-                        "wallet" => $this->wallet,
-                        "document" => $this->document
+                    ->subject('Votre nouveau compte bancaire est disponible')
+                    ->view('emails.customer.create_wallet', [
+                        'customer' => $this->customer,
+                        'wallet' => $this->wallet,
+                        'document' => $this->document,
                     ]);
     }
-
 }

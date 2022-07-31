@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->enum("status_open_account", ["open", "completed", "accepted", "declined", "terminated", "suspended", "closed"])->default("open");
-            $table->integer("cotation")->default(5)->comment("Cotation bancaire du client");
+            $table->enum('status_open_account', ['open', 'completed', 'accepted', 'declined', 'terminated', 'suspended', 'closed'])->default('open');
+            $table->integer('cotation')->default(5)->comment('Cotation bancaire du client');
             $table->string('auth_code');
             $table->boolean('ficp')->default(false);
             $table->boolean('fcc')->default(false);
@@ -38,9 +38,6 @@ return new class extends Migration
                             ->cascadeOnDelete();
 
             $table->foreign('agent_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
-
-
-
         });
     }
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->float('minimum');
             $table->float('maximum');
-            $table->integer('duration')->comment("En Mois");
+            $table->integer('duration')->comment('En Mois');
             $table->text('instruction')->nullable();
         });
     }

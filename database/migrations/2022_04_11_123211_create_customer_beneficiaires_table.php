@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('customer_beneficiaires', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->enum("type", ["corporate", "retail"])->default('retail');
+            $table->enum('type', ['corporate', 'retail'])->default('retail');
             $table->string('company')->nullable();
-            $table->enum("civility", ["M", "MME", "MLLE"])->nullable();
+            $table->enum('civility', ['M', 'MME', 'MLLE'])->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('currency')->default('EUR');
@@ -36,8 +36,6 @@ return new class extends Migration
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
-
         });
     }
 

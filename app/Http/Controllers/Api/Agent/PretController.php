@@ -22,21 +22,21 @@ class PretController extends Controller
         $customer = Customer::find($request->get('customer_id'));
         $wallet = CustomerWallet::find($request->get('wallet_id'));
         $plan = LoanPlan::query()->find($request->get('loan_plan_id'));
-        if($request->get('duration') > $plan->duration) {
-            return response()->json(["errors" => [
-                "Durée Non autorisé" =>"La durée du pret est supérieur à la limite autorisé !"
+        if ($request->get('duration') > $plan->duration) {
+            return response()->json(['errors' => [
+                'Durée Non autorisé' => 'La durée du pret est supérieur à la limite autorisé !',
             ]], 500);
         }
 
-        if($request->get('amount') < $plan->minimum) {
-            return response()->json(["errors" => [
-                "Montant non autorisé" =>"Le montant ne peut être inférieur à ".eur($plan->minimum)
+        if ($request->get('amount') < $plan->minimum) {
+            return response()->json(['errors' => [
+                'Montant non autorisé' => 'Le montant ne peut être inférieur à '.eur($plan->minimum),
             ]], 500);
         }
 
-        if($request->get('amount') > $plan->maximum) {
-            return response()->json(["errors" => [
-                "Montant non autorisé" =>"Le montant ne peut être supérieur à ".eur($plan->maximum)
+        if ($request->get('amount') > $plan->maximum) {
+            return response()->json(['errors' => [
+                'Montant non autorisé' => 'Le montant ne peut être supérieur à '.eur($plan->maximum),
             ]], 500);
         }
 
@@ -51,7 +51,7 @@ class PretController extends Controller
             'amount_du' => eur($request->get('amount') + CustomerLoanHelper::getLoanInterest($request->get('amount'), $plan->interests[0]->interest)),
             'insurance_du' => eur(CustomerLoanHelper::getLoanInsurance('DIM') * $request->get('duration')),
             'insurance_mensuality' => eur(CustomerLoanHelper::getLoanInsurance('DIM')),
-            'check_pret' => $checkPret
+            'check_pret' => $checkPret,
         ];
 
         return response()->json($arr);

@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $check
  * @property int $nb_carte_physique
  * @property int $nb_carte_virtuel
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Package newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Package newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Package query()
@@ -42,20 +43,27 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Package whereVisaClassic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Package whereWithdrawInternational($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperPackage
  */
 class Package extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function getTypePrlvAttribute($value)
     {
         switch ($value) {
-            case 'mensual': return 'Mensuel';break;
-            case 'trim': return 'Trimestriel';break;
-            case 'sem': return 'Semestriel';break;
-            default: return 'Annuel';break;
+            case 'mensual': return 'Mensuel';
+                break;
+            case 'trim': return 'Trimestriel';
+                break;
+            case 'sem': return 'Semestriel';
+                break;
+            default: return 'Annuel';
+                break;
         }
     }
 }

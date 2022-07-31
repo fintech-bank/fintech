@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Cms\CmsCategory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CmsCategorySeeder extends Seeder
@@ -16,14 +15,14 @@ class CmsCategorySeeder extends Seeder
     public function run()
     {
         CmsCategory::query()->create([
-            'name' => "Banque en Ligne",
-            "slug" => "banque-en-ligne"
+            'name' => 'Banque en Ligne',
+            'slug' => 'banque-en-ligne',
         ])->create([
-            'name' => "Tarifs",
-            "slug" => "tarifs"
+            'name' => 'Tarifs',
+            'slug' => 'tarifs',
         ])->create([
-            'name' => "Carte Bancaire",
-            "slug" => "carte-bancaire"
+            'name' => 'Carte Bancaire',
+            'slug' => 'carte-bancaire',
         ]);
     }
 }

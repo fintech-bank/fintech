@@ -5,7 +5,6 @@ namespace App\Notifications\Agent\Customer;
 use App\Helper\CustomerHelper;
 use App\Helper\CustomerTransferHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -49,8 +48,8 @@ class InitTransferNotification extends Notification
     {
         return (new MailMessage)
             ->subject("Initialisation d'un virement Bancaire")
-            ->line("Le client ".CustomerHelper::getName($this->transfer->wallet->customer)." à initié un virement bancaire")
-            ->line("Virement de ".eur($this->transfer->amount)." vers ".CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire));
+            ->line('Le client '.CustomerHelper::getName($this->transfer->wallet->customer).' à initié un virement bancaire')
+            ->line('Virement de '.eur($this->transfer->amount).' vers '.CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire));
     }
 
     /**
@@ -62,8 +61,8 @@ class InitTransferNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => "Le client ".CustomerHelper::getName($this->transfer->wallet->customer)." à initié un virement bancaire"
+            'type' => 'notice',
+            'message' => 'Le client '.CustomerHelper::getName($this->transfer->wallet->customer).' à initié un virement bancaire',
         ];
     }
 
@@ -72,6 +71,6 @@ class InitTransferNotification extends Notification
         return (new WebPushMessage)
             ->title("Initialisation d'un virement Bancaire")
             ->icon('/storage/log/notice.png')
-            ->body("Virement de ".eur($this->transfer->amount)." vers ".CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire));
+            ->body('Virement de '.eur($this->transfer->amount).' vers '.CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire));
     }
 }

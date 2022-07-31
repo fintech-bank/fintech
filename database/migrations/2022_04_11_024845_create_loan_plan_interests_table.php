@@ -16,13 +16,12 @@ return new class extends Migration
         Schema::create('loan_plan_interests', function (Blueprint $table) {
             $table->id();
             $table->float('interest');
-            $table->integer('duration')->comment("En Mois");
+            $table->integer('duration')->comment('En Mois');
 
             $table->foreignId('loan_plan_id')
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
         });
     }
 

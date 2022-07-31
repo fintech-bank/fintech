@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper;
-
 
 class CustomerHelper
 {
@@ -10,11 +8,11 @@ class CustomerHelper
     {
         return json_encode([
             [
-                'name' => "part"
+                'name' => 'part',
             ],
             [
-                'name' => "pro"
-            ]
+                'name' => 'pro',
+            ],
         ]);
     }
 
@@ -50,30 +48,44 @@ class CustomerHelper
     {
         if ($labeled == false) {
             switch ($status) {
-                case 'open': return 'Ouverture en cours'; break;
-                case 'completed': return 'Dossier Complet'; break;
-                case 'accepted': return 'Dossier Accepter'; break;
-                case 'declined': return 'Dossier Refuser'; break;
-                case 'suspended': return 'Suspendue'; break;
-                case 'closed': return 'Dossier Clotûrer'; break;
-                default: return 'Compte Actif'; break;
+                case 'open': return 'Ouverture en cours';
+                    break;
+                case 'completed': return 'Dossier Complet';
+                    break;
+                case 'accepted': return 'Dossier Accepter';
+                    break;
+                case 'declined': return 'Dossier Refuser';
+                    break;
+                case 'suspended': return 'Suspendue';
+                    break;
+                case 'closed': return 'Dossier Clotûrer';
+                    break;
+                default: return 'Compte Actif';
+                    break;
             }
         } else {
             switch ($status) {
-                case 'open': return '<span class="badge badge-primary">Ouverture en cours</span>'; break;
-                case 'completed': return '<span class="badge badge-warning">Dossier Complet</span>'; break;
-                case 'accepted': return '<span class="badge badge-success">Dossier Accepter</span>'; break;
-                case 'declined': return '<span class="badge badge-danger">Dossier Refuser</span>'; break;
-                case 'suspended': return '<span class="badge badge-warning">Dossier Suspendue</span>'; break;
-                case 'closed': return '<span class="badge badge-danger">Dossier Clotûrer</span>'; break;
-                default: return '<span class="badge badge-secondary">Compte Actif</span>'; break;
+                case 'open': return '<span class="badge badge-primary">Ouverture en cours</span>';
+                    break;
+                case 'completed': return '<span class="badge badge-warning">Dossier Complet</span>';
+                    break;
+                case 'accepted': return '<span class="badge badge-success">Dossier Accepter</span>';
+                    break;
+                case 'declined': return '<span class="badge badge-danger">Dossier Refuser</span>';
+                    break;
+                case 'suspended': return '<span class="badge badge-warning">Dossier Suspendue</span>';
+                    break;
+                case 'closed': return '<span class="badge badge-danger">Dossier Clotûrer</span>';
+                    break;
+                default: return '<span class="badge badge-secondary">Compte Actif</span>';
+                    break;
             }
         }
     }
 
     public static function getName($customer, $first = false)
     {
-        if($first == true) {
+        if ($first == true) {
             if ($customer->info->type == 'part') {
                 return $customer->info->lastname.' '.$customer->info->firstname;
             } else {
@@ -90,7 +102,7 @@ class CustomerHelper
 
     public static function getFirstname($customer)
     {
-        if($customer->info->type == 'pro') {
+        if ($customer->info->type == 'pro') {
             return $customer->info->company;
         } else {
             return $customer->info->firstname;
@@ -169,5 +181,4 @@ class CustomerHelper
     {
         return $customer->beneficiaires()->count();
     }
-
 }

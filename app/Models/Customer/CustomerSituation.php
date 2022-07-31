@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $pro_profession
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
+ *
  * @method static \Database\Factories\Customer\CustomerSituationFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituation newQuery()
@@ -36,14 +37,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituation whereProCategoryDetail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituation whereProProfession($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerSituation
  */
 class CustomerSituation extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
-    protected $dates = ["logement_at"];
+    protected $dates = ['logement_at'];
 
     public function customer()
     {

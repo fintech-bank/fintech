@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helper\AgencyHelper;
-use App\Helper\CountryHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Core\Agency;
 use Illuminate\Http\Request;
-use Intervention\Validation\Rules\Bic;
 
 class AgenceController extends Controller
 {
@@ -21,30 +19,28 @@ class AgenceController extends Controller
         return view('admin.agence.index');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string",
-            'bic' => "required",
-            "code_banque" => "required|numeric",
-            "code_agence" => "required|numeric",
-            "address" => "required|string",
-            "postal" => "required|numeric",
-            'city' => "required|string",
-            'country' => "required|string",
+            'name' => 'required|string',
+            'bic' => 'required',
+            'code_banque' => 'required|numeric',
+            'code_agence' => 'required|numeric',
+            'address' => 'required|string',
+            'postal' => 'required|numeric',
+            'city' => 'required|string',
+            'country' => 'required|string',
         ]);
 
         try {
             $agence = Agency::create($request->all());
-            ob_start();
-            ?>
+            ob_start(); ?>
             <tr>
                 <td><?= $agence->name; ?></td>
                 <td>
@@ -94,12 +90,14 @@ class AgenceController extends Controller
             </tr>
             <?php
             $content = ob_get_clean();
+
             return response()->json([
-                "agence" => $agence,
-                "html" => $content
+                'agence' => $agence,
+                'html' => $content,
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             \Log::critical($exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -107,7 +105,7 @@ class AgenceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
@@ -116,12 +114,12 @@ class AgenceController extends Controller
             $agence = Agency::find($id);
 
             return response()->json($agence);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             \Log::critical($exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -136,10 +134,11 @@ class AgenceController extends Controller
             Agency::find($id)->update($request->all());
 
             return response()->json([
-                "agence" => Agency::find($id)
+                'agence' => Agency::find($id),
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             \Log::critical($exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -156,8 +155,9 @@ class AgenceController extends Controller
             Agency::find($id)->delete();
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             \Log::critical($exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }

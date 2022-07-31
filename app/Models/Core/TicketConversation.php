@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read User $agent
  * @property-read User $customer
  * @property-read \App\Models\Core\Ticket $ticket
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation query()
@@ -30,10 +31,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation whereTicketId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperTicketConversation
  */
 class TicketConversation extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function ticket()

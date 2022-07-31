@@ -3,7 +3,6 @@
 namespace App\Mail\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,6 +11,7 @@ class WelcomeContract extends Mailable
     use Queueable, SerializesModels;
 
     public $customer;
+
     public $document;
 
     /**
@@ -35,7 +35,7 @@ class WelcomeContract extends Mailable
     public function build()
     {
         return $this->markdown('emails.customer.welcome_contract', [
-            'customer' => $this->customer
-        ])->subject("Bienvenue chez ".config('app.name'));
+            'customer' => $this->customer,
+        ])->subject('Bienvenue chez '.config('app.name'));
     }
 }

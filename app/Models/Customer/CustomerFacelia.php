@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerWallet $payment
  * @property-read \App\Models\Customer\CustomerPret $pret
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerFaceliaFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerFacelia newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerFacelia newQuery()
@@ -39,13 +40,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerFacelia whereReference($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerFacelia whereWalletPaymentId($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerFacelia
  */
 class CustomerFacelia extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
-    protected $dates = ["next_expiration"];
+
+    protected $dates = ['next_expiration'];
 
     public function pret()
     {

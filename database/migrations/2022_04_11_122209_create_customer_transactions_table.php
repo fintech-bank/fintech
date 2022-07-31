@@ -34,7 +34,6 @@ return new class extends Migration
             $table->foreignId('customer_credit_card_id')
                 ->nullable()
                 ->constrained();
-
         });
     }
 

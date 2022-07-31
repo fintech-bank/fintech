@@ -16,7 +16,7 @@ class UserIsCustomerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->user()->customer == 1) {
+        if ($request->user()->customer == 1) {
             return $next($request);
         } else {
             return redirect()->back()->with('error', "Vous n'avez pas accès à cette interface");

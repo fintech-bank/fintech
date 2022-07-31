@@ -9,7 +9,6 @@ use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerFacelia;
 use App\Notifications\Customer\SendCodeCardNotification;
 use Illuminate\Http\Request;
 
@@ -21,7 +20,7 @@ class CustomerCreditCardController extends Controller
 
         //Validation
         $request->validate([
-            'customer_wallet_id' => "required",
+            'customer_wallet_id' => 'required',
             'type' => 'required',
         ]);
 
@@ -38,6 +37,7 @@ class CustomerCreditCardController extends Controller
             return response()->json($card);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -49,7 +49,7 @@ class CustomerCreditCardController extends Controller
 
         return view('agent.customer.card.show', [
             'card' => $card,
-            'customer' => Customer::find($customer)
+            'customer' => Customer::find($customer),
         ]);
     }
 
@@ -81,22 +81,24 @@ class CustomerCreditCardController extends Controller
             return response()->json($card);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
 
     public function active($customer, $card)
     {
-       $card = \App\Models\Customer\CustomerCreditCard::find($card);
+        $card = \App\Models\Customer\CustomerCreditCard::find($card);
 
         try {
             $card->update([
-                'status' => 'active'
+                'status' => 'active',
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(['errors' => $exception->getMessage()]);
         }
     }
@@ -107,12 +109,13 @@ class CustomerCreditCardController extends Controller
 
         try {
             $card->update([
-                'status' => 'inactive'
+                'status' => 'inactive',
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(['errors' => $exception->getMessage()]);
         }
     }
@@ -123,12 +126,13 @@ class CustomerCreditCardController extends Controller
 
         try {
             $card->update([
-                'status' => 'canceled'
+                'status' => 'canceled',
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(['errors' => $exception->getMessage()]);
         }
     }
@@ -138,17 +142,18 @@ class CustomerCreditCardController extends Controller
         $card = \App\Models\Customer\CustomerCreditCard::find($card);
 
         try {
-            $new_code = base64_encode(rand(1000,9999));
+            $new_code = base64_encode(rand(1000, 9999));
 
             $card->update([
-                'code' => $new_code
+                'code' => $new_code,
             ]);
 
             $card->wallet->customer->info->notify(new SendCodeCardNotification($card->wallet->customer, $new_code, $card));
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(['errors' => $exception->getMessage()]);
         }
     }
@@ -162,7 +167,7 @@ class CustomerCreditCardController extends Controller
             $loan = CustomerLoanHelper::createLoan($card->wallet, $card->wallet->customer, $request->get('amount_available'), 8, 36, 20, 'accepted', $card->id);
             $card->update([
                 'facelia' => 1,
-                'customer_pret_id' => $loan->id
+                'customer_pret_id' => $loan->id,
             ]);
 
             CustomerTransactionHelper::create(
@@ -177,8 +182,9 @@ class CustomerCreditCardController extends Controller
             );
 
             return response()->json($card->facelias);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json(['errors' => $exception->getMessage()]);
         }
     }

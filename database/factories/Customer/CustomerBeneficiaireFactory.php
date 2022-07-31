@@ -17,27 +17,27 @@ class CustomerBeneficiaireFactory extends Factory
      */
     public function definition()
     {
-        $type = ["corporate", "retail"];
-        $tps = $type[rand(0,1)];
-        $civility = ['M', "MME"];
-        $civ = $civility[rand(0,1)];
+        $type = ['corporate', 'retail'];
+        $tps = $type[rand(0, 1)];
+        $civility = ['M', 'MME'];
+        $civ = $civility[rand(0, 1)];
         $bank = Bank::all()->random();
         $firstname = $tps == 'retail' ? ($civ == 'M' ? $this->faker->firstName('male') : $this->faker->firstName('female')) : null;
         $lastname = $tps == 'retail' ? $this->faker->lastName : null;
 
         return [
-            "uuid" => $this->faker->uuid,
-            "type" => $tps,
-            "company" => $tps == 'corporate' ? $this->faker->company() : null,
-            "civility" => $tps == 'retail' ? $civ : null,
-            "firstname" => $firstname,
-            "lastname" => $lastname,
-            "currency" => "EUR",
-            "bankname" => $bank->name,
-            "iban" => $this->faker->iban('FR'),
-            "bic" => $this->faker->swiftBicNumber,
-            "titulaire" => false,
-            "bank_id" => $bank->id
+            'uuid' => $this->faker->uuid,
+            'type' => $tps,
+            'company' => $tps == 'corporate' ? $this->faker->company() : null,
+            'civility' => $tps == 'retail' ? $civ : null,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'currency' => 'EUR',
+            'bankname' => $bank->name,
+            'iban' => $this->faker->iban('FR'),
+            'bic' => $this->faker->swiftBicNumber,
+            'titulaire' => false,
+            'bank_id' => $bank->id,
         ];
     }
 }

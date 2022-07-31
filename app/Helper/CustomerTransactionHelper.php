@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper;
-
 
 use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerWallet;
@@ -11,9 +9,8 @@ class CustomerTransactionHelper
 {
     public static function getTypeTransaction($type, $labeled = false, $symbol = false)
     {
-        if($symbol == true) {
-            switch ($type)
-            {
+        if ($symbol == true) {
+            switch ($type) {
                 case 'depot':
                     return '<div class="symbol symbol-50px symbol-circle" data-bs-toggle="tooltip" title="Dépot">
                                 <div class="symbol-label" style="background-image: url(/storage/transaction/depot.png)"></div>
@@ -77,25 +74,25 @@ class CustomerTransactionHelper
 
     public static function create($type, $type_transaction, $description, $amount, $wallet, $confirm = true, $designation = null, $confirmed_at = null, $updated_at = null, $card_id = null, $differed = false)
     {
-        if($type == 'debit') {
+        if ($type == 'debit') {
             CustomerTransaction::create([
-                "uuid" => \Str::uuid(),
-                "type" => $type_transaction,
-                "designation" => $designation == null ? $description : $designation,
-                "description" => $description == null ? $designation : $description,
-                "amount" => 0.00 - (float)$amount,
-                "confirmed" => $confirm,
-                "confirmed_at" => $confirmed_at,
-                "customer_wallet_id" => $wallet,
-                "updated_at" => $updated_at,
-                "customer_credit_card_id" => $card_id != null ? $card_id : null,
-                "differed" => $differed ? 1 : 0,
-                "differed_at" => $differed ? now()->endOfMonth() : null
+                'uuid' => \Str::uuid(),
+                'type' => $type_transaction,
+                'designation' => $designation == null ? $description : $designation,
+                'description' => $description == null ? $designation : $description,
+                'amount' => 0.00 - (float) $amount,
+                'confirmed' => $confirm,
+                'confirmed_at' => $confirmed_at,
+                'customer_wallet_id' => $wallet,
+                'updated_at' => $updated_at,
+                'customer_credit_card_id' => $card_id != null ? $card_id : null,
+                'differed' => $differed ? 1 : 0,
+                'differed_at' => $differed ? now()->endOfMonth() : null,
             ]);
             $transaction = CustomerTransaction::with('wallet')->latest()->first();
 
             $wallet = CustomerWallet::find($wallet);
-            if($confirm == true) {
+            if ($confirm == true) {
                 $wallet->balance_actual += $transaction->amount;
                 $wallet->save();
             } else {
@@ -104,20 +101,20 @@ class CustomerTransactionHelper
             }
         } else {
             CustomerTransaction::create([
-                "uuid" => \Str::uuid(),
-                "type" => $type_transaction,
-                "designation" => $designation == null ? $description : $designation,
-                "description" => $description == null ? $designation : $description,
-                "amount" => $amount,
-                "confirmed" => $confirm,
-                "confirmed_at" => $confirmed_at,
-                "customer_wallet_id" => $wallet,
-                "updated_at" => $updated_at
+                'uuid' => \Str::uuid(),
+                'type' => $type_transaction,
+                'designation' => $designation == null ? $description : $designation,
+                'description' => $description == null ? $designation : $description,
+                'amount' => $amount,
+                'confirmed' => $confirm,
+                'confirmed_at' => $confirmed_at,
+                'customer_wallet_id' => $wallet,
+                'updated_at' => $updated_at,
             ]);
             $transaction = CustomerTransaction::with('wallet')->latest()->first();
 
             $wallet = CustomerWallet::find($wallet);
-            if($confirm == true) {
+            if ($confirm == true) {
                 $wallet->balance_actual += $transaction->amount;
                 $wallet->save();
             } else {
@@ -125,8 +122,6 @@ class CustomerTransactionHelper
                 $wallet->save();
             }
         }
-
-
 
         return $transaction;
     }
@@ -135,28 +130,27 @@ class CustomerTransactionHelper
     {
         $transaction->wallet->update([
             'balance_actual' => $transaction->wallet->balance_actual + $transaction->amount,
-            'balance_coming' => $transaction->wallet->balance_coming + $transaction->amount
+            'balance_coming' => $transaction->wallet->balance_coming + $transaction->amount,
         ]);
 
         $transaction->update([
             'confirmed' => true,
-            'confirmed_at' => now()
+            'confirmed_at' => now(),
         ]);
     }
 
     public static function deleteTransaction($transaction)
     {
-        if($transaction->confirmed == 0) {
+        if ($transaction->confirmed == 0) {
             $transaction->wallet->update([
-                'balance_coming' => $transaction->wallet->balance_coming - $transaction->amount
+                'balance_coming' => $transaction->wallet->balance_coming - $transaction->amount,
             ]);
         } else {
             $transaction->wallet->update([
-                'balance_actual' => $transaction->wallet->balance_actual - $transaction->amount
+                'balance_actual' => $transaction->wallet->balance_actual - $transaction->amount,
             ]);
         }
 
         $transaction->delete();
-
     }
 }

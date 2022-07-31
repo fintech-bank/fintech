@@ -20,24 +20,24 @@ class CustomerVirementController extends Controller
         $beneficiaire = CustomerBeneficiaire::find($request->get('customer_beneficiaire_id'));
 
         // Vérification de l'état du compte
-        if($wallet->status != 'active') {
-            return response()->json(api_error('cv-521', "Le compte est actuellement ".CustomerWalletHelper::getStatusWallet($wallet->status).", Le virement ne peut être executer", 'warning'), 521);
+        if ($wallet->status != 'active') {
+            return response()->json(api_error('cv-521', 'Le compte est actuellement '.CustomerWalletHelper::getStatusWallet($wallet->status).', Le virement ne peut être executer', 'warning'), 521);
         }
 
         try {
             switch ($request->get('type')) {
                 case 'immediat':
-                    if($wallet->balance_actual <= 0) {
+                    if ($wallet->balance_actual <= 0) {
                         $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
                             'reason' => $request->get('reference') != '' ? $request->get('reference') : 'Virement vers le compte '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
-                            "type" => 'immediat',
-                            "transfer_date" => now(),
-                            "status" => 'pending',
+                            'type' => 'immediat',
+                            'transfer_date' => now(),
+                            'status' => 'pending',
                             'customer_wallet_id' => $wallet->id,
-                            'customer_beneficiaire_id' => $beneficiaire->id
+                            'customer_beneficiaire_id' => $beneficiaire->id,
                         ]);
                     } else {
                         $trans = $wallet->transfers()->create([
@@ -45,31 +45,31 @@ class CustomerVirementController extends Controller
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
                             'reason' => $request->get('reference') != '' ? $request->get('reference') : 'Virement vers le compte '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
-                            "type" => 'immediat',
-                            "transfer_date" => now(),
-                            "status" => 'in_transit',
+                            'type' => 'immediat',
+                            'transfer_date' => now(),
+                            'status' => 'in_transit',
                             'customer_wallet_id' => $wallet->id,
-                            'customer_beneficiaire_id' => $beneficiaire->id
+                            'customer_beneficiaire_id' => $beneficiaire->id,
                         ]);
                     }
                     $transaction = CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), $request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
                     $trans->update([
-                        'transaction_id' =>  $transaction->id
+                        'transaction_id' => $transaction->id,
                     ]);
                     break;
 
                 case 'differed':
-                    if($wallet->balance_actual <= 0) {
+                    if ($wallet->balance_actual <= 0) {
                         $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
                             'reason' => $request->get('reference') != '' ? $request->get('reference') : 'Virement vers le compte '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
-                            "type" => 'differed',
-                            "transfer_date" => $request->get('transfer_date'),
-                            "status" => 'pending',
+                            'type' => 'differed',
+                            'transfer_date' => $request->get('transfer_date'),
+                            'status' => 'pending',
                             'customer_wallet_id' => $wallet->id,
-                            'customer_beneficiaire_id' => $beneficiaire->id
+                            'customer_beneficiaire_id' => $beneficiaire->id,
                         ]);
                     } else {
                         $trans = $wallet->transfers()->create([
@@ -77,33 +77,33 @@ class CustomerVirementController extends Controller
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
                             'reason' => $request->get('reference') != '' ? $request->get('reference') : 'Virement vers le compte '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
-                            "type" => 'differed',
-                            "transfer_date" => $request->get('transfer_date'),
-                            "status" => 'in_transit',
+                            'type' => 'differed',
+                            'transfer_date' => $request->get('transfer_date'),
+                            'status' => 'in_transit',
                             'customer_wallet_id' => $wallet->id,
-                            'customer_beneficiaire_id' => $beneficiaire->id
+                            'customer_beneficiaire_id' => $beneficiaire->id,
                         ]);
                     }
 
                     $transaction = CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), $request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
                     $trans->update([
-                        'transaction_id' => $transaction->id
+                        'transaction_id' => $transaction->id,
                     ]);
                     break;
 
                 case 'permanent':
-                    if($wallet->balance_actual <= 0) {
+                    if ($wallet->balance_actual <= 0) {
                         $trans = $wallet->transfers()->create([
                             'uuid' => \Str::uuid(),
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
                             'reason' => $request->get('reference') != '' ? $request->get('reference') : 'Virement vers le compte '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
-                            "type" => 'differed',
-                            "recurring_start" => $date_permanent[0],
-                            "recurring_end" => $date_permanent[1],
-                            "status" => 'pending',
+                            'type' => 'differed',
+                            'recurring_start' => $date_permanent[0],
+                            'recurring_end' => $date_permanent[1],
+                            'status' => 'pending',
                             'customer_wallet_id' => $wallet->id,
-                            'customer_beneficiaire_id' => $beneficiaire->id
+                            'customer_beneficiaire_id' => $beneficiaire->id,
                         ]);
                     } else {
                         $trans = $wallet->transfers()->create([
@@ -111,23 +111,23 @@ class CustomerVirementController extends Controller
                             'amount' => $request->get('amount'),
                             'reference' => $request->get('reference') != '' ? $request->get('reference') : \Str::random(8),
                             'reason' => $request->get('reference') != '' ? $request->get('reference') : 'Virement vers le compte '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
-                            "type" => 'differed',
-                            "recurring_start" => $date_permanent[0],
-                            "recurring_end" => $date_permanent[1],
-                            "status" => 'in_transit',
+                            'type' => 'differed',
+                            'recurring_start' => $date_permanent[0],
+                            'recurring_end' => $date_permanent[1],
+                            'status' => 'in_transit',
                             'customer_wallet_id' => $wallet->id,
-                            'customer_beneficiaire_id' => $beneficiaire->id
+                            'customer_beneficiaire_id' => $beneficiaire->id,
                         ]);
                     }
                     $transaction = CustomerTransactionHelper::create('debit', 'virement', 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire), $request->get('amount'), $wallet->id, false, 'Virement '.CustomerTransferHelper::getNameBeneficiaire($beneficiaire));
                     $trans->update([
-                        'transaction_id' => $transaction->id
+                        'transaction_id' => $transaction->id,
                     ]);
                     break;
             }
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json(api_error('err-0001', $exception->getMessage(), 'critical'));
         }
     }
@@ -141,9 +141,9 @@ class CustomerVirementController extends Controller
             $transfer->save();
 
             return response()->json([
-                'status' => CustomerTransferHelper::getStatusTransfer('in_transit')
+                'status' => CustomerTransferHelper::getStatusTransfer('in_transit'),
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json(api_error('err-0001', $exception->getMessage(), 'critical'));
         }
     }
@@ -157,9 +157,9 @@ class CustomerVirementController extends Controller
             $transfer->save();
 
             return response()->json([
-                'status' => CustomerTransferHelper::getStatusTransfer('failed')
+                'status' => CustomerTransferHelper::getStatusTransfer('failed'),
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json(api_error('err-0001', $exception->getMessage(), 'critical'));
         }
     }

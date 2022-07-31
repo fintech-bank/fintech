@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_id
  * @property-read Agency $agency
  * @property-read Customer $customer
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss query()
@@ -36,13 +37,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss whereTypeDocument($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperDocumentTransmiss
  */
 class DocumentTransmiss extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    protected $dates = ["created_at", "updated_at", "date_transmiss"];
+    protected $dates = ['created_at', 'updated_at', 'date_transmiss'];
 
     public function agency()
     {

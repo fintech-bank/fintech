@@ -4,7 +4,6 @@ namespace App\Notifications\Customer\Automate;
 
 use App\Models\Customer\CustomerPret;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -17,7 +16,7 @@ class AcceptedLoanChargeNotification extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param CustomerPret $loan
+     * @param  CustomerPret  $loan
      */
     public function __construct(CustomerPret $loan)
     {
@@ -47,7 +46,7 @@ class AcceptedLoanChargeNotification extends Notification
         return (new MailMessage)
             ->subject('Votre pret bancaire N°'.$this->loan->reference)
             ->view('emails.customer.accepted_loan_charge', [
-                "loan" => $this->loan
+                'loan' => $this->loan,
             ]);
     }
 
@@ -64,7 +63,7 @@ class AcceptedLoanChargeNotification extends Notification
             'color' => 'primary',
             'title' => 'Votre pret bancaire n°'.$this->loan->reference,
             'text' => 'Le montant de votre pret est maintenant disponible',
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

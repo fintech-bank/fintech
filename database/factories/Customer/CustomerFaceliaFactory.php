@@ -17,7 +17,7 @@ class CustomerFaceliaFactory extends Factory
     public function definition()
     {
         return [
-            "reference" => rand(1000,9999)." ".rand(100,999)." ".rand(1000,9999),
+            'reference' => rand(1000, 9999).' '.rand(100, 999).' '.rand(1000, 9999),
         ];
     }
 }

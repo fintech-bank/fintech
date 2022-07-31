@@ -3,9 +3,7 @@
 namespace App\Notifications\Customer;
 
 use App\Helper\CustomerHelper;
-use App\Helper\CustomerTransferHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,11 +12,14 @@ class UpdateStatusAccountNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $status;
+
     /**
      * @var null
      */
     public $reason;
+
     /**
      * @var null
      */
@@ -29,8 +30,8 @@ class UpdateStatusAccountNotification extends Notification
      *
      * @param $customer
      * @param $status
-     * @param null $reason
-     * @param null $nameDocument
+     * @param  null  $reason
+     * @param  null  $nameDocument
      */
     public function __construct($customer, $status, $reason = null, $nameDocument = null)
     {
@@ -60,23 +61,23 @@ class UpdateStatusAccountNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        if($this->status == 'closed') {
+        if ($this->status == 'closed') {
             return (new MailMessage)
-                ->subject("Votre compte en ligne")
+                ->subject('Votre compte en ligne')
                 ->view('emails.customer.update_status_account', [
-                    "customer" => $this->customer,
-                    "statusLib" => CustomerHelper::getStatusOpenAccount($this->status),
-                    "status" => $this->status,
-                    "reason" => $this->reason
+                    'customer' => $this->customer,
+                    'statusLib' => CustomerHelper::getStatusOpenAccount($this->status),
+                    'status' => $this->status,
+                    'reason' => $this->reason,
                 ])->attach('/storage/gdd/'.$this->customer->id.'/courriers/');
         } else {
             return (new MailMessage)
-                ->subject("Votre compte en ligne")
+                ->subject('Votre compte en ligne')
                 ->view('emails.customer.update_status_account', [
-                    "customer" => $this->customer,
-                    "statusLib" => CustomerHelper::getStatusOpenAccount($this->status),
-                    "status" => $this->status,
-                    "reason" => $this->reason
+                    'customer' => $this->customer,
+                    'statusLib' => CustomerHelper::getStatusOpenAccount($this->status),
+                    'status' => $this->status,
+                    'reason' => $this->reason,
                 ]);
         }
     }
@@ -89,12 +90,12 @@ class UpdateStatusAccountNotification extends Notification
      */
     public function toArray($notifiable)
     {
-       return [
+        return [
             'icon' => 'fa-euro-sign',
             'color' => 'primary',
             'title' => 'Votre compte bancaire',
-            'text' => "Le status de votre compte est passée à: ".CustomerHelper::getStatusOpenAccount($this->status),
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'text' => 'Le status de votre compte est passée à: '.CustomerHelper::getStatusOpenAccount($this->status),
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,8 +11,11 @@ class CreatePretNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $wallet;
+
     public $document;
+
     public $pret;
 
     /**
@@ -53,12 +55,12 @@ class CreatePretNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre pret est disponible")
-            ->view("emails.customer.create_loan", [
-                "customer" => $this->customer,
-                "wallet" => $this->wallet,
-                "document" => $this->document,
-                "pret" => $this->pret
+            ->subject('Votre pret est disponible')
+            ->view('emails.customer.create_loan', [
+                'customer' => $this->customer,
+                'wallet' => $this->wallet,
+                'document' => $this->document,
+                'pret' => $this->pret,
             ]);
     }
 }

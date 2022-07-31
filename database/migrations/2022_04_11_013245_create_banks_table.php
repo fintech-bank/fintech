@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('primary_color');
             $table->string('country', 2);
             $table->string('bic');
-            $table->time('process_time')->default("24:00:00");
+            $table->time('process_time')->default('24:00:00');
         });
     }
 

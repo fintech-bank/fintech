@@ -15,16 +15,15 @@ return new class extends Migration
     {
         Schema::create('customer_situation_charges', function (Blueprint $table) {
             $table->id();
-            $table->float('rent')->default(0)->comment("Loyer, Pret Immobilier, etc...");
-            $table->integer('nb_credit')->default(0)->comment("Nombre de crédit actuel");
-            $table->float('credit')->default(0)->comment("Valeur total des mensualité de crédit");
-            $table->float('divers')->default(0)->comment("Autres charges (pension, etc...)");
+            $table->float('rent')->default(0)->comment('Loyer, Pret Immobilier, etc...');
+            $table->integer('nb_credit')->default(0)->comment('Nombre de crédit actuel');
+            $table->float('credit')->default(0)->comment('Valeur total des mensualité de crédit');
+            $table->float('divers')->default(0)->comment('Autres charges (pension, etc...)');
 
             $table->foreignId('customer_id')
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
         });
     }
 

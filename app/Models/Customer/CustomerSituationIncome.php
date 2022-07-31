@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $patrimoine Revenue Mensuel du patrimoine
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
+ *
  * @method static \Database\Factories\Customer\CustomerSituationIncomeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationIncome newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationIncome newQuery()
@@ -22,11 +23,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationIncome wherePatrimoine($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationIncome whereProIncoming($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerSituationIncome
  */
 class CustomerSituationIncome extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function customer()

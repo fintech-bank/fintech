@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class Switches extends Component
 {
     public $name;
+
     public $label;
+
     public $value;
+
     public $check;
 
     /**
@@ -17,7 +20,7 @@ class Switches extends Component
      * @param $name
      * @param $label
      * @param $value
-     * @param null $check
+     * @param  null  $check
      */
     public function __construct($name, $label, $value, $check = null)
     {

@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $customer_wallet_id
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount query()
@@ -23,10 +24,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount whereStripeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerRefundAccount
  */
 class CustomerRefundAccount extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function wallet()

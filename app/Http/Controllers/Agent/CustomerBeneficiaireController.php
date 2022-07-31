@@ -19,10 +19,10 @@ class CustomerBeneficiaireController extends Controller
         $customer = Customer::query()->find($customer);
         $wallet = CustomerWallet::query()->find($wallet);
         $request->validate([
-            'type' => "required",
-            "bank_id" => "required",
-            "bic" => new Bic(),
-            "iban" => new Iban()
+            'type' => 'required',
+            'bank_id' => 'required',
+            'bic' => new Bic(),
+            'iban' => new Iban(),
         ]);
 
         try {
@@ -38,14 +38,15 @@ class CustomerBeneficiaireController extends Controller
                 'bic' => $request->get('bic'),
                 'iban' => $request->get('iban'),
                 'titulaire' => $request->has('titulaire'),
-                'customer_id' => $customer->id
+                'customer_id' => $customer->id,
             ]);
 
             auth()->user()->notify(new CreateBeneficiaireNotification($customer, $beneficiaire, $wallet));
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage(), 500);
         }
     }
@@ -65,10 +66,9 @@ class CustomerBeneficiaireController extends Controller
                 'bic' => $request->get('bic'),
                 'iban' => $request->get('iban'),
                 'titulaire' => $request->has('titulaire'),
-                'customer_id' => $customer->id
+                'customer_id' => $customer->id,
             ]);
-        }catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
         }
     }
 
@@ -77,14 +77,16 @@ class CustomerBeneficiaireController extends Controller
         try {
             $beneficiaire = CustomerBeneficiaire::query()->find($beneficiaire);
 
-            if($beneficiaire->transfers()->count() == 0) {
+            if ($beneficiaire->transfers()->count() == 0) {
                 $beneficiaire->delete();
+
                 return response()->json(['state' => 'success']);
             } else {
                 return response()->json(['state' => 'transfer_execute']);
             }
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage(), 500);
         }
     }

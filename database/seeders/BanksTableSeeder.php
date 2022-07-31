@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class BanksTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,24 +13,20 @@ class BanksTableSeeder extends Seeder
      */
     public function run()
     {
-
-
         \DB::table('banks')->delete();
 
-        \DB::table('banks')->insert(array (
-            0 =>
-            array (
+        \DB::table('banks')->insert([
+            0 => [
                 'id' => 1,
                 'bridge_id' => 506,
-            'name' => 'Crédit Coopératif Entreprise (Lecteur sans fil)',
+                'name' => 'Crédit Coopératif Entreprise (Lecteur sans fil)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/credit_cooperatif_particuliers.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            1 =>
-            array (
+            ],
+            1 => [
                 'id' => 2,
                 'bridge_id' => 505,
                 'name' => 'manager.one',
@@ -40,9 +35,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            2 =>
-            array (
+            ],
+            2 => [
                 'id' => 3,
                 'bridge_id' => 504,
                 'name' => 'Ma French Bank',
@@ -51,9 +45,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            3 =>
-            array (
+            ],
+            3 => [
                 'id' => 4,
                 'bridge_id' => 502,
                 'name' => 'Epsor',
@@ -62,20 +55,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            4 =>
-            array (
+            ],
+            4 => [
                 'id' => 5,
                 'bridge_id' => 499,
-            'name' => 'Crédit Coopératif Entreprise (Mot de passe)',
+                'name' => 'Crédit Coopératif Entreprise (Mot de passe)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/credit_cooperatif_particuliers.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            5 =>
-            array (
+            ],
+            5 => [
                 'id' => 6,
                 'bridge_id' => 489,
                 'name' => 'Pumpkin',
@@ -84,20 +75,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            6 =>
-            array (
+            ],
+            6 => [
                 'id' => 7,
                 'bridge_id' => 488,
-            'name' => 'PayPal (New)',
+                'name' => 'PayPal (New)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/paypal.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            7 =>
-            array (
+            ],
+            7 => [
                 'id' => 8,
                 'bridge_id' => 487,
                 'name' => 'Anytime',
@@ -106,9 +95,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            8 =>
-            array (
+            ],
+            8 => [
                 'id' => 9,
                 'bridge_id' => 486,
                 'name' => 'Themis Banque',
@@ -117,9 +105,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            9 =>
-            array (
+            ],
+            9 => [
                 'id' => 10,
                 'bridge_id' => 485,
                 'name' => 'Banque Fiducial',
@@ -128,42 +115,38 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'FIDCFR21',
                 'process_time' => '24:00:00',
-            ),
-            10 =>
-            array (
+            ],
+            10 => [
                 'id' => 11,
                 'bridge_id' => 481,
-            'name' => 'Arkéa Banking Services (Compte courant et carte)',
+                'name' => 'Arkéa Banking Services (Compte courant et carte)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/481_arkea-banking-services.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            11 =>
-            array (
+            ],
+            11 => [
                 'id' => 12,
                 'bridge_id' => 480,
-            'name' => 'BPE Banque Privée (Compte courant et carte)',
+                'name' => 'BPE Banque Privée (Compte courant et carte)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/480_bpe.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            12 =>
-            array (
+            ],
+            12 => [
                 'id' => 13,
                 'bridge_id' => 478,
-            'name' => 'Caisse d\'Epargne Entreprises (CENET Lecteur sans fil)',
+                'name' => 'Caisse d\'Epargne Entreprises (CENET Lecteur sans fil)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/04_CaisseEpargne@2x.png',
                 'primary_color' => 'DB0029',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            13 =>
-            array (
+            ],
+            13 => [
                 'id' => 14,
                 'bridge_id' => 476,
                 'name' => 'CIC Banque Privée',
@@ -172,9 +155,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            14 =>
-            array (
+            ],
+            14 => [
                 'id' => 15,
                 'bridge_id' => 475,
                 'name' => 'Binck',
@@ -183,9 +165,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            15 =>
-            array (
+            ],
+            15 => [
                 'id' => 16,
                 'bridge_id' => 474,
                 'name' => 'Société de Banque Monaco',
@@ -194,9 +175,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            16 =>
-            array (
+            ],
+            16 => [
                 'id' => 17,
                 'bridge_id' => 470,
                 'name' => 'Banque Européenne du Crédit Mutuel',
@@ -205,20 +185,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            17 =>
-            array (
+            ],
+            17 => [
                 'id' => 18,
                 'bridge_id' => 458,
-            'name' => 'LCL Entreprise (Lecteur sans fil)',
+                'name' => 'LCL Entreprise (Lecteur sans fil)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/03_lcl@2x.png',
                 'primary_color' => '1F368B',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            18 =>
-            array (
+            ],
+            18 => [
                 'id' => 19,
                 'bridge_id' => 452,
                 'name' => 'Revolut Business FR',
@@ -227,9 +205,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            19 =>
-            array (
+            ],
+            19 => [
                 'id' => 20,
                 'bridge_id' => 451,
                 'name' => 'Caisse d\'Epargne Nord France Europe',
@@ -238,9 +215,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            20 =>
-            array (
+            ],
+            20 => [
                 'id' => 21,
                 'bridge_id' => 450,
                 'name' => 'Caisse d\'Epargne Grand Est Europe',
@@ -249,9 +225,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            21 =>
-            array (
+            ],
+            21 => [
                 'id' => 22,
                 'bridge_id' => 449,
                 'name' => 'Caisse d\'Epargne Auvergne et Limousin',
@@ -260,9 +235,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            22 =>
-            array (
+            ],
+            22 => [
                 'id' => 23,
                 'bridge_id' => 448,
                 'name' => 'Caisse d\'Epargne Côte d\'Azur',
@@ -271,9 +245,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            23 =>
-            array (
+            ],
+            23 => [
                 'id' => 24,
                 'bridge_id' => 447,
                 'name' => 'Caisse d\'Epargne Loire-Centre',
@@ -282,9 +255,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            24 =>
-            array (
+            ],
+            24 => [
                 'id' => 25,
                 'bridge_id' => 446,
                 'name' => 'Caisse d\'Epargne Loire Drôme Ardèche',
@@ -293,9 +265,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            25 =>
-            array (
+            ],
+            25 => [
                 'id' => 26,
                 'bridge_id' => 445,
                 'name' => 'Caisse d\'Epargne Rhône Alpes',
@@ -304,9 +275,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            26 =>
-            array (
+            ],
+            26 => [
                 'id' => 27,
                 'bridge_id' => 444,
                 'name' => 'Caisse d\'Epargne Languedoc-Roussillon',
@@ -315,9 +285,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            27 =>
-            array (
+            ],
+            27 => [
                 'id' => 28,
                 'bridge_id' => 443,
                 'name' => 'Caisse d\'Epargne Aquitaine Poitou-Charentes',
@@ -326,9 +295,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            28 =>
-            array (
+            ],
+            28 => [
                 'id' => 29,
                 'bridge_id' => 442,
                 'name' => 'Caisse d\'Epargne Midi-Pyrénées',
@@ -337,9 +305,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            29 =>
-            array (
+            ],
+            29 => [
                 'id' => 30,
                 'bridge_id' => 441,
                 'name' => 'Caisse d\'Epargne Bretagne-Pays De Loire',
@@ -348,9 +315,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            30 =>
-            array (
+            ],
+            30 => [
                 'id' => 31,
                 'bridge_id' => 440,
                 'name' => 'Caisse d\'Epargne Bourgogne Franche-Comté',
@@ -359,9 +325,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            31 =>
-            array (
+            ],
+            31 => [
                 'id' => 32,
                 'bridge_id' => 439,
                 'name' => 'Caisse d\'Epargne Normandie',
@@ -370,9 +335,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CEPAFRPP142',
                 'process_time' => '24:00:00',
-            ),
-            32 =>
-            array (
+            ],
+            32 => [
                 'id' => 33,
                 'bridge_id' => 438,
                 'name' => 'Caisse d\'Epargne Provence Alpes Corse',
@@ -381,9 +345,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            33 =>
-            array (
+            ],
+            33 => [
                 'id' => 34,
                 'bridge_id' => 437,
                 'name' => 'Caisse d\'Epargne Ile De France',
@@ -392,9 +355,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CEPAFRPP751',
                 'process_time' => '24:00:00',
-            ),
-            34 =>
-            array (
+            ],
+            34 => [
                 'id' => 35,
                 'bridge_id' => 436,
                 'name' => 'Lydia',
@@ -403,9 +365,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            35 =>
-            array (
+            ],
+            35 => [
                 'id' => 36,
                 'bridge_id' => 435,
                 'name' => 'SwissLife',
@@ -414,20 +375,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            36 =>
-            array (
+            ],
+            36 => [
                 'id' => 37,
                 'bridge_id' => 431,
-            'name' => 'Swile (ex Lunchr)',
+                'name' => 'Swile (ex Lunchr)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/swile.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            37 =>
-            array (
+            ],
+            37 => [
                 'id' => 38,
                 'bridge_id' => 428,
                 'name' => 'Shine',
@@ -436,20 +395,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            38 =>
-            array (
+            ],
+            38 => [
                 'id' => 39,
                 'bridge_id' => 425,
-            'name' => 'Floa (ex Banque Casino)',
+                'name' => 'Floa (ex Banque Casino)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/floa_bank.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            39 =>
-            array (
+            ],
+            39 => [
                 'id' => 40,
                 'bridge_id' => 424,
                 'name' => 'Banque Transatlantique',
@@ -458,9 +415,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            40 =>
-            array (
+            ],
+            40 => [
                 'id' => 41,
                 'bridge_id' => 423,
                 'name' => 'C-Zam',
@@ -469,9 +425,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            41 =>
-            array (
+            ],
+            41 => [
                 'id' => 42,
                 'bridge_id' => 422,
                 'name' => 'Revolut FR',
@@ -480,9 +435,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            42 =>
-            array (
+            ],
+            42 => [
                 'id' => 43,
                 'bridge_id' => 421,
                 'name' => 'Qonto',
@@ -491,9 +445,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            43 =>
-            array (
+            ],
+            43 => [
                 'id' => 44,
                 'bridge_id' => 420,
                 'name' => 'Orange Bank',
@@ -502,9 +455,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'GPBAFRPP',
                 'process_time' => '24:00:00',
-            ),
-            44 =>
-            array (
+            ],
+            44 => [
                 'id' => 45,
                 'bridge_id' => 419,
                 'name' => 'Yomoni',
@@ -513,31 +465,28 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'YOMOFRP1',
                 'process_time' => '24:00:00',
-            ),
-            45 =>
-            array (
+            ],
+            45 => [
                 'id' => 46,
                 'bridge_id' => 418,
-            'name' => 'Natixis Interépargne (Mail & N° d\'entreprise)',
+                'name' => 'Natixis Interépargne (Mail & N° d\'entreprise)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/natixis.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            46 =>
-            array (
+            ],
+            46 => [
                 'id' => 47,
                 'bridge_id' => 417,
-            'name' => 'Caisse d\'Epargne Entreprises (CENET)',
+                'name' => 'Caisse d\'Epargne Entreprises (CENET)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/04_CaisseEpargne@2x.png',
                 'primary_color' => 'DB0029',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            47 =>
-            array (
+            ],
+            47 => [
                 'id' => 48,
                 'bridge_id' => 416,
                 'name' => 'BNP Paribas Privée',
@@ -546,9 +495,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            48 =>
-            array (
+            ],
+            48 => [
                 'id' => 49,
                 'bridge_id' => 415,
                 'name' => 'Oney Banque',
@@ -557,9 +505,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            49 =>
-            array (
+            ],
+            49 => [
                 'id' => 50,
                 'bridge_id' => 414,
                 'name' => 'Carrefour Banque',
@@ -568,20 +515,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'SOAPFR22',
                 'process_time' => '24:00:00',
-            ),
-            50 =>
-            array (
+            ],
+            50 => [
                 'id' => 51,
                 'bridge_id' => 413,
-            'name' => 'N26 (Number 26)',
+                'name' => 'N26 (Number 26)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/neo/04N26@2x.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            51 =>
-            array (
+            ],
+            51 => [
                 'id' => 52,
                 'bridge_id' => 412,
                 'name' => 'Unilend',
@@ -590,31 +535,28 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            52 =>
-            array (
+            ],
+            52 => [
                 'id' => 53,
                 'bridge_id' => 411,
-            'name' => 'Natixis Interépargne (N° d\'entreprise)',
+                'name' => 'Natixis Interépargne (N° d\'entreprise)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/natixis.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            53 =>
-            array (
+            ],
+            53 => [
                 'id' => 54,
                 'bridge_id' => 410,
-            'name' => 'Natixis Interépargne (E-mail)',
+                'name' => 'Natixis Interépargne (E-mail)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/natixis.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            54 =>
-            array (
+            ],
+            54 => [
                 'id' => 55,
                 'bridge_id' => 409,
                 'name' => 'Compte Nickel',
@@ -623,9 +565,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            55 =>
-            array (
+            ],
+            55 => [
                 'id' => 56,
                 'bridge_id' => 408,
                 'name' => 'Simulator',
@@ -634,9 +575,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            56 =>
-            array (
+            ],
+            56 => [
                 'id' => 57,
                 'bridge_id' => 401,
                 'name' => 'Banque BCP Particuliers',
@@ -645,9 +585,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            57 =>
-            array (
+            ],
+            57 => [
                 'id' => 58,
                 'bridge_id' => 400,
                 'name' => 'Banque Palatine Particuliers',
@@ -656,9 +595,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            58 =>
-            array (
+            ],
+            58 => [
                 'id' => 59,
                 'bridge_id' => 388,
                 'name' => 'Bq. Palatine - Entreprises & Prof. Immobilières',
@@ -667,9 +605,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            59 =>
-            array (
+            ],
+            59 => [
                 'id' => 60,
                 'bridge_id' => 350,
                 'name' => 'BNP Guyane',
@@ -678,9 +615,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            60 =>
-            array (
+            ],
+            60 => [
                 'id' => 61,
                 'bridge_id' => 349,
                 'name' => 'BNP Martinique',
@@ -689,9 +625,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            61 =>
-            array (
+            ],
+            61 => [
                 'id' => 62,
                 'bridge_id' => 348,
                 'name' => 'BNP Guadeloupe',
@@ -700,9 +635,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            62 =>
-            array (
+            ],
+            62 => [
                 'id' => 63,
                 'bridge_id' => 347,
                 'name' => 'BNP Reunion',
@@ -711,9 +645,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            63 =>
-            array (
+            ],
+            63 => [
                 'id' => 64,
                 'bridge_id' => 304,
                 'name' => 'Oney - Banque Accord',
@@ -722,9 +655,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            64 =>
-            array (
+            ],
+            64 => [
                 'id' => 65,
                 'bridge_id' => 303,
                 'name' => 'BforBank',
@@ -733,9 +665,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'BFBKFRP1',
                 'process_time' => '24:00:00',
-            ),
-            65 =>
-            array (
+            ],
+            65 => [
                 'id' => 66,
                 'bridge_id' => 302,
                 'name' => 'Monabanq',
@@ -744,31 +675,28 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            66 =>
-            array (
+            ],
+            66 => [
                 'id' => 67,
                 'bridge_id' => 299,
-            'name' => 'HSBC Professionnel (Elys PC)',
+                'name' => 'HSBC Professionnel (Elys PC)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/299_hsbc.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            67 =>
-            array (
+            ],
+            67 => [
                 'id' => 68,
                 'bridge_id' => 298,
-            'name' => 'HSBC Entreprise (Elys PC)',
+                'name' => 'HSBC Entreprise (Elys PC)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/299_hsbc.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            68 =>
-            array (
+            ],
+            68 => [
                 'id' => 69,
                 'bridge_id' => 297,
                 'name' => 'Banque De Savoie',
@@ -777,9 +705,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            69 =>
-            array (
+            ],
+            69 => [
                 'id' => 70,
                 'bridge_id' => 296,
                 'name' => 'Banque SBE',
@@ -788,9 +715,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            70 =>
-            array (
+            ],
+            70 => [
                 'id' => 71,
                 'bridge_id' => 295,
                 'name' => 'HSBC Pro Question Mémorable',
@@ -799,9 +725,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            71 =>
-            array (
+            ],
+            71 => [
                 'id' => 72,
                 'bridge_id' => 294,
                 'name' => 'Banque Chalus',
@@ -810,20 +735,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            72 =>
-            array (
+            ],
+            72 => [
                 'id' => 73,
                 'bridge_id' => 293,
-            'name' => 'BNP Net Entreprises (Lecteur sans fil)',
+                'name' => 'BNP Net Entreprises (Lecteur sans fil)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/12_BNPParisbasParticulier@2x.png',
                 'primary_color' => '007942',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            73 =>
-            array (
+            ],
+            73 => [
                 'id' => 74,
                 'bridge_id' => 292,
                 'name' => 'Arkéa Banque Privée',
@@ -832,9 +755,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            74 =>
-            array (
+            ],
+            74 => [
                 'id' => 75,
                 'bridge_id' => 289,
                 'name' => 'Crédit Maritime Bretagne Normandie',
@@ -843,9 +765,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            75 =>
-            array (
+            ],
+            75 => [
                 'id' => 76,
                 'bridge_id' => 288,
                 'name' => 'Crédit Maritime Atlantique',
@@ -854,9 +775,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            76 =>
-            array (
+            ],
+            76 => [
                 'id' => 77,
                 'bridge_id' => 286,
                 'name' => 'Crédit Maritime Littoral du Sud-Ouest',
@@ -865,9 +785,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            77 =>
-            array (
+            ],
+            77 => [
                 'id' => 78,
                 'bridge_id' => 285,
                 'name' => 'Groupama Banque',
@@ -876,9 +795,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            78 =>
-            array (
+            ],
+            78 => [
                 'id' => 79,
                 'bridge_id' => 284,
                 'name' => 'Crédit Coopératif Particuliers',
@@ -887,20 +805,18 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            79 =>
-            array (
+            ],
+            79 => [
                 'id' => 80,
                 'bridge_id' => 283,
-            'name' => 'LCL Entreprise (Mot de passe)',
+                'name' => 'LCL Entreprise (Mot de passe)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/03_lcl@2x.png',
                 'primary_color' => '1F368B',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            80 =>
-            array (
+            ],
+            80 => [
                 'id' => 81,
                 'bridge_id' => 282,
                 'name' => 'Société Générale Entreprises',
@@ -909,31 +825,28 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            81 =>
-            array (
+            ],
+            81 => [
                 'id' => 82,
                 'bridge_id' => 281,
-            'name' => 'BNP Net Entreprises (Navigation Sécurisée)',
+                'name' => 'BNP Net Entreprises (Navigation Sécurisée)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/france/12_BNPParisbasParticulier@2x.png',
                 'primary_color' => '007942',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            82 =>
-            array (
+            ],
+            82 => [
                 'id' => 83,
                 'bridge_id' => 280,
-            'name' => 'HSBC France (sans Secure Key)',
+                'name' => 'HSBC France (sans Secure Key)',
                 'logo' => 'https://web.bankin.com/img/banks-logo/299_hsbc.png',
                 'primary_color' => '',
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            83 =>
-            array (
+            ],
+            83 => [
                 'id' => 84,
                 'bridge_id' => 279,
                 'name' => 'AXA Banque',
@@ -942,9 +855,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            84 =>
-            array (
+            ],
+            84 => [
                 'id' => 85,
                 'bridge_id' => 179,
                 'name' => 'LCL Pro',
@@ -953,9 +865,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            85 =>
-            array (
+            ],
+            85 => [
                 'id' => 86,
                 'bridge_id' => 172,
                 'name' => 'BNP Paribas Pro',
@@ -964,9 +875,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            86 =>
-            array (
+            ],
+            86 => [
                 'id' => 87,
                 'bridge_id' => 167,
                 'name' => 'Crédit Mutuel Massif Central Pro',
@@ -975,9 +885,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            87 =>
-            array (
+            ],
+            87 => [
                 'id' => 88,
                 'bridge_id' => 166,
                 'name' => 'Crédit Mutuel de Bretagne Pro',
@@ -986,9 +895,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            88 =>
-            array (
+            ],
+            88 => [
                 'id' => 89,
                 'bridge_id' => 165,
                 'name' => 'Crédit Mutuel du Sud-Ouest Pro',
@@ -997,9 +905,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            89 =>
-            array (
+            ],
+            89 => [
                 'id' => 90,
                 'bridge_id' => 156,
                 'name' => 'Hello Bank',
@@ -1008,9 +915,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            90 =>
-            array (
+            ],
+            90 => [
                 'id' => 91,
                 'bridge_id' => 152,
                 'name' => 'LCL Particuliers',
@@ -1019,9 +925,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            91 =>
-            array (
+            ],
+            91 => [
                 'id' => 92,
                 'bridge_id' => 151,
                 'name' => 'La Banque Postale Pro',
@@ -1030,9 +935,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            92 =>
-            array (
+            ],
+            92 => [
                 'id' => 93,
                 'bridge_id' => 147,
                 'name' => 'Caisse d\'Epargne Pro',
@@ -1041,9 +945,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            93 =>
-            array (
+            ],
+            93 => [
                 'id' => 94,
                 'bridge_id' => 145,
                 'name' => 'Société Générale Pro',
@@ -1052,9 +955,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            94 =>
-            array (
+            ],
+            94 => [
                 'id' => 95,
                 'bridge_id' => 144,
                 'name' => 'Milleis Banque',
@@ -1063,9 +965,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            95 =>
-            array (
+            ],
+            95 => [
                 'id' => 96,
                 'bridge_id' => 143,
                 'name' => 'Crédit Mutuel Antilles-Guyane',
@@ -1074,9 +975,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            96 =>
-            array (
+            ],
+            96 => [
                 'id' => 97,
                 'bridge_id' => 142,
                 'name' => 'Crédit Mutuel Massif Central',
@@ -1085,9 +985,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            97 =>
-            array (
+            ],
+            97 => [
                 'id' => 98,
                 'bridge_id' => 141,
                 'name' => 'Crédit Mutuel Maine-Anjou',
@@ -1096,9 +995,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            98 =>
-            array (
+            ],
+            98 => [
                 'id' => 99,
                 'bridge_id' => 140,
                 'name' => 'Crédit Mutuel Nord-Europe',
@@ -1107,9 +1005,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            99 =>
-            array (
+            ],
+            99 => [
                 'id' => 100,
                 'bridge_id' => 139,
                 'name' => 'Crédit Mutuel Océan',
@@ -1118,9 +1015,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            100 =>
-            array (
+            ],
+            100 => [
                 'id' => 101,
                 'bridge_id' => 138,
                 'name' => 'Crédit Mutuel du Sud-Ouest',
@@ -1129,9 +1025,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            101 =>
-            array (
+            ],
+            101 => [
                 'id' => 102,
                 'bridge_id' => 137,
                 'name' => 'Banque Tarneaud',
@@ -1140,9 +1035,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'TARNFR2L',
                 'process_time' => '24:00:00',
-            ),
-            102 =>
-            array (
+            ],
+            102 => [
                 'id' => 103,
                 'bridge_id' => 136,
                 'name' => 'Banque Rhône-Alpes',
@@ -1151,9 +1045,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            103 =>
-            array (
+            ],
+            103 => [
                 'id' => 104,
                 'bridge_id' => 135,
                 'name' => 'Banque Nuger',
@@ -1162,9 +1055,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'BNUGFR21',
                 'process_time' => '24:00:00',
-            ),
-            104 =>
-            array (
+            ],
+            104 => [
                 'id' => 105,
                 'bridge_id' => 134,
                 'name' => 'Banque Laydernier',
@@ -1173,9 +1065,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'LAYDFR2W',
                 'process_time' => '24:00:00',
-            ),
-            105 =>
-            array (
+            ],
+            105 => [
                 'id' => 106,
                 'bridge_id' => 133,
                 'name' => 'Banque Courtois',
@@ -1184,9 +1075,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            106 =>
-            array (
+            ],
+            106 => [
                 'id' => 107,
                 'bridge_id' => 132,
                 'name' => 'Société Marseillaise de Crédit',
@@ -1195,9 +1085,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            107 =>
-            array (
+            ],
+            107 => [
                 'id' => 108,
                 'bridge_id' => 131,
                 'name' => 'Banque Kolb',
@@ -1206,9 +1095,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            108 =>
-            array (
+            ],
+            108 => [
                 'id' => 109,
                 'bridge_id' => 130,
                 'name' => 'Crédit Mutuel de Bretagne',
@@ -1217,9 +1105,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            109 =>
-            array (
+            ],
+            109 => [
                 'id' => 110,
                 'bridge_id' => 129,
                 'name' => 'ING France',
@@ -1228,9 +1115,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            110 =>
-            array (
+            ],
+            110 => [
                 'id' => 111,
                 'bridge_id' => 128,
                 'name' => 'Fortuneo',
@@ -1239,9 +1125,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'FTNOFRP1',
                 'process_time' => '24:00:00',
-            ),
-            111 =>
-            array (
+            ],
+            111 => [
                 'id' => 112,
                 'bridge_id' => 126,
                 'name' => 'American Express',
@@ -1250,9 +1135,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            112 =>
-            array (
+            ],
+            112 => [
                 'id' => 113,
                 'bridge_id' => 122,
                 'name' => 'Boursorama',
@@ -1261,9 +1145,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'BOUSFRPP',
                 'process_time' => '24:00:00',
-            ),
-            113 =>
-            array (
+            ],
+            113 => [
                 'id' => 114,
                 'bridge_id' => 120,
                 'name' => 'Crédit Agricole Val de France',
@@ -1272,9 +1155,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            114 =>
-            array (
+            ],
+            114 => [
                 'id' => 115,
                 'bridge_id' => 119,
                 'name' => 'Crédit Agricole Nord Est',
@@ -1283,9 +1165,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            115 =>
-            array (
+            ],
+            115 => [
                 'id' => 116,
                 'bridge_id' => 118,
                 'name' => 'Crédit Agricole Lorraine',
@@ -1294,9 +1175,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            116 =>
-            array (
+            ],
+            116 => [
                 'id' => 117,
                 'bridge_id' => 117,
                 'name' => 'Crédit Agricole Franche Comté',
@@ -1305,9 +1185,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            117 =>
-            array (
+            ],
+            117 => [
                 'id' => 118,
                 'bridge_id' => 116,
                 'name' => 'Crédit Agricole Pyrénées Gascogne',
@@ -1316,9 +1195,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            118 =>
-            array (
+            ],
+            118 => [
                 'id' => 119,
                 'bridge_id' => 115,
                 'name' => 'Crédit Agricole Brie Picardie',
@@ -1327,9 +1205,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            119 =>
-            array (
+            ],
+            119 => [
                 'id' => 120,
                 'bridge_id' => 114,
                 'name' => 'Crédit Agricole Alsace Vosges',
@@ -1338,9 +1215,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            120 =>
-            array (
+            ],
+            120 => [
                 'id' => 121,
                 'bridge_id' => 113,
                 'name' => 'Crédit Agricole Ile de France',
@@ -1349,9 +1225,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            121 =>
-            array (
+            ],
+            121 => [
                 'id' => 122,
                 'bridge_id' => 80,
                 'name' => 'Crédit Agricole Touraine Poitou',
@@ -1360,9 +1235,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            122 =>
-            array (
+            ],
+            122 => [
                 'id' => 123,
                 'bridge_id' => 79,
                 'name' => 'Crédit Agricole Toulouse 31',
@@ -1371,9 +1245,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            123 =>
-            array (
+            ],
+            123 => [
                 'id' => 124,
                 'bridge_id' => 78,
                 'name' => 'Crédit Agricole Sud Rhône Alpes',
@@ -1382,9 +1255,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            124 =>
-            array (
+            ],
+            124 => [
                 'id' => 125,
                 'bridge_id' => 77,
                 'name' => 'Crédit Agricole Sud Méditerranée',
@@ -1393,9 +1265,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            125 =>
-            array (
+            ],
+            125 => [
                 'id' => 126,
                 'bridge_id' => 76,
                 'name' => 'Crédit Agricole Réunion',
@@ -1404,9 +1275,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            126 =>
-            array (
+            ],
+            126 => [
                 'id' => 127,
                 'bridge_id' => 75,
                 'name' => 'Crédit Agricole Provence Côte d\'Azur',
@@ -1415,9 +1285,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            127 =>
-            array (
+            ],
+            127 => [
                 'id' => 128,
                 'bridge_id' => 74,
                 'name' => 'Crédit Agricole Normandie Seine',
@@ -1426,9 +1295,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            128 =>
-            array (
+            ],
+            128 => [
                 'id' => 129,
                 'bridge_id' => 73,
                 'name' => 'Crédit Agricole Normandie',
@@ -1437,9 +1305,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            129 =>
-            array (
+            ],
+            129 => [
                 'id' => 130,
                 'bridge_id' => 72,
                 'name' => 'Crédit Agricole Nord Midi-Pyrénées',
@@ -1448,9 +1315,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            130 =>
-            array (
+            ],
+            130 => [
                 'id' => 131,
                 'bridge_id' => 71,
                 'name' => 'Crédit Agricole Nord De France',
@@ -1459,9 +1325,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            131 =>
-            array (
+            ],
+            131 => [
                 'id' => 132,
                 'bridge_id' => 70,
                 'name' => 'Crédit Agricole Morbihan',
@@ -1470,9 +1335,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            132 =>
-            array (
+            ],
+            132 => [
                 'id' => 133,
                 'bridge_id' => 69,
                 'name' => 'Crédit Agricole Deux-Sèvres',
@@ -1481,9 +1345,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            133 =>
-            array (
+            ],
+            133 => [
                 'id' => 134,
                 'bridge_id' => 66,
                 'name' => 'Crédit Agricole Martinique-Guyane',
@@ -1492,9 +1355,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            134 =>
-            array (
+            ],
+            134 => [
                 'id' => 135,
                 'bridge_id' => 65,
                 'name' => 'Crédit Agricole Loire Haute Loire',
@@ -1503,9 +1365,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            135 =>
-            array (
+            ],
+            135 => [
                 'id' => 136,
                 'bridge_id' => 64,
                 'name' => 'Crédit Agricole Languedoc',
@@ -1514,9 +1375,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            136 =>
-            array (
+            ],
+            136 => [
                 'id' => 137,
                 'bridge_id' => 63,
                 'name' => 'Crédit Agricole Ille-et-Vilaine',
@@ -1525,9 +1385,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            137 =>
-            array (
+            ],
+            137 => [
                 'id' => 138,
                 'bridge_id' => 62,
                 'name' => 'Crédit Agricole Guadeloupe',
@@ -1536,9 +1395,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            138 =>
-            array (
+            ],
+            138 => [
                 'id' => 139,
                 'bridge_id' => 61,
                 'name' => 'Crédit Agricole Finistère',
@@ -1547,9 +1405,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            139 =>
-            array (
+            ],
+            139 => [
                 'id' => 140,
                 'bridge_id' => 60,
                 'name' => 'Crédit Agricole Côtes d\'Armor',
@@ -1558,9 +1415,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            140 =>
-            array (
+            ],
+            140 => [
                 'id' => 141,
                 'bridge_id' => 59,
                 'name' => 'Crédit Agricole Corse',
@@ -1569,9 +1425,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            141 =>
-            array (
+            ],
+            141 => [
                 'id' => 142,
                 'bridge_id' => 58,
                 'name' => 'Crédit Agricole Charente Perigord',
@@ -1580,9 +1435,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            142 =>
-            array (
+            ],
+            142 => [
                 'id' => 143,
                 'bridge_id' => 57,
                 'name' => 'Crédit Agricole Charente-Maritime',
@@ -1591,9 +1445,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            143 =>
-            array (
+            ],
+            143 => [
                 'id' => 144,
                 'bridge_id' => 56,
                 'name' => 'Crédit Agricole Champagne-Bourgogne',
@@ -1602,9 +1455,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            144 =>
-            array (
+            ],
+            144 => [
                 'id' => 145,
                 'bridge_id' => 55,
                 'name' => 'Crédit Agricole Centre-Ouest',
@@ -1613,9 +1465,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            145 =>
-            array (
+            ],
+            145 => [
                 'id' => 146,
                 'bridge_id' => 54,
                 'name' => 'Crédit Agricole Centre France',
@@ -1624,9 +1475,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            146 =>
-            array (
+            ],
+            146 => [
                 'id' => 147,
                 'bridge_id' => 53,
                 'name' => 'Crédit Agricole Centre-Est',
@@ -1635,9 +1485,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            147 =>
-            array (
+            ],
+            147 => [
                 'id' => 148,
                 'bridge_id' => 52,
                 'name' => 'Crédit Agricole Atlantique Vendée',
@@ -1646,9 +1495,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            148 =>
-            array (
+            ],
+            148 => [
                 'id' => 149,
                 'bridge_id' => 51,
                 'name' => 'Crédit Agricole Anjou Maine',
@@ -1657,9 +1505,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            149 =>
-            array (
+            ],
+            149 => [
                 'id' => 150,
                 'bridge_id' => 50,
                 'name' => 'Crédit Agricole Alpes Provence',
@@ -1668,9 +1515,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            150 =>
-            array (
+            ],
+            150 => [
                 'id' => 151,
                 'bridge_id' => 49,
                 'name' => 'Crédit Agricole Centre Loire',
@@ -1679,9 +1525,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            151 =>
-            array (
+            ],
+            151 => [
                 'id' => 152,
                 'bridge_id' => 48,
                 'name' => 'Crédit Agricole Aquitaine',
@@ -1690,9 +1535,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            152 =>
-            array (
+            ],
+            152 => [
                 'id' => 153,
                 'bridge_id' => 40,
                 'name' => 'Banque Populaire Du Sud',
@@ -1701,9 +1545,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPPPG',
                 'process_time' => '24:00:00',
-            ),
-            153 =>
-            array (
+            ],
+            153 => [
                 'id' => 154,
                 'bridge_id' => 39,
                 'name' => 'Banque Populaire Méditerranée',
@@ -1712,9 +1555,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            154 =>
-            array (
+            ],
+            154 => [
                 'id' => 155,
                 'bridge_id' => 38,
                 'name' => 'Banque Populaire Grand Ouest',
@@ -1723,9 +1565,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            155 =>
-            array (
+            ],
+            155 => [
                 'id' => 156,
                 'bridge_id' => 37,
                 'name' => 'Banque Populaire Du Nord',
@@ -1734,9 +1575,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPLIL',
                 'process_time' => '24:00:00',
-            ),
-            156 =>
-            array (
+            ],
+            156 => [
                 'id' => 157,
                 'bridge_id' => 36,
                 'name' => 'Banque Populaire Alsace Lorraine Champagne',
@@ -1745,9 +1585,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPMTZ',
                 'process_time' => '24:00:00',
-            ),
-            157 =>
-            array (
+            ],
+            157 => [
                 'id' => 158,
                 'bridge_id' => 35,
                 'name' => 'Banque Populaire Du Massif Central',
@@ -1756,9 +1595,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            158 =>
-            array (
+            ],
+            158 => [
                 'id' => 159,
                 'bridge_id' => 34,
                 'name' => 'Banque Populaire Loire et Lyonnais',
@@ -1767,9 +1605,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            159 =>
-            array (
+            ],
+            159 => [
                 'id' => 160,
                 'bridge_id' => 32,
                 'name' => 'Banque Populaire Bourgogne Franche-Comté',
@@ -1778,9 +1615,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            160 =>
-            array (
+            ],
+            160 => [
                 'id' => 161,
                 'bridge_id' => 31,
                 'name' => 'Banque Populaire Atlantique',
@@ -1789,9 +1625,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPNAN',
                 'process_time' => '24:00:00',
-            ),
-            161 =>
-            array (
+            ],
+            161 => [
                 'id' => 162,
                 'bridge_id' => 30,
                 'name' => 'Banque Populaire Aquitaine Centre Atlantique',
@@ -1800,9 +1635,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPBDX',
                 'process_time' => '24:00:00',
-            ),
-            162 =>
-            array (
+            ],
+            162 => [
                 'id' => 163,
                 'bridge_id' => 28,
                 'name' => 'Banque Populaire Auvergne Rhône Alpes',
@@ -1811,9 +1645,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            163 =>
-            array (
+            ],
+            163 => [
                 'id' => 164,
                 'bridge_id' => 25,
                 'name' => 'Banque Populaire Occitane',
@@ -1822,9 +1655,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPTLS',
                 'process_time' => '24:00:00',
-            ),
-            164 =>
-            array (
+            ],
+            164 => [
                 'id' => 165,
                 'bridge_id' => 23,
                 'name' => 'Bred',
@@ -1833,9 +1665,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            165 =>
-            array (
+            ],
+            165 => [
                 'id' => 166,
                 'bridge_id' => 21,
                 'name' => 'Crédit Agricole Savoie',
@@ -1844,9 +1675,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            166 =>
-            array (
+            ],
+            166 => [
                 'id' => 167,
                 'bridge_id' => 20,
                 'name' => 'Crédit du Nord',
@@ -1855,9 +1685,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            167 =>
-            array (
+            ],
+            167 => [
                 'id' => 168,
                 'bridge_id' => 18,
                 'name' => 'Banque Populaire Rives de Paris',
@@ -1866,9 +1695,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => 'CCBPFRPPMTG',
                 'process_time' => '24:00:00',
-            ),
-            168 =>
-            array (
+            ],
+            168 => [
                 'id' => 169,
                 'bridge_id' => 17,
                 'name' => 'La Banque Postale Particulier',
@@ -1877,9 +1705,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            169 =>
-            array (
+            ],
+            169 => [
                 'id' => 170,
                 'bridge_id' => 16,
                 'name' => 'Crédit Mutuel - Site National',
@@ -1888,9 +1715,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            170 =>
-            array (
+            ],
+            170 => [
                 'id' => 171,
                 'bridge_id' => 15,
                 'name' => 'Banque Populaire Val de France ',
@@ -1899,9 +1725,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            171 =>
-            array (
+            ],
+            171 => [
                 'id' => 172,
                 'bridge_id' => 14,
                 'name' => 'CIC',
@@ -1910,9 +1735,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            172 =>
-            array (
+            ],
+            172 => [
                 'id' => 173,
                 'bridge_id' => 6,
                 'name' => 'BNP Paribas Particulier',
@@ -1921,9 +1745,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            173 =>
-            array (
+            ],
+            173 => [
                 'id' => 174,
                 'bridge_id' => 5,
                 'name' => 'Société Générale Particulier',
@@ -1932,9 +1755,8 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            174 =>
-            array (
+            ],
+            174 => [
                 'id' => 175,
                 'bridge_id' => 4,
                 'name' => 'Caisse d\'Epargne Particulier',
@@ -1943,20 +1765,17 @@ class BanksTableSeeder extends Seeder
                 'country' => 'FR',
                 'bic' => '',
                 'process_time' => '24:00:00',
-            ),
-            175 =>
-                array (
-                    'id' => 176,
-                    'bridge_id' => 0,
-                    'name' => 'FINBANK ',
-                    'logo' => config('app.url').'/storage/logo/logo_carre.png',
-                    'primary_color' => 'DB0029',
-                    'country' => 'FR',
-                    'bic' => 'FINFRPPXXX',
-                    'process_time' => '02:00:00',
-                ),
-        ));
-
-
+            ],
+            175 => [
+                'id' => 176,
+                'bridge_id' => 0,
+                'name' => 'FINBANK ',
+                'logo' => config('app.url').'/storage/logo/logo_carre.png',
+                'primary_color' => 'DB0029',
+                'country' => 'FR',
+                'bic' => 'FINFRPPXXX',
+                'process_time' => '02:00:00',
+            ],
+        ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,7 +11,9 @@ class CreateCreditCardNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $card;
+
     public $document;
 
     /**
@@ -50,11 +51,11 @@ class CreateCreditCardNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject("Votre nouvelle carte bancaire")
+                    ->subject('Votre nouvelle carte bancaire')
                     ->view('emails.customer.create_credit_card', [
-                        "card" => $this->card,
-                        "document" => $this->document,
-                        "customer" => $this->customer
+                        'card' => $this->card,
+                        'document' => $this->document,
+                        'customer' => $this->customer,
                     ]);
     }
 

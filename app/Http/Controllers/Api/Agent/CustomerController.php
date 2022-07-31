@@ -45,13 +45,13 @@ class CustomerController extends Controller
         foreach ($customer->wallets as $wallet) {
             if ($wallet->balance_actual < 0 && $wallet->decouvert == 0) {
                 $wallets[] = [
-                    "compte" => $wallet->number_account,
-                    "status" => "outdated"
+                    'compte' => $wallet->number_account,
+                    'status' => 'outdated',
                 ];
             } else {
                 $wallets[] = [
-                    "compte" => $wallet->number_account,
-                    "status" => "ok"
+                    'compte' => $wallet->number_account,
+                    'status' => 'ok',
                 ];
             }
         }
@@ -72,7 +72,7 @@ class CustomerController extends Controller
                 [],
                 false,
                 true,
-                '/storage/gdd/' . $customer_id . '/courriers/', false, 'address');
+                '/storage/gdd/'.$customer_id.'/courriers/', false, 'address');
         }
 
         try {
@@ -83,15 +83,17 @@ class CustomerController extends Controller
             auth()->user()->notify(new UpdateStatusAccountNotification($customer, $request->get('status_open_account')));
 
             // Notification Client
-            $customer->user->notify(new \App\Notifications\Customer\UpdateStatusAccountNotification($customer, $request->get('status_open_account'), null, 'Cloture du compte - CUS' . $customer->user->identifiant . '.pdf'));
+            $customer->user->notify(new \App\Notifications\Customer\UpdateStatusAccountNotification($customer, $request->get('status_open_account'), null, 'Cloture du compte - CUS'.$customer->user->identifiant.'.pdf'));
 
             // response
-            LogHelper::notify('notice', "Mise à jour du status du compte client: " . CustomerHelper::getName($customer));
+            LogHelper::notify('notice', 'Mise à jour du status du compte client: '.CustomerHelper::getName($customer));
+
             return response()->json([
-                "status" => CustomerHelper::getStatusOpenAccount($request->get('status_open_account'))
+                'status' => CustomerHelper::getStatusOpenAccount($request->get('status_open_account')),
             ]);
         } catch (\Exception $exception) {
             LogHelper::notify('error', $exception->getMessage());
+
             return response()->json();
         }
     }
@@ -126,14 +128,16 @@ class CustomerController extends Controller
 
         try {
             $twillo->client->messages->create($customer->info->mobile, [
-                "body" => $request->get('message'),
-                "from" => config('twilio-notification-channel.from')
+                'body' => $request->get('message'),
+                'from' => config('twilio-notification-channel.from'),
             ]);
 
-            LogHelper::notify('notice', "Envoie d'un message sms au " . $customer->info->mobile);
+            LogHelper::notify('notice', "Envoie d'un message sms au ".$customer->info->mobile);
+
             return response()->json();
         } catch (TwilioException $exception) {
             LogHelper::notify('error', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -145,10 +149,12 @@ class CustomerController extends Controller
         try {
             \Mail::to($customer->user->email)->send(new WriteMail($customer, $request->get('message')));
 
-            LogHelper::notify('notice', "Envoie d'un message mail à " . $customer->user->email);
+            LogHelper::notify('notice', "Envoie d'un message mail à ".$customer->user->email);
+
             return response()->json();
         } catch (\Exception $exception) {
             LogHelper::notify('error', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -160,7 +166,7 @@ class CustomerController extends Controller
 
         try {
             $customer->user()->update([
-                'password' => \Hash::make($password)
+                'password' => \Hash::make($password),
             ]);
 
             // Envoie du pass par sms
@@ -172,10 +178,12 @@ class CustomerController extends Controller
                 }
             } catch (\Exception $exception) {
                 LogHelper::notify('error', $exception->getMessage());
+
                 return response()->json($exception->getMessage(), 500);
             }
         } catch (\Exception $exception) {
             LogHelper::notify('error', $exception->getMessage());
+
             return response()->json($exception->getMessage(), 500);
         }
 
@@ -188,11 +196,12 @@ class CustomerController extends Controller
         $customer = Customer::find($customer_id);
 
         $customer->update([
-            'auth_code' => base64_encode($code)
+            'auth_code' => base64_encode($code),
         ]);
 
         // Envoie du code par sms
         $customer->info->notify(new ReinitCodeCustomer($code));
+
         return response()->json();
     }
 
@@ -208,6 +217,7 @@ class CustomerController extends Controller
 
         // Notification client
         $customer->user->notify(new ReinitAuthCustomer($customer));
+
         return response()->json();
     }
 
@@ -217,15 +227,17 @@ class CustomerController extends Controller
 
         try {
             $customer->info->update([
-                'isVerified' => 1
+                'isVerified' => 1,
             ]);
 
             $this->PhoneVerification($customer);
 
-            LogHelper::notify('notice', "Client Vérifier");
+            LogHelper::notify('notice', 'Client Vérifier');
+
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('error', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -236,11 +248,10 @@ class CustomerController extends Controller
         $customer = Customer::find($request->get('customer_id'));
         $code_customer = base64_decode($customer->auth_code);
 
-
-        if($code == $code_customer) {
+        if ($code == $code_customer) {
             return response()->json();
         } else {
-            return response()->json(["errors" => ["Le code SECURPASS est invalide"]], 401);
+            return response()->json(['errors' => ['Le code SECURPASS est invalide']], 401);
         }
     }
 
@@ -254,11 +265,11 @@ class CustomerController extends Controller
                 $arr[] = [
                     'id' => $sepa->id,
                     'account' => CustomerWalletHelper::getNameAccount($wallet),
-                    'categorie' => "Europrélèvement",
+                    'categorie' => 'Europrélèvement',
                     'creditor' => $sepa->creditor,
                     'mandat' => $sepa->number_mandate,
                     'montant' => eur($sepa->amount),
-                    'status' => CustomerSepaHelper::getStatus($sepa->status, true)
+                    'status' => CustomerSepaHelper::getStatus($sepa->status, true),
                 ];
             }
         }
@@ -272,8 +283,9 @@ class CustomerController extends Controller
             $customer->info->notify(new PhoneVerificationNotification('sms', true));
 
             return null;
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('error', $exception);
+
             return response()->json($exception->getMessage());
         }
     }

@@ -3,7 +3,6 @@
 namespace App\Notifications\Agent\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
@@ -34,7 +33,7 @@ class ReinitPasswordCustomer extends Notification
      */
     public function via($notifiable)
     {
-        if(config('app.env') == 'local') {
+        if (config('app.env') == 'local') {
             return ['mail'];
         } else {
             return [TwilioChannel::class];

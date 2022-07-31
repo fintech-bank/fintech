@@ -7,25 +7,33 @@ use Illuminate\View\Component;
 class InputGroup extends Component
 {
     public $name;
+
     public $label;
+
     public $symbol;
+
     /**
      * @var null
      */
     public $value;
+
     /**
      * @var bool
      */
     public $required;
+
     public $placement;
+
     /**
      * @var null
      */
     public $placeholder;
+
     /**
      * @var null
      */
     public $text;
+
     /**
      * @var null
      */
@@ -38,13 +46,13 @@ class InputGroup extends Component
      * @param $symbol
      * @param $placement
      * @param $label
-     * @param null $value
-     * @param bool $required
-     * @param null $placeholder
-     * @param null $text
-     * @param null $class
+     * @param  null  $value
+     * @param  bool  $required
+     * @param  null  $placeholder
+     * @param  null  $text
+     * @param  null  $class
      */
-    public function __construct($name, $symbol, $placement, $label = null,  $value = null, $required = false, $placeholder = null, $text = null, $class = null)
+    public function __construct($name, $symbol, $placement, $label = null, $value = null, $required = false, $placeholder = null, $text = null, $class = null)
     {
         //
         $this->name = $name;

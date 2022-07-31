@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerWallet $payment
  * @property-read LoanPlan $plan
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerPretFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPret newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPret newQuery()
@@ -62,11 +63,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPret whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPret whereWalletPaymentId($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerPret
  */
 class CustomerPret extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     protected $dates = ['created_at', 'updated_at', 'first_payment_at'];
 
     public function plan()

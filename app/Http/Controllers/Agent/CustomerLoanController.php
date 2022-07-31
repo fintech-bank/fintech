@@ -8,7 +8,6 @@ use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Jobs\Agent\Customer\RembLoan;
 use App\Jobs\Agent\Customer\ReportScheduleLoan;
-use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerSepa;
 use App\Models\Customer\CustomerWallet;
@@ -34,6 +33,7 @@ class CustomerLoanController extends Controller
 
     /**
      * Vérification Primaire de la demande de pret
+     *
      * @param $customer
      * @param $wallet
      * @param $loan
@@ -90,7 +90,6 @@ class CustomerLoanController extends Controller
             $text->add(['decouvert']);
         }
 
-
         /*
          * Vérifie le salaire du client
          * si <= 500 = $v--
@@ -134,15 +133,15 @@ class CustomerLoanController extends Controller
         $result = $v * 2;
 
         return response()->json([
-            "resultat" => $result,
-            "text" => $text
+            'resultat' => $result,
+            'text' => $text,
         ]);
-
     }
 
     /**
      * Mise à jour du status du pret manuel
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @param $customer
      * @param $wallet
      * @param $loan
@@ -155,7 +154,7 @@ class CustomerLoanController extends Controller
             //dd($loan->wallet);
 
             $loan->update([
-                'status' => $request->get('status')
+                'status' => $request->get('status'),
             ]);
 
             /*
@@ -164,21 +163,21 @@ class CustomerLoanController extends Controller
 
             if ($request->get('status') == 'accepted') {
                 $loan->wallet->update([
-                    'status' => 'active'
+                    'status' => 'active',
                 ]);
 
                 CustomerTransactionHelper::create('credit',
                     'autre',
-                    'Attribution de la somme du pret N°' . $loan->reference,
+                    'Attribution de la somme du pret N°'.$loan->reference,
                     $loan->amount_loan,
                     $loan->wallet->id,
                     false,
-                    'Pret N°' . $loan->reference);
+                    'Pret N°'.$loan->reference);
             }
 
             if ($request->get('status') == 'refused') {
                 $loan->wallet->update([
-                    'status' => 'closed'
+                    'status' => 'closed',
                 ]);
             }
 
@@ -189,13 +188,15 @@ class CustomerLoanController extends Controller
             return response()->json();
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
 
     /**
      * Modifie la date de prélèvement d'un pret bancaire
-     * @param Request $request
+     *
+     * @param  Request  $request
      * @param $customer
      * @param $wallet
      * @param $loan
@@ -207,12 +208,13 @@ class CustomerLoanController extends Controller
 
         try {
             $loan->update([
-                'prlv_day' => $request->get('prlv_day')
+                'prlv_day' => $request->get('prlv_day'),
             ]);
 
             return response()->json();
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -220,7 +222,7 @@ class CustomerLoanController extends Controller
     /**
      * Reporte la prochaine échéance d'un pret bancaire
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $customer
      * @param $wallet
      * @param $loan
@@ -236,6 +238,7 @@ class CustomerLoanController extends Controller
             return response()->json(['nextDate' => $date_prlv->addMonth()->format('d/m/Y')]);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -243,7 +246,7 @@ class CustomerLoanController extends Controller
     /**
      * Changement du compte de prélèvement d'un pret bancaire
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $customer
      * @param $wallet
      * @param $loan
@@ -255,12 +258,13 @@ class CustomerLoanController extends Controller
 
         try {
             $loan->update([
-                'wallet_payment_id' => $request->get('wallet_payment_id')
+                'wallet_payment_id' => $request->get('wallet_payment_id'),
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -272,28 +276,28 @@ class CustomerLoanController extends Controller
         try {
             $restant = CustomerLoanHelper::calcRestantDu($loan, false);
 
-            if($request->get('amount') > $restant) {
-                return response()->json(['error' => "Le montant instruit est supérieur au restant dù"], 500);
+            if ($request->get('amount') > $restant) {
+                return response()->json(['error' => 'Le montant instruit est supérieur au restant dù'], 500);
             } else {
                 $sepa = CustomerSepa::create([
                     'uuid' => \Str::uuid(),
                     'creditor' => config('app.name'),
                     'number_mandate' => \Str::upper(\Str::random(8)),
-                    'amount' => - $request->get('amount'),
+                    'amount' => -$request->get('amount'),
                     'status' => 'waiting',
                     'created_at' => now(),
                     'updated_at' => now()->addDay(),
-                    'customer_wallet_id' => $loan->wallet_payment_id
+                    'customer_wallet_id' => $loan->wallet_payment_id,
                 ]);
 
                 dispatch(new RembLoan($loan, $sepa))->delay(now()->addDay()->startOfDay());
 
                 return response()->json();
             }
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
-
 }

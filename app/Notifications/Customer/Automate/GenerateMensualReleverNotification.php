@@ -5,7 +5,6 @@ namespace App\Notifications\Customer\Automate;
 use App\Helper\CustomerHelper;
 use App\Models\Customer\CustomerDocument;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -46,8 +45,8 @@ class GenerateMensualReleverNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->greeting("Bonjour ".CustomerHelper::getName($this->file->customer))
-                    ->line("Votre relever du mois ".now()->monthName." est disponible sur votre espace");
+                    ->greeting('Bonjour '.CustomerHelper::getName($this->file->customer))
+                    ->line('Votre relever du mois '.now()->monthName.' est disponible sur votre espace');
     }
 
     /**
@@ -62,8 +61,8 @@ class GenerateMensualReleverNotification extends Notification
             'icon' => 'fa-file-pdf',
             'color' => 'primary',
             'title' => 'Relevé Bancaire',
-            'text' => 'Votre relevé bancaire de '.now()->monthName." est disponible",
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'text' => 'Votre relevé bancaire de '.now()->monthName.' est disponible',
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

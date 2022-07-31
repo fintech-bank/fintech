@@ -16,12 +16,13 @@ class CustomerCreditCardController extends Controller
 
         try {
             $card->update([
-                'status' => "active"
+                'status' => 'active',
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => [$exception->getMessage()]], 500);
         }
     }
@@ -32,12 +33,13 @@ class CustomerCreditCardController extends Controller
 
         try {
             $card->update([
-                'status' => "inactive"
+                'status' => 'inactive',
             ]);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => [$exception->getMessage()]], 500);
         }
     }
@@ -48,14 +50,15 @@ class CustomerCreditCardController extends Controller
 
         try {
             $card->update([
-                'status' => "inactive"
+                'status' => 'inactive',
             ]);
 
             $card->wallet->customer->agent->notify(new RequestOppositCardNotification($card->wallet->customer, $card, $request->get('type_opposit')));
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => [$exception->getMessage()]], 500);
         }
     }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper;
-
 
 use App\Models\Core\LoanPlan;
 use App\Models\Customer\CustomerFacelia;
@@ -20,7 +18,6 @@ class CustomerLoanHelper
 
     public static function getTypeLoan($type)
     {
-
     }
 
     public static function getStatusLoan($status, $labeled = true)
@@ -52,25 +49,25 @@ class CustomerLoanHelper
         } else {
             switch ($status) {
                 case 'open':
-                    return "Nouveau dossier";
+                    return 'Nouveau dossier';
                     break;
                 case 'study':
-                    return "Traitement de la demande";
+                    return 'Traitement de la demande';
                     break;
                 case 'accepted':
-                    return "Accepter";
+                    return 'Accepter';
                     break;
                 case 'refused':
-                    return "Refuser";
+                    return 'Refuser';
                     break;
                 case 'progress':
-                    return "Utilisation en cours";
+                    return 'Utilisation en cours';
                     break;
                 case 'terminated':
-                    return "Pret rembourser";
+                    return 'Pret rembourser';
                     break;
                 case 'error':
-                    return "Erreur";
+                    return 'Erreur';
                     break;
             }
         }
@@ -85,6 +82,7 @@ class CustomerLoanHelper
             return eur($calc);
         } else {
             $prlv_effect = CustomerSepa::query()->where('status', 'processed')->where('creditor', config('app.name'))->sum('amount');
+
             return $loan->amount_du - $prlv_effect;
         }
     }
@@ -111,7 +109,7 @@ class CustomerLoanHelper
             'wallet_payment_id' => $wallet->id,
             'first_payment_at' => Carbon::create(now()->year, now()->addMonth()->month, $prlv_day),
             'loan_plan_id' => $loan_plan,
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         if ($plan->id == 8) {
@@ -124,13 +122,13 @@ class CustomerLoanHelper
                 'wallet_payment_id' => $wallet->id,
                 'customer_pret_id' => $loan->id,
                 'customer_credit_card_id' => $card,
-                'customer_wallet_id' => $loan->wallet->id
+                'customer_wallet_id' => $loan->wallet->id,
             ]);
 
             $doc_pret = DocumentFile::createDoc(
                 $customer,
                 'Contrat de crédit facelia',
-                $loan->reference . ' - Information Contractuel Facelia',
+                $loan->reference.' - Information Contractuel Facelia',
                 3,
                 null,
                 true,
@@ -138,15 +136,15 @@ class CustomerLoanHelper
                 true,
                 true,
                 [
-                    "loan" => $loan,
-                    "facelia" => $facelia
+                    'loan' => $loan,
+                    'facelia' => $facelia,
                 ]
             );
         } else {
             $doc_pret = DocumentFile::createDoc(
                 $customer,
                 'Contrat de crédit Personnel',
-                $loan->reference . ' - Offre de contrat de crédit: Pret Personnel',
+                $loan->reference.' - Offre de contrat de crédit: Pret Personnel',
                 3,
                 null,
                 true,
@@ -154,7 +152,7 @@ class CustomerLoanHelper
                 false,
                 true,
                 [
-                    "loan" => $loan,
+                    'loan' => $loan,
                 ]
             );
         }
@@ -162,7 +160,7 @@ class CustomerLoanHelper
         DocumentFile::createDoc(
             $customer,
             'Fiche de Dialogue',
-            $loan->reference . ' - Fiche de Dialogue',
+            $loan->reference.' - Fiche de Dialogue',
             3,
             null,
             false,
@@ -175,7 +173,7 @@ class CustomerLoanHelper
         DocumentFile::createDoc(
             $customer,
             'Information Précontractuel Normalisé',
-            $loan->reference . ' - Information Précontractuel Normalisé',
+            $loan->reference.' - Information Précontractuel Normalisé',
             3,
             null,
             true,
@@ -183,14 +181,14 @@ class CustomerLoanHelper
             true,
             true,
             [
-                "loan" => $loan
+                'loan' => $loan,
             ]
         );
 
         DocumentFile::createDoc(
             $customer,
             'Assurance Emprunteur',
-            $loan->reference . ' - Assurance Emprunteur',
+            $loan->reference.' - Assurance Emprunteur',
             3,
             null,
             false,
@@ -203,7 +201,7 @@ class CustomerLoanHelper
         DocumentFile::createDoc(
             $customer,
             'Avis de conseil relatif assurance',
-            $loan->reference . ' - Avis de conseil relatif à un produit d\'assurance',
+            $loan->reference.' - Avis de conseil relatif à un produit d\'assurance',
             3,
             null,
             false,
@@ -215,7 +213,7 @@ class CustomerLoanHelper
         DocumentFile::createDoc(
             $customer,
             'Mandat Prélèvement Sepa',
-            $loan->reference . ' - Mandat Prélèvement Sepa',
+            $loan->reference.' - Mandat Prélèvement Sepa',
             3,
             null,
             false,
@@ -223,13 +221,13 @@ class CustomerLoanHelper
             false,
             true,
             [
-                "loan" => $loan
+                'loan' => $loan,
             ]
         );
         DocumentFile::createDoc(
             $customer,
             'Plan d\'amortissement',
-            $loan->reference . ' - Plan d\'amortissement',
+            $loan->reference.' - Plan d\'amortissement',
             3,
             null,
             false,
@@ -237,7 +235,7 @@ class CustomerLoanHelper
             false,
             true,
             [
-                "loan" => $loan
+                'loan' => $loan,
             ]
         );
 
@@ -251,7 +249,7 @@ class CustomerLoanHelper
     {
         $ass = self::getLoanInsurance($assurance);
 
-        $subtotal = $total_amount + ($ass*$duration);
+        $subtotal = $total_amount + ($ass * $duration);
         $subInterest = self::getLoanInterest($total_amount, $plan->interests[0]->interest);
         $int_mensuality = $subInterest / $duration;
 
@@ -261,9 +259,12 @@ class CustomerLoanHelper
     public static function getLoanInsurance($insurance)
     {
         switch ($insurance) {
-            case 'D': $ass = 3.50;break;
-            case 'DIM': $ass = 4.90;break;
-            default: $ass = 7.90;break;
+            case 'D': $ass = 3.50;
+                break;
+            case 'DIM': $ass = 4.90;
+                break;
+            default: $ass = 7.90;
+                break;
         }
 
         return $ass;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper;
-
 
 class PackageHelper
 {
@@ -10,16 +8,16 @@ class PackageHelper
     {
         return json_encode([
             [
-                "name" => "Mensuel",
+                'name' => 'Mensuel',
             ],
             [
-                "name" => "Trimestriel",
+                'name' => 'Trimestriel',
             ],
             [
-                "name" => "Semestriel",
+                'name' => 'Semestriel',
             ],
             [
-                "name" => "Annuel",
+                'name' => 'Annuel',
             ],
         ]);
     }

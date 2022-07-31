@@ -19,25 +19,26 @@ class CustomerCheckController extends Controller
         $customer = Customer::find($customer);
         $wallet = CustomerWallet::find($wallet);
 
-        if($customer->fcc == true) {
+        if ($customer->fcc == true) {
             return response()->json(null, 426);
-        } elseif($wallet->status != 'active'){
+        } elseif ($wallet->status != 'active') {
             return response()->json(null, 427);
         } else {
             try {
-                $reference = rand(1000000,9999999);
+                $reference = rand(1000000, 9999999);
                 $check = CustomerCheck::query()->create([
                     'reference' => $reference,
                     'tranche_start' => $reference,
                     'tranche_end' => $reference + 40,
-                    'customer_wallet_id' => $wallet->id
+                    'customer_wallet_id' => $wallet->id,
                 ]);
 
                 $customer->user->notify(new CheckCheckoutNotification($customer, $check));
 
                 return response()->json($check);
-            }catch (\Exception $exception) {
+            } catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception->getMessage());
+
                 return response()->json($exception->getMessage(), 500);
             }
         }
@@ -50,7 +51,7 @@ class CustomerCheckController extends Controller
         return response()->json([
             'check' => $check,
             'check_edit_status_uri' => route('agent.customer.wallet.check.update', [$customer, $wallet, $check->id]),
-            'check_status' => CustomerCheckHelper::getStatus($check->status)
+            'check_status' => CustomerCheckHelper::getStatus($check->status),
         ]);
     }
 
@@ -60,14 +61,15 @@ class CustomerCheckController extends Controller
 
         try {
             $check->update([
-                'status' => $request->get('status')
+                'status' => $request->get('status'),
             ]);
 
             $check->wallet->customer->user->notify(new CheckStatusNotification($check->wallet->customer, $check));
 
             return response()->json(null, 200);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage(), 500);
         }
     }
@@ -78,8 +80,9 @@ class CustomerCheckController extends Controller
             CustomerCheck::find($check)->delete();
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage(), 500);
         }
     }

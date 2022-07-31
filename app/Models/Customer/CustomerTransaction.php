@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $customer_credit_card_id
  * @property-read \App\Models\Customer\CustomerCreditCard|null $card
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerTransactionFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction newQuery()
@@ -43,13 +44,15 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction whereUuid($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerTransaction
  */
 class CustomerTransaction extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    protected $dates = ["created_at", "updated_at", "confirmed_at", "differed_at"];
+    protected $dates = ['created_at', 'updated_at', 'confirmed_at', 'differed_at'];
 
     public function wallet()
     {

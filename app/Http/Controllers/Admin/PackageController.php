@@ -23,28 +23,30 @@ class PackageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string",
-            'price' => "required",
-            'type_prlv' => "required"
+            'name' => 'required|string',
+            'price' => 'required',
+            'type_prlv' => 'required',
         ]);
 
         $request->merge([
-            'type_prlv' => PackageHelper::setTypePrlv($request->get('type_prlv'))
+            'type_prlv' => PackageHelper::setTypePrlv($request->get('type_prlv')),
         ]);
 
         try {
             $package = Package::create($request->all());
 
-            LogHelper::notify('notice', "Création d'un package: " . $request->get('name'));
+            LogHelper::notify('notice', "Création d'un package: ".$request->get('name'));
+
             return response()->json($package);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -55,8 +57,9 @@ class PackageController extends Controller
             $package = Package::find($id);
 
             return response()->json($package);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -64,7 +67,7 @@ class PackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
@@ -73,9 +76,11 @@ class PackageController extends Controller
             Package::find($id)->delete();
 
             LogHelper::notify('notice', "Suppression d'un package");
+
             return response()->json();
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $divers Autres charges (pension, etc...)
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
+ *
  * @method static \Database\Factories\Customer\CustomerSituationChargeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationCharge newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationCharge newQuery()
@@ -26,11 +27,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationCharge whereNbCredit($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationCharge whereRent($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerSituationCharge
  */
 class CustomerSituationCharge extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function customer()

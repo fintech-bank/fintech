@@ -17,15 +17,15 @@ class CustomerSituationFactory extends Factory
     public function definition()
     {
         return [
-            "legal_capacity" => "Majeur capable",
-            "family_situation" => "Célibataire",
-            "logement" => "Locataire",
-            "logement_at" => $this->faker->dateTimeBetween(now()->subYears(rand(1,99)), now()),
-            "child" => rand(0,9),
-            "person_charged" => rand(0,5),
-            "pro_category" => "Employé",
-            "pro_category_detail" => "Employé de commerce",
-            "pro_profession" => "Cuisinier"
+            'legal_capacity' => 'Majeur capable',
+            'family_situation' => 'Célibataire',
+            'logement' => 'Locataire',
+            'logement_at' => $this->faker->dateTimeBetween(now()->subYears(rand(1, 99)), now()),
+            'child' => rand(0, 9),
+            'person_charged' => rand(0, 5),
+            'pro_category' => 'Employé',
+            'pro_category_detail' => 'Employé de commerce',
+            'pro_profession' => 'Cuisinier',
         ];
     }
 }

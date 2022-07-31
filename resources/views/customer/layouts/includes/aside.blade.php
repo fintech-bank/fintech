@@ -125,7 +125,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('agent.customer.index') }}">
+                    <a class="menu-link" href="{{ route('customer.document.index') }}">
 						<span class="menu-icon">
 							<i class="fa-solid fa-file fa-lg"></i>
 						</span>

@@ -7,16 +7,21 @@ use Illuminate\View\Component;
 class SelectAjax extends Component
 {
     public $name;
+
     public $datas;
+
     public $label;
+
     /**
      * @var null
      */
     public $placeholder;
+
     /**
      * @var bool
      */
     public $required;
+
     public $url;
 
     /**
@@ -25,10 +30,10 @@ class SelectAjax extends Component
      * @param $name
      * @param $label
      * @param $url
-     * @param null $placeholder
-     * @param bool $required
+     * @param  null  $placeholder
+     * @param  bool  $required
      */
-    public function __construct($name, $label,$url, $placeholder = null, $required = true)
+    public function __construct($name, $label, $url, $placeholder = null, $required = true)
     {
         //
         $this->name = $name;

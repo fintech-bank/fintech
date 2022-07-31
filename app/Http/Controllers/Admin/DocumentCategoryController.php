@@ -19,7 +19,6 @@ class DocumentCategoryController extends Controller
         return view('admin.document.index');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -29,15 +28,17 @@ class DocumentCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string"
+            'name' => 'required|string',
         ]);
 
         try {
             $category = DocumentCategory::create($request->all());
             LogHelper::notify('notice', "Création d'une catégorie de document: ".$request->get('name'));
+
             return response()->json($category);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -52,13 +53,14 @@ class DocumentCategoryController extends Controller
     {
         try {
             $category = DocumentCategory::find($id);
+
             return response()->json($category);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -72,9 +74,11 @@ class DocumentCategoryController extends Controller
         try {
             $category = DocumentCategory::find($id)->update($request->all());
             LogHelper::notify('notice', "Création d'une catégorie de document: ".$request->get('name'));
+
             return response()->json($category);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -90,9 +94,11 @@ class DocumentCategoryController extends Controller
         try {
             DocumentCategory::find($id)->delete();
             LogHelper::notify('notice', "Suppression d'une catégorie de document");
+
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }

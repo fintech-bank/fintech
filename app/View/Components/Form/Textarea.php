@@ -7,11 +7,14 @@ use Illuminate\View\Component;
 class Textarea extends Component
 {
     public $name;
+
     public $label;
+
     /**
      * @var bool
      */
     public $required;
+
     /**
      * @var null
      */
@@ -22,8 +25,8 @@ class Textarea extends Component
      *
      * @param $name
      * @param $label
-     * @param bool $required
-     * @param null $value
+     * @param  bool  $required
+     * @param  null  $value
      */
     public function __construct($name, $label, $required = false, $value = null)
     {

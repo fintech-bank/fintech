@@ -7,28 +7,32 @@ use Illuminate\View\Component;
 class Underline extends Component
 {
     public $title;
+
     /**
      * @var int
      */
     public $size;
+
     /**
      * @var string
      */
     public $color;
+
     /**
      * @var string
      */
     public $sizeText;
+
     public string $class;
 
     /**
      * Create a new component instance.
      *
      * @param $title
-     * @param int $size
-     * @param string $color
-     * @param string $sizeText
-     * @param string $class
+     * @param  int  $size
+     * @param  string  $color
+     * @param  string  $sizeText
+     * @param  string  $class
      */
     public function __construct($title, $size = 8, $color = 'primary', $sizeText = 'fs-2tx', $class = 'w-250px mt-5 mb-5')
     {
