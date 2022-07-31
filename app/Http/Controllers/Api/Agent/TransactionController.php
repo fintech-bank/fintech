@@ -7,7 +7,6 @@ use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerTransaction;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -19,11 +18,11 @@ class TransactionController extends Controller
         return response()->json([
             'type' => CustomerTransactionHelper::getTypeTransaction($transaction->type),
             'title' => $transaction->designation,
-            'dateText' => $transaction->amount < 0 ? "Débité le ".$transaction->updated_at->locale('fr_FR')->format('j F Y') : "Crédité le ".$transaction->updated_at->locale('fr_FR')->format('j F Y'),
-            'amount' => $transaction->amount < 0 ? eur($transaction->amount) : "+ ".eur($transaction->amount),
+            'dateText' => $transaction->amount < 0 ? 'Débité le '.$transaction->updated_at->locale('fr_FR')->format('j F Y') : 'Crédité le '.$transaction->updated_at->locale('fr_FR')->format('j F Y'),
+            'amount' => $transaction->amount < 0 ? eur($transaction->amount) : '+ '.eur($transaction->amount),
             'description' => $transaction->description != null ? $transaction->description : $transaction->designation,
             'date' => $transaction->updated_at->locale('fr_FR')->format('j F Y'),
-            'reference' => $transaction->uuid
+            'reference' => $transaction->uuid,
         ]);
     }
 
@@ -35,8 +34,9 @@ class TransactionController extends Controller
             CustomerTransactionHelper::deleteTransaction($transaction);
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => $exception], 500);
         }
     }

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $limit
  * @property-read \Illuminate\Database\Eloquent\Collection|CustomerEpargne[] $epargnes
  * @property-read int|null $epargnes_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|EpargnePlan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EpargnePlan newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|EpargnePlan query()
@@ -29,17 +30,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|EpargnePlan whereProfitDays($value)
  * @method static \Illuminate\Database\Eloquent\Builder|EpargnePlan whereProfitPercent($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperEpargnePlan
  */
 class EpargnePlan extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function epargnes()
     {
         return $this->hasMany(CustomerEpargne::class);
     }
-
-
 }

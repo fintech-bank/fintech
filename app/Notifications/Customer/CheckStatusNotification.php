@@ -4,7 +4,6 @@ namespace App\Notifications\Customer;
 
 use App\Helper\CustomerCheckHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -13,6 +12,7 @@ class CheckStatusNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $check;
 
     /**
@@ -48,12 +48,11 @@ class CheckStatusNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject("Votre commande de chéquier")
+                    ->subject('Votre commande de chéquier')
             ->view('emails.customer.status_check', [
-                "customer" => $this->customer,
-                "check" => $this->check,
-                "check_status" => CustomerCheckHelper::getStatus($this->check->status)
+                'customer' => $this->customer,
+                'check' => $this->check,
+                'check_status' => CustomerCheckHelper::getStatus($this->check->status),
             ]);
     }
-
 }

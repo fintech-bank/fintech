@@ -7,16 +7,21 @@ use Illuminate\View\Component;
 class SelectModal extends Component
 {
     public $name;
+
     public $parent;
+
     public $datas;
+
     /**
      * @var null
      */
     public $placeholder;
+
     /**
      * @var bool
      */
     public $required;
+
     public $label;
 
     /**
@@ -26,8 +31,8 @@ class SelectModal extends Component
      * @param $parent
      * @param $datas
      * @param $label
-     * @param null $placeholder
-     * @param bool $required
+     * @param  null  $placeholder
+     * @param  bool  $required
      */
     public function __construct($name, $parent, $datas, $label, $placeholder = null, $required = true)
     {

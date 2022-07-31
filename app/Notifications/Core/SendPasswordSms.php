@@ -2,9 +2,8 @@
 
 namespace App\Notifications\Core;
 
+use App\Models\Customer\Customer;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
@@ -13,8 +12,9 @@ class SendPasswordSms extends Notification
 {
     use Queueable;
 
-    private $customer;
-    private $password;
+    public Customer $customer;
+
+    public string $password;
 
     /**
      * Create a new notification instance.

@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_beneficiaire_id
  * @property-read \App\Models\Customer\CustomerBeneficiaire $beneficiaire
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerTransferFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransfer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransfer newQuery()
@@ -41,14 +42,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransfer whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransfer whereUuid($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerTransfer
  */
 class CustomerTransfer extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
-    protected $dates = ["transfer_date", "recurring_start", "recurring_end"];
+    protected $dates = ['transfer_date', 'recurring_start', 'recurring_end'];
 
     public function wallet()
     {

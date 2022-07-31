@@ -28,8 +28,8 @@ return new class extends Migration
             $table->boolean('payment_international')->default(false);
             $table->boolean('payment_insurance')->default(false);
             $table->boolean('check')->default(false);
-            $table->integer("nb_carte_physique")->default(1);
-            $table->integer("nb_carte_virtuel")->default(1);
+            $table->integer('nb_carte_physique')->default(1);
+            $table->integer('nb_carte_virtuel')->default(1);
             $table->integer('subaccount')->default(0);
         });
     }

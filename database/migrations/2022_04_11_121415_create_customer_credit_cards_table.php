@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('customer_credit_cards', function (Blueprint $table) {
             $table->id();
-            $table->string('currency', 3)->default("EUR");
+            $table->string('currency', 3)->default('EUR');
             $table->string('exp_month', 2);
             $table->string('exp_year', 4)->default(now()->addYears(4)->year);
             $table->string('number');
@@ -39,8 +39,6 @@ return new class extends Migration
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
-
         });
     }
 

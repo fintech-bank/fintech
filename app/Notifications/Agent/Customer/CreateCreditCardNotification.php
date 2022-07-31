@@ -5,7 +5,6 @@ namespace App\Notifications\Agent\Customer;
 use App\Helper\CustomerCreditCard;
 use App\Helper\CustomerHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -16,7 +15,9 @@ class CreateCreditCardNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $card;
+
     public $document;
 
     /**
@@ -71,8 +72,8 @@ class CreateCreditCardNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => 'Une nouvelle Carte bancaire à été créer pour le client :'.CustomerHelper::getName($this->customer)
+            'type' => 'notice',
+            'message' => 'Une nouvelle Carte bancaire à été créer pour le client :'.CustomerHelper::getName($this->customer),
         ];
     }
 

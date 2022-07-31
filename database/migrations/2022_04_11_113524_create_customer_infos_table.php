@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('customer_infos', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ["part", "pro"])->default('part');
-            $table->enum('civility', ["M", "Mme", "Mlle"])->nullable();
+            $table->enum('type', ['part', 'pro'])->default('part');
+            $table->enum('civility', ['M', 'Mme', 'Mlle'])->nullable();
             $table->string('firstname')->nullable();
             $table->string('middlename')->nullable();
             $table->string('lastname')->nullable();
@@ -40,8 +40,6 @@ return new class extends Migration
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
-
         });
     }
 

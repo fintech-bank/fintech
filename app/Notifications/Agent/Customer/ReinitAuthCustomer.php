@@ -3,7 +3,6 @@
 namespace App\Notifications\Agent\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -46,5 +45,4 @@ class ReinitAuthCustomer extends Notification
         return (new MailMessage)
                     ->view('emails.customer.reinit_auth');
     }
-
 }

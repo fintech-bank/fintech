@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('subject');
-            $table->enum('status', ['open', 'progress', "closed"])->default("open");
-            $table->enum('priority', ["low", "middle", "high"])->default('low');
+            $table->enum('status', ['open', 'progress', 'closed'])->default('open');
+            $table->enum('priority', ['low', 'middle', 'high'])->default('low');
             $table->timestamps();
         });
     }

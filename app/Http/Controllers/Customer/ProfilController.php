@@ -24,8 +24,8 @@ class ProfilController extends Controller
                 'type' => 'document',
                 'metadata' => [
                     'customer_id' => Customer::where('user_id', auth()->user()->id)->first()->id,
-                    'previous_url' => url()->previous(true)
-                ]
+                    'previous_url' => url()->previous(true),
+                ],
             ])->client_secret,
         ]);
     }
@@ -37,12 +37,13 @@ class ProfilController extends Controller
             case 'updateSecurePhone':
                 if ($this->phoneVerificationToken($request->get('mobile')) == true) {
                     Customer::find($request->user()->customer)->info->update([
-                        'mobile' => $request->get('mobile')
+                        'mobile' => $request->get('mobile'),
                     ]);
 
                     return response()->json(['mobile' => $request->get('mobile')]);
                 } else {
                     LogHelper::notify('critical', 'Le numéro de téléphone n\'exist pas');
+
                     return response()->json(null, 500);
                 }
                 break;
@@ -58,13 +59,14 @@ class ProfilController extends Controller
                     return response()->json();
                 } catch (\Exception $exception) {
                     LogHelper::notify('critical', $exception);
+
                     return response()->json($exception, 500);
                 }
                 break;
 
             case 'updateInfoPerso':
-                if($request->get('email') != UserHelper::emailObscurate($request->user()->email)) {
-                    $request->validate(['email' => "email"]);
+                if ($request->get('email') != UserHelper::emailObscurate($request->user()->email)) {
+                    $request->validate(['email' => 'email']);
                     $this->updateUser($request->user()->customers, $request);
                 }
 
@@ -72,42 +74,45 @@ class ProfilController extends Controller
                     $this->updateInfo($request->user()->customers, $request);
 
                     return response()->json();
-                }catch (\Exception $exception) {
+                } catch (\Exception $exception) {
                     LogHelper::notify('critical', $exception);
+
                     return response()->json(['errors' => $exception], 500);
                 }
                 break;
 
             case 'updatePassword':
                 $request->validate([
-                    'new_password' => new Password
+                    'new_password' => new Password,
                 ]);
 
                 try {
                     $request->user()->update([
-                        'password' => \Hash::make($request->get('new_password'))
+                        'password' => \Hash::make($request->get('new_password')),
                     ]);
 
                     return response()->json();
-                }catch (\Exception $exception) {
+                } catch (\Exception $exception) {
                     LogHelper::notify('critical', $exception);
+
                     return response()->json(['errors' => $exception], 500);
                 }
                 break;
 
             case 'updateSecurpass':
                 $request->validate([
-                    'auth_code' => 'numeric'
+                    'auth_code' => 'numeric',
                 ]);
 
                 try {
                     $request->user()->customers->update([
-                        'auth_code' => base64_encode($request->get('auth_code'))
+                        'auth_code' => base64_encode($request->get('auth_code')),
                     ]);
 
                     return response()->json();
-                }catch (\Exception $exception) {
+                } catch (\Exception $exception) {
                     LogHelper::notify('critical', $exception);
+
                     return response()->json(['errors' => $exception], 500);
                 }
                 break;
@@ -121,7 +126,7 @@ class ProfilController extends Controller
     {
         return view('customer.profil.password', [
             'customer' => auth()->user()->customers,
-            'agent' => new Agent()
+            'agent' => new Agent(),
         ]);
     }
 
@@ -145,11 +150,11 @@ class ProfilController extends Controller
     {
         try {
             $customer->user->update([
-                'email' => $request->get('email')
+                'email' => $request->get('email'),
             ]);
 
             return null;
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return $exception;
         }
     }
@@ -158,10 +163,10 @@ class ProfilController extends Controller
     {
         try {
             $customer->info->update($request->except(['_token', 'action', 'email']));
+
             return null;
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             return $exception;
         }
     }
-
 }

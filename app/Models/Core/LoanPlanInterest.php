@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $duration En Mois
  * @property int $loan_plan_id
  * @property-read \App\Models\Core\LoanPlan $plan
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest query()
@@ -21,11 +22,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest whereInterest($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest whereLoanPlanId($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperLoanPlanInterest
  */
 class LoanPlanInterest extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function plan()

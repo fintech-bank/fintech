@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helper\CustomerCreditCard;
-use App\Helper\CustomerHelper;
 use App\Helper\CustomerSituationHelper;
 use App\Helper\CustomerTransactionHelper;
 use App\Helper\DocumentFile;
@@ -38,20 +36,19 @@ class RegisterController extends Controller
         $package = Package::find($request->get('package'));
         session()->put('package', $package);
 
-
         return view('auth.cart', compact('package'));
     }
 
     public function card(Request $request)
     {
         return view('auth.card', [
-            'package' => session()->get('package')
+            'package' => session()->get('package'),
         ]);
     }
 
     public function persoHome(Request $request)
     {
-        session()->put('cart', ["type" => $request->get('support'), "debit" => $request->get('debit')]);
+        session()->put('cart', ['type' => $request->get('support'), 'debit' => $request->get('debit')]);
 
         return view('auth.perso_home');
     }
@@ -69,14 +66,13 @@ class RegisterController extends Controller
 
         //dd(session()->all());
 
-
         return view('auth.perso_final', [
-            "personal" => session('personal'),
-            "cart" => session('cart'),
-            "package" => session("package"),
-            "pro" => session('pro'),
-            "limit_payment" => round((session('pro.pro_incoming') + session('pro.patrimoine') - (session('pro.rent') + session('pro.divers') + session('pro.credit'))) * 1.9, -2),
-            "limit_retrait" => round((session('pro.pro_incoming') + session('pro.patrimoine') - (session('pro.rent') + session('pro.divers') + session('pro.credit'))) / 1.9, -2),
+            'personal' => session('personal'),
+            'cart' => session('cart'),
+            'package' => session('package'),
+            'pro' => session('pro'),
+            'limit_payment' => round((session('pro.pro_incoming') + session('pro.patrimoine') - (session('pro.rent') + session('pro.divers') + session('pro.credit'))) * 1.9, -2),
+            'limit_retrait' => round((session('pro.pro_incoming') + session('pro.patrimoine') - (session('pro.rent') + session('pro.divers') + session('pro.credit'))) / 1.9, -2),
         ]);
     }
 
@@ -87,18 +83,16 @@ class RegisterController extends Controller
 
         session()->put('user', $user);
 
-        return redirect()->route('register.signate-sign', ["user" => $user]);
-
+        return redirect()->route('register.signate-sign', ['user' => $user]);
     }
 
     public function signateSign(Request $request)
     {
         $user = User::find($request->get('user'));
 
-
         return view('auth.signate', [
-            "user" => $user,
-            "documents" => $user->customers->documents()->where('document_category_id', 3)->where('signable', 1)->get()
+            'user' => $user,
+            'documents' => $user->customers->documents()->where('document_category_id', 3)->where('signable', 1)->get(),
         ]);
     }
 
@@ -109,14 +103,15 @@ class RegisterController extends Controller
         try {
             $document->update([
                 'signed_by_client' => 1,
-                'signed_at' => now()
+                'signed_at' => now(),
             ]);
 
             return response()->json();
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json([
-                'errors' => [$exception->getMessage()]
+                'errors' => [$exception->getMessage()],
             ], 500);
         }
     }
@@ -126,13 +121,13 @@ class RegisterController extends Controller
         $session = $stripe->client->identity->verificationSessions->create([
             'type' => 'document',
             'metadata' => [
-                'user' => session('user')
-            ]
+                'user' => session('user'),
+            ],
         ]);
 
         return view('auth.identity_init', [
             'user' => session('user'),
-            'client_secret' => $session->client_secret
+            'client_secret' => $session->client_secret,
         ]);
     }
 
@@ -142,17 +137,17 @@ class RegisterController extends Controller
         $user = User::find($ses);
 
         $user->customers->info->update([
-            'isVerified' => 1
+            'isVerified' => 1,
         ]);
 
-        if($request->has('payment') && $request->get('payment') == 'success') {
+        if ($request->has('payment') && $request->get('payment') == 'success') {
             $user->customers->update([
-                'status_open_account' => 'completed'
+                'status_open_account' => 'completed',
             ]);
 
             $wallet = $user->customers->wallets()->first();
             $transaction = CustomerTransactionHelper::create('credit', 'depot', 'Dépot initial', 20, $wallet->id,
-            true, "Dépot initial à l'ouverture de votre compte", now(), null, null);
+                true, "Dépot initial à l'ouverture de votre compte", now(), null, null);
             LogHelper::notify('info', "
             Un dépot d'ouverture de compte à été effectuer:<br>
             Nom: $user->name<br>
@@ -163,7 +158,7 @@ class RegisterController extends Controller
             $user->notify(new UpdateStatusAccountNotification($user->customers, $user->customers->status_open_account));
 
             return view('auth.terminate', [
-                'user' => $user
+                'user' => $user,
             ]);
         } else {
             try {
@@ -172,14 +167,15 @@ class RegisterController extends Controller
                     'currency' => 'eur',
                     'payment_method_types' => [
                         'card',
-                        'sepa_debit'
-                    ]
+                        'sepa_debit',
+                    ],
                 ]);
+
                 return view('auth.terminate', [
                     'user' => $user,
-                    'client_secret' => $intent->client_secret
+                    'client_secret' => $intent->client_secret,
                 ]);
-            }catch (\Error $error) {
+            } catch (\Error $error) {
                 LogHelper::notify('critical', $error->getMessage());
                 dd($error);
             }
@@ -191,11 +187,11 @@ class RegisterController extends Controller
         $password = \Str::random(10);
 
         $user = User::create([
-            "name" => $request['firstname'] . " " . $request['lastname'],
-            "email" => $request['email'],
-            "password" => \Hash::make($password),
-            "identifiant" => UserHelper::generateID(),
-            "agency_id" => 1
+            'name' => $request['firstname'].' '.$request['lastname'],
+            'email' => $request['email'],
+            'password' => \Hash::make($password),
+            'identifiant' => UserHelper::generateID(),
+            'agency_id' => 1,
         ]);
 
         $customer = $this->createCustomer(session(), $user, $password);
@@ -205,16 +201,16 @@ class RegisterController extends Controller
 
     private function createCustomer($request, $user, $password)
     {
-        $package = (object)$request->get('package');
-        $card = (object)$request->get('cart');
-        $pro = (object)$request->get('pro');
-        $personal = (object)$request->get('personal');
+        $package = (object) $request->get('package');
+        $card = (object) $request->get('cart');
+        $pro = (object) $request->get('pro');
+        $personal = (object) $request->get('personal');
         $code_auth = rand(1000, 9999);
         $bank = new BankFintech();
         $ficp = $bank->callInter();
 
         $customer = Customer::create([
-            'status_open_account' => "open",
+            'status_open_account' => 'open',
             'auth_code' => base64_encode($code_auth),
             'user_id' => $user->id,
             'package_id' => $package->id,
@@ -222,7 +218,6 @@ class RegisterController extends Controller
             'ficp' => $ficp->ficp ? 1 : 0,
             'fcc' => $ficp->fcc ? 1 : 0,
         ]);
-
 
         $info = CustomerInfo::create([
             'type' => 'part',
@@ -240,8 +235,8 @@ class RegisterController extends Controller
             'country' => $personal->country,
             'phone' => $personal->phone,
             'mobile' => $personal->mobile,
-            'country_code' => "+33",
-            'customer_id' => $customer->id
+            'country_code' => '+33',
+            'customer_id' => $customer->id,
         ]);
 
         $authy = new AuthyApi(config('twilio-notification-channel.authy_secret'));
@@ -254,35 +249,34 @@ class RegisterController extends Controller
 
         $info->save();
 
-
         $setting = CustomerSetting::create([
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
 
         $situation = CustomerSituation::create([
-            "legal_capacity" => $pro->legal_capacity,
-            "family_situation" => $pro->family_situation,
-            "logement" => $pro->logement,
-            "logement_at" => $pro->logement_at,
-            "child" => $pro->child,
-            "person_charged" => $pro->person_charged,
-            "pro_category" => $pro->pro_category,
-            "pro_profession" => $pro->pro_profession,
-            "customer_id" => $customer->id
+            'legal_capacity' => $pro->legal_capacity,
+            'family_situation' => $pro->family_situation,
+            'logement' => $pro->logement,
+            'logement_at' => $pro->logement_at,
+            'child' => $pro->child,
+            'person_charged' => $pro->person_charged,
+            'pro_category' => $pro->pro_category,
+            'pro_profession' => $pro->pro_profession,
+            'customer_id' => $customer->id,
         ]);
 
         $income = CustomerSituationIncome::create([
-            "pro_incoming" => $pro->pro_incoming,
-            "patrimoine" => $pro->patrimoine,
-            "customer_id" => $customer->id
+            'pro_incoming' => $pro->pro_incoming,
+            'patrimoine' => $pro->patrimoine,
+            'customer_id' => $customer->id,
         ]);
 
         $charge = CustomerSituationCharge::create([
-            "rent" => $pro->rent,
-            "nb_credit" => $pro->nb_credit,
-            "credit" => $pro->credit,
-            "divers" => $pro->divers,
-            "customer_id" => $customer->id
+            'rent' => $pro->rent,
+            'nb_credit' => $pro->nb_credit,
+            'credit' => $pro->credit,
+            'divers' => $pro->divers,
+            'customer_id' => $customer->id,
         ]);
 
         $wallet = $this->createWallet($customer);
@@ -293,7 +287,7 @@ class RegisterController extends Controller
                 $setting->update([
                     'nb_physical_card' => 1,
                     'nb_virtual_card' => 0,
-                    'check' => 0
+                    'check' => 0,
                 ]);
                 break;
 
@@ -301,7 +295,7 @@ class RegisterController extends Controller
                 $setting->update([
                     'nb_physical_card' => 1,
                     'nb_virtual_card' => 5,
-                    'check' => 1
+                    'check' => 1,
                 ]);
                 break;
 
@@ -309,7 +303,7 @@ class RegisterController extends Controller
                 $setting->update([
                     'nb_physical_card' => 5,
                     'nb_virtual_card' => 5,
-                    'check' => 1
+                    'check' => 1,
                 ]);
 
                 $this->calcultateFacility($pro->pro_incoming, $customer, $wallet);
@@ -328,23 +322,21 @@ class RegisterController extends Controller
          * - Condition Générale
          */
 
-        $document = DocumentFile::createDoc($customer, 'Convention Part', 'Convention relation particulier - CUS' . $customer->user->identifiant,
-            3, "CNT" . \Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet]);
+        $document = DocumentFile::createDoc($customer, 'Convention Part', 'Convention relation particulier - CUS'.$customer->user->identifiant,
+            3, 'CNT'.\Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet]);
 
-
-        DocumentFile::createDoc($customer, 'RIB', 'Relever Identité Bancaire - CUS' . $customer->user->identifiant,
+        DocumentFile::createDoc($customer, 'RIB', 'Relever Identité Bancaire - CUS'.$customer->user->identifiant,
             3, null, false, false, false, true, ['wallet' => $wallet]);
 
-
-        DocumentFile::createDoc($customer, 'Convention CB Physique', 'Convention CB Visa Physique - CUS' . $customer->user->identifiant,
-            3, "CNT" . \Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet, 'card' => $card]);
+        DocumentFile::createDoc($customer, 'Convention CB Physique', 'Convention CB Visa Physique - CUS'.$customer->user->identifiant,
+            3, 'CNT'.\Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet, 'card' => $card]);
 
         // Notification mail de Bienvenue
         \Mail::to($user)->send(new WelcomeContract($customer, $document));
 
-        \Storage::disk('public')->makeDirectory('gdd/' . $customer->id);
+        \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
         foreach (DocumentCategory::all() as $doc) {
-            \Storage::disk('public')->makeDirectory('gdd/' . $customer->id . '/' . $doc->id);
+            \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
         }
     }
 
@@ -354,14 +346,15 @@ class RegisterController extends Controller
         $ibanC = new Generator($customer->user->agency->code_banque, $number_account, 'FR');
         $iban = $ibanC->generate();
         $rib_key = \Str::substr($iban, 18, 2);
+
         return CustomerWallet::create([
-            "uuid" => \Str::uuid(),
-            "number_account" => $number_account,
+            'uuid' => \Str::uuid(),
+            'number_account' => $number_account,
             'iban' => $iban,
             'rib_key' => $rib_key,
             'type' => 'compte',
             'status' => 'active',
-            'customer_id' => $customer->id
+            'customer_id' => $customer->id,
         ]);
     }
 
@@ -372,15 +365,15 @@ class RegisterController extends Controller
         $card_code = rand(1000, 9999);
 
         $card = \App\Models\Customer\CustomerCreditCard::create([
-            "exp_month" => \Str::length(now()->month) <= 1 ? "0" . now()->month : now()->month,
-            "number" => $card_number,
-            "support" => $request->type,
-            "debit" => $request->debit ? $request->debit : 'immediate',
-            "cvc" => rand(100, 999),
-            "code" => base64_encode($card_code),
-            "limit_payment" => \App\Helper\CustomerCreditCard::calcLimitPayment(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
-            "limit_retrait" => \App\Helper\CustomerCreditCard::calcLimitRetrait(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
-            "customer_wallet_id" => $wallet->id
+            'exp_month' => \Str::length(now()->month) <= 1 ? '0'.now()->month : now()->month,
+            'number' => $card_number,
+            'support' => $request->type,
+            'debit' => $request->debit ? $request->debit : 'immediate',
+            'cvc' => rand(100, 999),
+            'code' => base64_encode($card_code),
+            'limit_payment' => \App\Helper\CustomerCreditCard::calcLimitPayment(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
+            'limit_retrait' => \App\Helper\CustomerCreditCard::calcLimitRetrait(CustomerSituationHelper::calcDiffInSituation($wallet->customer)),
+            'customer_wallet_id' => $wallet->id,
         ]);
 
         // Envoie du code de la carte bleu par sms
@@ -392,12 +385,12 @@ class RegisterController extends Controller
     private function calcultateFacility($incoming, Customer $customer, CustomerWallet $wallet)
     {
         $calc = $incoming / 3;
-        if($customer->ficp == 0) {
-            if($calc >= 300) {
-                $result = $calc > 1000 ? 1000 : ceil($calc/100)*100;
+        if ($customer->ficp == 0) {
+            if ($calc >= 300) {
+                $result = $calc > 1000 ? 1000 : ceil($calc / 100) * 100;
                 $wallet->update([
                     'decouvert' => 1,
-                    'balance_decouvert' => $result
+                    'balance_decouvert' => $result,
                 ]);
             }
         }
@@ -406,11 +399,11 @@ class RegisterController extends Controller
     private function defineDifferedAmount($incoming, Customer $customer, \App\Models\Customer\CustomerCreditCard $card)
     {
         $calc = $incoming / 1.8;
-        if($customer->ficp == 0) {
-            if($calc >= 300) {
-                $result = $calc > 10000 ? 10000 : ceil($calc/100)*100;
+        if ($customer->ficp == 0) {
+            if ($calc >= 300) {
+                $result = $calc > 10000 ? 10000 : ceil($calc / 100) * 100;
                 $card->update([
-                    'differed_limit' => $result
+                    'differed_limit' => $result,
                 ]);
             }
         }

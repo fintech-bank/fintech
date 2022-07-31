@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Alert extends Component
 {
     public $type;
+
     public $color;
+
     public $icon;
+
     public $title;
+
     public $content;
+
     /**
      * @var null
      */
@@ -24,7 +29,7 @@ class Alert extends Component
      * @param $icon
      * @param $title
      * @param $content
-     * @param null $buttons
+     * @param  null  $buttons
      */
     public function __construct($type, $color, $icon, $title, $content, $buttons = null)
     {

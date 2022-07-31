@@ -3,7 +3,6 @@
 namespace App\Mail\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,6 +11,7 @@ class VerifyIdentity extends Mailable
     use Queueable, SerializesModels;
 
     public $customer;
+
     public $verify_uri;
 
     /**
@@ -35,8 +35,8 @@ class VerifyIdentity extends Mailable
     public function build()
     {
         return $this->view('emails.customer.verify_identity', [
-            "customer" => $this->customer,
-            "verify_uri" => $this->verify_uri
+            'customer' => $this->customer,
+            'verify_uri' => $this->verify_uri,
         ])
             ->subject("Vérification d'identité");
     }

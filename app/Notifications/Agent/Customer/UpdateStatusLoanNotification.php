@@ -4,7 +4,6 @@ namespace App\Notifications\Agent\Customer;
 
 use App\Helper\CustomerLoanHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -15,7 +14,9 @@ class UpdateStatusLoanNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $loan;
+
     public $status;
 
     /**
@@ -54,7 +55,7 @@ class UpdateStatusLoanNotification extends Notification
     {
         return (new MailMessage)
             ->subject("Mise à jour du status d'un pret bancaire")
-            ->line("Le status du Pret Bancaire N°".$this->loan->reference." est passée à ".CustomerLoanHelper::getStatusLoan($this->status, false));
+            ->line('Le status du Pret Bancaire N°'.$this->loan->reference.' est passée à '.CustomerLoanHelper::getStatusLoan($this->status, false));
     }
 
     /**
@@ -66,8 +67,8 @@ class UpdateStatusLoanNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => "Le status du Pret Bancaire N°".$this->loan->reference." est passée à ".CustomerLoanHelper::getStatusLoan($this->status, false)
+            'type' => 'notice',
+            'message' => 'Le status du Pret Bancaire N°'.$this->loan->reference.' est passée à '.CustomerLoanHelper::getStatusLoan($this->status, false),
         ];
     }
 
@@ -76,6 +77,6 @@ class UpdateStatusLoanNotification extends Notification
         return (new WebPushMessage)
             ->title("Mise à jour du status d'un pret bancaire")
             ->icon('/storage/log/notice.png')
-            ->body("Le status du Pret Bancaire N°".$this->loan->reference." est passée à ".CustomerLoanHelper::getStatusLoan($this->status, false));
+            ->body('Le status du Pret Bancaire N°'.$this->loan->reference.' est passée à '.CustomerLoanHelper::getStatusLoan($this->status, false));
     }
 }

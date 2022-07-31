@@ -18,16 +18,16 @@ return new class extends Migration
             $table->uuid();
             $table->string('reference');
             $table->float('amount_loan')->comment('Montant du crédit demander');
-            $table->float('amount_interest')->comment("Montant des interet du par le client");
-            $table->float('amount_du')->comment("Total des sommes du par le client (Credit + Interet - mensualités payé)");
+            $table->float('amount_interest')->comment('Montant des interet du par le client');
+            $table->float('amount_du')->comment('Total des sommes du par le client (Credit + Interet - mensualités payé)');
             $table->float('mensuality')->comment('Mensualité du par le client par mois');
-            $table->integer('prlv_day')->default(5)->comment("Jours du prélèvement de la mensualité");
-            $table->integer('duration')->comment("Durée total du contrat en année");
-            $table->enum('status', ["open", "study", "accepted", "refused", "progress", "terminated", "error"])->default("open");
+            $table->integer('prlv_day')->default(5)->comment('Jours du prélèvement de la mensualité');
+            $table->integer('duration')->comment('Durée total du contrat en année');
+            $table->enum('status', ['open', 'study', 'accepted', 'refused', 'progress', 'terminated', 'error'])->default('open');
             $table->boolean('signed_customer')->default(false);
             $table->boolean('signed_bank')->default(false);
             $table->boolean('alert')->default(false);
-            $table->enum('assurance_type', ["D", "DIM", "DIMC"])->default('DIM');
+            $table->enum('assurance_type', ['D', 'DIM', 'DIMC'])->default('DIM');
             $table->bigInteger('customer_wallet_id')->unsigned();
             $table->bigInteger('wallet_payment_id')->unsigned();
             $table->timestamps();
@@ -58,7 +58,6 @@ return new class extends Migration
                             ->constrained()
                             ->cascadeOnUpdate()
                             ->cascadeOnDelete();
-
         });
     }
 

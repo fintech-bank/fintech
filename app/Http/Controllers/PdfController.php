@@ -7,13 +7,11 @@ use App\Models\Customer\CustomerDocument;
 use App\Models\Customer\CustomerPret;
 use App\Models\Customer\CustomerWallet;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 
 class PdfController extends Controller
 {
     public function __construct()
     {
-
     }
 
     public function showRib($customer, $wallet)
@@ -23,12 +21,13 @@ class PdfController extends Controller
         $pdf = Pdf::loadView('pdf.agence.rib', [
             'customer' => $customer,
             'data' => [
-                'wallet' => CustomerWallet::find($wallet)
+                'wallet' => CustomerWallet::find($wallet),
             ],
             'agence' => $customer->user->agency,
-            'title' => "Rib",
-            "header_type" => null,
+            'title' => 'Rib',
+            'header_type' => null,
         ]);
+
         return $pdf->stream('rib.pdf');
     }
 
@@ -42,16 +41,14 @@ class PdfController extends Controller
             'customer' => $customer,
             'data' => [
                 'wallet' => CustomerWallet::find($wallet),
-                'loan' => $loan
+                'loan' => $loan,
             ],
             'agence' => $customer->user->agency,
             'title' => "Tableau d'amortissement du pret bancaire N°".$loan->reference,
-            "header_type" => "address",
-            "document" => CustomerDocument::where('customer_id', $customer->id)->where('name', $loan->reference." - Plan d'amortissement")->first()
+            'header_type' => 'address',
+            'document' => CustomerDocument::where('customer_id', $customer->id)->where('name', $loan->reference." - Plan d'amortissement")->first(),
         ]);
 
         return $pdf->stream('amortissement.pdf');
     }
-
-
 }

@@ -16,13 +16,13 @@ class CustomerSepaFactory extends Factory
      */
     public function definition()
     {
-        $status = ['waiting','processed','rejected','return','refunded'];
+        $status = ['waiting', 'processed', 'rejected', 'return', 'refunded'];
 
         return [
-            "uuid" => $this->faker->uuid(),
-            "creditor" => $this->faker->company,
-            "number_mandate" => \Str::upper(\Str::random(rand(6,15))),
-            "status" => $status[rand(0,4)]
+            'uuid' => $this->faker->uuid(),
+            'creditor' => $this->faker->company,
+            'number_mandate' => \Str::upper(\Str::random(rand(6, 15))),
+            'status' => $status[rand(0, 4)],
         ];
     }
 }

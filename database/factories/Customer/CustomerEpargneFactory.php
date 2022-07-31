@@ -16,13 +16,14 @@ class CustomerEpargneFactory extends Factory
      */
     public function definition()
     {
-        $monthly_payment = [10,20,30,40,50,60,70,80,90,100];
+        $monthly_payment = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
         return [
-            "uuid" => $this->faker->uuid(),
-            "reference" => \Str::upper("EPS".\Str::random(8)),
-            "initial_payment" => rand(10,100),
-            "monthly_payment" => $monthly_payment[rand(0,9)],
-            "monthly_days" => rand(1,30),
+            'uuid' => $this->faker->uuid(),
+            'reference' => \Str::upper('EPS'.\Str::random(8)),
+            'initial_payment' => rand(10, 100),
+            'monthly_payment' => $monthly_payment[rand(0, 9)],
+            'monthly_days' => rand(1, 30),
         ];
     }
 }

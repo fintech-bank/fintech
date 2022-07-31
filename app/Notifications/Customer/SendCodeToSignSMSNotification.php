@@ -3,8 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
@@ -14,6 +12,7 @@ class SendCodeToSignSMSNotification extends Notification
     use Queueable;
 
     public $file;
+
     public $code;
 
     /**

@@ -3,8 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Authy\AuthyChannel;
 use NotificationChannels\Authy\AuthyMessage;
@@ -17,14 +15,17 @@ class PhoneVerificationNotification extends Notification
      * @var string
      */
     public $method;
+
     /**
      * @var bool
      */
     public $force;
+
     /**
      * @var null
      */
     public $action;
+
     /**
      * @var null
      */
@@ -33,10 +34,10 @@ class PhoneVerificationNotification extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param string $method
-     * @param bool $force
-     * @param null $action
-     * @param null $actionMessage
+     * @param  string  $method
+     * @param  bool  $force
+     * @param  null  $action
+     * @param  null  $actionMessage
      */
     public function __construct($method = 'sms', $force = false, $action = null, $actionMessage = null)
     {
@@ -71,11 +72,11 @@ class PhoneVerificationNotification extends Notification
             $message->force();
         }
 
-        if ($this->action) {
+        if ($this->action != null) {
             $message->action($this->action);
         }
 
-        if ($this->actionMessage) {
+        if ($this->actionMessage != null) {
             $message->actionMessage($this->actionMessage);
         }
 

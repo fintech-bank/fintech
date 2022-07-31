@@ -27,17 +27,16 @@ class BanksController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string",
-            'logo' => "required|url",
-            'primary_color' => "required",
+            'name' => 'required|string',
+            'logo' => 'required|url',
+            'primary_color' => 'required',
             'country' => 'required',
             'bic' => 'required',
         ]);
 
         try {
             $bank = Bank::create($request->all());
-            ob_start();
-            ?>
+            ob_start(); ?>
             <tr>
                 <td>
                     <div class="d-flex align-items-center mb-7">
@@ -91,14 +90,15 @@ class BanksController extends Controller
             <?php
             $content = ob_get_clean();
 
-            LogHelper::notify('notice', "Création de la banque: ".$bank->name);
+            LogHelper::notify('notice', 'Création de la banque: '.$bank->name);
 
             return response()->json([
-                "bank" => $bank,
-                "html" => $content
+                'bank' => $bank,
+                'html' => $content,
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -115,12 +115,12 @@ class BanksController extends Controller
             $bank = Bank::find($id);
 
             return response()->json($bank);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -135,10 +135,11 @@ class BanksController extends Controller
             Bank::find($id)->update($request->all());
 
             return response()->json([
-                "bank" => Bank::find($id)
+                'bank' => Bank::find($id),
             ]);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -155,8 +156,9 @@ class BanksController extends Controller
             Bank::find($id)->delete();
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }

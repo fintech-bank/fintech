@@ -16,14 +16,14 @@ class CustomerCheckFactory extends Factory
      */
     public function definition()
     {
-        $reference = rand(1000000,9999999);
-        $status = ['checkout','manufacture','ship','outstanding','finish','destroy'];
+        $reference = rand(1000000, 9999999);
+        $status = ['checkout', 'manufacture', 'ship', 'outstanding', 'finish', 'destroy'];
 
         return [
-            "reference" => $reference,
-            "tranche_start" => $reference,
-            "tranche_end" => $reference + 40,
-            "status" => $status[rand(0,5)]
+            'reference' => $reference,
+            'tranche_start' => $reference,
+            'tranche_end' => $reference + 40,
+            'status' => $status[rand(0, 5)],
         ];
     }
 }

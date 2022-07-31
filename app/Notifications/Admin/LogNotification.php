@@ -4,8 +4,6 @@ namespace App\Notifications\Admin;
 
 use App\Helper\LogHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
 use NotificationChannels\WebPush\WebPushMessage;
@@ -15,6 +13,7 @@ class LogNotification extends Notification
     use Queueable;
 
     public $type;
+
     public $message;
 
     /**
@@ -58,8 +57,8 @@ class LogNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => $this->type,
-            "message" => $this->message
+            'type' => $this->type,
+            'message' => $this->message,
         ];
     }
 }

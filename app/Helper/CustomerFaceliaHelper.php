@@ -1,17 +1,14 @@
 <?php
 
-
 namespace App\Helper;
 
-
 use App\Models\Customer\CustomerFacelia;
-use App\Models\Customer\CustomerPret;
 
 class CustomerFaceliaHelper
 {
     public static function generateReference()
     {
-        return rand(1000, 9999) . " " . rand(100, 999) . " " . rand(1000, 9999);
+        return rand(1000, 9999).' '.rand(100, 999).' '.rand(1000, 9999);
     }
 
     public static function calcComptantMensuality($wallet)
@@ -35,20 +32,20 @@ class CustomerFaceliaHelper
 
         // Verif Coefficient
         $coef = $customer->cotation;
-        if($coef <= 6) {
+        if ($coef <= 6) {
             $score--;
         } else {
             $score++;
         }
 
         // Verifie si FICP
-        if($customer->ficp == 1) {
+        if ($customer->ficp == 1) {
             $score--;
         } else {
             $score++;
         }
 
-        if($card->support == 'premium' || $card->support == 'infinite') {
+        if ($card->support == 'premium' || $card->support == 'infinite') {
             $score++;
         } else {
             $score--;
@@ -60,6 +57,7 @@ class CustomerFaceliaHelper
     public static function create($wallet, $customer, $amount, $card)
     {
         $pret = self::createFaceliaPret($wallet, $customer, $amount, $card);
+
         return self::createFacelia($pret->wallet, $pret, $card, $wallet);
     }
 
@@ -85,9 +83,7 @@ class CustomerFaceliaHelper
             'wallet_payment_id' => $payment->id,
             'customer_pret_id' => $pret->id,
             'customer_credit_card_id' => $card->id,
-            'customer_wallet_id' => $wallet->id
+            'customer_wallet_id' => $wallet->id,
         ]);
     }
-
-
 }

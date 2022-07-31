@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $check
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
+ *
  * @method static \Database\Factories\Customer\CustomerSettingFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSetting newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSetting newQuery()
@@ -30,11 +31,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSetting whereNotifMail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSetting whereNotifSms($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerSetting
  */
 class CustomerSetting extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function customer()

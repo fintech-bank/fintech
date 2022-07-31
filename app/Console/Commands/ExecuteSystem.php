@@ -18,11 +18,11 @@ use App\Notifications\Customer\Automate\VerifRequestLoanOpenNotification;
 use App\Notifications\Customer\UpdateStatusAccountNotification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use PHPUnit\Exception;
 
 class ExecuteSystem extends Command
 {
     private object $agents;
+
     private string $date;
 
     public function __construct()
@@ -90,7 +90,7 @@ class ExecuteSystem extends Command
             $transaction = CustomerTransactionHelper::create(
                 'credit',
                 'sepa',
-                "Prélèvement " . $sepa->creditor,
+                'Prélèvement '.$sepa->creditor,
                 $sepa->amount,
                 $sepa->customer_wallet_id,
                 true,
@@ -98,17 +98,15 @@ class ExecuteSystem extends Command
                 now()
             );
 
-            if($transaction->wallet->customer->setting->notif_mail) {
+            if ($transaction->wallet->customer->setting->notif_mail) {
                 $transaction->wallet->customer->user->notify(new AutoAcceptCreditPrlvNotification($transaction->wallet->customer, $sepa, $sepa->status));
             }
-
 
             $i++;
         }
 
         $this->info('Acceptation automatique des prélèvement SEPA en crédit');
         $this->line('Nombre de prélèvement: '.$i);
-
     }
 
     private function verifRequestLoanOpen()
@@ -118,10 +116,10 @@ class ExecuteSystem extends Command
 
         foreach ($loans as $loan) {
             $loan->update([
-                'status' => 'study'
+                'status' => 'study',
             ]);
 
-            if($loan->customer->setting->notif_mail) {
+            if ($loan->customer->setting->notif_mail) {
                 $loan->customer->user->notify(new VerifRequestLoanOpenNotification($loan));
             }
 
@@ -141,10 +139,10 @@ class ExecuteSystem extends Command
             if ($loan->updated_at > now()->addDays(8)) {
                 $loan->wallet->update([
                     'balance_coming' => $loan->wallet->balance_coming - $loan->amount_loan,
-                    'balance_actual' => $loan->wallet->balance_actual + $loan->amount_loan
+                    'balance_actual' => $loan->wallet->balance_actual + $loan->amount_loan,
                 ]);
 
-                if($loan->customer->setting->notif_mail) {
+                if ($loan->customer->setting->notif_mail) {
                     $loan->customer->user->notify(new AcceptedLoanChargeNotification($loan));
                 }
 
@@ -175,7 +173,7 @@ class ExecuteSystem extends Command
                     'status' => 'waiting',
                     'created_at' => now(),
                     'updated_at' => $prlv_day,
-                    'customer_wallet_id' => $wallet_retrait->id
+                    'customer_wallet_id' => $wallet_retrait->id,
                 ]);
 
                 CustomerSepa::query()->create([
@@ -186,7 +184,7 @@ class ExecuteSystem extends Command
                     'status' => 'waiting',
                     'created_at' => now(),
                     'updated_at' => $prlv_day,
-                    'customer_wallet_id' => $epargne->wallet->id
+                    'customer_wallet_id' => $epargne->wallet->id,
                 ]);
                 $i++;
             }
@@ -207,33 +205,33 @@ class ExecuteSystem extends Command
 
             $wallet_retrait = CustomerWallet::find($loan->wallet_payment_id);
 
-            if($prlv_day == $now) {
+            if ($prlv_day == $now) {
                 CustomerSepa::query()->create([
                     'uuid' => \Str::uuid(),
                     'creditor' => config('app.name'),
                     'number_mandate' => \Str::upper(\Str::random(8)),
-                    'amount' => - $loan->mensuality,
+                    'amount' => -$loan->mensuality,
                     'status' => 'waiting',
                     'created_at' => now(),
                     'updated_at' => $prlv_day,
-                    'customer_wallet_id' => $wallet_retrait->id
+                    'customer_wallet_id' => $wallet_retrait->id,
                 ]);
 
                 CustomerSepa::query()->create([
                     'uuid' => \Str::uuid(),
                     'creditor' => config('app.name'),
                     'number_mandate' => \Str::upper(\Str::random(8)),
-                    'amount' => - $loan->mensuality,
+                    'amount' => -$loan->mensuality,
                     'status' => 'waiting',
                     'created_at' => now(),
                     'updated_at' => $prlv_day,
-                    'customer_wallet_id' => $loan->wallet->id
+                    'customer_wallet_id' => $loan->wallet->id,
                 ]);
                 $i++;
             }
         }
 
-        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem("Création des prélèvements des mensualité de pret en date du " . $this->date . ".<br>Nombre d'initialisation: " . $i));
+        \Mail::to($this->agents)->send(new \App\Mail\Agent\ExecuteSystem('Création des prélèvements des mensualité de pret en date du '.$this->date.".<br>Nombre d'initialisation: ".$i));
         $this->info('Création des prélèvements des mensualité de pret en date du '.$this->date);
         $this->line("Nombre d'initialisation': ".$i);
     }
@@ -246,9 +244,9 @@ class ExecuteSystem extends Command
         foreach ($sepas as $sepa) {
             if ($sepa->updated_at->startOfDay() == now()->startOfDay()) {
                 if ($sepa->amount <= 0) {
-                    CustomerTransactionHelper::create('debit', 'sepa', 'Prélèvement SEPA - ' . $sepa->creditor, $sepa->amount, $sepa->customer_wallet_id);
+                    CustomerTransactionHelper::create('debit', 'sepa', 'Prélèvement SEPA - '.$sepa->creditor, $sepa->amount, $sepa->customer_wallet_id);
                 } else {
-                    CustomerTransactionHelper::create('credit', 'sepa', 'Prélèvement SEPA - ' . $sepa->creditor, $sepa->amount, $sepa->customer_wallet_id);
+                    CustomerTransactionHelper::create('credit', 'sepa', 'Prélèvement SEPA - '.$sepa->creditor, $sepa->amount, $sepa->customer_wallet_id);
                 }
                 $i++;
             }
@@ -265,15 +263,15 @@ class ExecuteSystem extends Command
 
         try {
             foreach ($transactions as $transaction) {
-                if($transaction->updated_at->between(now()->startOfDay(), now()->endOfDay())) {
-                    if($transaction->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
+                if ($transaction->updated_at->between(now()->startOfDay(), now()->endOfDay())) {
+                    if ($transaction->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
                         CustomerTransactionHelper::updated($transaction);
                         $v++;
                     }
                 }
             }
-            $this->line("Nombre de transaction passée: ".$v);
-        }catch (\Exception $exception) {
+            $this->line('Nombre de transaction passée: '.$v);
+        } catch (\Exception $exception) {
             $this->error($exception->getMessage());
         }
     }
@@ -286,7 +284,7 @@ class ExecuteSystem extends Command
         try {
             foreach ($accounts as $account) {
                 $account->update([
-                    'status_open_account' => 'terminated'
+                    'status_open_account' => 'terminated',
                 ]);
 
                 $account->user->notify(new UpdateStatusAccountNotification($account, $account->status_open_account));
@@ -294,10 +292,8 @@ class ExecuteSystem extends Command
             }
 
             $this->line('Nombre de compte passé à TERMINER: '.$i);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             $this->error($exception->getMessage());
         }
     }
-
-
 }

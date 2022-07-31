@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Core\Agency;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AgencySeeder extends Seeder
@@ -16,29 +15,29 @@ class AgencySeeder extends Seeder
     public function run()
     {
         Agency::create([
-            "name" => "FINTECH Bank",
-            "bic" => "FINFRPPXXX",
-            "code_banque" => rand(10000,99999),
-            "code_agence" => rand(10000,99999),
-            "address" => "4 Rue du Coudray",
-            "postal" => "44000",
-            "city" => "Nantes Cedex 4",
-            "country" => "FR",
-            "online" => true,
-            "phone" => "08 99 49 32 01"
+            'name' => 'FINTECH Bank',
+            'bic' => 'FINFRPPXXX',
+            'code_banque' => rand(10000, 99999),
+            'code_agence' => rand(10000, 99999),
+            'address' => '4 Rue du Coudray',
+            'postal' => '44000',
+            'city' => 'Nantes Cedex 4',
+            'country' => 'FR',
+            'online' => true,
+            'phone' => '08 99 49 32 01',
         ]);
 
         Agency::create([
-            "name" => "FINTECH Bank Pays de la Loire",
-            "bic" => "FINFRPPNAN",
-            "code_banque" => rand(10000,99999),
-            "code_agence" => rand(10000,99999),
-            "address" => "4 Rue du Coudray",
-            "postal" => "44000",
-            "city" => "Nantes Cedex 4",
-            "country" => "FR",
-            "online" => false,
-            "phone" => "08 99 49 32 01"
+            'name' => 'FINTECH Bank Pays de la Loire',
+            'bic' => 'FINFRPPNAN',
+            'code_banque' => rand(10000, 99999),
+            'code_agence' => rand(10000, 99999),
+            'address' => '4 Rue du Coudray',
+            'postal' => '44000',
+            'city' => 'Nantes Cedex 4',
+            'country' => 'FR',
+            'online' => false,
+            'phone' => '08 99 49 32 01',
         ]);
     }
 }

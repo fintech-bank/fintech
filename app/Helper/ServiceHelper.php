@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Helper;
-
 
 use App\Models\Core\Package;
 
@@ -15,7 +13,7 @@ class ServiceHelper
 
         foreach ($packages as $package) {
             $arr[] = [
-                "name" => $package->name
+                'name' => $package->name,
             ];
         }
 

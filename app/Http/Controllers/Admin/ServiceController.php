@@ -20,7 +20,6 @@ class ServiceController extends Controller
         return view('admin.services.index');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -30,23 +29,25 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string",
-            'price' => "required",
-            'type_prlv' => "required"
+            'name' => 'required|string',
+            'price' => 'required',
+            'type_prlv' => 'required',
         ]);
 
         try {
             $service = Service::create([
-                "name" => $request->get('name'),
-                "price" => $request->get('price'),
-                "type_prlv" => ServiceHelper::setTypePrlv($request->get('type_prlv')),
-                "package_id" => $request->get('package_id'),
+                'name' => $request->get('name'),
+                'price' => $request->get('price'),
+                'type_prlv' => ServiceHelper::setTypePrlv($request->get('type_prlv')),
+                'package_id' => $request->get('package_id'),
             ]);
 
-            LogHelper::notify('notice', "Création d'un service: " . $request->get('name'));
+            LogHelper::notify('notice', "Création d'un service: ".$request->get('name'));
+
             return response()->json($service);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -63,12 +64,12 @@ class ServiceController extends Controller
             $service = Service::find($id);
 
             return response()->json($service);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -87,10 +88,12 @@ class ServiceController extends Controller
             $service->package_id = $request->get('package_id');
             $service->save();
 
-            LogHelper::notify('notice', "Edition d'un service: " . $request->get('name'));
+            LogHelper::notify('notice', "Edition d'un service: ".$request->get('name'));
+
             return response()->json($service);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -107,9 +110,11 @@ class ServiceController extends Controller
             Service::find($id)->delete();
 
             LogHelper::notify('notice', "Suppression d'un service");
+
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }

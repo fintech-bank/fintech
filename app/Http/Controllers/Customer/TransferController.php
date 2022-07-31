@@ -25,7 +25,8 @@ class TransferController extends Controller
 
     /**
      * TransferController constructor.
-     * @param BankFintech $bankFintech
+     *
+     * @param  BankFintech  $bankFintech
      */
     public function __construct(BankFintech $bankFintech)
     {
@@ -35,7 +36,7 @@ class TransferController extends Controller
     public function index()
     {
         return view('customer.transfer.index', [
-            'customer' => \request()->user()->customers
+            'customer' => \request()->user()->customers,
         ]);
     }
 
@@ -56,7 +57,7 @@ class TransferController extends Controller
     public function history()
     {
         return view('customer.transfer.history', [
-            'customer' => \request()->user()->customers
+            'customer' => \request()->user()->customers,
         ]);
     }
 
@@ -79,12 +80,13 @@ class TransferController extends Controller
         try {
             $transfer->update([
                 'recurring_end' => $request->get('recurring_end') != $transfer->recurring_end ? $request->get('recurring_end') : $transfer->recurring_end,
-                'amount' => $request->get('amount') != $transfer->amount ? $request->get('amount') : $transfer->amount
+                'amount' => $request->get('amount') != $transfer->amount ? $request->get('amount') : $transfer->amount,
             ]);
 
             return response()->json();
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => $exception], 500);
         }
     }
@@ -110,17 +112,18 @@ class TransferController extends Controller
             // création du virement
             try {
                 $transfer = $wallet->transfers()->create([
-                    "uuid" => \Str::uuid(),
-                    "amount" => $request->get('amount'),
-                    "reference" => \Str::upper(\Str::random()),
-                    "reason" => $request->get('reason'),
-                    "type" => $request->get('type'),
-                    "transfer_date" => now()->startOfDay(),
-                    "customer_beneficiaire_id" => $beneficiaire->id,
-                    "customer_wallet_id" => $wallet->id
+                    'uuid' => \Str::uuid(),
+                    'amount' => $request->get('amount'),
+                    'reference' => \Str::upper(\Str::random()),
+                    'reason' => $request->get('reason'),
+                    'type' => $request->get('type'),
+                    'transfer_date' => now()->startOfDay(),
+                    'customer_beneficiaire_id' => $beneficiaire->id,
+                    'customer_wallet_id' => $wallet->id,
                 ]);
             } catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception);
+
                 return response()->json(['errors' => $exception], 500);
             }
 
@@ -128,6 +131,7 @@ class TransferController extends Controller
                 $tr = CustomerTransferHelper::initTransfer($transfer->id);
             } catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception);
+
                 return response()->json(['errors' => $exception], 500);
             }
 
@@ -138,11 +142,11 @@ class TransferController extends Controller
             auth()->user()->notify(new InitTransferController($tr));
 
             return response()->json([
-                "beneficiaire" => CustomerTransferHelper::getNameBeneficiaire($beneficiaire)
+                'beneficiaire' => CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
             ]);
         } else {
             return response()->json(['errors' => [
-                $beneficiaire->bank->name => "La banque distante est actuellement fermé"
+                $beneficiaire->bank->name => 'La banque distante est actuellement fermé',
             ]], 404);
         }
     }
@@ -151,17 +155,18 @@ class TransferController extends Controller
     {
         try {
             $transfer = $wallet->transfers()->create([
-                "uuid" => \Str::uuid(),
-                "amount" => $request->get('amount'),
-                "reference" => \Str::upper(\Str::random()),
-                "reason" => $request->get('reason'),
-                "type" => $request->get('type'),
-                "transfer_date" => $request->get('transfer_date'),
-                "customer_beneficiaire_id" => $beneficiaire->id,
-                "customer_wallet_id" => $wallet->id
+                'uuid' => \Str::uuid(),
+                'amount' => $request->get('amount'),
+                'reference' => \Str::upper(\Str::random()),
+                'reason' => $request->get('reason'),
+                'type' => $request->get('type'),
+                'transfer_date' => $request->get('transfer_date'),
+                'customer_beneficiaire_id' => $beneficiaire->id,
+                'customer_wallet_id' => $wallet->id,
             ]);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => $exception], 500);
         }
 
@@ -169,6 +174,7 @@ class TransferController extends Controller
             $tr = CustomerTransferHelper::initTransfer($transfer->id);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => $exception], 500);
         }
 
@@ -179,7 +185,7 @@ class TransferController extends Controller
         auth()->user()->notify(new InitTransferController($tr));
 
         return response()->json([
-            "beneficiaire" => CustomerTransferHelper::getNameBeneficiaire($beneficiaire)
+            'beneficiaire' => CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
         ]);
     }
 
@@ -187,19 +193,20 @@ class TransferController extends Controller
     {
         try {
             $transfer = $wallet->transfers()->create([
-                "uuid" => \Str::uuid(),
-                "amount" => $request->get('amount'),
-                "reference" => \Str::upper(\Str::random()),
-                "reason" => $request->get('reason'),
-                "type" => $request->get('type'),
-                "transfer_date" => null,
-                "recurring_start" => $request->get('recurring_start'),
-                "recurring_end" => $request->get('recurring_end'),
-                "customer_beneficiaire_id" => $beneficiaire->id,
-                "customer_wallet_id" => $wallet->id
+                'uuid' => \Str::uuid(),
+                'amount' => $request->get('amount'),
+                'reference' => \Str::upper(\Str::random()),
+                'reason' => $request->get('reason'),
+                'type' => $request->get('type'),
+                'transfer_date' => null,
+                'recurring_start' => $request->get('recurring_start'),
+                'recurring_end' => $request->get('recurring_end'),
+                'customer_beneficiaire_id' => $beneficiaire->id,
+                'customer_wallet_id' => $wallet->id,
             ]);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => $exception], 500);
         }
 
@@ -207,6 +214,7 @@ class TransferController extends Controller
             $tr = CustomerTransferHelper::programTransfer($transfer->id);
         } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['errors' => $exception], 500);
         }
 
@@ -217,7 +225,7 @@ class TransferController extends Controller
         auth()->user()->notify(new InitTransferController($tr));
 
         return response()->json([
-            "beneficiaire" => CustomerTransferHelper::getNameBeneficiaire($beneficiaire)
+            'beneficiaire' => CustomerTransferHelper::getNameBeneficiaire($beneficiaire),
         ]);
     }
 }

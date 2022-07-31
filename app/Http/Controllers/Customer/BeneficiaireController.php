@@ -15,7 +15,7 @@ class BeneficiaireController extends Controller
     public function index()
     {
         return view('customer.transfer.beneficiaire', [
-            'customer' => auth()->user()->customers
+            'customer' => auth()->user()->customers,
         ]);
     }
 
@@ -23,23 +23,23 @@ class BeneficiaireController extends Controller
     {
         $request->validate([
             'iban' => new Iban(),
-            'bic' => new Bic()
+            'bic' => new Bic(),
         ]);
 
         $bank = Bank::find($request->get('bank_id'));
         $request->merge([
             'uuid' => \Str::uuid(),
-            "bankname" => $bank->name,
-            "customer_id" => auth()->user()->customers->id
+            'bankname' => $bank->name,
+            'customer_id' => auth()->user()->customers->id,
         ]);
-
 
         try {
             $beneficiaire = CustomerBeneficiaire::query()->create($request->all());
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json($exception, 500);
         }
     }
@@ -47,11 +47,12 @@ class BeneficiaireController extends Controller
     public function update(Request $request, $beneficiaire)
     {
         try {
-            CustomerBeneficiaire::query()->find($beneficiaire)->update($request->except("_token"));
+            CustomerBeneficiaire::query()->find($beneficiaire)->update($request->except('_token'));
 
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json($exception, 500);
         }
     }
@@ -60,8 +61,9 @@ class BeneficiaireController extends Controller
     {
         try {
             CustomerBeneficiaire::query()->find($beneficiaire)->delete();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json(['error' => $exception], 500);
         }
     }

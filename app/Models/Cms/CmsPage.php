@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $subcategory_id
  * @property-read \App\Models\Cms\CmsSubCategory $category
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage query()
@@ -29,10 +30,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCmsPage
  */
 class CmsPage extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function category()

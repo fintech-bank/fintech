@@ -4,7 +4,6 @@ namespace App\Notifications\Customer\Automate;
 
 use App\Models\Customer\CustomerPret;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -47,7 +46,7 @@ class VerifRequestLoanOpenNotification extends Notification
         return (new MailMessage)
             ->subject('Votre demande de pret bancaire')
             ->view('emails.customer.verif_request_loan', [
-                "loan" => $this->loan
+                'loan' => $this->loan,
             ]);
     }
 
@@ -64,7 +63,7 @@ class VerifRequestLoanOpenNotification extends Notification
             'color' => 'primary',
             'title' => 'Votre demande de pret bancaire',
             'text' => 'Votre demande est maintenant en cours d\'étude',
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

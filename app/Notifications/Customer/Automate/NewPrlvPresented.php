@@ -4,7 +4,6 @@ namespace App\Notifications\Customer\Automate;
 
 use App\Models\Customer\CustomerSepa;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -17,7 +16,7 @@ class NewPrlvPresented extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param CustomerSepa $sepa
+     * @param  CustomerSepa  $sepa
      */
     public function __construct(CustomerSepa $sepa)
     {
@@ -46,7 +45,7 @@ class NewPrlvPresented extends Notification
         return (new MailMessage)
             ->subject('Nouveau prélèvement bancaire')
             ->view('emails.customer.new_prlv_presented', [
-                "sepa" => $this->sepa
+                'sepa' => $this->sepa,
             ]);
     }
 
@@ -63,7 +62,7 @@ class NewPrlvPresented extends Notification
             'color' => 'primary',
             'title' => 'Prélèvement Bancaire',
             'text' => 'Un nouveau prélèvement bancaire est actuellement présenté',
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

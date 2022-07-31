@@ -4,7 +4,6 @@ namespace App\Notifications\Agent\Customer;
 
 use App\Helper\CustomerHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -15,6 +14,7 @@ class UpdateTypeAccountNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $type;
 
     /**
@@ -51,7 +51,7 @@ class UpdateTypeAccountNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Mise à jour du type de compte client')
-                    ->line("Le type de compte du client ".CustomerHelper::getName($this->customer)." est passer à ".$this->type->name);
+                    ->line('Le type de compte du client '.CustomerHelper::getName($this->customer).' est passer à '.$this->type->name);
     }
 
     /**
@@ -63,8 +63,8 @@ class UpdateTypeAccountNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => "Le type de compte du client ".CustomerHelper::getName($this->customer)." est passer à ".$this->type->name
+            'type' => 'notice',
+            'message' => 'Le type de compte du client '.CustomerHelper::getName($this->customer).' est passer à '.$this->type->name,
         ];
     }
 
@@ -73,6 +73,6 @@ class UpdateTypeAccountNotification extends Notification
         return (new WebPushMessage)
             ->title("Mise à jour du type de compte d'un compte client")
             ->icon('/storage/log/notice.png')
-            ->body("Le type de compte du client ".CustomerHelper::getName($this->customer)." est passer à ".$this->type->name);
+            ->body('Le type de compte du client '.CustomerHelper::getName($this->customer).' est passer à '.$this->type->name);
     }
 }

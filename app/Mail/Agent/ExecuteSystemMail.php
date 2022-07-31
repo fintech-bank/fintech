@@ -3,7 +3,6 @@
 namespace App\Mail\Agent;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -12,6 +11,7 @@ class ExecuteSystemMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $command;
+
     protected $result;
 
     /**
@@ -30,16 +30,16 @@ class ExecuteSystemMail extends Mailable
     /**
      * Build the message.
      *
-     * @return $this
+     * @return $this|null
      */
     public function build()
     {
-        switch ($this->command) {
-            case 'autoAcceptCreditPrlv':
-                $this->view('emails.agent.command.auto_accept_credit_prlv', [
-                    "resultat" => "Nombre de prélèvement accepté: ".$this->result
-                ])->subject("Execution d'une commande automatique");
-                break;
+        if ($this->command == 'autoAcceptCreditPrlv') {
+            $this->view('emails.agent.command.auto_accept_credit_prlv', [
+                'resultat' => 'Nombre de prélèvement accepté: '.$this->result,
+            ])->subject("Execution d'une commande automatique");
         }
+
+        return null;
     }
 }

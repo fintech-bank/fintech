@@ -2,10 +2,7 @@
 
 namespace App\Notifications\Customer;
 
-use App\Helper\CustomerHelper;
-use App\Helper\CustomerLoanHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,6 +11,7 @@ class UpdateTypeAccountNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $type;
 
     /**
@@ -49,10 +47,10 @@ class UpdateTypeAccountNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Votre compte en ligne")
+            ->subject('Votre compte en ligne')
             ->view('emails.customer.update_type_account', [
-                "customer" => $this->customer,
-                "type" => $this->type
+                'customer' => $this->customer,
+                'type' => $this->type,
             ]);
     }
 
@@ -68,8 +66,8 @@ class UpdateTypeAccountNotification extends Notification
             'icon' => 'fa-box',
             'color' => 'primary',
             'title' => 'Votre compte en ligne',
-            'text' => "Votre compte est passée à l'offre ".$this->type->name." à " .eur($this->type->price),
-            'time' => now()->shortAbsoluteDiffForHumans()
+            'text' => "Votre compte est passée à l'offre ".$this->type->name.' à '.eur($this->type->price),
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 }

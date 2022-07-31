@@ -28,7 +28,6 @@ use App\Models\Customer\CustomerSituation;
 use App\Models\Customer\CustomerSituationCharge;
 use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerTransaction;
-use App\Models\Customer\CustomerTransfer;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
 use Carbon\Carbon;
@@ -63,43 +62,44 @@ class SystemSeedCommand extends Command
             $this->call('migrate:fresh');
         }
 
-        $this->info("Seeding: Liste des agences");
-        $this->call("db:seed", ["class" => "AgencySeeder"]);
+        $this->info('Seeding: Liste des agences');
+        $this->call('db:seed', ['class' => 'AgencySeeder']);
 
-        $this->info("Seeding: Liste des Banques");
-        $this->call("db:seed", ["class" => "BanksTableSeeder"]);
+        $this->info('Seeding: Liste des Banques');
+        $this->call('db:seed', ['class' => 'BanksTableSeeder']);
 
         $this->info("Seeding: Liste des Plan d'épargne");
-        $this->call("db:seed", ["class" => "EpargnePlanSeeder"]);
+        $this->call('db:seed', ['class' => 'EpargnePlanSeeder']);
 
-        $this->info("Seeding: Liste des Plan de Pret");
-        $this->call("db:seed", ["class" => "LoanPlanSeeder"]);
+        $this->info('Seeding: Liste des Plan de Pret');
+        $this->call('db:seed', ['class' => 'LoanPlanSeeder']);
 
-        $this->info("Seeding: Liste des Interets des plan de pret");
-        $this->call("db:seed", ["class" => "LoanPlanInterestSeeder"]);
+        $this->info('Seeding: Liste des Interets des plan de pret');
+        $this->call('db:seed', ['class' => 'LoanPlanInterestSeeder']);
 
-        $this->info("Seeding: Liste des Packages");
-        $this->call("db:seed", ["class" => "PackageSeeder"]);
+        $this->info('Seeding: Liste des Packages');
+        $this->call('db:seed', ['class' => 'PackageSeeder']);
 
-        $this->info("Seeding: Liste des Services");
-        $this->call("db:seed", ["class" => "ServiceSeeder"]);
+        $this->info('Seeding: Liste des Services');
+        $this->call('db:seed', ['class' => 'ServiceSeeder']);
 
-        $this->info("Seeding: Liste des Utilisateur de Test");
-        $this->call("db:seed", ["class" => "UserSeeder"]);
+        $this->info('Seeding: Liste des Utilisateur de Test');
+        $this->call('db:seed', ['class' => 'UserSeeder']);
 
-        $this->info("Seeding: Liste des Catégories de documents");
-        $this->call("db:seed", ["class" => "DocumentCategorySeeder"]);
+        $this->info('Seeding: Liste des Catégories de documents');
+        $this->call('db:seed', ['class' => 'DocumentCategorySeeder']);
 
-        $this->info("Seeding: Liste des Catégories de pages");
-        $this->call("db:seed", ["class" => "CmsCategorySeeder"]);
+        $this->info('Seeding: Liste des Catégories de pages');
+        $this->call('db:seed', ['class' => 'CmsCategorySeeder']);
 
-        $this->info("Seeding: Liste des Sous Catégories de pages");
-        $this->call("db:seed", ["class" => "CmsSubCategorySeeder"]);
+        $this->info('Seeding: Liste des Sous Catégories de pages');
+        $this->call('db:seed', ['class' => 'CmsSubCategorySeeder']);
 
         if ($this->option('test')) {
-            $this->info("Seeding TESTING: Création de la base client");
+            $this->info('Seeding TESTING: Création de la base client');
             $this->createCustomer();
         }
+
         return 0;
     }
 
@@ -107,13 +107,12 @@ class SystemSeedCommand extends Command
     {
         $agency = Agency::all()->random();
 
-
         $users = User::factory(rand(100, 200))->create([
-            "admin" => false,
-            "agent" => false,
-            "customer" => true,
-            "identifiant" => UserHelper::generateID(),
-            "agency_id" => $agency->id,
+            'admin' => false,
+            'agent' => false,
+            'customer' => true,
+            'identifiant' => UserHelper::generateID(),
+            'agency_id' => $agency->id,
         ]);
 
         $bar = $this->output->createProgressBar(User::all()->count());
@@ -122,29 +121,29 @@ class SystemSeedCommand extends Command
         foreach ($users as $user) {
             $customer = Customer::factory()->create([
                 'user_id' => $user->id,
-                "package_id" => Package::all()->random()->id,
-                "agent_id" => 2
+                'package_id' => Package::all()->random()->id,
+                'agent_id' => 2,
             ]);
 
-            \Storage::disk('public')->makeDirectory('gdd/' . $customer->id);
+            \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
             foreach (DocumentCategory::all() as $doc) {
-                \Storage::disk('public')->makeDirectory('gdd/' . $customer->id . '/' . $doc->id);
+                \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
             }
 
             CustomerInfo::factory()->create([
-                "customer_id" => $customer->id,
+                'customer_id' => $customer->id,
             ]);
 
             $user->update([
-                'name' => CustomerHelper::getName($customer, true)
+                'name' => CustomerHelper::getName($customer, true),
             ]);
 
             CustomerSetting::factory()->create([
-                "customer_id" => $customer->id,
+                'customer_id' => $customer->id,
             ]);
 
             CustomerSituation::factory()->create([
-                "customer_id" => $customer->id
+                'customer_id' => $customer->id,
             ]);
 
             CustomerSituationCharge::factory()->create([
@@ -152,9 +151,8 @@ class SystemSeedCommand extends Command
             ]);
 
             CustomerSituationIncome::factory()->create([
-                "customer_id" => $customer->id,
+                'customer_id' => $customer->id,
             ]);
-
 
             if ($customer->status_open_account == 'terminated') {
                 $epargne = rand(0, 1);
@@ -164,10 +162,10 @@ class SystemSeedCommand extends Command
 
                 // Wallet Account
                 $wallet_account = CustomerWallet::factory()->create([
-                    "type" => "compte",
-                    "customer_id" => $customer->id,
+                    'type' => 'compte',
+                    'customer_id' => $customer->id,
                     'balance_actual' => 0,
-                    'balance_coming' => 0
+                    'balance_coming' => 0,
                 ]);
 
                 $doc_account = DocumentFile::createDoc(
@@ -182,20 +180,19 @@ class SystemSeedCommand extends Command
                     true,
                     ['wallet' => $wallet_account]);
 
-
                 if ($epargne == 1) {
                     $wallet_epargnes = CustomerWallet::factory($nb_epargne)->create([
                         'type' => 'epargne',
-                        "customer_id" => $customer->id,
-                        "decouvert" => false,
-                        "balance_decouvert" => 0
+                        'customer_id' => $customer->id,
+                        'decouvert' => false,
+                        'balance_decouvert' => 0,
                     ]);
 
                     foreach ($wallet_epargnes as $wallet_epargne) {
                         CustomerEpargne::factory()->create([
                             'wallet_id' => $wallet_epargne->id,
-                            "wallet_payment_id" => $wallet_account->id,
-                            "epargne_plan_id" => EpargnePlan::all()->random()->id,
+                            'wallet_payment_id' => $wallet_account->id,
+                            'epargne_plan_id' => EpargnePlan::all()->random()->id,
                         ]);
 
                         if ($wallet_epargne->customer->info->type == 'part') {
@@ -211,7 +208,7 @@ class SystemSeedCommand extends Command
                                 'bic' => $wallet_epargne->customer->user->agency->bic,
                                 'titulaire' => true,
                                 'customer_id' => $customer->id,
-                                'bank_id' => 176
+                                'bank_id' => 176,
                             ]);
                         } else {
                             CustomerBeneficiaire::query()->create([
@@ -224,51 +221,50 @@ class SystemSeedCommand extends Command
                                 'bic' => $wallet_epargne->customer->user->agency->bic,
                                 'titulaire' => true,
                                 'customer_id' => $customer->id,
-                                'bank_id' => 176
+                                'bank_id' => 176,
                             ]);
                         }
-
                     }
                 }
 
                 if ($pret == 1) {
                     $wallet_prets = CustomerWallet::factory($nb_pret)->create([
-                        'type' => "pret",
-                        "customer_id" => $customer->id,
-                        "decouvert" => false,
-                        "balance_decouvert" => 0
+                        'type' => 'pret',
+                        'customer_id' => $customer->id,
+                        'decouvert' => false,
+                        'balance_decouvert' => 0,
                     ]);
 
                     foreach ($wallet_prets as $wallet_pret) {
                         CustomerPret::factory()->create([
                             'customer_wallet_id' => $wallet_pret->id,
-                            "wallet_payment_id" => $wallet_account->id,
-                            "customer_id" => $customer->id
+                            'wallet_payment_id' => $wallet_account->id,
+                            'customer_id' => $customer->id,
                         ]);
                     }
                 }
 
                 // Bénéficiaire
                 CustomerBeneficiaire::factory(rand(1, 10))->create([
-                    "customer_id" => $customer->id,
+                    'customer_id' => $customer->id,
                 ]);
 
                 //dd(CustomerBeneficiaire::query()->where('customer_id', $customer->id)->get()->random());
 
                 // Commande de chéquier
                 CustomerCheck::factory(rand(0, 2))->create([
-                    "customer_wallet_id" => $wallet_account->id
+                    'customer_wallet_id' => $wallet_account->id,
                 ]);
 
                 // Carte Bancaire Physique
                 $card = CustomerCreditCard::factory()->create([
-                    "customer_wallet_id" => $wallet_account->id,
-                    'status' => 'active'
+                    'customer_wallet_id' => $wallet_account->id,
+                    'status' => 'active',
                 ]);
 
                 if ($card->support == 'premium' || $card->support == 'infinite') {
                     $card->update([
-                        'facelia' => rand(0, 1)
+                        'facelia' => rand(0, 1),
                     ]);
                 }
 
@@ -302,7 +298,7 @@ class SystemSeedCommand extends Command
                         'type' => 'pret',
                         'status' => 'active',
                         'balance_actual' => $amount_loan,
-                        'customer_id' => $customer->id
+                        'customer_id' => $customer->id,
                     ]);
 
                     $pr = CustomerPret::factory()->create([
@@ -317,11 +313,11 @@ class SystemSeedCommand extends Command
                         'wallet_payment_id' => $card->wallet->id,
                         'first_payment_at' => Carbon::create(now()->year, now()->addMonth()->month, 30),
                         'loan_plan_id' => 8,
-                        'customer_id' => $customer->id
+                        'customer_id' => $customer->id,
                     ]);
 
                     $card->update([
-                        'customer_pret_id' => $pr->id
+                        'customer_pret_id' => $pr->id,
                     ]);
 
                     CustomerFacelia::query()->create([
@@ -334,26 +330,26 @@ class SystemSeedCommand extends Command
                         'customer_pret_id' => $pr->id,
                         'customer_credit_card_id' => $card->id,
                         'customer_wallet_id' => $cpt_pret->id,
-                        'wallet_payment_id' => $card->wallet->id
+                        'wallet_payment_id' => $card->wallet->id,
                     ]);
 
                     DocumentFile::createDoc(
                         $customer,
                         'Plan d\'amortissement',
-                        $pr->reference . " - Plan d'amortissement",
+                        $pr->reference." - Plan d'amortissement",
                         3,
                         null,
                         false,
                         false,
                         false,
                         true,
-                        ["loan" => $pr]
+                        ['loan' => $pr]
                     );
 
                     DocumentFile::createDoc(
                         $customer,
                         'Assurance Emprunteur',
-                        $pr->reference . " - Assurance Emprunteur",
+                        $pr->reference.' - Assurance Emprunteur',
                         3,
                         null,
                         false,
@@ -365,8 +361,8 @@ class SystemSeedCommand extends Command
 
                     DocumentFile::createDoc(
                         $customer,
-                        "Avis de conseil relatif assurance",
-                        $pr->reference . " - Avis de conseil Relatif au assurance emprunteur",
+                        'Avis de conseil relatif assurance',
+                        $pr->reference.' - Avis de conseil Relatif au assurance emprunteur',
                         3,
                         null,
                         false,
@@ -379,20 +375,20 @@ class SystemSeedCommand extends Command
                     DocumentFile::createDoc(
                         $customer,
                         'contrat de credit facelia',
-                        $pr->reference . " - Contrat de Crédit FACELIA",
+                        $pr->reference.' - Contrat de Crédit FACELIA',
                         3,
                         null,
                         true,
                         true,
                         false,
                         true,
-                        ["loan" => $pr]
+                        ['loan' => $pr]
                     );
 
                     DocumentFile::createDoc(
                         $customer,
                         'Fiche de dialogue',
-                        $pr->reference . " - Fiche de Dialogue",
+                        $pr->reference.' - Fiche de Dialogue',
                         3,
                         null,
                         false,
@@ -405,27 +401,27 @@ class SystemSeedCommand extends Command
                     DocumentFile::createDoc(
                         $customer,
                         'Information précontractuel normalise',
-                        $pr->reference . " - Information Précontractuel Normalisé",
+                        $pr->reference.' - Information Précontractuel Normalisé',
                         3,
                         null,
                         true,
                         true,
                         false,
                         true,
-                        ["loan" => $pr]
+                        ['loan' => $pr]
                     );
 
                     DocumentFile::createDoc(
                         $customer,
                         'Mandat Prélevement sepa',
-                        $pr->reference . " - Mandat Prélèvement SEPA",
+                        $pr->reference.' - Mandat Prélèvement SEPA',
                         3,
                         null,
                         false,
                         false,
                         false,
                         true,
-                        ["loan" => $pr]
+                        ['loan' => $pr]
                     );
                 }
 
@@ -434,15 +430,15 @@ class SystemSeedCommand extends Command
 
                 foreach ($transactionsSepa as $sepa) {
                     $s = CustomerSepa::factory()->create([
-                        "amount" => $sepa->amount,
-                        "customer_wallet_id" => $wallet_account->id,
+                        'amount' => $sepa->amount,
+                        'customer_wallet_id' => $wallet_account->id,
                     ]);
 
                     if (CustomerCreditor::where('name', $s->creditor)->where('customer_wallet_id', $wallet_account->id)->count() == 0) {
                         CustomerCreditor::query()->create([
                             'name' => $s->creditor,
                             'customer_wallet_id' => $s->customer_wallet_id,
-                            'customer_sepa_id' => $s->id
+                            'customer_sepa_id' => $s->id,
                         ]);
                     }
                 }
@@ -464,7 +460,7 @@ class SystemSeedCommand extends Command
                         'type' => 'pret',
                         'status' => 'active',
                         'balance_actual' => $amount_loan,
-                        'customer_id' => $customer->id
+                        'customer_id' => $customer->id,
                     ]);
 
                     $pr = CustomerPret::factory()->create([
@@ -479,11 +475,11 @@ class SystemSeedCommand extends Command
                         'wallet_payment_id' => $card->wallet->id,
                         'first_payment_at' => Carbon::create(now()->year, now()->addMonth()->month, 30),
                         'loan_plan_id' => 8,
-                        'customer_id' => $customer->id
+                        'customer_id' => $customer->id,
                     ]);
 
                     $card->update([
-                        'customer_pret_id' => $pr->id
+                        'customer_pret_id' => $pr->id,
                     ]);
 
                     CustomerFacelia::query()->create([
@@ -496,14 +492,12 @@ class SystemSeedCommand extends Command
                         'customer_pret_id' => $pr->id,
                         'customer_credit_card_id' => $card->id,
                         'customer_wallet_id' => $cpt_pret->id,
-                        'wallet_payment_id' => $card->wallet->id
+                        'wallet_payment_id' => $card->wallet->id,
                     ]);
                 }
 
                 $this->generateTransactions(rand(10, 100), $wallet_account);
-
             }
-
 
             $bar->advance();
         }
@@ -521,7 +515,6 @@ class SystemSeedCommand extends Command
             $card = $transpac_choice == 'payment' || $transpac_choice == 'retrait' || $transpac_choice == 'depot' ? $wallet->cards()->where('status', 'active')->first() : null;
             $amount = $this->amount($transpac_choice, $wallet);
 
-
             if ($transpac_choice == 'retrait') {
                 if (\App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($card, true) < 100 && $amount < \App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($card)) {
                     CustomerTransactionHelper::create(
@@ -536,9 +529,9 @@ class SystemSeedCommand extends Command
                 }
             } elseif ($transpac_choice == 'payment') {
                 if (\App\Helper\CustomerCreditCard::getTransactionsMonthPayment($card, true) < 100 && $amount < \App\Helper\CustomerCreditCard::getTransactionsMonthPayment($card)) {
-                    if($wallet->cards()->first()->debit == 'differed') {
-                        if(($amount+$wallet->transactions()->where('type', 'payment')->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount')) < $wallet->cards()->first()->differed_limit) {
-                            $differed = rand(0,1);
+                    if ($wallet->cards()->first()->debit == 'differed') {
+                        if (($amount + $wallet->transactions()->where('type', 'payment')->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount')) < $wallet->cards()->first()->differed_limit) {
+                            $differed = rand(0, 1);
                             CustomerTransactionHelper::create(
                                 $type,
                                 $transpac_choice,
@@ -561,7 +554,7 @@ class SystemSeedCommand extends Command
                             $confirm == 1 ? now() : null, now(), $card->id);
                     }
                 }
-            } elseif($transpac_choice == 'depot') {
+            } elseif ($transpac_choice == 'depot') {
                 CustomerTransactionHelper::create(
                     $type,
                     $transpac_choice,
@@ -597,27 +590,27 @@ class SystemSeedCommand extends Command
                 break;
 
             case 'payment':
-                return "Payment CB Ref:" . Str::upper(Str::random(8));
+                return 'Payment CB Ref:'.Str::upper(Str::random(8));
                 break;
 
             case 'virement':
-                return "Virement bancaire sur votre compte";
+                return 'Virement bancaire sur votre compte';
                 break;
 
             case 'sepa':
-                return "Prélèvement SEPA sur votre compte";
+                return 'Prélèvement SEPA sur votre compte';
                 break;
 
             case 'frais':
-                return "Frais Bancaire";
+                return 'Frais Bancaire';
                 break;
 
             case 'souscription':
-                return "Cotisation bancaire";
+                return 'Cotisation bancaire';
                 break;
 
             default:
-                return "Autre Mouvement bancaire";
+                return 'Autre Mouvement bancaire';
                 break;
         }
     }
@@ -655,6 +648,7 @@ class SystemSeedCommand extends Command
 
             case 'souscription':
                 $ar = [0, 4.99, 9.99];
+
                 return $ar[rand(0, 2)];
                 break;
 

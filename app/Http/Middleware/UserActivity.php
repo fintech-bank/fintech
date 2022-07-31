@@ -15,9 +15,9 @@ class UserActivity
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
     {
-        if(\Auth::check()) {
+        if (\Auth::check()) {
             $expire = now()->addMinutes(config('session.lifetime'));
             \Cache::put('user-is-online-'.\Auth::user()->id, true, $expire);
 

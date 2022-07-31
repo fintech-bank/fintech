@@ -26,20 +26,22 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse
+        {
             public function toResponse($request)
             {
                 $url = url()->previous();
+
                 return redirect()->action([HomeController::class, 'redirect']);
             }
         });
 
-        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
-
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse
+        {
             public function toResponse($request)
             {
                 $url = url()->previous();
+
                 return redirect()->route('home');
             }
         });
@@ -63,7 +65,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->get('email'))->orWhere('identifiant', $request->get('email'))->first();
 
-            if($user &&
+            if ($user &&
             Hash::check($request->get('password'), $user->password)) {
                 return $user;
             }

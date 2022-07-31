@@ -15,7 +15,7 @@ class BeneficiaireController extends Controller
 
         return response()->json([
             'name' => CustomerTransferHelper::getNameBeneficiaire($info),
-            'beneficiaire' => $info
+            'beneficiaire' => $info,
         ]);
     }
 
@@ -36,13 +36,13 @@ class BeneficiaireController extends Controller
                 'id' => $item->id,
                 'full_name' => $item->full_name,
                 'bankname' => $item->bankname,
-                'iban' => $item->iban
+                'iban' => $item->iban,
             ];
         }
 
         return response()->json([
             'beneficiaires' => $arr,
-            'all' => $all
+            'all' => $all,
         ]);
     }
 }

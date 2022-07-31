@@ -13,17 +13,21 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|CustomerDocument[] $documents
  * @property-read int|null $documents_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory query()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory whereName($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperDocumentCategory
  */
 class DocumentCategory extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function documents()

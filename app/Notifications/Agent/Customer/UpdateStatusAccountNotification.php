@@ -3,9 +3,7 @@
 namespace App\Notifications\Agent\Customer;
 
 use App\Helper\CustomerHelper;
-use App\Helper\LogHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
@@ -16,6 +14,7 @@ class UpdateStatusAccountNotification extends Notification
     use Queueable;
 
     private $customer;
+
     private $status;
 
     /**
@@ -52,7 +51,7 @@ class UpdateStatusAccountNotification extends Notification
     {
         return (new MailMessage)
                     ->subject("Mise à jour du status d'un client")
-                    ->line('Le compte du client '.CustomerHelper::getName($this->customer)." à vue sont status passer à ".CustomerHelper::getStatusOpenAccount($this->status));
+                    ->line('Le compte du client '.CustomerHelper::getName($this->customer).' à vue sont status passer à '.CustomerHelper::getStatusOpenAccount($this->status));
     }
 
     /**
@@ -64,8 +63,8 @@ class UpdateStatusAccountNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "type" => "notice",
-            "message" => 'Le compte du client '.CustomerHelper::getName($this->customer)." à vue sont status passer à ".CustomerHelper::getStatusOpenAccount($this->status)
+            'type' => 'notice',
+            'message' => 'Le compte du client '.CustomerHelper::getName($this->customer).' à vue sont status passer à '.CustomerHelper::getStatusOpenAccount($this->status),
         ];
     }
 
@@ -74,6 +73,6 @@ class UpdateStatusAccountNotification extends Notification
         return (new WebPushMessage)
             ->title("Mise à jour du status d'un compte client")
             ->icon('/storage/log/notice.png')
-            ->body('Le compte du client '.CustomerHelper::getName($this->customer)." à vue sont status passer à ".CustomerHelper::getStatusOpenAccount($this->status));
+            ->body('Le compte du client '.CustomerHelper::getName($this->customer).' à vue sont status passer à '.CustomerHelper::getStatusOpenAccount($this->status));
     }
 }

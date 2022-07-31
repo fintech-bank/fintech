@@ -43,6 +43,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerWallet[] $wallets
  * @property-read int|null $wallets_count
+ *
  * @method static \Database\Factories\Customer\CustomerFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newQuery()
@@ -58,11 +59,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereStatusOpenAccount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereUserId($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomer
  */
 class Customer extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function user()
@@ -139,6 +143,4 @@ class Customer extends Model
     {
         return $this->hasMany(CustomerEpargne::class);
     }
-
-
 }

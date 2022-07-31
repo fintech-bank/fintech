@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $instruction
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Core\LoanPlanInterest[] $interests
  * @property-read int|null $interests_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan query()
@@ -26,11 +27,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan whereMinimum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan whereName($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperLoanPlan
  */
 class LoanPlan extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function interests()

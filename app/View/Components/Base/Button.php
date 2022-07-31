@@ -7,20 +7,26 @@ use Illuminate\View\Component;
 class Button extends Component
 {
     public $id;
+
     public $class;
+
     public $text;
+
     /**
      * @var string
      */
     public $textIndicator;
+
     /**
      * @var array
      */
     public $datas;
+
     /**
      * @var null
      */
     public $other;
+
     /**
      * @var null
      */
@@ -31,13 +37,13 @@ class Button extends Component
      *
      * @param $class
      * @param $text
-     * @param array $datas
+     * @param  array  $datas
      * @param $id
-     * @param null $other
-     * @param string $textIndicator
-     * @param null $tooltip
+     * @param  null  $other
+     * @param  string  $textIndicator
+     * @param  null  $tooltip
      */
-    public function __construct($class, $text, $datas = [], $id = null, $other = null, $textIndicator = "Veuillez Patienter...", $tooltip = null)
+    public function __construct($class, $text, $datas = [], $id = null, $other = null, $textIndicator = 'Veuillez Patienter...', $tooltip = null)
     {
         //
         $this->id = $id;

@@ -3,7 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,6 +11,7 @@ class CheckCheckoutNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $check;
 
     /**
@@ -47,10 +47,10 @@ class CheckCheckoutNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject("Commande de chéquier effectué")
+            ->subject('Commande de chéquier effectué')
             ->view('emails.customer.checkout_check', [
-                "customer" => $this->customer,
-                "check" => $this->check
+                'customer' => $this->customer,
+                'check' => $this->check,
             ]);
     }
 

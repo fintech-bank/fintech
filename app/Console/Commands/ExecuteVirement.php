@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Helper\CustomerTransactionHelper;
-use App\Helper\CustomerTransferHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Models\Customer\CustomerTransaction;
 use App\Models\Customer\CustomerTransfer;
@@ -35,7 +34,7 @@ class ExecuteVirement extends Command
     {
         switch ($this->argument('call')) {
             case 'virement':
-                    return $this->executeVirements();
+                return $this->executeVirements();
                 break;
 
             default: return $this->executeVirements();
@@ -51,7 +50,7 @@ class ExecuteVirement extends Command
             switch ($virement->type) {
                 case 'immediat':
                     // Vérifie que le solde est disponible
-                    if($virement->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
+                    if ($virement->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
                         // Met à jour la transaction
                         CustomerTransactionHelper::updated($transaction);
 
@@ -67,7 +66,7 @@ class ExecuteVirement extends Command
                     break;
 
                 case 'differed':
-                    if($virement->transfer_date->startOfDay() == now()->startOfDay()) {
+                    if ($virement->transfer_date->startOfDay() == now()->startOfDay()) {
                         // Met à jour la transaction
                         CustomerTransactionHelper::updated($transaction);
 
@@ -78,7 +77,7 @@ class ExecuteVirement extends Command
                     break;
 
                 default:
-                    if($transaction->updated_at->startOfDay() == now()->startOfDay()) {
+                    if ($transaction->updated_at->startOfDay() == now()->startOfDay()) {
                         // Met à jour la transaction
                         CustomerTransactionHelper::updated($transaction);
 
@@ -91,6 +90,5 @@ class ExecuteVirement extends Command
 
             $transaction->wallet->customer->user->notify(new UpdateStatusVirementNotification($virement, $virement->status));
         }
-
     }
 }

@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerTransaction[] $transactions
  * @property-read int|null $transactions_count
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerCreditCardFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditCard newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditCard newQuery()
@@ -62,11 +63,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditCard whereVisaSpec($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditCard whereWarranty($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerCreditCard
  */
 class CustomerCreditCard extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function wallet()

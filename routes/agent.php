@@ -1,15 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AgenceController;
-use App\Http\Controllers\Admin\BanksController;
-use App\Http\Controllers\Admin\CmsCategoryController;
-use App\Http\Controllers\Admin\CmsPagesController;
-use App\Http\Controllers\Admin\DocumentCategoryController;
-use App\Http\Controllers\Admin\EpargneController;
-use App\Http\Controllers\Admin\PackageController;
-use App\Http\Controllers\Admin\PretController;
-use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Agent\AgentController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
+Route::prefix('agence')->middleware(['auth', 'agent'])->group(function () {
     Route::get('/', [AgentController::class, 'dashboard'])->name('agent.dashboard');
 
     Route::prefix('customers')->group(function () {
@@ -48,7 +38,6 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         Route::prefix('{customer}/wallets')->group(function () {
             Route::post('/', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'store'])->name('agent.customer.wallet.store');
             Route::post('decouvert', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'decouvert'])->name('agent.customer.wallet.decouvert');
-
 
             Route::prefix('{wallet_id}')->group(function () {
                 Route::get('/', [\App\Http\Controllers\Agent\CustomerWalletController::class, 'show'])->name('agent.customer.wallet.show');
@@ -125,4 +114,3 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function() {
         Route::get('{loan_id}', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'show'])->name('agent.loan.show');
     });
 });
-

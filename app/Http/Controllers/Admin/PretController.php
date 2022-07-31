@@ -17,7 +17,8 @@ class PretController extends Controller
 
     /**
      * PretController constructor.
-     * @param LoanPlanRepository $loanPlanRepository
+     *
+     * @param  LoanPlanRepository  $loanPlanRepository
      */
     public function __construct(LoanPlanRepository $loanPlanRepository)
     {
@@ -34,7 +35,6 @@ class PretController extends Controller
         return view('admin.prets.index');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -45,10 +45,10 @@ class PretController extends Controller
     {
         //dd($request->all());
         $request->validate([
-            'name' => "required|string",
-            "min" => "required",
-            "max" => "required",
-            "duration" => "required",
+            'name' => 'required|string',
+            'min' => 'required',
+            'max' => 'required',
+            'duration' => 'required',
         ]);
 
         try {
@@ -57,25 +57,26 @@ class PretController extends Controller
                 'min' => $request->get('min'),
                 'max' => $request->get('max'),
                 'duration' => $request->get('duration'),
-                'instruction' => $request->get('instruction')
+                'instruction' => $request->get('instruction'),
             ]);
 
             foreach ($request->get('loan_interests') as $interest) {
                 $plan->interests()->create([
                     'interest' => $interest['interest'],
                     'duration' => $interest['duration'],
-                    'loan_plan_id' => $plan->id
+                    'loan_plan_id' => $plan->id,
                 ]);
             }
 
             LogHelper::notify('notice', "Création d'un plan de pret: ".$plan->name);
+
             return response()->json($plan);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json($exception);
         }
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -89,9 +90,11 @@ class PretController extends Controller
             LoanPlan::find($id)->delete();
 
             LogHelper::notify('notice', "Suppression d'un plan de pret");
+
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
+
             return response()->json($exception);
         }
     }

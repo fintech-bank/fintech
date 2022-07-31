@@ -7,7 +7,6 @@ use App\Helper\CustomerTransferHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerTransfer;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class TransferController extends Controller
 {
@@ -18,14 +17,14 @@ class TransferController extends Controller
 
         if ($transfer->type == 'permanent') {
             return response()->json([
-                'title' => 'Virement N°' . $transfer->reference,
+                'title' => 'Virement N°'.$transfer->reference,
                 'wallet_customer' => [
                     'bank' => [
                         'name' => 'FINBANK',
-                        'logo' => '/storage/logo/logo_carre_80.png'
+                        'logo' => '/storage/logo/logo_carre_80.png',
                     ],
                     'name' => CustomerHelper::getName($transfer->wallet->customer),
-                    'account' => 'Compte N°' . $transfer->wallet->number_account
+                    'account' => 'Compte N°'.$transfer->wallet->number_account,
                 ],
                 'wallet_beneficiaire' => [
                     'bank' => [
@@ -33,7 +32,7 @@ class TransferController extends Controller
                         'logo' => $transfer->beneficiaire->bank->logo,
                     ],
                     'name' => CustomerTransferHelper::getNameBeneficiaire($transfer->beneficiaire),
-                    'account' => $transfer->beneficiaire->iban
+                    'account' => $transfer->beneficiaire->iban,
                 ],
                 'status' => CustomerTransferHelper::getStatusTransfer($transfer->status, true),
                 'amount' => eur($transfer->amount),
@@ -44,18 +43,18 @@ class TransferController extends Controller
                     'end' => $transfer->recurring_end->locale('fr_FR')->format('j F Y'),
                 ],
                 'typeText' => $transfer->type,
-                'id' => $transfer->id
+                'id' => $transfer->id,
             ]);
         } else {
             return response()->json([
-                'title' => 'Virement N°' . $transfer->reference,
+                'title' => 'Virement N°'.$transfer->reference,
                 'wallet_customer' => [
                     'bank' => [
                         'name' => 'FINBANK',
-                        'logo' => '/storage/logo/logo_carre_80.png'
+                        'logo' => '/storage/logo/logo_carre_80.png',
                     ],
                     'name' => CustomerHelper::getName($transfer->wallet->customer),
-                    'account' => 'Compte N°' . $transfer->wallet->number_account
+                    'account' => 'Compte N°'.$transfer->wallet->number_account,
                 ],
                 'wallet_beneficiaire' => [
                     'bank' => [
@@ -63,7 +62,7 @@ class TransferController extends Controller
                         'logo' => $transfer->beneficiaire->bank->logo,
                     ],
                     'name' => CustomerTransferHelper::getNameBeneficiaire($transfer->beneficiaire),
-                    'account' => $transfer->beneficiaire->iban
+                    'account' => $transfer->beneficiaire->iban,
                 ],
                 'status' => CustomerTransferHelper::getStatusTransfer($transfer->status, true),
                 'amount' => eur($transfer->amount),
@@ -71,7 +70,7 @@ class TransferController extends Controller
                 'type' => CustomerTransferHelper::getTypeTransfer($transfer->type),
                 'date' => $transfer->transfer_date->locale('fr_FR')->format('j F Y'),
                 'typeText' => $transfer->type,
-                'id' => $transfer->id
+                'id' => $transfer->id,
             ]);
         }
     }

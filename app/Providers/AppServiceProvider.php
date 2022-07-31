@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        if(!auth()->guest()) {
+        if (! auth()->guest()) {
             $agent = new Agent();
             \View::share('user', request()->user());
             \View::share('agent', $agent);

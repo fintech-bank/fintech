@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerWallet $payment
  * @property-read EpargnePlan $plan
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerEpargneFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerEpargne newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerEpargne newQuery()
@@ -35,11 +36,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerEpargne whereWalletId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerEpargne whereWalletPaymentId($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerEpargne
  */
 class CustomerEpargne extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function plan()

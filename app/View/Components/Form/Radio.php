@@ -7,17 +7,23 @@ use Illuminate\View\Component;
 class Radio extends Component
 {
     public $name;
+
     public $value;
+
     public $for;
+
     public $label;
+
     /**
      * @var bool
      */
     public $checked;
+
     /**
      * @var null
      */
     public $function;
+
     /**
      * @var null
      */
@@ -30,9 +36,9 @@ class Radio extends Component
      * @param $value
      * @param $for
      * @param $label
-     * @param bool $checked
-     * @param null $function
-     * @param null $nameFunction
+     * @param  bool  $checked
+     * @param  null  $function
+     * @param  null  $nameFunction
      */
     public function __construct($name, $value, $for, $label, $checked = false, $function = null, $nameFunction = null)
     {

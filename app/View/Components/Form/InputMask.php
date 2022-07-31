@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class InputMask extends Component
 {
     public $name;
+
     public $label;
+
     public $mask;
+
     /**
      * @var bool
      */
@@ -20,7 +23,7 @@ class InputMask extends Component
      * @param $name
      * @param $label
      * @param $mask
-     * @param bool $required
+     * @param  bool  $required
      */
     public function __construct($name, $label, $mask, $required = true)
     {

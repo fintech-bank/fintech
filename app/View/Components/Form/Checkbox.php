@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class Checkbox extends Component
 {
     public $name;
+
     public $label;
+
     public $value;
+
     /**
      * @var bool
      */
@@ -20,7 +23,7 @@ class Checkbox extends Component
      * @param $name
      * @param $label
      * @param $value
-     * @param bool $checked
+     * @param  bool  $checked
      */
     public function __construct($name, $label, $value, $checked = false)
     {

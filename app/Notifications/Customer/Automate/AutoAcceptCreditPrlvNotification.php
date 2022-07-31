@@ -4,7 +4,6 @@ namespace App\Notifications\Customer\Automate;
 
 use App\Helper\CustomerSepaHelper;
 use Illuminate\Bus\Queueable;
-
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -13,7 +12,9 @@ class AutoAcceptCreditPrlvNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $prlv;
+
     public $status;
 
     /**
@@ -53,9 +54,9 @@ class AutoAcceptCreditPrlvNotification extends Notification
         return (new MailMessage)
                     ->subject('Votre Prélèvement Bancaire')
                     ->view('emails.customer.auto_accept_prlv', [
-                        "customer" => $this->customer,
-                        "prlv" => $this->prlv,
-                        'status' => $this->status
+                        'customer' => $this->customer,
+                        'prlv' => $this->prlv,
+                        'status' => $this->status,
                     ]);
     }
 
@@ -100,14 +101,15 @@ class AutoAcceptCreditPrlvNotification extends Notification
         }
 
         $title = 'Prélèvement bancaire';
-        $text = "Le status du prélèvement bancaire ".$this->prlv->number_mandate." est passée à ".CustomerSepaHelper::getStatus($this->status, false);
+        $text = 'Le status du prélèvement bancaire '.$this->prlv->number_mandate.' est passée à '.CustomerSepaHelper::getStatus($this->status, false);
         $time = now()->shortAbsoluteDiffForHumans();
+
         return [
             'icon' => $icon,
             'color' => $color,
             'title' => $title,
             'text' => $text,
-            'time' => $time
+            'time' => $time,
         ];
     }
 }

@@ -23,17 +23,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::resource('agences', AgenceController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
     Route::resource('banks', BanksController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
     Route::resource('documents', DocumentCategoryController::class)->names([
-        'index' => "document.category.index",
-        'store' => "document.category.store",
-        'show' => "document.category.show",
-        'update' => "document.category.update",
-        'destroy' => "document.category.destroy",
+        'index' => 'document.category.index',
+        'store' => 'document.category.store',
+        'show' => 'document.category.show',
+        'update' => 'document.category.update',
+        'destroy' => 'document.category.destroy',
     ])->only(['index', 'store', 'show', 'update', 'destroy']);
 
     Route::resource('epargnes', EpargneController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
@@ -50,4 +50,3 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function() {
         });
     });
 });
-

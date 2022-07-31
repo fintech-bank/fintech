@@ -3,8 +3,6 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
@@ -14,7 +12,9 @@ class SendCodeCardNotification extends Notification
     use Queueable;
 
     public $customer;
+
     public $code;
+
     private $card;
 
     /**
@@ -46,6 +46,6 @@ class SendCodeCardNotification extends Notification
     public function toTwilio($notifiable)
     {
         return (new TwilioSmsMessage())
-            ->content("Votre code de la carte bancaire ".$this->card->number." est le ".base64_decode($this->code));
+            ->content('Votre code de la carte bancaire '.$this->card->number.' est le '.base64_decode($this->code));
     }
 }

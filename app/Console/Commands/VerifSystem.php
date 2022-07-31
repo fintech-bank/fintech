@@ -67,12 +67,12 @@ class VerifSystem extends Command
         $count = 0;
 
         foreach ($wallets as $wallet) {
-            if($wallet->alert_debit == 1 && CustomerWalletHelper::getSoldeRemaining($wallet) >= 0) {
+            if ($wallet->alert_debit == 1 && CustomerWalletHelper::getSoldeRemaining($wallet) >= 0) {
                 $wallet->update([
                     'alert_debit' => 0,
                     'alert_fee' => 0,
                     'alert_date' => null,
-                    'status' => "active",
+                    'status' => 'active',
                 ]);
                 $count++;
             }
@@ -92,10 +92,10 @@ class VerifSystem extends Command
         $count = 0;
 
         foreach ($wallets as $wallet) {
-            if($wallet->alert_debit == 0 && CustomerWalletHelper::getSoldeRemaining($wallet) <= 0) {
+            if ($wallet->alert_debit == 0 && CustomerWalletHelper::getSoldeRemaining($wallet) <= 0) {
                 $wallet->update([
                     'alert_debit' => 1,
-                    'alert_date' => now()
+                    'alert_date' => now(),
                 ]);
                 $count++;
             }
@@ -115,9 +115,9 @@ class VerifSystem extends Command
         $count = 0;
 
         foreach ($wallets as $wallet) {
-            if($wallet->alert_debit == 1 && $wallet->alert_date->startOfDay() >= now()->addDays(15)->startOfDay()) {
+            if ($wallet->alert_debit == 1 && $wallet->alert_date->startOfDay() >= now()->addDays(15)->startOfDay()) {
                 $wallet->update([
-                    'alert_fee' => 1
+                    'alert_fee' => 1,
                 ]);
                 $count++;
             }
@@ -137,9 +137,9 @@ class VerifSystem extends Command
         $count = 0;
 
         foreach ($wallets as $wallet) {
-            if($wallet->alert_debit == 1 && $wallet->alert_fee == 1 && $wallet->alert_date->startOfDay() >= now()->addDays(15)->startOfDay()) {
+            if ($wallet->alert_debit == 1 && $wallet->alert_fee == 1 && $wallet->alert_date->startOfDay() >= now()->addDays(15)->startOfDay()) {
                 $wallet->update([
-                    'status' => 'suspended'
+                    'status' => 'suspended',
                 ]);
                 $count++;
             }

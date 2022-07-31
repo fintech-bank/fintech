@@ -47,26 +47,25 @@ class CustomerWalletController extends Controller
         ];
 
         $decouvert[] = [
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert,
-            "-".$wallet->balance_decouvert
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
+            '-'.$wallet->balance_decouvert,
         ];
 
         return response()->json([
             'debit' => $debit,
             'credit' => $credit,
-            'decouvert' => $decouvert
+            'decouvert' => $decouvert,
         ]);
-
     }
 
     public function getBeneficiaire(Request $request, $id)
@@ -81,13 +80,12 @@ class CustomerWalletController extends Controller
     {
         $wallet = CustomerWallet::find($wallet_id);
 
-
         return response()->json([
             'wallet' => $wallet,
             'type' => CustomerWalletHelper::getTypeWallet($wallet->type),
             'agency' => $wallet->customer->user->agency,
             'customer' => \Str::limit(CustomerHelper::getName($wallet->customer), 15, '...'),
-            'rib' => '/api/wallet/'.$wallet_id.'/rib'
+            'rib' => '/api/wallet/'.$wallet_id.'/rib',
         ]);
     }
 
@@ -110,13 +108,13 @@ class CustomerWalletController extends Controller
 
         return $documentFile->generatePDF('agence.exportTransaction', $wallet->customer, null, [
             'transactions' => $transactions,
-            "wallet" => $wallet,
-            "sum_first" => $sum_first,
-            "sum_first_name" => $sum_first < 0 ? 'debiteur' : 'crediteur',
+            'wallet' => $wallet,
+            'sum_first' => $sum_first,
+            'sum_first_name' => $sum_first < 0 ? 'debiteur' : 'crediteur',
             'first' => $first,
             'start' => $start,
             'end' => $end,
-            'sum_last_name' => $wallet->balance_actual < 0 ? 'debiteur' : 'crediteur'
+            'sum_last_name' => $wallet->balance_actual < 0 ? 'debiteur' : 'crediteur',
         ]);
     }
 }

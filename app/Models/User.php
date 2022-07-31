@@ -6,7 +6,6 @@ use App\Models\Core\Agency;
 use App\Models\Core\Package;
 use App\Models\Core\TicketConversation;
 use App\Models\Customer\Customer;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,6 +43,7 @@ use NotificationChannels\WebPush\HasPushSubscriptions;
  * @property-read int|null $ticket_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -66,6 +66,7 @@ use NotificationChannels\WebPush\HasPushSubscriptions;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperUser
  */
 class User extends Authenticatable
 {
@@ -116,7 +117,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Agency::class);
     }
-
-
-
 }

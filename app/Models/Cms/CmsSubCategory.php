@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Cms\CmsCategory $category
  * @property-read \Illuminate\Database\Eloquent\Collection|CmsSubCategory[] $subcategories
  * @property-read int|null $subcategories_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory query()
@@ -27,11 +28,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory whereSlug($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCmsSubCategory
  */
 class CmsSubCategory extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function category()

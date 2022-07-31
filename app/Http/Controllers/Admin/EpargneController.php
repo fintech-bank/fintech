@@ -19,7 +19,6 @@ class EpargneController extends Controller
         return view('admin.epargnes.index');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -29,19 +28,21 @@ class EpargneController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string",
-            "profit_percent" => "required",
-            "lock_days" => "required",
-            "limit" => "required"
+            'name' => 'required|string',
+            'profit_percent' => 'required',
+            'lock_days' => 'required',
+            'limit' => 'required',
         ]);
 
         try {
             $plan = EpargnePlan::create($request->all());
 
             LogHelper::notify('notice', "Création d'un plan d'épargne: ".$request->get('name'));
+
             return response()->json($plan);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -56,13 +57,14 @@ class EpargneController extends Controller
     {
         try {
             $plan = EpargnePlan::find($id);
+
             return response()->json($plan);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -76,9 +78,11 @@ class EpargneController extends Controller
         try {
             $plan = EpargnePlan::find($id)->update($request->all());
             LogHelper::notify('notice', "Edition d'un plan d'épargne: ".$request->get('name'));
+
             return response()->json($plan);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }
@@ -93,9 +97,11 @@ class EpargneController extends Controller
     {
         try {
             EpargnePlan::find($id)->delete();
+
             return response()->json();
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception->getMessage());
+
             return response()->json($exception->getMessage());
         }
     }

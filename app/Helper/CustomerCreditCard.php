@@ -1,10 +1,7 @@
 <?php
 
-
 namespace App\Helper;
 
-
-use App\Models\Customer\CustomerDocument;
 use App\Notifications\Agent\Customer\CreateCreditCardNotification;
 use App\Notifications\Customer\SendCodeCardNotification;
 use Plansky\CreditCard\Generator;
@@ -32,7 +29,7 @@ class CustomerCreditCard
 
     public static function getDebit($debit): string
     {
-        return $debit == 'differed' ? "Différé" : "Immédiat";
+        return $debit == 'differed' ? 'Différé' : 'Immédiat';
     }
 
     public static function getType($type)
@@ -50,13 +47,13 @@ class CustomerCreditCard
 
     public static function getContact($contact): string
     {
-        return $contact == 1 ? "OUI" : "NON";
+        return $contact == 1 ? 'OUI' : 'NON';
     }
 
     public static function getCreditCard($number, $obscure = true)
     {
         if ($obscure == true) {
-            return "XXXX XXXX XXXX " . \Str::substr($number, 12, 16);
+            return 'XXXX XXXX XXXX '.\Str::substr($number, 12, 16);
         } else {
             return $number;
         }
@@ -105,7 +102,7 @@ class CustomerCreditCard
                 'code' => base64_encode(rand(1000, 9999)),
                 'limit_retrait' => self::calcLimitRetrait($customer->income->pro_incoming),
                 'limit_payment' => self::calcLimitPayment($customer->income->pro_incoming),
-                'customer_wallet_id' => $wallet->id
+                'customer_wallet_id' => $wallet->id,
             ]);
 
             // Génération des contrat
@@ -138,7 +135,7 @@ class CustomerCreditCard
                 'code' => base64_encode(rand(1000, 9999)),
                 'limit_retrait' => 0,
                 'limit_payment' => $limit_payment,
-                'customer_wallet_id' => $wallet->id
+                'customer_wallet_id' => $wallet->id,
             ]);
         }
 
@@ -148,12 +145,12 @@ class CustomerCreditCard
     public static function getExpiration($card): string
     {
         if ($card->exp_month <= 9) {
-            $month = '0' . $card->exp_month;
+            $month = '0'.$card->exp_month;
         } else {
             $month = $card->exp_month;
         }
 
-        return $month . '/' . $card->exp_year;
+        return $month.'/'.$card->exp_year;
     }
 
     public static function getTransactionsMonthWithdraw($card, $percent = false)
@@ -198,7 +195,7 @@ class CustomerCreditCard
                 ->get()
                 ->sum('amount');
 
-            if($tran == 0) {
+            if ($tran == 0) {
                 return 0;
             } else {
                 return $tran * 100 / $card->limit_payment;
@@ -213,11 +210,11 @@ class CustomerCreditCard
 
     public static function getUsedDiffered($card, $percent = false)
     {
-        if(!$percent) {
+        if (! $percent) {
             return $card->transactions()->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount');
         } else {
             $used = $card->transactions()->where('differed', 1)->whereBetween('differed_at', [now()->startOfMonth(), now()->endOfMonth()])->sum('amount');
-            if($used != 0) {
+            if ($used != 0) {
                 return self::getRestantDiffered($card) * 100 / $card->differed_limit;
             } else {
                 return 0;

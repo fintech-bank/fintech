@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreign('subcategory_id')->references('id')->on('cms_sub_categories')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-
         });
     }
 

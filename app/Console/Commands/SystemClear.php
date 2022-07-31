@@ -39,6 +39,7 @@ class SystemClear extends Command
         $this->call('view:clear');
         $this->call('auth:clear-resets');
         $this->call('schedule:clear-cache');
+
         return 0;
     }
 }

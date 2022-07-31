@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_sepa_id
  * @property-read \App\Models\Customer\CustomerSepa $sepa
  * @property-read \App\Models\Customer\CustomerWallet $wallet
+ *
  * @method static \Database\Factories\Customer\CustomerCreditorFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditor newQuery()
@@ -25,11 +26,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditor whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditor whereOpposit($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperCustomerCreditor
  */
 class CustomerCreditor extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
     public $timestamps = false;
 
     public function wallet()

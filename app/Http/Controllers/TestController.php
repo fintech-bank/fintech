@@ -2,21 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helper\CustomerCreditCard;
-use App\Helper\CustomerFaceliaHelper;
-use App\Helper\CustomerTransferHelper;
-use App\Helper\DocumentFile;
-use App\Models\Customer\Customer;
-use App\Models\Customer\CustomerTransfer;
-use App\Models\Customer\CustomerWallet;
 use App\Services\BankFintech;
-use App\Services\Twillo;
 use Auth;
-use IbanGenerator\Generator;
 use Illuminate\Http\Request;
-use Jenssegers\Agent\Agent;
-use Twilio\Rest\Lookups;
-
 
 class TestController extends Controller
 {
@@ -35,10 +23,10 @@ class TestController extends Controller
     {
         $this->middleware('auth');
 
-        $this->validate($request,[
-            'endpoint'    => 'required',
-            'keys.auth'   => 'required',
-            'keys.p256dh' => 'required'
+        $this->validate($request, [
+            'endpoint' => 'required',
+            'keys.auth' => 'required',
+            'keys.p256dh' => 'required',
         ]);
         $endpoint = $request->endpoint;
         $token = $request->keys['auth'];
@@ -46,6 +34,6 @@ class TestController extends Controller
         $user = Auth::user();
         $user->updatePushSubscription($endpoint, $key, $token);
 
-        return response()->json(['success' => true],200);
+        return response()->json(['success' => true], 200);
     }
 }

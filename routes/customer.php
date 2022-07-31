@@ -1,16 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AgenceController;
-use App\Http\Controllers\Admin\BanksController;
-use App\Http\Controllers\Admin\CmsCategoryController;
-use App\Http\Controllers\Admin\CmsPagesController;
-use App\Http\Controllers\Admin\DocumentCategoryController;
-use App\Http\Controllers\Admin\EpargneController;
-use App\Http\Controllers\Admin\PackageController;
-use App\Http\Controllers\Admin\PretController;
-use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Agent\AgentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
+Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Customer\CustomerController::class, 'dashboard'])->name('customer.dashboard');
     Route::get('offline', [\App\Http\Controllers\Customer\CustomerController::class, 'offline'])->name('customer.offline');
 
@@ -66,5 +55,8 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function() {
         Route::get('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'show'])->name('customer.payment.show');
         Route::put('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'update'])->name('customer.payment.update');
     });
-});
 
+    Route::prefix('documents')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Customer\DocumentController::class, 'index'])->name('customer.document.index');
+    });
+});
