@@ -2,4 +2,5 @@
 
 return [
     'code_banque' => env('CODE_BANQUE'),
+    'installed' => env("APP_INSTALLED")
 ];
