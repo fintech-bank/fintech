@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_sepa_id
  * @property-read \App\Models\Customer\CustomerSepa $sepa
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerCreditorFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditor newQuery()

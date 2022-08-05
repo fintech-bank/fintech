@@ -4,6 +4,7 @@ namespace App\Models\Core;
 
 use App\Helper\CountryHelper;
 use App\Models\Customer\CustomerBeneficiaire;
+use App\Models\Customer\CustomerMobility;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $process_time
  * @property-read \Illuminate\Database\Eloquent\Collection|CustomerBeneficiaire[] $beneficiaires
  * @property-read int|null $beneficiaires_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Bank newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bank newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bank query()
@@ -46,6 +46,11 @@ class Bank extends Model
     public function beneficiaires()
     {
         return $this->hasMany(CustomerBeneficiaire::class);
+    }
+
+    public function mobility()
+    {
+        return $this->hasMany(CustomerMobility::class);
     }
 
     public function getCountryAttribute($value)

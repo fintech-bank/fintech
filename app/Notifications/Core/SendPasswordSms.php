@@ -12,20 +12,16 @@ class SendPasswordSms extends Notification
 {
     use Queueable;
 
-    public Customer $customer;
-
     public string $password;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
      * @param $password
      */
-    public function __construct($customer, $password)
+    public function __construct($password)
     {
         //
-        $this->customer = $customer;
         $this->password = $password;
     }
 

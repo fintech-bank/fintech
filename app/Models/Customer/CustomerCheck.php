@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $customer_wallet_id
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerCheckFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCheck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCheck newQuery()

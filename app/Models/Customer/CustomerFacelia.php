@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerWallet $payment
  * @property-read \App\Models\Customer\CustomerPret $pret
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerFaceliaFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerFacelia newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerFacelia newQuery()

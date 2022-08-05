@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerWallet $payment
  * @property-read EpargnePlan $plan
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerEpargneFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerEpargne newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerEpargne newQuery()

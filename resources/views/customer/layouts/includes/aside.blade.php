@@ -133,7 +133,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('agent.customer.index') }}">
+                    <a class="menu-link" href="{{ route('customer.subscription.index') }}">
 						<span class="menu-icon">
 							<i class="fa-solid fa-shopping-cart fa-lg"></i>
 						</span>

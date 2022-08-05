@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null $customer_credit_card_id
  * @property-read \App\Models\Customer\CustomerCreditCard|null $card
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerTransactionFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction newQuery()

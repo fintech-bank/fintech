@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_id
  * @property-read Agency $agency
  * @property-read Customer $customer
- *
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentTransmiss query()

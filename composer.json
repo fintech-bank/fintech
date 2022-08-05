@@ -34,6 +34,7 @@
         "mmockelyn/laravel-insee": "dev-master",
         "mmockelyn/laravel-totem": "^8.4",
         "orangehill/iseed": "^3.0",
+        "ovh/ovh": "^3.1",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^7.0",
         "rinvex/laravel-authy": "^9.1",

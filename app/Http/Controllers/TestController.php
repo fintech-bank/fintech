@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\DocumentFile;
+use App\Models\Customer\CustomerMobility;
 use App\Services\BankFintech;
+use App\Services\Ovh;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -10,8 +13,8 @@ class TestController extends Controller
 {
     public function test()
     {
-        $ban = new BankFintech();
-        dd($ban->callInter());
+        $ovh = new Ovh();
+        dd($ovh->services());
     }
 
     public function home()

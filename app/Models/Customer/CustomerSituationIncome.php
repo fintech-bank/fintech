@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $patrimoine Revenue Mensuel du patrimoine
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
- *
  * @method static \Database\Factories\Customer\CustomerSituationIncomeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationIncome newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationIncome newQuery()

@@ -36,7 +36,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerWallet $payment
  * @property-read LoanPlan $plan
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerPretFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPret newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerPret newQuery()

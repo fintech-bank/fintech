@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $subcategory_id
  * @property-read \App\Models\Cms\CmsSubCategory $category
- *
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsPage query()

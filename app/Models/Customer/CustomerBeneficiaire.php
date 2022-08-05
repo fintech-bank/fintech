@@ -29,7 +29,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $full_name
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerTransfer[] $transfers
  * @property-read int|null $transfers_count
- *
  * @method static \Database\Factories\Customer\CustomerBeneficiaireFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerBeneficiaire newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerBeneficiaire newQuery()

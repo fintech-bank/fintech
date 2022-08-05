@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $instruction
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Core\LoanPlanInterest[] $interests
  * @property-read int|null $interests_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlan query()

@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type_prlv
  * @property int|null $package_id
  * @property-read \App\Models\Core\Package|null $package
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Service newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Service newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Service query()

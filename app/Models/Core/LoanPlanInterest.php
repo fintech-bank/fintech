@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $duration En Mois
  * @property int $loan_plan_id
  * @property-read \App\Models\Core\LoanPlan $plan
- *
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LoanPlanInterest query()

@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $divers Autres charges (pension, etc...)
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
- *
  * @method static \Database\Factories\Customer\CustomerSituationChargeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationCharge newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituationCharge newQuery()

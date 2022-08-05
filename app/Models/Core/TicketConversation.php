@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read User $agent
  * @property-read User $customer
  * @property-read \App\Models\Core\Ticket $ticket
- *
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TicketConversation query()

@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $document_category_id
  * @property-read DocumentCategory $category
  * @property-read \App\Models\Customer\Customer $customer
- *
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument query()

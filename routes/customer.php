@@ -59,4 +59,21 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
     Route::prefix('documents')->group(function () {
         Route::get('/', [\App\Http\Controllers\Customer\DocumentController::class, 'index'])->name('customer.document.index');
     });
+
+    Route::prefix('subscribe')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Customer\SubscriptionController::class, 'index'])->name('customer.subscription.index');
+        Route::prefix('account')->group(function () {
+            Route::put('/update', [\App\Http\Controllers\Customer\SubscriptionController::class, 'updateAccount'])->name('customer.subscription.update-account');
+            Route::put('/mobility', [\App\Http\Controllers\Customer\SubscriptionController::class, 'mobility'])->name('customer.subscription.mobility');
+            Route::put('/mobility/signate', [\App\Http\Controllers\Customer\SubscriptionController::class, 'mobilitySignate'])->name('customer.subscription.mobilitySignate');
+        });
+        Route::prefix('loan')->group(function (){
+            Route::post('personnal', [\App\Http\Controllers\Customer\SubscriptionController::class, 'personnal'])->name('customer.subscription.personnal');
+            Route::post('estate', [\App\Http\Controllers\Customer\SubscriptionController::class, 'estate'])->name('customer.subscription.estate');
+            Route::post('facelia', [\App\Http\Controllers\Customer\SubscriptionController::class, 'facelia'])->name('customer.subscription.facelia');
+        });
+        Route::prefix('saving')->group(function (){
+            Route::post('passbook', [\App\Http\Controllers\Customer\SubscriptionController::class, 'passbook'])->name('customer.subscription.passbook');
+        });
+    });
 });

@@ -78,5 +78,9 @@ Route::prefix('card')->group(function () {
     Route::get('{card}/opposit', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'opposit']);
 });
 
+Route::prefix('documents')->group(function () {
+    Route::post('/lists', [\App\Http\Controllers\Api\Customer\DocumentController::class, 'lists']);
+});
+
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
 Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);
