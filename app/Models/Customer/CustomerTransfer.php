@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_beneficiaire_id
  * @property-read \App\Models\Customer\CustomerBeneficiaire $beneficiaire
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerTransferFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransfer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransfer newQuery()

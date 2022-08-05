@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $customer_wallet_id
  * @property-read int|null $creditor_count
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Database\Factories\Customer\CustomerSepaFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSepa newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSepa newQuery()

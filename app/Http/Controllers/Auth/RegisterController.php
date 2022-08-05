@@ -24,10 +24,12 @@ use App\Notifications\Core\SendPasswordSms;
 use App\Notifications\Customer\SendCodeCardNotification;
 use App\Notifications\Customer\UpdateStatusAccountNotification;
 use App\Services\BankFintech;
+use App\Services\Ovh;
 use App\Services\Stripe;
 use Authy\AuthyApi;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class RegisterController extends Controller
 {
@@ -208,6 +210,7 @@ class RegisterController extends Controller
         $code_auth = rand(1000, 9999);
         $bank = new BankFintech();
         $ficp = $bank->callInter();
+        $ovh = new Ovh();
 
         $customer = Customer::create([
             'status_open_account' => 'open',
@@ -225,7 +228,7 @@ class RegisterController extends Controller
             'lastname' => $personal->lastname,
             'middlename' => $personal->middlename,
             'firstname' => $personal->firstname,
-            'datebirth' => $personal->datebirth,
+            'datebirth' => Carbon::createFromTimestamp(strtotime($personal->datebirth)),
             'citybirth' => $personal->citybirth,
             'countrybirth' => $personal->countrybirth,
             'address' => $personal->address,
@@ -312,7 +315,7 @@ class RegisterController extends Controller
         }
 
         // Envoie du mot de passe provisoire par SMS avec identifiant
-        $info->notify(new SendPasswordSms($user, $password));
+        $ovh->send("Votre mot de passe provisoire est le {$password}", $info->mobile);
 
         /*
          * Création des documents usuel du comptes
@@ -360,6 +363,7 @@ class RegisterController extends Controller
 
     private function createCreditCard($request, CustomerWallet $wallet)
     {
+        $ovh = new Ovh();
         $creditcard = new \Plansky\CreditCard\Generator();
         $card_number = $creditcard->single();
         $card_code = rand(1000, 9999);
@@ -377,7 +381,7 @@ class RegisterController extends Controller
         ]);
 
         // Envoie du code de la carte bleu par sms
-        $wallet->customer->info->notify(new SendCodeCardNotification($wallet->customer, base64_encode($card_code), $card));
+        $ovh->send('Votre code de la carte bancaire '.$card->number.' est le '.base64_decode($card_code), $wallet->customer->info->mobile);
 
         return $card;
     }

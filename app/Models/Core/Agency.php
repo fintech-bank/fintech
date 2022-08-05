@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $documents_count
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
  * @property-read int|null $users_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Agency newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Agency newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Agency query()

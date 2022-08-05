@@ -76,7 +76,7 @@ class DocumentFile
         $document_name = $document != null ? $document->name : 'Document';
 
         $pdf = PDF::loadView('pdf.'.$view, [
-            'data' => $data,
+            'data' => (object)$data,
             'agence' => $agence,
             'document' => $document,
             'title' => $document != null ? $document->name : 'Document',

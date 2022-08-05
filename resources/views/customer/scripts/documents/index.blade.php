@@ -1,7 +1,7 @@
 <script type="text/javascript">
     let tables = {}
     let elements = {
-        items: document.querySelectorAll('.menu-item')
+        items: document.querySelector('#documentCat').querySelectorAll('.menu-item')
     }
     let modals = {}
     let forms = {}

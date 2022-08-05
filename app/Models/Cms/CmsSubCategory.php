@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Cms\CmsCategory $category
  * @property-read \Illuminate\Database\Eloquent\Collection|CmsSubCategory[] $subcategories
  * @property-read int|null $subcategories_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsSubCategory query()

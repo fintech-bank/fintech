@@ -3,6 +3,7 @@
 namespace App\Notifications\Agent\Customer;
 
 use App\Helper\CustomerHelper;
+use App\Helper\CustomerTransferHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -63,8 +64,11 @@ class UpdateTypeAccountNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'type' => 'notice',
-            'message' => 'Le type de compte du client '.CustomerHelper::getName($this->customer).' est passer à '.$this->type->name,
+            'icon' => 'fa-user',
+            'color' => 'success',
+            'title' => 'Mise à jour de compte',
+            'text' => 'Le type de compte du client '.CustomerHelper::getName($this->customer).' est passer à '.$this->type->name,
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
     }
 

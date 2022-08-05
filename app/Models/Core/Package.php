@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $check
  * @property int $nb_carte_physique
  * @property int $nb_carte_virtuel
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Package newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Package newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Package query()

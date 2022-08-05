@@ -42,7 +42,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int|null $transactions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerTransfer[] $transfers
  * @property-read int|null $transfers_count
- *
  * @method static \Database\Factories\Customer\CustomerWalletFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerWallet newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerWallet newQuery()
@@ -133,5 +132,10 @@ class CustomerWallet extends Model
     public function refunds()
     {
         return $this->hasMany(CustomerRefundAccount::class);
+    }
+
+    public function mobility()
+    {
+        return $this->hasOne(CustomerMobility::class);
     }
 }

@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property-read \Illuminate\Database\Eloquent\Collection|CustomerDocument[] $documents
  * @property-read int|null $documents_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DocumentCategory query()

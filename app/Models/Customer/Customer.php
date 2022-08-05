@@ -43,7 +43,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read User $user
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerWallet[] $wallets
  * @property-read int|null $wallets_count
- *
  * @method static \Database\Factories\Customer\CustomerFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Customer newQuery()
@@ -81,7 +80,7 @@ class Customer extends Model
 
     public function agency()
     {
-        return $this->hasOne(Agency::class);
+        return $this->belongsTo(Agency::class, 'agency_id');
     }
 
     public function info()
@@ -142,5 +141,10 @@ class Customer extends Model
     public function epargnes()
     {
         return $this->hasMany(CustomerEpargne::class);
+    }
+
+    public function mobility()
+    {
+        return $this->hasOne(CustomerMobility::class);
     }
 }

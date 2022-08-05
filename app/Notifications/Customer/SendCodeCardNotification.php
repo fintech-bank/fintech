@@ -11,8 +11,6 @@ class SendCodeCardNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
-
     public $code;
 
     private $card;
@@ -20,14 +18,11 @@ class SendCodeCardNotification extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param $customer
      * @param $code
      * @param $card
      */
-    public function __construct($customer, $code, $card)
+    public function __construct($code, $card)
     {
-        //
-        $this->customer = $customer;
         $this->code = $code;
         $this->card = $card;
     }

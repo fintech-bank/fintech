@@ -37,7 +37,7 @@
             <div class="card card-flush shadow-md">
                 <div class="card-body py-5">
                     <div class="d-flex flex-column align-items-center">
-                        <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
+                        <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10" id="documentCat">
                             <!--begin::Menu item-->
                             @foreach(\App\Models\Core\DocumentCategory::all() as $category)
                             <div class="menu-item mb-3" data-category="{{ $category->id }}">

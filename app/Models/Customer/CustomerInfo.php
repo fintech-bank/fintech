@@ -34,7 +34,6 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \App\Models\Customer\Customer $customer
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- *
  * @method static \Database\Factories\Customer\CustomerInfoFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerInfo newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerInfo newQuery()

@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $customer_wallet_id
  * @property-read \App\Models\Customer\CustomerWallet $wallet
- *
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerRefundAccount query()

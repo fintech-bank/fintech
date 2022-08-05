@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $pro_profession
  * @property int $customer_id
  * @property-read \App\Models\Customer\Customer $customer
- *
  * @method static \Database\Factories\Customer\CustomerSituationFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerSituation newQuery()

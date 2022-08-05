@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Cms\CmsSubCategory[] $subcategories
  * @property-read int|null $subcategories_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|CmsCategory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsCategory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CmsCategory query()
