@@ -169,7 +169,7 @@ return [
          */
         Jenssegers\Agent\AgentServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
+        Illuminate\Notifications\OvhSmsChannelServiceProvider::class,
         /*
          * Application Service Providers...
          */

@@ -8,6 +8,24 @@
 </head>
 <body>
     @include('pdf.layouts.header', ["type" => $header_type])
+    <footer>
+        <table style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="width: 33%;">
+                        {{ config('app.name') }} - Agence {{ $agence->name }} - {{ $agence->address }}, {{ $agence->postal }} {{ $agence->city }}
+                    </td>
+                    <td style="width: 33%; text-align: center">
+                        {{ $title }}
+                    </td>
+                    <td style="width: 33%; text-align: right">
+                        Page <span class="pagenum"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
     @yield("content")
+
 </body>
 </html>

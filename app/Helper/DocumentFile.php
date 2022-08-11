@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use App\Models\Core\DocumentCategory;
+use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerDocument;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -115,7 +116,7 @@ class DocumentFile
         return null;
     }
 
-    public static function createDoc($customer, $name, $nameless = null, $category = 3, $reference = null, $signable = false, $signed_bank = false, $signed_client = false, $pdf = false, $pdfData = [])
+    public static function createDoc(Customer $customer, $name, $nameless = null, $category = 3, $reference = null, $signable = false, $signed_bank = false, $signed_client = false, $pdf = false, $pdfData = [])
     {
         $document = CustomerDocument::create([
             'name' => $nameless == null ? $name : $nameless,
@@ -131,7 +132,7 @@ class DocumentFile
         if ($pdf == true) {
             $pdf = Pdf::loadView('pdf.agence.'.\Str::slug($name, '_'), [
                 'customer' => $customer,
-                'data' => $pdfData,
+                'data' => (object)$pdfData,
                 'agence' => $customer->user->agency,
                 'title' => $name,
                 'header_type' => 'address',

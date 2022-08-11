@@ -3,6 +3,8 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Channels\OvhSmsChannel;
+use Illuminate\Notifications\Messages\OvhSmsMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
@@ -35,12 +37,11 @@ class SendCodeCardNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [TwilioChannel::class];
+        return [OvhSmsChannel::class];
     }
 
-    public function toTwilio($notifiable)
+    public function toOvhSms($notifiable)
     {
-        return (new TwilioSmsMessage())
-            ->content('Votre code de la carte bancaire '.$this->card->number.' est le '.base64_decode($this->code));
+        return (new OvhSmsMessage('Votre code de la carte bancaire '.$this->card->number.' est le '.base64_decode($this->code)));
     }
 }

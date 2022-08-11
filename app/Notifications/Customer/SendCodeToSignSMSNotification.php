@@ -3,6 +3,8 @@
 namespace App\Notifications\Customer;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Channels\OvhSmsChannel;
+use Illuminate\Notifications\Messages\OvhSmsMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
@@ -36,12 +38,11 @@ class SendCodeToSignSMSNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [TwilioChannel::class];
+        return [OvhSmsChannel::class];
     }
 
     public function toTwilio($notifiable)
     {
-        return (new TwilioSmsMessage())
-            ->content('Voici votre code pour signer le document "'.$this->file->name.'": '.$this->code);
+        return (new OvhSmsMessage('Voici votre code pour signer le document "'.$this->file->name.'": '.$this->code));
     }
 }

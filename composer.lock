@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "590c8d1802cb20e3221ad08de98fc805",
+    "content-hash": "f050bc368f164024fe119c48310317ef",
     "packages": [
         {
             "name": "alimranahmed/laraocr",
@@ -4693,6 +4693,57 @@
                 "source": "https://github.com/mmockelyn/laravel-insee/tree/master"
             },
             "time": "2021-01-17T00:00:00+00:00"
+        },
+        {
+            "name": "mmockelyn/laravel-ovh-sms",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mmockelyn/laravel-ovh-sms.git",
+                "reference": "44bf6a440deb9f40022900eb163a46a83a9c0daa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mmockelyn/laravel-ovh-sms/zipball/44bf6a440deb9f40022900eb163a46a83a9c0daa",
+                "reference": "44bf6a440deb9f40022900eb163a46a83a9c0daa",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/notifications": "^7.0|^8.0|^9.0",
+                "illuminate/support": "^8.0|^9.0",
+                "ovh/ovh": "^v3.0.0",
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Notifications\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Orykami",
+                    "email": "88.jacquot.benoit@gmail.com"
+                }
+            ],
+            "description": "OVH SMS API integration for Laravel 7+.",
+            "keywords": [
+                "api",
+                "laravel",
+                "laravel7",
+                "laravel8",
+                "laravel9",
+                "ovh",
+                "sms"
+            ],
+            "support": {
+                "source": "https://github.com/mmockelyn/laravel-ovh-sms/tree/1.0.1"
+            },
+            "time": "2022-08-11T09:19:34+00:00"
         },
         {
             "name": "mmockelyn/laravel-totem",

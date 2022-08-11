@@ -189,7 +189,7 @@ class RegisterController extends Controller
         $password = \Str::random(10);
 
         $user = User::create([
-            'name' => $request['firstname'].' '.$request['lastname'],
+            'name' => $request['firstname'] . ' ' . $request['lastname'],
             'email' => $request['email'],
             'password' => \Hash::make($password),
             'identifiant' => UserHelper::generateID(),
@@ -203,10 +203,10 @@ class RegisterController extends Controller
 
     private function createCustomer($request, $user, $password)
     {
-        $package = (object) $request->get('package');
-        $card = (object) $request->get('cart');
-        $pro = (object) $request->get('pro');
-        $personal = (object) $request->get('personal');
+        $package = (object)$request->get('package');
+        $card = (object)$request->get('cart');
+        $pro = (object)$request->get('pro');
+        $personal = (object)$request->get('personal');
         $code_auth = rand(1000, 9999);
         $bank = new BankFintech();
         $ficp = $bank->callInter();
@@ -315,32 +315,115 @@ class RegisterController extends Controller
         }
 
         // Envoie du mot de passe provisoire par SMS avec identifiant
-        $ovh->send("Votre mot de passe provisoire est le {$password}", $info->mobile);
+        try {
+            $info->notify(new SendPasswordSms($password));
+        }catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception);
+        }
+
+        \Storage::disk('public')->makeDirectory('gdd/' . $customer->id);
+        foreach (DocumentCategory::all() as $doc) {
+            \Storage::disk('public')->makeDirectory('gdd/' . $customer->id . '/' . $doc->id);
+        }
 
         /*
          * Création des documents usuel du comptes
-         * - Convention
+         * - Convention de preuve
+         * - Certification Fiscal
+         * - Synthese echange
+         * - Contrat Banque à distance
+         * - Contrat Banque Souscription
          * - RIB
-         * - Convention Carte Bleu
-         * - Condition Générale
          */
 
-        $document = DocumentFile::createDoc($customer, 'Convention Part', 'Convention relation particulier - CUS'.$customer->user->identifiant,
-            3, 'CNT'.\Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet]);
+        DocumentFile::createDoc(
+            $customer,
+            'Convention Preuve',
+            'Convention de Preuve - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            []);
 
-        DocumentFile::createDoc($customer, 'RIB', 'Relever Identité Bancaire - CUS'.$customer->user->identifiant,
-            3, null, false, false, false, true, ['wallet' => $wallet]);
+        DocumentFile::createDoc(
+            $customer,
+            'Certification Fiscal',
+            'Formulaire d\'auto-certification de résidence fiscale - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            []);
 
-        DocumentFile::createDoc($customer, 'Convention CB Physique', 'Convention CB Visa Physique - CUS'.$customer->user->identifiant,
-            3, 'CNT'.\Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet, 'card' => $card]);
+        DocumentFile::createDoc(
+            $customer,
+            'Synthese Echange',
+            'Synthese Echange - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            false,
+            false,
+            false,
+            true,
+            ["card" => $card]);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Contrat Banque Distance',
+            'Contrat Banque à distance - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            []);
+
+        $document = DocumentFile::createDoc(
+            $customer,
+            'Contrat Banque Souscription',
+            'Convention de compte - CUS' . $customer->user->identifiant,
+            3,
+            'CNT' . \Str::upper(\Str::random(6)),
+            true,
+            true,
+            false,
+            true,
+            ["card" => $card, "wallet" => $wallet]);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Info Tarif',
+            'Information Tarifaire',
+            5,
+            null,
+            false,
+            false,
+            false,
+            false,
+            []);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Rib',
+            'Relevé Identité Bancaire',
+            5,
+            null,
+            false,
+            false,
+            false,
+            false,
+            ["wallet" => $wallet]);
+
+        \Storage::disk('public')->copy('gdd/shared/info_tarif.pdf', 'gdd/'.$customer->id.'/5/info_tarif.pdf');
 
         // Notification mail de Bienvenue
         \Mail::to($user)->send(new WelcomeContract($customer, $document));
-
-        \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
-        foreach (DocumentCategory::all() as $doc) {
-            \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
-        }
     }
 
     private function createWallet($customer)
@@ -369,7 +452,7 @@ class RegisterController extends Controller
         $card_code = rand(1000, 9999);
 
         $card = \App\Models\Customer\CustomerCreditCard::create([
-            'exp_month' => \Str::length(now()->month) <= 1 ? '0'.now()->month : now()->month,
+            'exp_month' => \Str::length(now()->month) <= 1 ? '0' . now()->month : now()->month,
             'number' => $card_number,
             'support' => $request->type,
             'debit' => $request->debit ? $request->debit : 'immediate',
@@ -381,7 +464,7 @@ class RegisterController extends Controller
         ]);
 
         // Envoie du code de la carte bleu par sms
-        $ovh->send('Votre code de la carte bancaire '.$card->number.' est le '.base64_decode($card_code), $wallet->customer->info->mobile);
+        $wallet->customer->info->notify(new SendCodeCardNotification($card_code, $card));
 
         return $card;
     }
