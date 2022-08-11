@@ -63,37 +63,37 @@ class SystemSeedCommand extends Command
         }
 
         $this->info('Seeding: Liste des agences');
-        $this->call('db:seed --force', ['class' => 'AgencySeeder']);
+        $this->call('db:seed', ['class' => 'AgencySeeder', 'force']);
 
         $this->info('Seeding: Liste des Banques');
-        $this->call('db:seed --force', ['class' => 'BanksTableSeeder']);
+        $this->call('db:seed', ['class' => 'BanksTableSeeder', 'force']);
 
         $this->info("Seeding: Liste des Plan d'épargne");
-        $this->call('db:seed --force', ['class' => 'EpargnePlanSeeder']);
+        $this->call('db:seed', ['class' => 'EpargnePlanSeeder', 'force']);
 
         $this->info('Seeding: Liste des Plan de Pret');
-        $this->call('db:seed --force', ['class' => 'LoanPlanSeeder']);
+        $this->call('db:seed', ['class' => 'LoanPlanSeeder', 'force']);
 
         $this->info('Seeding: Liste des Interets des plan de pret');
-        $this->call('db:seed --force', ['class' => 'LoanPlanInterestSeeder']);
+        $this->call('db:seed', ['class' => 'LoanPlanInterestSeeder', 'force']);
 
         $this->info('Seeding: Liste des Packages');
-        $this->call('db:seed --force', ['class' => 'PackageSeeder']);
+        $this->call('db:seed', ['class' => 'PackageSeeder', 'force']);
 
         $this->info('Seeding: Liste des Services');
-        $this->call('db:seed --force', ['class' => 'ServiceSeeder']);
+        $this->call('db:seed', ['class' => 'ServiceSeeder', 'force']);
 
         $this->info('Seeding: Liste des Utilisateur de Test');
-        $this->call('db:seed --force', ['class' => 'UserSeeder']);
+        $this->call('db:seed', ['class' => 'UserSeeder', 'force']);
 
         $this->info('Seeding: Liste des Catégories de documents');
-        $this->call('db:seed --force', ['class' => 'DocumentCategorySeeder']);
+        $this->call('db:seed', ['class' => 'DocumentCategorySeeder', 'force']);
 
         $this->info('Seeding: Liste des Catégories de pages');
-        $this->call('db:seed --force', ['class' => 'CmsCategorySeeder']);
+        $this->call('db:seed', ['class' => 'CmsCategorySeeder', 'force']);
 
         $this->info('Seeding: Liste des Sous Catégories de pages');
-        $this->call('db:seed --force', ['class' => 'CmsSubCategorySeeder']);
+        $this->call('db:seed', ['class' => 'CmsSubCategorySeeder', 'force']);
 
         if ($this->option('test')) {
             $this->info('Seeding TESTING: Création de la base client');
