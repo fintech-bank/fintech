@@ -18,7 +18,7 @@ install:
 	php artisan key:generate
 	php artisan storage:link
 	chmod -R 777 storage/ bootstrap/
-	php artisan system:seed --base --test
+	php artisan system:seed --base
 	php artisan system:clear
 	screen -S <schedule> -X stuff 'php artisan schedule:work'
 	screen -S <queue> -X stuff 'php artisan queue:work'
