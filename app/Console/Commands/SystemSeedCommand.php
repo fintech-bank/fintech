@@ -59,7 +59,7 @@ class SystemSeedCommand extends Command
     public function handle()
     {
         if ($this->option('base')) {
-            $this->call('migrate:fresh --force');
+            $this->call('migrate:fresh', ['force']);
         }
 
         $this->info('Seeding: Liste des agences');

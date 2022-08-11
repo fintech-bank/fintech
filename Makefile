@@ -12,7 +12,7 @@ all:
 	make pint
 
 install:
-	composer install
+	composer install --no-interaction
 	rm -rf .env
 	cp .env.prod .env
 	php artisan key:generate
