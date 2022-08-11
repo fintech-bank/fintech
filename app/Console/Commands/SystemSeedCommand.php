@@ -130,7 +130,7 @@ class SystemSeedCommand extends Command
                 \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
             }
 
-            CustomerInfo::factory()->create([
+            $info = CustomerInfo::factory()->create([
                 'customer_id' => $customer->id,
             ]);
 
@@ -490,89 +490,91 @@ class SystemSeedCommand extends Command
                     \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
                 }
 
-                DocumentFile::createDoc(
-                    $customer,
-                    'Convention Preuve',
-                    'Convention de Preuve - CUS' . $customer->user->identifiant,
-                    3,
-                    null,
-                    true,
-                    true,
-                    false,
-                    true,
-                    []);
+                if($info->type == 'part') {
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Convention Preuve',
+                        'Convention de Preuve - CUS' . $customer->user->identifiant,
+                        3,
+                        null,
+                        true,
+                        true,
+                        false,
+                        true,
+                        []);
 
-                DocumentFile::createDoc(
-                    $customer,
-                    'Certification Fiscal',
-                    'Formulaire d\'auto-certification de résidence fiscale - CUS' . $customer->user->identifiant,
-                    3,
-                    null,
-                    true,
-                    true,
-                    false,
-                    true,
-                    []);
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Certification Fiscal',
+                        'Formulaire d\'auto-certification de résidence fiscale - CUS' . $customer->user->identifiant,
+                        3,
+                        null,
+                        true,
+                        true,
+                        false,
+                        true,
+                        []);
 
-                DocumentFile::createDoc(
-                    $customer,
-                    'Synthese Echange',
-                    'Synthese Echange - CUS' . $customer->user->identifiant,
-                    3,
-                    null,
-                    false,
-                    false,
-                    false,
-                    true,
-                    ["card" => $card]);
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Synthese Echange',
+                        'Synthese Echange - CUS' . $customer->user->identifiant,
+                        3,
+                        null,
+                        false,
+                        false,
+                        false,
+                        true,
+                        ["card" => $card]);
 
-                DocumentFile::createDoc(
-                    $customer,
-                    'Contrat Banque Distance',
-                    'Contrat Banque à distance - CUS' . $customer->user->identifiant,
-                    3,
-                    null,
-                    true,
-                    true,
-                    false,
-                    true,
-                    []);
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Contrat Banque Distance',
+                        'Contrat Banque à distance - CUS' . $customer->user->identifiant,
+                        3,
+                        null,
+                        true,
+                        true,
+                        false,
+                        true,
+                        []);
 
-                $document = DocumentFile::createDoc(
-                    $customer,
-                    'Contrat Banque Souscription',
-                    'Convention de compte - CUS' . $customer->user->identifiant,
-                    3,
-                    'CNT' . \Str::upper(\Str::random(6)),
-                    true,
-                    true,
-                    false,
-                    true,
-                    ["card" => $card, "wallet" => $wallet_account]);
+                    $document = DocumentFile::createDoc(
+                        $customer,
+                        'Contrat Banque Souscription',
+                        'Convention de compte - CUS' . $customer->user->identifiant,
+                        3,
+                        'CNT' . \Str::upper(\Str::random(6)),
+                        true,
+                        true,
+                        false,
+                        true,
+                        ["card" => $card, "wallet" => $wallet_account]);
 
-                DocumentFile::createDoc(
-                    $customer,
-                    'Info Tarif',
-                    'Information Tarifaire',
-                    5,
-                    null,
-                    false,
-                    false,
-                    false,
-                    false,
-                    []);
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Info Tarif',
+                        'Information Tarifaire',
+                        5,
+                        null,
+                        false,
+                        false,
+                        false,
+                        false,
+                        []);
 
-                DocumentFile::createDoc(
-                    $customer,
-                    'Rib',
-                    'Relevé Identité Bancaire',
-                    5,
-                    null,
-                    false,
-                    false,
-                    false,
-                    false,
-                    ["wallet" => $wallet_account]);
+                    DocumentFile::createDoc(
+                        $customer,
+                        'Rib',
+                        'Relevé Identité Bancaire',
+                        5,
+                        null,
+                        false,
+                        false,
+                        false,
+                        false,
+                        ["wallet" => $wallet_account]);
+                }
 
                 \Storage::disk('public')->copy('gdd/shared/info_tarif.pdf', 'gdd/'.$customer->id.'/5/info_tarif.pdf');
             }
