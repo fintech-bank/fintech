@@ -3,18 +3,18 @@
 @section("content")
     <div class="courier uppercase">
         <div class="text-center mb-5">
-            Releve du {{ \App\Helper\CustomerWalletHelper::getTypeWallet($data['wallet']['type']) }} en euro<br>
+            Releve du {{ \App\Helper\CustomerWalletHelper::getTypeWallet($data->wallet->type) }} en euro<br>
             de {{ \App\Helper\CustomerHelper::getName($customer) }}
         </div>
         <table style="width: 95%;" class="mb-10">
             <tbody>
                 <tr>
-                    <td style="width: 35px; text-align: right">{{ $data['wallet']['number_account'] }}</td>
+                    <td style="width: 35px; text-align: right">{{ $data->wallet->number_account }}</td>
                     <td style="width: 35px; text-align: center ">Relever au {{ now()->format('d/m/Y') }}</td>
                 </tr>
             </tbody>
         </table>
-        IBAN {{ $data['wallet']['iban'] }}<br>
+        IBAN {{ $data->wallet->iban }}<br>
         BIC {{ $agence->bic }}
 
         <table class="table mt-5 mb-5">
@@ -30,19 +30,19 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="4" class="text-center">SOLDE {{ $data['sum_first_name'] }} au {{ $data['start']->format('d/m/Y') }}</td>
+                    <td colspan="4" class="text-center">SOLDE {{ $data->sum_first_name }} au {{ $data->start->format('d/m/Y') }}</td>
                     <td class="text-end">
-                        @if($data['sum_first'] < 0)
-                            {{ eur($data['sum_first']) }}
+                        @if($data->sum_first < 0)
+                            {{ eur($data->sum_first) }}
                         @endif
                     </td>
                     <td class="text-end">
-                        @if($data['sum_first'] > 0)
-                            {{ eur($data['sum_first']) }}
+                        @if($data->sum_first > 0)
+                            {{ eur($data->sum_first) }}
                         @endif
                     </td>
                 </tr>
-                @foreach($data['transactions'] as $transaction)
+                @foreach($data->transactions as $transaction)
                     <tr>
                         <td>{{ $transaction->created_at->format('dm') }}</td>
                         <td>
@@ -69,15 +69,15 @@
                     </tr>
                 @endforeach
                     <tr>
-                        <td colspan="4">SOLDE {{ $data['sum_last_name'] }} au {{ $data['end']->format('d/m/Y') }}</td>
+                        <td colspan="4">SOLDE {{ $data->sum_last_name }} au {{ $data->end->format('d/m/Y') }}</td>
                         <td class="text-end">
-                            @if($data['wallet']->balance_actual < 0)
-                                {{ eur($data['wallet']->balance_actual) }}
+                            @if($data->wallet->balance_actual < 0)
+                                {{ eur($data->wallet->balance_actual) }}
                             @endif
                         </td>
                         <td class="text-end">
-                            @if($data['wallet']->balance_actual > 0)
-                                {{ eur($data['wallet']->balance_actual) }}
+                            @if($data->wallet->balance_actual > 0)
+                                {{ eur($data->wallet->balance_actual) }}
                             @endif
                         </td>
                     </tr>
