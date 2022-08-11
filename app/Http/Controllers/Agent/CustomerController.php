@@ -215,30 +215,111 @@ class CustomerController extends Controller
         // Envoie du mot de passe provisoire par SMS avec identifiant
         $info->notify(new SendPasswordSms($user, $password));
 
-        /*
-         * Création des documents usuel du comptes
-         * - Convention
-         * - RIB
-         * - Convention Carte Bleu
-         * - Condition Générale
-         */
-
-        $document = DocumentFile::createDoc($customer, 'Convention Part', 'Convention relation particulier - CUS'.$customer->user->identifiant,
-            3, 'CNT'.\Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet]);
-
-        DocumentFile::createDoc($customer, 'RIB', 'Relever Identité Bancaire - CUS'.$customer->user->identifiant,
-            3, null, false, false, false, true, ['wallet' => $wallet]);
-
-        DocumentFile::createDoc($customer, 'Convention CB Physique', 'Convention CB Visa Physique - CUS'.$customer->user->identifiant,
-            3, 'CNT'.\Str::upper(\Str::random(6)), true, true, false, true, ['wallet' => $wallet, 'card' => $card]);
-
-        // Notification mail de Bienvenue
-        \Mail::to($user)->send(new WelcomeContract($customer, $document));
-
         \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
         foreach (DocumentCategory::all() as $doc) {
             \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
         }
+
+
+        /*
+         * Création des documents usuel du comptes
+         * - Convention de preuve
+         * - Certification Fiscal
+         * - Synthese echange
+         * - Contrat Banque à distance
+         * - Contrat Banque Souscription
+         * - RIB
+         */
+
+        DocumentFile::createDoc(
+            $customer,
+            'Convention Preuve',
+            'Convention de Preuve - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            []);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Certification Fiscal',
+            'Formulaire d\'auto-certification de résidence fiscale - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            []);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Synthese Echange',
+            'Synthese Echange - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            false,
+            false,
+            false,
+            true,
+            ["card" => $card]);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Contrat Banque Distance',
+            'Contrat Banque à distance - CUS' . $customer->user->identifiant,
+            3,
+            null,
+            true,
+            true,
+            false,
+            true,
+            []);
+
+        $document = DocumentFile::createDoc(
+            $customer,
+            'Contrat Banque Souscription',
+            'Convention de compte - CUS' . $customer->user->identifiant,
+            3,
+            'CNT' . \Str::upper(\Str::random(6)),
+            true,
+            true,
+            false,
+            true,
+            ["card" => $card, "wallet" => $wallet]);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Info Tarif',
+            'Information Tarifaire',
+            5,
+            null,
+            false,
+            false,
+            false,
+            false,
+            []);
+
+        DocumentFile::createDoc(
+            $customer,
+            'Rib',
+            'Relevé Identité Bancaire',
+            5,
+            null,
+            false,
+            false,
+            false,
+            false,
+            ["wallet" => $wallet]);
+
+        \Storage::disk('public')->copy('gdd/shared/info_tarif.pdf', 'gdd/'.$customer->id.'/5/info_tarif.pdf');
+
+        // Notification mail de Bienvenue
+        \Mail::to($user)->send(new WelcomeContract($customer, $document));
+
     }
 
     private function createWallet($customer)

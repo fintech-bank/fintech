@@ -168,18 +168,6 @@ class SystemSeedCommand extends Command
                     'balance_coming' => 0,
                 ]);
 
-                $doc_account = DocumentFile::createDoc(
-                    $customer,
-                    'Convention Part',
-                    'Convention Particulier',
-                    3,
-                    null,
-                    true,
-                    true,
-                    false,
-                    true,
-                    ['wallet' => $wallet_account]);
-
                 if ($epargne == 1) {
                     $wallet_epargnes = CustomerWallet::factory($nb_epargne)->create([
                         'type' => 'epargne',
@@ -224,6 +212,18 @@ class SystemSeedCommand extends Command
                                 'bank_id' => 176,
                             ]);
                         }
+
+                        DocumentFile::createDoc(
+                            $customer,
+                            'Contrat Banque Distance',
+                            'Contrat Banque à distance - CUS' . $customer->user->identifiant,
+                            3,
+                            null,
+                            true,
+                            true,
+                            false,
+                            true,
+                            []);
                     }
                 }
 
@@ -267,19 +267,6 @@ class SystemSeedCommand extends Command
                         'facelia' => rand(0, 1),
                     ]);
                 }
-
-                DocumentFile::createDoc(
-                    $customer,
-                    'convention cb physique',
-                    'Convention CB Visa Physique',
-                    3,
-                    null,
-                    true,
-                    true,
-                    false,
-                    true,
-                    ['wallet' => $wallet_account, 'card' => $card]
-                );
 
                 if ($card->facelia == 1) {
                     $amount = [500, 1000, 1500, 2000, 2500, 3000];
@@ -497,6 +484,97 @@ class SystemSeedCommand extends Command
                 }
 
                 $this->generateTransactions(rand(10, 100), $wallet_account);
+
+                \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
+                foreach (DocumentCategory::all() as $doc) {
+                    \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
+                }
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'Convention Preuve',
+                    'Convention de Preuve - CUS' . $customer->user->identifiant,
+                    3,
+                    null,
+                    true,
+                    true,
+                    false,
+                    true,
+                    []);
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'Certification Fiscal',
+                    'Formulaire d\'auto-certification de résidence fiscale - CUS' . $customer->user->identifiant,
+                    3,
+                    null,
+                    true,
+                    true,
+                    false,
+                    true,
+                    []);
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'Synthese Echange',
+                    'Synthese Echange - CUS' . $customer->user->identifiant,
+                    3,
+                    null,
+                    false,
+                    false,
+                    false,
+                    true,
+                    ["card" => $card]);
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'Contrat Banque Distance',
+                    'Contrat Banque à distance - CUS' . $customer->user->identifiant,
+                    3,
+                    null,
+                    true,
+                    true,
+                    false,
+                    true,
+                    []);
+
+                $document = DocumentFile::createDoc(
+                    $customer,
+                    'Contrat Banque Souscription',
+                    'Convention de compte - CUS' . $customer->user->identifiant,
+                    3,
+                    'CNT' . \Str::upper(\Str::random(6)),
+                    true,
+                    true,
+                    false,
+                    true,
+                    ["card" => $card, "wallet" => $wallet_account]);
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'Info Tarif',
+                    'Information Tarifaire',
+                    5,
+                    null,
+                    false,
+                    false,
+                    false,
+                    false,
+                    []);
+
+                DocumentFile::createDoc(
+                    $customer,
+                    'Rib',
+                    'Relevé Identité Bancaire',
+                    5,
+                    null,
+                    false,
+                    false,
+                    false,
+                    false,
+                    ["wallet" => $wallet_account]);
+
+                \Storage::disk('public')->copy('gdd/shared/info_tarif.pdf', 'gdd/'.$customer->id.'/5/info_tarif.pdf');
             }
 
             $bar->advance();
