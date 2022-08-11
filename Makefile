@@ -20,13 +20,13 @@ install:
 	chmod -R 777 storage/ bootstrap/
 	php artisan system:seed --base
 	php artisan system:clear
-	screen -S <schedule> -X stuff 'php artisan schedule:work'
-	screen -S <queue> -X stuff 'php artisan queue:work'
+	screen -dmS schedule php artisan schedule:work
+	screen -dmS queue php artisan queue:work
 	php putenv("APP_INSTALLED=true")
 
 update:
 	php artisan down
 	composer install
 	php artisan system:clear
-	php artisan system:seed --base --test
+	php artisan system:seed --base
 	php artisan up
