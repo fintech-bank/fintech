@@ -41,7 +41,7 @@
             <td class="fw-bold text-gray-600">BIC</td>
         </tr>
         <tr class="bg-gray-200">
-            <td>{{ $data['wallet']->iban }}</td>
+            <td>{{ $data->wallet->iban }}</td>
             <td>{{ $agence->bic }}</td>
         </tr>
         </tbody>
@@ -56,7 +56,7 @@
         <tr class="bg-gray-200">
             <td>{{ $agence->code_banque }}</td>
             <td>{{ $agence->code_agence }}</td>
-            <td>{{ $data['wallet']->number_account }}</td>
+            <td>{{ $data->wallet->number_account }}</td>
         </tr>
         </tbody>
     </table>
@@ -101,7 +101,7 @@
             <td class="fw-bold text-gray-600">BIC</td>
         </tr>
         <tr class="bg-gray-200">
-            <td>{{ $data['wallet']->iban }}</td>
+            <td>{{ $data->wallet->iban }}</td>
             <td>{{ $agence->bic }}</td>
         </tr>
         </tbody>
@@ -116,7 +116,7 @@
         <tr class="bg-gray-200">
             <td>{{ $agence->code_banque }}</td>
             <td>{{ $agence->code_agence }}</td>
-            <td>{{ $data['wallet']->number_account }}</td>
+            <td>{{ $data->wallet->number_account }}</td>
         </tr>
         </tbody>
     </table>

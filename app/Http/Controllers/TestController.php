@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helper\DocumentFile;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerCreditCard;
 use App\Models\Customer\CustomerMobility;
+use App\Models\Customer\CustomerWallet;
 use App\Services\BankFintech;
 use App\Services\Ovh;
 use Auth;
@@ -13,8 +16,12 @@ class TestController extends Controller
 {
     public function test()
     {
-        $ovh = new Ovh();
-        dd($ovh->services());
+        $doc = new DocumentFile();
+        $customer = Customer::find(122);
+        $card = CustomerCreditCard::find(20);
+        $wallet = CustomerWallet::find(127);
+
+        return $doc->generatePDF('agence.condition_general_banque_distance', $customer, null, ["card" => $card, "wallet" => $wallet], false, false, null, true);
     }
 
     public function home()

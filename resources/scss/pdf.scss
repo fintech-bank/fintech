@@ -1,6 +1,6 @@
 body {
-    font-family: Poppins, Arial, 'Helvetica Neue', sans-serif;
-    font-size: 14px;
+    font-family: "Roboto Light", Arial, 'Helvetica Neue', sans-serif;
+    font-size: 12px;
 }
 
 footer {
@@ -113,24 +113,14 @@ header {
     text-align: center;
 }
 
-.fs-1 {
-    font-size: 0.5rem;
-    text-align: center;
+.text-end {
+    text-align: right;
 }
 
-.fs-2 {
-    font-size: 0.8rem;
-    text-align: center;
-}
-
-.fs-3 {
-    font-size: 1.1rem;
-    text-align: center;
-}
-
-.fs-4 {
-    font-size: 1.5rem;
-    text-align: center;
+@for $i from 1 through 12 {
+    .fs-#{$i} {
+        font-size: 0.3rem*$i;
+    }
 }
 
 .util {
@@ -159,6 +149,30 @@ header {
     }
 }
 
+@for $i from 1 through 100 {
+    .mt-#{$i} {
+        margin-top: 1px*$i;
+    }
+}
+
+@for $i from 1 through 5 {
+    .p-#{$i} {
+        padding: 1px*$i;
+    }
+}
+
+@for $i from 1 through 100 {
+    .pt-#{$i} {
+        padding-top: 1px*$i;
+    }
+}
+
+@for $i from 1 through 100 {
+    .pb-#{$i} {
+        padding-bottom: 1px*$i;
+    }
+}
+
 :root {
     --primary: #ff7b22;
     --secondary: #1794d7;
@@ -167,7 +181,23 @@ header {
     --success: #3cc700;
     --info: #7230b8;
     --bank: #002f87;
+
+    --primary-light: #fa955b;
+    --secondary-light: #56a9d5;
+    --warning-light: #dcd0a8;
+    --danger-light: #fd707c;
+    --success-light: #6bc743;
+    --info-light: #8252b6;
+    --bank-light: #294985;
 }
+
+.text-primary { color: var(--primary) !important; }
+.text-secondary { color: var(--secondary) !important; }
+.text-warning { color: var(--warning) !important; }
+.text-danger { color: var(--danger) !important; }
+.text-success { color: var(--success) !important; }
+.text-info { color: var(--info) !important; }
+.text-bank { color: var(--bank) !important; }
 
 span.text-primary { color: var(--primary) !important; }
 span.text-secondary { color: var(--secondary) !important; }
@@ -192,6 +222,93 @@ i.icon-bank { color: var(--bank) !important; }
 .bg-success { color: var(--success) !important; }
 .bg-info { color: var(--info) !important; }
 .bg-bank { color: var(--bank) !important; }
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fw-bolder {
+    font-weight: bolder;
+}
+
+.fs-italic {
+    font-style: italic;
+}
+
+.fs-underline {
+    text-decoration: underline;
+}
+
+li {
+    margin-bottom: 6px;
+}
+
+.page-break {
+    page-break-after: always;
+}
+
+footer {
+    position: fixed;
+    bottom: -60px;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+}
+
+.pagenum:before {
+    content: counter(page);
+}
+@for $i from 1 through 5 {
+    .border-#{$i} {
+        border-width: 1px*$i;
+    }
+}
+
+.form-check {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 2.25rem;
+    margin-bottom: 0.125rem;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=checkbox] {
+    background-size: 60% 60%;
+}
+.form-check-input[type=checkbox] {
+    border-radius: 0.45em;
+}
+.form-check .form-check-input {
+    float: left;
+    margin-left: -2.25rem;
+}
+.form-check-input {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-top: -0.125rem;
+    vertical-align: top;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid #E4E6EF;
+    appearance: none;
+    print-color-adjust: exact;
+}
+.form-check-input {
+    background-color: var(--bank);
+    border: var(--bank-light);
+}
+.form-check-label {
+    color: var(--bank);
+}
+label {
+    display: inline-block;
+}
+
+.form-check-input:checked {
+    background-color: var(--bank);
+    border-color: var(--bank-light);
+}
 
 @import "base/separator";
 @import "base/border";

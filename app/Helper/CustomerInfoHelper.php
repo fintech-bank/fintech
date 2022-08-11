@@ -20,6 +20,16 @@ class CustomerInfoHelper
 
     public static function getAddress(CustomerInfo $info)
     {
-        return `$info->address<br>$info->addressbis ? $info->addressbis : null<br>$info->postal $info->city`;
+        $address = $info->address."<br>";
+        $bis = $info->addressbis ? $info->addressbis."<br>" : '';
+
+        ob_start();
+        ?>
+        <?= $address; ?>
+        <?= $bis; ?>
+        <?= $info->postal; ?> <?= $info->city; ?>
+        <?php
+
+        return ob_get_clean();
     }
 }
