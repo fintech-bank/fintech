@@ -315,7 +315,7 @@ class RegisterController extends Controller
         }
 
         // Envoie du mot de passe provisoire par SMS avec identifiant
-        $ovh->send("Votre mot de passe provisoire est le {$password}", $info->mobile);
+        $info->notify(new SendPasswordSms($password));
 
         /*
          * Création des documents usuel du comptes
@@ -381,7 +381,7 @@ class RegisterController extends Controller
         ]);
 
         // Envoie du code de la carte bleu par sms
-        $ovh->send('Votre code de la carte bancaire '.$card->number.' est le '.base64_decode($card_code), $wallet->customer->info->mobile);
+        $wallet->customer->info->notify(new SendCodeCardNotification($card_code, $card));
 
         return $card;
     }

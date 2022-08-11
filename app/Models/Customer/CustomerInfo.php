@@ -92,4 +92,12 @@ class CustomerInfo extends Model
     {
         return $this->authy_id;
     }
+
+    /**
+     * Returns the user's phone number.
+     */
+    public function routeNotificationForOvhSms()
+    {
+        return $this->mobile; // Ex: +33611223344
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Notifications\Core;
 
 use App\Models\Customer\Customer;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Channels\OvhSmsChannel;
+use Illuminate\Notifications\Messages\OvhSmsMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
@@ -33,12 +35,11 @@ class SendPasswordSms extends Notification
      */
     public function via($notifiable)
     {
-        return [TwilioChannel::class];
+        return [OvhSmsChannel::class];
     }
 
-    public function toTwilio($notifiable)
+    public function toOvhSms($notifiable)
     {
-        return (new TwilioSmsMessage())
-            ->content("Votre mot de passe provisoire est le {$this->password}");
+        return (new OvhSmsMessage("Votre mot de passe provisoire est le {$this->password}"));
     }
 }
