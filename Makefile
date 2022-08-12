@@ -22,7 +22,6 @@ install:
 	php artisan system:clear
 	screen -dmS schedule php artisan schedule:work
 	screen -dmS queue php artisan queue:work
-	php putenv("APP_INSTALLED=true")
 
 update:
 	php artisan down
