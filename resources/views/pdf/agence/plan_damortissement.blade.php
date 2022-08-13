@@ -3,7 +3,7 @@
 @section("content")
     <div class="m-5 fs-1">
         <div class="fw-bolder">Numéro de pret personnel</div>
-        {{ $data['loan']['reference'] }}
+        {{ $data->loan->reference }}
     </div>
     <table style="width: 90%; margin-right: auto; margin-left: auto;">
         <tbody>
@@ -13,15 +13,15 @@
                         <tbody>
                         <tr style="border: none">
                             <td class="fw-bolder">Capital prété:</td>
-                            <td class="text-right">{{ eur($data['loan']['amount_loan']) }}</td>
+                            <td class="text-right">{{ eur($data->loan->amount_loan) }}</td>
                         </tr>
                         <tr style="border: none">
                             <td class="fw-bolder">Taux:</td>
-                            <td class="text-right">{{ $data['loan']['plan']['interests'][0]['interest'] }} %</td>
+                            <td class="text-right">{{ $data->loan->plan->interests[0]->interest }} %</td>
                         </tr>
                         <tr style="border: none">
                             <td class="fw-bolder">Durée:</td>
-                            <td class="text-right">{{ $data['loan']['duration'] }} mois</td>
+                            <td class="text-right">{{ $data->loan->duration }} mois</td>
                         </tr>
                         </tbody>
                     </table>
@@ -71,12 +71,12 @@
             </tr>
         </thead>
         <tbody>
-            @for($i=1; $i <= $data['loan']['duration']; $i++)
+            @for($i=1; $i <= $data->loan->duration; $i++)
                 <tr>
                     <td>{{ $i }}</td>
-                    <td>{{ \Carbon\Carbon::create(now()->year, now()->month, $data['loan']['prlv_day'])->addMonths($i)->format('d/m/Y') }}</td>
-                    <td>{{ $data['loan']['mensuality'] }}</td>
-                    <td>{{ eur(($data['loan']['amount_du']-$data['loan']['mensuality']) / $i ) }}</td>
+                    <td>{{ \Carbon\Carbon::create(now()->year, now()->month, $data->loan->prlv_day)->addMonths($i)->format('d/m/Y') }}</td>
+                    <td>{{ $data->loan->mensuality }}</td>
+                    <td>{{ eur(($data->loan->amount_du-$data->loan->mensuality) / $i ) }}</td>
                 </tr>
             @endfor
         </tbody>

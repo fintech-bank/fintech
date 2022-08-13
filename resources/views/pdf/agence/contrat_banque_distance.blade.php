@@ -49,7 +49,7 @@
                     <tbody>
                     <tr>
                         <td style="width: 50%;">Date de Naissance</td>
-                        <td style="width: 50%;">{{ $customer->info->datebirth->format('d/m/Y') }}</td>
+                        <td style="width: 50%;">{{ $customer->info->datebirth }}</td>
                     </tr>
                     <tr>
                         <td style="width: 50%;">Commune de Naissance</td>
