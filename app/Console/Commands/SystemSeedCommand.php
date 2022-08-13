@@ -490,7 +490,7 @@ class SystemSeedCommand extends Command
                     \Storage::disk('public')->makeDirectory('gdd/'.$customer->id.'/'.$doc->id);
                 }
 
-                if($info->type == 'part') {
+                if($info->type == 'part' && isset($info->datebirth)) {
                     DocumentFile::createDoc(
                         $customer,
                         'Convention Preuve',

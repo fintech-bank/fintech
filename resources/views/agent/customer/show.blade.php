@@ -1659,7 +1659,7 @@
                             <label for="wallet_payment_id" class="form-label">Compte de retrait</label>
                             <select class="form-select form-select-solid" id="wallet_payment_id" name="wallet_payment_id" data-dropdown-parent="#createEpargne" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un compte à débiter">
                                 <option value=""></option>
-                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $wallet->customer_id)->where('type', 'compte')->where('status', 'active')->get() as $wallet)
+                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $customer->id)->where('type', 'compte')->where('status', 'active')->get() as $wallet)
                                     <option value="{{ $wallet->id }}">{{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}</option>
                                 @endforeach
                             </select>
@@ -1749,7 +1749,7 @@
                             <label for="wallet_payment_id" class="form-label">Compte de payment</label>
                             <select class="form-select form-select-solid" id="wallet_payment_id" name="wallet_payment_id" data-dropdown-parent="#createPret" data-control="select2" data-allow-clear="true" data-placeholder="Selectionner un compte à débiter">
                                 <option value=""></option>
-                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $wallet->customer_id)->where('type', 'compte')->where('status', 'active')->get() as $wallet)
+                                @foreach(\App\Models\Customer\CustomerWallet::where('customer_id', $customer->id)->where('type', 'compte')->where('status', 'active')->get() as $wallet)
                                     <option value="{{ $wallet->id }}">{{ \App\Helper\CustomerWalletHelper::getNameAccount($wallet) }}</option>
                                 @endforeach
                             </select>
