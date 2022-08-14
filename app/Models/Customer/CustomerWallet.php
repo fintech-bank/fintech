@@ -63,6 +63,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerWallet whereUuid($value)
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerWallet
+ * @property-read \App\Models\Customer\CustomerMobility|null $mobility
  */
 class CustomerWallet extends Model
 {

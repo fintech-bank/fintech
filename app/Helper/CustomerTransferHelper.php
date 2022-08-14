@@ -82,9 +82,6 @@ class CustomerTransferHelper
 
         if ($transfer->beneficiaire->titulaire == true) {
             if ($compte_beneficiaire->status == 'active') {
-                $transfer->wallet->balance_coming = $transfer->wallet->balance_coming - $transfer->amount;
-                $transfer->wallet->balance_actual = $transfer->wallet->balance_actual + $transfer->amount;
-                $transfer->wallet->save();
 
                 $compte_beneficiaire->balance_actual = $compte_beneficiaire->balance_actual + $transfer->amount;
                 $compte_beneficiaire->save();
@@ -94,10 +91,30 @@ class CustomerTransferHelper
                     true, $transfer->reference.' - '.$transfer->reason,
                     now());
 
-                $transfer->status = 'paid';
-                $transfer->save();
+                try {
+                    CustomerTransactionHelper::create(
+                        $transfer->amount >= 0 ? 'credit' : 'debit',
+                        'virement',
+                        $transfer->reason,
+                        $transfer->amount,
+                        $transfer->wallet->id,
+                        $transfer->type == 'immediat',
+                        $transfer->reason,
+                        $transfer->type == 'immediat' ? now() : null,
+                        $transfer->type != 'immediat' ? $transfer->transfer_date : null,
+                    );
+                    $transfer->status = 'paid';
+                    $transfer->save();
 
-                return $transfer;
+                    return $transfer;
+                }catch (\Exception $exception) {
+                    LogHelper::notify('critical', $exception);
+                    $transfer->status = 'failed';
+                    $transfer->save();
+
+                    return $transfer;
+                }
+
             } else {
                 $transfer->status = 'failed';
                 $transfer->save();
@@ -105,14 +122,28 @@ class CustomerTransferHelper
                 return $transfer;
             }
         } else {
-            $transfer->wallet->balance_coming = $transfer->wallet->balance_coming - $transfer->amount;
-            $transfer->wallet->balance_actual = $transfer->wallet->balance_actual + $transfer->amount;
-            $transfer->wallet->save();
+            try {
+                CustomerTransactionHelper::create(
+                    $transfer->amount >= 0 ? 'credit' : 'debit',
+                    'virement',
+                    $transfer->reason,
+                    $transfer->amount,
+                    $transfer->wallet->id,
+                    true,
+                    $transfer->reason,
+                    now(),
+                );
 
-            $transfer->status = 'paid';
-            $transfer->save();
+                $transfer->status = 'paid';
+                $transfer->save();
+                return $transfer;
+            }catch (\Exception $exception) {
+                LogHelper::notify('critical', $exception);
+                $transfer->status = 'failed';
+                $transfer->save();
 
-            return $transfer;
+                return $transfer;
+            }
         }
     }
 

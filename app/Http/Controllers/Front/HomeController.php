@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use Jenssegers\Agent\Facades\Agent;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('front.index');
+        if(Agent::isMobile() || Agent::isPhone()) {
+            return redirect()->to(config('domain.mobile'));
+        } else {
+            return view('front.index');
+        }
     }
 
     public function redirect()

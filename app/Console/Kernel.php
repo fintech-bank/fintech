@@ -43,7 +43,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('system:verif alertFee')->daily()->description('Vérification des comptes au solde n&gatif depuis 15 jours')->emailOutputTo(config('mail.from.address'));
         $schedule->command('system:verif accountSuspended')->daily()->description('Vérification des comptes au solde n&gatif depuis 30 jours et suspend le comptes')->emailOutputTo(config('mail.from.address'));
 
-        $schedule->command('mobility bank_end')->daily()->description('Mobilité Bancaire: Retour des banques de départ')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('mobility bank_end')->everySixHours()->description('Mobilité Bancaire: Retour des banques de départ')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('mobility creditor_start')->everySixHours()->description('Mobilité Bancaire: Demande aux créditeurs')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('mobility creditor_end')->everySixHours()->description('Mobilité Bancaire: Retour des créditeurs')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('mobility close')->everySixHours()->description('Mobilité Bancaire: Cloture des dossiers')->emailOutputTo(config('mail.from.address'));
     }
 
     /**

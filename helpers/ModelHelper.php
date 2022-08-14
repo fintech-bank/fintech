@@ -852,11 +852,26 @@ namespace App\Models\Customer{
 /**
  * App\Models\Customer\CustomerMobilityCheque
  *
+ * @property int $id
+ * @property string $number
+ * @property float $amount
+ * @property \Illuminate\Support\Carbon $date_enc
+ * @property string $creditor
+ * @property string $file_url
+ * @property int $valid
+ * @property int $customer_mobility_id
  * @property-read \App\Models\Customer\CustomerMobility|null $mobility
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque query()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereCreditor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereCustomerMobilityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereDateEnc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereFileUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque whereValid($value)
  */
 	class IdeHelperCustomerMobilityCheque {}
 }
@@ -865,11 +880,24 @@ namespace App\Models\Customer{
 /**
  * App\Models\Customer\CustomerMobilityPrlv
  *
- * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @property int $id
+ * @property string $uuid
+ * @property string $creditor
+ * @property string $number_mandate
+ * @property float $amount
+ * @property int $valid
+ * @property int $customer_mobility_id
+ * @property-read \App\Models\Customer\CustomerMobility $mobility
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv query()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereCreditor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereCustomerMobilityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereNumberMandate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv whereValid($value)
  */
 	class IdeHelperCustomerMobilityPrlv {}
 }
@@ -878,11 +906,32 @@ namespace App\Models\Customer{
 /**
  * App\Models\Customer\CustomerMobilityVirIncoming
  *
- * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @property int $id
+ * @property string $uuid
+ * @property float $amount
+ * @property string $reference
+ * @property string $reason
+ * @property string $type
+ * @property \Illuminate\Support\Carbon|null $transfer_date
+ * @property \Illuminate\Support\Carbon|null $recurring_start
+ * @property \Illuminate\Support\Carbon|null $recurring_end
+ * @property int $valid
+ * @property int $customer_mobility_id
+ * @property-read \App\Models\Customer\CustomerMobility $mobility
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming query()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereCustomerMobilityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereRecurringEnd($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereRecurringStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereReference($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereTransferDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming whereValid($value)
  */
 	class IdeHelperCustomerMobilityVirIncoming {}
 }
@@ -891,11 +940,26 @@ namespace App\Models\Customer{
 /**
  * App\Models\Customer\CustomerMobilityVirOutgoing
  *
- * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @property int $id
+ * @property string $uuid
+ * @property float $amount
+ * @property string $reference
+ * @property string $reason
+ * @property \Illuminate\Support\Carbon|null $transfer_date
+ * @property int $valid
+ * @property int $customer_mobility_id
+ * @property-read \App\Models\Customer\CustomerMobility $mobility
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing query()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereCustomerMobilityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereReference($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereTransferDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing whereValid($value)
  */
 	class IdeHelperCustomerMobilityVirOutgoing {}
 }

@@ -615,8 +615,8 @@
                         <div class="col-4">
                             <div class="card card-flush shadow-sm">
                                 <div class="card-body py-5">
-                                    <div class="d-flex flex-wrap">
-                                        <a class="btn btn-sm btn-bank w-100" href=""><i class="fa-solid fa-print"></i> Imprimer le mandat</a>
+                                    <div class="d-flex flex-wrap btn_actions">
+                                        <a class="btn btn-sm btn-bank w-100 mb-2" href=""><i class="fa-solid fa-print"></i> Imprimer le mandat</a>
                                     </div>
                                 </div>
                             </div>

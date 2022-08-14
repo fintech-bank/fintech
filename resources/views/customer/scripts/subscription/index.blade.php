@@ -192,6 +192,7 @@
                         modals.modalMobilityShow.querySelector('[data-content="endPrlv"]').innerHTML = data.other.end_prlv
                         modals.modalMobilityShow.querySelector('[data-content="wallet_account"]').innerHTML = data.mobility.wallet.number_account
                         modals.modalMobilityShow.querySelector('.btn-bank').setAttribute('href', `/storage/gdd/${data.mobility.customer.id}/3/Mandat de mobilité bancaire - ${data.mobility.mandate}.pdf`)
+                        data.mobility.status === 'bank_return' ? modals.modalMobilityShow.querySelector('.btn_actions').innerHTML += `<a href="/customer/subscribe/mobility/${data.mobility.id}/document" class="btn btn-bank btn-sm w-100 mb-2"><i class="fa-solid fa-check"></i> Valider les documents</a>`:'';
                         modal.show()
                     },
                     error: err => {

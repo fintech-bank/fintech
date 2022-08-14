@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->string('reference');
-            $table->float('amount_loan')->comment('Montant du crédit demander');
-            $table->float('amount_interest')->comment('Montant des interet du par le client');
-            $table->float('amount_du')->comment('Total des sommes du par le client (Credit + Interet - mensualités payé)');
-            $table->float('mensuality')->comment('Mensualité du par le client par mois');
+            $table->float('amount_loan', 50)->comment('Montant du crédit demander');
+            $table->float('amount_interest', 50)->comment('Montant des interet du par le client');
+            $table->float('amount_du', 50)->comment('Total des sommes du par le client (Credit + Interet - mensualités payé)');
+            $table->float('mensuality', 50)->comment('Mensualité du par le client par mois');
             $table->integer('prlv_day')->default(5)->comment('Jours du prélèvement de la mensualité');
             $table->integer('duration')->comment('Durée total du contrat en année');
             $table->enum('status', ['open', 'study', 'accepted', 'refused', 'progress', 'terminated', 'error'])->default('open');

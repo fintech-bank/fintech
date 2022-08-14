@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('customer_facelias', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->float('amount_available');
-            $table->float('amount_interest');
-            $table->float('amount_du');
-            $table->float('mensuality');
+            $table->float('amount_available', 50);
+            $table->float('amount_interest', 50);
+            $table->float('amount_du', 50);
+            $table->float('mensuality', 50);
             $table->timestamp('next_expiration')->nullable();
             $table->bigInteger('wallet_payment_id')->unsigned();
 

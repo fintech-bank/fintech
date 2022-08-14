@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('type', ['depot', 'retrait', 'payment', 'virement', 'sepa', 'frais', 'souscription', 'autre', 'facelia']);
             $table->string('designation');
             $table->string('description')->nullable();
-            $table->float('amount');
+            $table->float('amount', 50);
             $table->boolean('confirmed');
             $table->boolean('differed')->default(false);
             $table->timestamp('confirmed_at')->nullable();

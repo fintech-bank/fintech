@@ -36,6 +36,15 @@ class MobilityCommand extends Command
         switch ($this->argument('action')) {
             case 'bank_end':
                 return $this->bankEnd();
+
+            case 'creditor_start':
+                return $this->creditorStart();
+
+            case 'creditor_end':
+                return $this->creditorEnd();
+
+            case 'close':
+                return $this->close();
         }
     }
 
@@ -96,7 +105,79 @@ class MobilityCommand extends Command
 
                 $mobility->update([
                     'status' => 'bank_return',
-                    'comment' => CustomerMobilityHelper::getStatus('bank_return', 'comment')
+                    'comment' => CustomerMobilityHelper::getStatus('bank_return', 'comment'),
+                    'updated_at' => now()
+                ]);
+
+                $mobility->customer->user->notify(new GetMobilityBankEndNotification($mobility));
+                $arr[] = [
+                    'mandate' => $mobility->mandate,
+                    'customer' => CustomerHelper::getName($mobility->customer)
+                ];
+            }
+        }
+
+        $this->table(['Mandat', "Client"], $arr);
+        return 0;
+    }
+    private function creditorStart()
+    {
+        $mobilities = CustomerMobility::all();
+        $arr = [];
+        foreach ($mobilities as $mobility) {
+            if($mobility->status == 'bank_return' && CustomerMobilityHelper::documentIsAllValid($mobility)) {
+                $mobility->update([
+                    'status' => 'creditor_start',
+                    'comment' => CustomerMobilityHelper::getStatus('creditor_start', 'comment'),
+                    "updated_at" => now()
+                ]);
+
+                $mobility->customer->user->notify(new GetMobilityBankEndNotification($mobility));
+                $arr[] = [
+                    'mandate' => $mobility->mandate,
+                    'customer' => CustomerHelper::getName($mobility->customer)
+                ];
+            }
+        }
+
+        $this->table(['Mandat', "Client"], $arr);
+        return 0;
+    }
+
+    private function creditorEnd()
+    {
+        $mobilities = CustomerMobility::all();
+        $arr = [];
+        foreach ($mobilities as $mobility) {
+            if($mobility->status == 'creditor_start' && $mobility->updated_at->addDays(5)->startOfDay() == now()->startOfDay()) {
+                $mobility->update([
+                    'status' => 'creditor_end',
+                    'comment' => CustomerMobilityHelper::getStatus('creditor_end', 'comment'),
+                    "updated_at" => now()
+                ]);
+
+                $mobility->customer->user->notify(new GetMobilityBankEndNotification($mobility));
+                $arr[] = [
+                    'mandate' => $mobility->mandate,
+                    'customer' => CustomerHelper::getName($mobility->customer)
+                ];
+            }
+        }
+
+        $this->table(['Mandat', "Client"], $arr);
+        return 0;
+    }
+
+    private function close()
+    {
+        $mobilities = CustomerMobility::all();
+        $arr = [];
+        foreach ($mobilities as $mobility) {
+            if($mobility->status == 'creditor_end') {
+                $mobility->update([
+                    'status' => 'terminate',
+                    'comment' => CustomerMobilityHelper::getStatus('terminate', 'comment'),
+                    "updated_at" => now()
                 ]);
 
                 $mobility->customer->user->notify(new GetMobilityBankEndNotification($mobility));

@@ -43,6 +43,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Package whereWithdrawInternational($value)
  * @mixin \Eloquent
  * @mixin IdeHelperPackage
+ * @property string $type_cpt
+ * @property int $subaccount
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereSubaccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Package whereTypeCpt($value)
  */
 class Package extends Model
 {

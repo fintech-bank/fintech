@@ -75,5 +75,7 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
         Route::prefix('saving')->group(function (){
             Route::post('passbook', [\App\Http\Controllers\Customer\SubscriptionController::class, 'passbook'])->name('customer.subscription.passbook');
         });
+        Route::get('mobility/{mobility_id}/document', [\App\Http\Controllers\Customer\MobilityController::class, 'showDocument'])->name('customer.subscription.mobility.document');
+        Route::post('mobility/{mobility_id}/document/signate', [\App\Http\Controllers\Customer\MobilityController::class, 'signateDocument'])->name('customer.subscription.mobility.document.signate');
     });
 });

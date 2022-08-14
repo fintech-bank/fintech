@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Bank whereProcessTime($value)
  * @mixin \Eloquent
  * @mixin IdeHelperBank
+ * @property-read \Illuminate\Database\Eloquent\Collection|CustomerMobility[] $mobility
+ * @property-read int|null $mobility_count
  */
 class Bank extends Model
 {
