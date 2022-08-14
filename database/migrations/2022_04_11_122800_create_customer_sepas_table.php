@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->string('creditor');
             $table->string('number_mandate');
-            $table->float('amount');
+            $table->float('amount', 50);
             $table->enum('status', ['waiting', 'processed', 'rejected', 'return', 'refunded']);
             $table->timestamps();
             $table->integer('transaction_id')->nullable();

@@ -28,9 +28,9 @@ return new class extends Migration
             $table->boolean('payment_abroad')->default(false);
             $table->boolean('payment_contact')->default(true);
             $table->string('code');
-            $table->float('limit_retrait');
-            $table->float('limit_payment');
-            $table->float('differed_limit')->default(0);
+            $table->float('limit_retrait', 50);
+            $table->float('limit_payment', 50);
+            $table->float('differed_limit', 50)->default(0);
             $table->boolean('facelia')->default(false);
             $table->boolean('visa_spec')->default(false);
             $table->boolean('warranty')->default(false);

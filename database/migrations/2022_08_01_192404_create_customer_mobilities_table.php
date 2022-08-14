@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('customer_mobilities', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['bank_start', 'bank_return', 'creditor_start', 'creditor_end']);
+            $table->enum('status', ['bank_start', 'bank_return', 'creditor_start', 'creditor_end', 'terminate']);
             $table->string('old_iban');
             $table->string('old_bic')->nullable();
             $table->string('mandate');
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('close_account')->default(0);
             $table->longText('comment')->nullable();
             $table->string('code')->nullable();
+            $table->timestamp('updated_at')->default(now());
 
             $table->foreignId('customer_id')
                 ->constrained()

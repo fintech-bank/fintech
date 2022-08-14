@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('customer_transfers', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->float('amount');
+            $table->float('amount', 50);
             $table->string('reference');
             $table->string('reason');
             $table->enum('type', ['immediat', 'differed', 'permanent']);

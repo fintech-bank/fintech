@@ -59,6 +59,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereUserId($value)
  * @mixin \Eloquent
  * @mixin IdeHelperCustomer
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerMobility[] $mobilities
+ * @property-read int|null $mobilities_count
  */
 class Customer extends Model
 {

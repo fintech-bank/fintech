@@ -19,6 +19,11 @@
                 <p>Afin de poursuivre cette demande, vous devez valider l'ensemble des documents et opérations fournis par vos créditeurs dans votre espace client</p>
                 <a href="{{ route('customer.subscription.index') }}#request" class="btn btn-bank">Mandat N°{{ $mobility->mandate }}</a>
             @endif
+            @if($mobility->status == 'terminate')
+                <p>Tous est en ordre.</p>
+                <p>Toutes les informations ont été traité et ajouté à votre compte bancaire.</p>
+                <p>Votre dossier à donc été <strong>clôturé</strong></p>
+            @endif
         </div>
         @include("emails.layouts.salutation")
     </div>

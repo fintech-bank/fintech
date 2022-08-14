@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('reference');
-            $table->float('initial_payment');
-            $table->float('monthly_payment');
+            $table->float('initial_payment', 50);
+            $table->float('monthly_payment', 50);
             $table->integer('monthly_days')->default(15);
             $table->bigInteger('wallet_id')->unsigned();
             $table->foreign('wallet_id')->references('id')->on('customer_wallets')

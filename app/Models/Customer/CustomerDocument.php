@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument whereUpdatedAt($value)
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerDocument
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument signedByClient()
  */
 class CustomerDocument extends Model
 {
