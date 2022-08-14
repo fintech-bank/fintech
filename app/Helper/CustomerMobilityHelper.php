@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 
+use App\Models\Customer\CustomerMobility;
+
 class CustomerMobilityHelper
 {
     public static function getStatus($status, $j = null)
@@ -27,6 +29,62 @@ class CustomerMobilityHelper
                 case 'creditor_start': return 'Dossier Transmis (Créancier)';
                 case 'creditor_end': return 'Dossier Receptionner (Créancier)';
             }
+        }
+    }
+
+    public static function getProgressMobility(CustomerMobility $mobility)
+    {
+        switch ($mobility->status) {
+            case 'bank_start':
+                ob_start();
+                ?>
+                <div class="d-flex flex-column w-100 mt-12">
+                    <span class="text-dark me-2 fw-bold pb-3"><?= $mobility->comment ?></span>
+                    <div class="progress h-10px w-100">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+                break;
+            case 'bank_return':
+                ob_start();
+                ?>
+                <div class="d-flex flex-column w-100 mt-12">
+                    <span class="text-dark me-2 fw-bold pb-3"><?= $mobility->comment ?></span>
+                    <div class="progress h-10px w-100">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+                break;
+
+            case 'creditor_start':
+                ob_start();
+                ?>
+                <div class="d-flex flex-column w-100 mt-12">
+                    <span class="text-dark me-2 fw-bold pb-3"><?= $mobility->comment ?></span>
+                    <div class="progress h-10px w-100">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+                break;
+
+            case 'creditor_end':
+                ob_start();
+                ?>
+                <div class="d-flex flex-column w-100 mt-12">
+                    <span class="text-dark me-2 fw-bold pb-3"><?= $mobility->comment ?></span>
+                    <div class="progress h-10px w-100">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <?php
+                return ob_get_clean();
+                break;
         }
     }
 }

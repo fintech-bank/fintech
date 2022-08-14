@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Core\Bank;
 use App\Models\Core\Package;
 use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerDocument;
 use App\Models\Customer\CustomerMobility;
 use App\Notifications\Agent\Customer\UpdateTypeAccountNotification;
 use App\Notifications\Customer\SendCodeToSignEmailNotification;
@@ -74,6 +75,7 @@ class SubscriptionController extends Controller
         $customer = auth()->user()->customers;
         $code = rand(100000,999999);
         $serach_iban = CustomerMobility::where('old_iban', $request->get('old_iban'))->exists();
+        $mandate = "MDB-".$request->get('old_bic').'T'.$request->user()->agency->bic.now()->format('dmY').'-'.rand(10000,99999);
 
         if($serach_iban) {
             return response()->json([
@@ -83,11 +85,11 @@ class SubscriptionController extends Controller
         }
 
         try {
-            $mobility = $customer->mobility()->create([
+            $mobility = $customer->mobilities()->create([
                 'status' => 'bank_start',
                 'old_iban' => str_replace(' ', '', $request->get('old_iban')),
                 'old_bic' => $request->get('old_bic'),
-                'mandate' => "MDB-".$request->get('old_bic').'T'.$request->user()->agency->bic.now()->format('dmY').'-'.rand(10000,99999),
+                'mandate' => $mandate,
                 'start' => now(),
                 'end_prov' => now()->addDays(22)->startOfDay(),
                 'close_account' => $request->get('close_account') == 1 ? 1 : 0,
@@ -99,7 +101,7 @@ class SubscriptionController extends Controller
             ]);
 
             try {
-                $document = DocumentFile::createDoc($customer, 'mandate mobility', 'Mandat de mobilité bancaire', 3, "MDB-".$request->get('old_bic').'T'.$request->user()->agency->bic.now()->format('dmY').'-'.rand(10000,99999),
+                $document = DocumentFile::createDoc($customer, 'mandate mobility', 'Mandat de mobilité bancaire - '.$mandate, 3, $mandate,
                 true, true, false, true, ['mobility' => $mobility]);
             }catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception);
@@ -121,6 +123,15 @@ class SubscriptionController extends Controller
 
     public function mobilitySignate(Request $request, DocumentFile $documentFile)
     {
-        dd($request->all());
+        $document = CustomerMobility::find($request->get('document_id'));
+        $file = CustomerDocument::where('reference', $document->mandate)->first();
+        if($request->get('code') == base64_decode($document->code)) {
+            $file->signedByClient();
+            return response()->json();
+        } else {
+            return response()->json(['errors' => [
+                "Le code de vérification est invalide"
+            ]], 500);
+        }
     }
 }

@@ -143,8 +143,8 @@ class Customer extends Model
         return $this->hasMany(CustomerEpargne::class);
     }
 
-    public function mobility()
+    public function mobilities()
     {
-        return $this->hasOne(CustomerMobility::class);
+        return $this->hasMany(CustomerMobility::class);
     }
 }

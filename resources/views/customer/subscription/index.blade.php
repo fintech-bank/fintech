@@ -165,7 +165,53 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="requests" role="tabpanel">
-                ...
+                <x-base.underline title="Demande de mobilité bancaire" class="w-100 mt-5 mb-5" size-text="fs-2"  size="3"/>
+                <div class="row">
+                    @foreach($customer->mobilities as $mobility)
+                        <div class="col-xl-4">
+                            <div class="card card-xl-stretch mb-xl-8 bg-light">
+                                <!--begin::Body-->
+                                <div class="card-body">
+                                    <!--begin::Heading-->
+                                    <div class="d-flex flex-stack">
+                                        <!--begin:Info-->
+                                        <div class="d-flex align-items-center">
+                                            <!--begin:Image-->
+                                            <div class="symbol symbol-60px me-5">
+												<span class="symbol-label bg-white">
+													<img src="{{ $mobility->bank->logo }}" class="h-50 align-self-center" alt="">
+												</span>
+                                            </div>
+                                            <!--end:Image-->
+                                            <!--begin:Title-->
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pr-3">
+                                                <a href="#" class="text-dark fw-bold text-hover-primary fs-5">Banque de départ</a>
+                                                <span class="text-muted fw-bold">{{ $mobility->bank->name }}</span>
+                                            </div>
+                                            <!--end:Title-->
+                                        </div>
+                                        <!--begin:Info-->
+                                    </div>
+                                    <!--end::Heading-->
+                                    <div class="d-flex flex-column w-100 mt-5 fw-bolder">
+                                        <span>Mandat de mobilité du {{ $mobility->start }}</span>
+                                        <span>{{ $mobility->mandate }}</span>
+                                        <span>{{ $mobility->old_iban }}</span>
+                                    </div>
+                                    <!--begin:Stats-->
+                                    {!! \App\Helper\CustomerMobilityHelper::getProgressMobility($mobility) !!}
+                                    <!--end:Stats-->
+                                </div>
+                                <!--end::Body-->
+                                <div class="card-footer">
+                                    <div class="d-flex flex-row-reverse">
+                                        <button class="btn btn-sm btn-white showDetailMobility" data-uri="/api/mobility/{{ $mobility->id }}">Consulter le détail</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -419,15 +465,12 @@
                                 label="Ancien Compte"
                                 placeholder="Iban de l'ancien compte" required="true" />
 
-                            <div class="mb-10">
-                                <label for="" class="form-label">Ancienne Banque</label>
-                                <select class="form-select form-select-solid" data-control="select2" name="old_bic" data-dropdown-parent="#MobilityAccount" data-placeholder="Select an option" data-allow-clear="true">
-                                    <option></option>
-                                    @foreach(\App\Models\Core\Bank::all() as $bank)
-                                        <option value="{{ $bank->bic }}">{{ $bank->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <x-form.input
+                                name="old_banque"
+                                type="text"
+                                label="Ancienne Banque" />
+
+                            <input type="hidden" name="old_bic" id="old_bic">
 
                             <x-form.input-date
                                 name="end_prlv"
@@ -498,14 +541,88 @@
                             type="text"
                             label="Code de vérification"
                             required="true" />
+                        <input type="hidden" name="document_id" />
 
 
-                        <div id="viewerMobility" class="h-1000px w-100" data-document=""></div>
+                        <div id="viewerMobility" class="h-1000px w-100"></div>
                     </div>
                     <div class="modal-footer">
                         <x-form.button />
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="MobilityShow">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h3 class="modal-title text-white"></h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Ancienne Banque</span>
+                                <div class="d-flex align-items-center mb-7">
+                                    <!--begin::Symbol-->
+                                    <div class="symbol symbol-50px me-5">
+										<span class="symbol-label bg-light-danger">
+											<img src="" alt="" class="h-50 align-self-center" data-content="logo_banque">
+										</span>
+                                    </div>
+                                    <!--end::Symbol-->
+                                    <!--begin::Text-->
+                                    <div class="d-flex flex-column">
+                                        <a href="#" class="text-dark text-hover-primary fs-6 fw-bold" data-content="name_banque">Development</a>
+                                        <span class="text-muted fw-bold" data-content="old_iban">DevOps</span>
+                                    </div>
+                                    <!--end::Text-->
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Date de début de procédure</span>
+                                <span class="text-muted" data-content="start"></span>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Date de fin prévu</span>
+                                <span class="text-muted" data-content="endProv"></span>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Etat Actuel</span>
+                                <span class="text-muted" data-content="status"></span>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Demande de fermeture de compte</span>
+                                <span class="text-muted" data-content="closeAccount"></span>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Date de fin des virements permanents et prélèvements</span>
+                                <span class="text-muted" data-content="endPrlv"></span>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <span class="fw-bolder mb-2">Compte de récéption de la mobilité</span>
+                                <span class="text-muted" data-content="wallet_account"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card card-flush shadow-sm">
+                                <div class="card-body py-5">
+                                    <div class="d-flex flex-wrap">
+                                        <a class="btn btn-sm btn-bank w-100" href=""><i class="fa-solid fa-print"></i> Imprimer le mandat</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

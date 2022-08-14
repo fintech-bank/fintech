@@ -1,10 +1,14 @@
 <script type="text/javascript">
     let tables = {}
-    let elements = {}
+    let elements = {
+        btnShowMobility: document.querySelectorAll('.showDetailMobility'),
+        inputIban: document.querySelector('#old_iban'),
+    }
     let modals = {
         modalUpdateAccount: document.querySelector("#UpdateAccount"),
         modalMobilityAccount: document.querySelector("#MobilityAccount"),
         modalMobilitySignate: document.querySelector("#MobilitySignate"),
+        modalMobilityShow: document.querySelector("#MobilityShow"),
     }
     let forms = {}
 
@@ -69,12 +73,11 @@
             method: 'PUT',
             data: data,
             success: data => {
-                console.log(data)
                 let modal = new bootstrap.Modal(modals.modalMobilityAccount)
                 let modalSignate = new bootstrap.Modal(modals.modalMobilitySignate)
                 modal.hide()
                 btn.removeAttr('data-kt-indicator')
-                document.querySelector("#viewerMobility").setAttribute('data-document', data.mobility.id)
+                document.querySelector("[name='document_id']").value = data.mobility.id
 
                 WebViewer({
                     path: '/assets/plugins/custom/pdfexpress/lib', // path to the PDF.js Express'lib' folder on your server
@@ -126,12 +129,12 @@
         let data = form.serializeArray()
 
         btn.attr('data-kt-indicator', 'on')
-        console.log(btn.attr('data-package'))
+        console.log(btn.attr('data-document'))
 
         $.ajax({
             url: url,
             method: 'PUT',
-            data: {"mobility_id": btn.attr('data-document'), 'code': document.querySelector('[name="code"]').value},
+            data: data,
             success: data => {
                 console.log(data)
                 let modal = new bootstrap.Modal(modals.modalMobilitySignate)
@@ -162,6 +165,67 @@
                         window.location.reload()
                     }, 1000)
                 }
+            }
+        })
+    })
+
+    if(elements.btnShowMobility) {
+        elements.btnShowMobility.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                let uri = e.target.dataset.uri
+
+                $.ajax({
+                    url: uri,
+                    method: 'GET',
+                    success: data => {
+                        console.log(data)
+                        let modal = new bootstrap.Modal(modals.modalMobilityShow)
+                        modals.modalMobilityShow.querySelector('.modal-title').innerHTML = `Mandat de mobilité bancaire N°${data.mobility.mandate}`
+                        modals.modalMobilityShow.querySelector('[data-content="logo_banque"]').setAttribute('src', data.mobility.bank.logo)
+                        modals.modalMobilityShow.querySelector('[data-content="name_banque"]').innerHTML = data.mobility.bank.name
+                        modals.modalMobilityShow.querySelector('[data-content="old_iban"]').innerHTML = data.mobility.old_iban
+                        modals.modalMobilityShow.querySelector('[data-content="start"]').innerHTML = data.other.start
+                        modals.modalMobilityShow.querySelector('[data-content="endProv"]').innerHTML = data.other.end_prov
+                        modals.modalMobilityShow.querySelector('[data-content="status"]').innerHTML = data.other.status+'<br>'+data.mobility.comment
+                        modals.modalMobilityShow.querySelector('[data-content="closeAccount"]').innerHTML = data.mobility.close_account
+                        modals.modalMobilityShow.querySelector('[data-content="endPrlv"]').innerHTML = data.other.end_prlv
+                        modals.modalMobilityShow.querySelector('[data-content="wallet_account"]').innerHTML = data.mobility.wallet.number_account
+                        modals.modalMobilityShow.querySelector('.btn-bank').setAttribute('href', `/storage/gdd/${data.mobility.customer.id}/3/Mandat de mobilité bancaire - ${data.mobility.mandate}.pdf`)
+                        modal.show()
+                    },
+                    error: err => {
+                        const errors = err.responseJSON.errors
+
+                        Object.keys(errors).forEach(key => {
+                            toastr[err.responseJSON.type](errors[key], "Champs: "+key, {
+                                "positionClass": "toastr-bottom-right",
+                            })
+                        })
+
+                        if(err.responseJSON.type === 'warning') {
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 1000)
+                        }
+                    }
+                })
+
+            })
+        })
+    }
+    elements.inputIban.addEventListener('blur', e => {
+        e.preventDefault()
+        let iban = e.target.value
+
+        $.ajax({
+            url: '/api/verifIban',
+            method: 'POST',
+            data: {'iban': iban},
+            success: data => {
+                console.log(data)
+                document.querySelector('[name="old_banque"]').value = data.name
+                document.querySelector('[name="old_bic"]').value = data.bic
             }
         })
     })

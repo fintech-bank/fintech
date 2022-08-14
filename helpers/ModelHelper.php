@@ -344,6 +344,23 @@ namespace App\Models\Core{
 
 namespace App\Models\Core{
 /**
+ * App\Models\Core\TicketCategory
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketCategory newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketCategory newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketCategory query()
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketCategory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketCategory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketCategory whereUpdatedAt($value)
+ */
+	class IdeHelperTicketCategory {}
+}
+
+namespace App\Models\Core{
+/**
  * App\Models\Core\TicketConversation
  *
  * @property int $id
@@ -369,6 +386,23 @@ namespace App\Models\Core{
  * @mixin \Eloquent
  */
 	class IdeHelperTicketConversation {}
+}
+
+namespace App\Models\Core{
+/**
+ * App\Models\Core\TicketSubCategory
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketSubCategory newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketSubCategory newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketSubCategory query()
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketSubCategory whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketSubCategory whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TicketSubCategory whereUpdatedAt($value)
+ */
+	class IdeHelperTicketSubCategory {}
 }
 
 namespace App\Models\Customer{
@@ -421,7 +455,8 @@ namespace App\Models\Customer{
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereStatusOpenAccount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Customer whereUserId($value)
  * @mixin \Eloquent
- * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerMobility[] $mobilities
+ * @property-read int|null $mobilities_count
  */
 	class IdeHelperCustomer {}
 }
@@ -623,6 +658,7 @@ namespace App\Models\Customer{
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument whereSignedByClient($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerDocument signedByClient()
  */
 	class IdeHelperCustomerDocument {}
 }
@@ -764,15 +800,104 @@ namespace App\Models\Customer{
 /**
  * App\Models\Customer\CustomerMobility
  *
+ * @property int $id
+ * @property string $status
+ * @property string $old_iban
+ * @property string|null $old_bic
+ * @property string $mandate
+ * @property \Illuminate\Support\Carbon $start
+ * @property \Illuminate\Support\Carbon $end_prov
+ * @property string|null $env_real
+ * @property \Illuminate\Support\Carbon|null $end_prlv
+ * @property int $close_account
+ * @property string|null $comment
+ * @property string|null $code
+ * @property int $customer_id
+ * @property int $bank_id
+ * @property int $customer_wallet_id
  * @property-read \App\Models\Core\Bank $bank
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerMobilityCheque[] $cheques
+ * @property-read int|null $cheques_count
  * @property-read \App\Models\Customer\Customer $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerMobilityVirIncoming[] $incomings
+ * @property-read int|null $incomings_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerMobilityVirOutgoing[] $outgoings
+ * @property-read int|null $outgoings_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerMobilityPrlv[] $prlvs
+ * @property-read int|null $prlvs_count
  * @property-read \App\Models\Customer\CustomerWallet $wallet
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility query()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereBankId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereCloseAccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereComment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereCustomerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereCustomerWalletId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereEndPrlv($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereEndProv($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereEnvReal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereMandate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereOldBic($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereOldIban($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereStart($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereStatus($value)
  */
 	class IdeHelperCustomerMobility {}
+}
+
+namespace App\Models\Customer{
+/**
+ * App\Models\Customer\CustomerMobilityCheque
+ *
+ * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityCheque query()
+ * @mixin \Eloquent
+ */
+	class IdeHelperCustomerMobilityCheque {}
+}
+
+namespace App\Models\Customer{
+/**
+ * App\Models\Customer\CustomerMobilityPrlv
+ *
+ * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityPrlv query()
+ * @mixin \Eloquent
+ */
+	class IdeHelperCustomerMobilityPrlv {}
+}
+
+namespace App\Models\Customer{
+/**
+ * App\Models\Customer\CustomerMobilityVirIncoming
+ *
+ * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirIncoming query()
+ * @mixin \Eloquent
+ */
+	class IdeHelperCustomerMobilityVirIncoming {}
+}
+
+namespace App\Models\Customer{
+/**
+ * App\Models\Customer\CustomerMobilityVirOutgoing
+ *
+ * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobilityVirOutgoing query()
+ * @mixin \Eloquent
+ */
+	class IdeHelperCustomerMobilityVirOutgoing {}
 }
 
 namespace App\Models\Customer{

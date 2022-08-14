@@ -61,4 +61,8 @@ return [
         'sms_sandbox_mode' => env('OVH_SMS_SANDBOX_MODE', false),
     ],
 
+    'selectra' => [
+        'token' => env('API_SELECTRA_TOKEN')
+    ]
+
 ];
