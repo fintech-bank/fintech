@@ -82,5 +82,9 @@ Route::prefix('documents')->group(function () {
     Route::post('/lists', [\App\Http\Controllers\Api\Customer\DocumentController::class, 'lists']);
 });
 
+
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
 Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);
+Route::get('mobility/{mobility_id}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'getMobility']);
+
+Route::post('verifIban', \App\Http\Controllers\Api\IbanController::class);

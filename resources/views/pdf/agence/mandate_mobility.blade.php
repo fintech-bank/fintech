@@ -71,11 +71,11 @@
         <tr>
             <td>
                 <strong>Clotûre du compte de départ:</strong>
-                {{ $data->mobility->close_account == 0 ? 'NON' : 'OUI' }}<br>
+                {{ $data->mobility->close_account }}<br>
                 @isset($data->mobility->end_prlv)
-                    <strong>Date de fin des virements permanents:</strong> {{ $data->mobility->env_prlv->format('d/m/Y') }}<br>
+                    <strong>Date de fin des virements permanents:</strong> {{ $data->mobility->env_prlv }}<br>
                 @endisset
-                <strong>Date de fin de la procédure (Prévu):</strong> {{ $data->mobility->end_prov->format('d/m/Y') }}
+                <strong>Date de fin de la procédure (Prévu):</strong> {{ $data->mobility->end_prov }}
             </td>
         </tr>
         </tbody>

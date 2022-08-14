@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Agent;
 
 use App\Helper\CustomerHelper;
+use App\Helper\CustomerMobilityHelper;
 use App\Helper\CustomerSepaHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
@@ -12,6 +13,7 @@ use App\Mail\Agent\Customer\WriteMail;
 use App\Models\Core\Package;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerInfo;
+use App\Models\Customer\CustomerMobility;
 use App\Notifications\Agent\Customer\ReinitAuthCustomer;
 use App\Notifications\Agent\Customer\ReinitCodeCustomer;
 use App\Notifications\Agent\Customer\ReinitPasswordCustomer;
@@ -72,7 +74,7 @@ class CustomerController extends Controller
                 [],
                 false,
                 true,
-                '/storage/gdd/'.$customer_id.'/courriers/', false, 'address');
+                '/storage/gdd/' . $customer_id . '/courriers/', false, 'address');
         }
 
         try {
@@ -83,10 +85,10 @@ class CustomerController extends Controller
             auth()->user()->notify(new UpdateStatusAccountNotification($customer, $request->get('status_open_account')));
 
             // Notification Client
-            $customer->user->notify(new \App\Notifications\Customer\UpdateStatusAccountNotification($customer, $request->get('status_open_account'), null, 'Cloture du compte - CUS'.$customer->user->identifiant.'.pdf'));
+            $customer->user->notify(new \App\Notifications\Customer\UpdateStatusAccountNotification($customer, $request->get('status_open_account'), null, 'Cloture du compte - CUS' . $customer->user->identifiant . '.pdf'));
 
             // response
-            LogHelper::notify('notice', 'Mise à jour du status du compte client: '.CustomerHelper::getName($customer));
+            LogHelper::notify('notice', 'Mise à jour du status du compte client: ' . CustomerHelper::getName($customer));
 
             return response()->json([
                 'status' => CustomerHelper::getStatusOpenAccount($request->get('status_open_account')),
@@ -132,7 +134,7 @@ class CustomerController extends Controller
                 'from' => config('twilio-notification-channel.from'),
             ]);
 
-            LogHelper::notify('notice', "Envoie d'un message sms au ".$customer->info->mobile);
+            LogHelper::notify('notice', "Envoie d'un message sms au " . $customer->info->mobile);
 
             return response()->json();
         } catch (TwilioException $exception) {
@@ -149,7 +151,7 @@ class CustomerController extends Controller
         try {
             \Mail::to($customer->user->email)->send(new WriteMail($customer, $request->get('message')));
 
-            LogHelper::notify('notice', "Envoie d'un message mail à ".$customer->user->email);
+            LogHelper::notify('notice', "Envoie d'un message mail à " . $customer->user->email);
 
             return response()->json();
         } catch (\Exception $exception) {
@@ -275,6 +277,19 @@ class CustomerController extends Controller
         }
 
         return response()->json($arr);
+    }
+
+    public function getMobility($mobility_id)
+    {
+        $mobility = CustomerMobility::with('bank', 'customer', 'wallet')->find($mobility_id);
+        $other = [
+            "status" => CustomerMobilityHelper::getStatus($mobility->status, 'label'),
+            "start" => $mobility->start->format('d/m/Y'),
+            "end_prov" => $mobility->end_prov->format("d/m/Y"),
+            "env_real" => $mobility->env_real ? $mobility->env_real->format("d/m/Y") : "Non Définie",
+            "end_prlv" => $mobility->end_prlv ? $mobility->end_prlv->format('d/m/Y') : "Non Définie",
+        ];
+        return response()->json(["mobility" => $mobility, "other" => $other]);
     }
 
     private function PhoneVerification($customer)

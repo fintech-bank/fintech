@@ -58,4 +58,11 @@ class CustomerDocument extends Model
     {
         return $this->belongsTo(DocumentCategory::class, 'document_category_id');
     }
+
+    public function scopeSignedByClient($query)
+    {
+        return $query->update([
+            'signed_by_client' => 1
+        ]);
+    }
 }
