@@ -13,6 +13,8 @@
         "barryvdh/laravel-dompdf": "^1.0",
         "binarytorch/larecipe": "^2.5",
         "creativeorange/gravatar": "~1.0",
+        "deployer/deployer": "^7.0",
+        "deployer/recipes": "^6.2",
         "diglactic/laravel-breadcrumbs": "^7.1",
         "fruitcake/laravel-cors": "^3.0",
         "globalcitizen/php-iban": "^4.1",
