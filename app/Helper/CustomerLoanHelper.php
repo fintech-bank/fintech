@@ -269,4 +269,5 @@ class CustomerLoanHelper
 
         return $ass;
     }
+
 }

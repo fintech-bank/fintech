@@ -28,11 +28,10 @@ class Button extends Component
     /**
      * Create a new component instance.
      *
-     * @param  string  $class
+     * @param  array  $dataset
      * @param  string  $text
      * @param  string  $textProgress
      * @param  null  $id
-     * @param  array  $dataset
      */
     public function __construct($class = 'btn-bank', $text = 'Valider', $textProgress = 'Veuillez patientez...', $id = null, $dataset = [])
     {

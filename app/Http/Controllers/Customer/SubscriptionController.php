@@ -7,6 +7,7 @@ use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Core\Bank;
+use App\Models\Core\LoanPlan;
 use App\Models\Core\Package;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerDocument;
@@ -133,5 +134,14 @@ class SubscriptionController extends Controller
                 "Le code de vérification est invalide"
             ]], 500);
         }
+    }
+
+    public function personnalSimulate()
+    {
+        $customer = auth()->user()->customers;
+        $loan_plan = LoanPlan::where('name', 'LIKE', '%Crédit Personnel%')->first();
+        //dd($loan_plan);
+
+        return view('customer.subscription.loan.personnalSimulate', compact('customer', 'loan_plan'));
     }
 }

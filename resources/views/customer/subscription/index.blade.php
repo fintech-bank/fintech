@@ -87,7 +87,7 @@
 
                 <div class="row">
                     <div class="col-4">
-                        <a href="" class="card card-flush shadow-sm bg-hover-secondary text-hover-white">
+                        <a href="{{ route('personnal-simulate') }}" class="card card-flush shadow-sm bg-hover-secondary text-hover-white">
                             <div class="card-body d-flex flex-row text-dark ">
                                 <img src="https://source.unsplash.com/random/300x300/?loan" alt="" class="w-25 me-3">
                                 <div class="w-75">

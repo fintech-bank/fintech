@@ -68,6 +68,7 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
             Route::put('/mobility/signate', [\App\Http\Controllers\Customer\SubscriptionController::class, 'mobilitySignate'])->name('customer.subscription.mobilitySignate');
         });
         Route::prefix('loan')->group(function (){
+            Route::get('personnal/simulate', [\App\Http\Controllers\Customer\SubscriptionController::class, 'personnalSimulate'])->name('personnal-simulate');
             Route::post('personnal', [\App\Http\Controllers\Customer\SubscriptionController::class, 'personnal'])->name('customer.subscription.personnal');
             Route::post('estate', [\App\Http\Controllers\Customer\SubscriptionController::class, 'estate'])->name('customer.subscription.estate');
             Route::post('facelia', [\App\Http\Controllers\Customer\SubscriptionController::class, 'facelia'])->name('customer.subscription.facelia');

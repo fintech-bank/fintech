@@ -7,7 +7,8 @@ class CheckPretService
     public function handle($wallet_principal, $customer)
     {
         $v = 0;
-        $text = collect();
+        $text = [];
+        $t = null;
         /*
          * Vérification des transactions du compte bancaire principal
          * NB: On calcul la moyenne des débits et des crédit si crédit > débit V+1
@@ -16,12 +17,11 @@ class CheckPretService
         $deb = $wallet_principal->transactions()->where('confirmed', true)->where('amount', '<', 0)->avg('amount');
         $cred = $wallet_principal->transactions()->where('confirmed', true)->where('amount', '>', 0)->avg('amount');
 
-        $cred > $deb ? $v++ : $v--;
         if ($cred > $deb) {
             $v++;
         } else {
             $v--;
-            $text->add(['transactions']);
+            $t = array_merge($text, ["transaction" => "Débit supérieur au Crédit"]);
         }
 
         /*
@@ -29,14 +29,14 @@ class CheckPretService
          * Si == 0 $v++
          */
 
-        $loans = $customer->prets()->where('status', 'terminated')->count();
+        $loans = $customer->prets()->where('status', '!=', 'terminated')->count();
         if ($loans == 0) {
             $v += 2;
         } elseif ($loans >= 1 && $loans <= 3) {
             $v++;
         } else {
             $v--;
-            $text->add(['loans']);
+            $t = array_merge($text, ["pret_bancaire" => "Vous avez un nombre important de Prêt bancaire en cours..."]);
         }
 
         /*
@@ -46,7 +46,7 @@ class CheckPretService
 
         if ($wallet_principal->decouvert == 1) {
             $v--;
-            $text->add(['decouvert']);
+            $t = array_merge($text, ["decouvert" => "Vous avez un découvert bancaire"]);
         } else {
             $v++;
         }
@@ -60,7 +60,7 @@ class CheckPretService
 
         if ($customer->income->pro_incoming <= 500) {
             $v--;
-            $text->add(['incoming']);
+            $t = array_merge($text, ["salaire" => "Votre salaire actuelle ne permet pas un crédit"]);
         } elseif ($customer->income->pro_incoming > 500 && $customer->income->pro_incoming <= 1500) {
             $v++;
         } else {
@@ -73,7 +73,7 @@ class CheckPretService
 
         if ($customer->cotation <= 4) {
             $v--;
-            $text->add(['cotation']);
+            $t = array_merge($text, ["cotation" => "Votre cotation bancaire ne permet pas un crédit"]);
         } elseif ($customer->cotation > 4 && $customer->cotation <= 6) {
             $v++;
         } else {
@@ -86,7 +86,7 @@ class CheckPretService
 
         if ($customer->ficp == true) {
             $v--;
-            $text->add(['ficp']);
+            $t = array_merge($text, ["ficp" => "Vous êtes FICP, vous ne pouvez pas avoir de crédit pour le moment."]);
         } else {
             $v++;
         }
@@ -95,7 +95,7 @@ class CheckPretService
 
         return [
             'resultat' => $result,
-            'text' => $text,
+            'text' => $t,
         ];
     }
 }
