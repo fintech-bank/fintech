@@ -72,9 +72,7 @@ class PretController extends Controller
                 'min_mensuality' => CustomerLoanHelper::calcMensuality($request->get('amount'), $loan_plan->duration, $loan_plan),
                 'max_mensuality' => CustomerLoanHelper::calcMensuality($request->get('amount'), 12, $loan_plan),
             ]);
-        } elseif ($request->has('mensuality')) {
-
-        } else {
+        }  else {
             return response()->json([
                 'amount_loan' => eur($request->get('amount')),
                 'mensuality_duration_text' => "12 Mensualités de",

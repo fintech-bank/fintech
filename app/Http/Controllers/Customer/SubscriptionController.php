@@ -140,7 +140,6 @@ class SubscriptionController extends Controller
     {
         $customer = auth()->user()->customers;
         $loan_plan = LoanPlan::where('name', 'LIKE', '%Crédit Personnel%')->first();
-        //dd($loan_plan);
 
         return view('customer.subscription.loan.personnalSimulate', compact('customer', 'loan_plan'));
     }
