@@ -1,10 +1,9 @@
 <?php
 namespace Deployer;
 
-require 'recipe/laravel.php';
-require 'recipe/rsync.php';
+require 'vendor/deployer/recipes/recipe/rsync.php';
 
-set('application', 'My App');
+set('application', 'FINTECH Bank');
 set('ssh_multiplexing', true);
 
 set('rsync_src', function () {
