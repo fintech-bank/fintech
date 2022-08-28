@@ -155,12 +155,58 @@ License: For each use you must have a valid license purchased only from above li
                         <!--end::Menu wrapper-->
                         <!--begin::Toolbar-->
                         <div class="flex-equal text-end ms-1">
-                            <a href="{{ route('login') }}"
-                               class="btn btn-success"><i class="fa-solid fa-lock"></i> Connexion</a>
-                        </div>
-                        <div class="flex-equal text-end ms-1">
-                            <a href="{{ route('register') }}"
-                               class="btn btn-danger"><i class="fa-solid fa-user"></i> Nouveau client</a>
+                            <div class="d-flex flex-row text-white align-items-center justify-content-end">
+                                @auth()
+                                    <a href="" class="rotate me-10" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
+                                        <i class="fa-solid fa-user-circle fa-3x me-5"></i>
+                                        <div class="d-flex flex-column">
+                                            <div class="fw-bolder fs-4">{{ auth()->user()->name }}</div>
+                                            <div class="text-muted">
+                                                @if(auth()->user()->customer == 1)
+                                                    {{ \App\Helper\CustomerHelper::getTypeCustomer(auth()->user()->customers) }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px p-5" data-kt-menu="true">
+
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="/redirect" class="menu-link px-3">
+                                                Mon compte
+                                            </a>
+                                        </div>
+                                        <!--end::Menu item-->
+
+                                        <!--begin::Menu separator-->
+                                        <div class="separator mt-3 opacity-75"></div>
+                                        <!--end::Menu separator-->
+
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <div class="menu-content px-3 py-3">
+                                                <form action="{{ route('logout') }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-light-primary btn-sm px-4">
+                                                        Déconnexion
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <!--end::Menu item-->
+                                    </div>
+                                    <!--end::Menu-->
+                                @else
+                                    <div class="me-10 d-flex flex-row">
+                                        <i class="fa-solid fa-user-circle fa-3x me-5"></i>
+                                        <div class="d-flex flex-wrap align-items-center fs-6">
+                                            <a class="fw-bolder me-2" href="{{ route('login') }}">Connexion</a> ou <a class="fw-bolder ms-2" href="{{ route('register') }}">Inscription</a>
+                                        </div>
+                                    </div>
+
+                                @endauth
+                            </div>
                         </div>
                         <!--end::Toolbar-->
                     </div>

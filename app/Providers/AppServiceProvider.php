@@ -38,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
             $agent = new Agent();
             \View::share('user', request()->user());
             \View::share('agent', $agent);
+            \View::share('customer', request()->user()->customers);
         }
     }
 }

@@ -56,6 +56,8 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereOldIban($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereStart($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereStatus($value)
+ * @property Carbon $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerMobility whereUpdatedAt($value)
  */
 class CustomerMobility extends Model
 {
