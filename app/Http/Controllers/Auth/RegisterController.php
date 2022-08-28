@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helper\CustomerSituationHelper;
 use App\Helper\CustomerTransactionHelper;
+use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Helper\UserHelper;
@@ -148,6 +149,13 @@ class RegisterController extends Controller
             ]);
 
             $wallet = $user->customers->wallets()->first();
+            if($wallet == null) {
+                $wallet = CustomerWalletHelper::createWallet(
+                    $user->customers,
+                    'compte',
+                    20.00
+                );
+            }
             $transaction = CustomerTransactionHelper::create('credit', 'depot', 'Dépot initial', 20, $wallet->id,
                 true, "Dépot initial à l'ouverture de votre compte", now(), null, null);
             LogHelper::notify('info', "
@@ -171,6 +179,7 @@ class RegisterController extends Controller
                         'card',
                         'sepa_debit',
                     ],
+
                 ]);
 
                 return view('auth.terminate', [

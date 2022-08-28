@@ -144,7 +144,7 @@ class CustomerLoanHelper
             $doc_pret = DocumentFile::createDoc(
                 $customer,
                 'Contrat de crédit Personnel',
-                $loan->reference.' - Offre de contrat de crédit: Pret Personnel',
+                $loan->reference.' - Offre de contrat de credit: Pret Personnel',
                 3,
                 null,
                 true,
@@ -173,7 +173,7 @@ class CustomerLoanHelper
         DocumentFile::createDoc(
             $customer,
             'Information Précontractuel Normalisé',
-            $loan->reference.' - Information Précontractuel Normalisé',
+            $loan->reference.' - Information Precontractuel Normalise',
             3,
             null,
             true,
@@ -213,7 +213,7 @@ class CustomerLoanHelper
         DocumentFile::createDoc(
             $customer,
             'Mandat Prélèvement Sepa',
-            $loan->reference.' - Mandat Prélèvement Sepa',
+            $loan->reference.' - Mandat Prelevement Sepa',
             3,
             null,
             false,

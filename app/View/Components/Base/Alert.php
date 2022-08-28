@@ -20,6 +20,14 @@ class Alert extends Component
      * @var null
      */
     public $buttons;
+    /**
+     * @var null
+     */
+    public mixed $class;
+    /**
+     * @var null
+     */
+    public mixed $id;
 
     /**
      * Create a new component instance.
@@ -31,7 +39,7 @@ class Alert extends Component
      * @param $content
      * @param  null  $buttons
      */
-    public function __construct($type, $color, $icon, $title, $content, $buttons = null)
+    public function __construct($type, $color, $icon, $title, $content, $buttons = null, $class = null, $id = null)
     {
         //
         $this->type = $type;
@@ -40,6 +48,8 @@ class Alert extends Component
         $this->title = $title;
         $this->content = $content;
         $this->buttons = $buttons;
+        $this->class = $class;
+        $this->id = $id;
     }
 
     /**

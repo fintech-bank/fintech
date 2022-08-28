@@ -1,6 +1,6 @@
 @if($type == 'basic')
     <!--begin::Alert-->
-    <div class="alert alert-{{ $color }}">
+    <div id="{{ $id != null ? $id : '' }}" class="alert alert-{{ $color }} {{ $class != null ? $class : '' }}">
         <!--begin::Icon-->
         <i class="fa-solid fa-{{ $icon }} fa-2x text-{{ $color }} me-3"></i>
         <!--end::Icon-->
@@ -8,7 +8,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column">
             <!--begin::Title-->
-            <h4 class="mb-1 text-white">{{ $title }}</h4>
+            <h4 class="mb-1 text-{{ $color }}">{{ $title }}</h4>
             <!--end::Title-->
             <!--begin::Content-->
             <span>{{ $content }}</span>
@@ -20,7 +20,7 @@
 @elseif($type == 'solid')
 
     <!--begin::Alert-->
-    <div class="alert alert-dismissible bg-{{ $color }} d-flex flex-column flex-sm-row p-5 mb-10">
+    <div id="{{ isset($id) ? $id : '' }}" class="alert alert-dismissible bg-{{ $color }} d-flex flex-column flex-sm-row p-5 mb-10 {{ isset($class) ? $class : '' }}">
         <!--begin::Icon-->
         <i class="fa-solid fa-{{ $icon }} fa-2x text-light-{{ $color }} me-3"></i>
         <!--end::Icon-->
@@ -28,7 +28,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column text-light pe-0 pe-sm-10">
             <!--begin::Title-->
-            <h4 class="mb-2 text-white">{{ $title }}</h4>
+            <h4 class="mb-2 text-{{ $color }}">{{ $title }}</h4>
             <!--end::Title-->
 
             <!--begin::Content-->
@@ -47,7 +47,7 @@
 
 @elseif($type == 'light')
     <!--begin::Alert-->
-    <div class="alert alert-dismissible bg-light-{{ $color }} d-flex flex-column flex-sm-row p-5 mb-10">
+    <div id="{{ isset($id) ? $id : '' }}" class="alert alert-dismissible bg-light-{{ $color }} d-flex flex-column flex-sm-row p-5 mb-10 {{ isset($class) ? $class : '' }}">
         <!--begin::Icon-->
         <i class="fa-solid fa-{{ $icon }} fa-2x text-light-{{ $color }} me-3"></i>
         <!--end::Icon-->
@@ -55,7 +55,7 @@
         <!--begin::Wrapper-->
         <div class="d-flex flex-column text-light pe-0 pe-sm-10">
             <!--begin::Title-->
-            <h4 class="mb-2 text-white">{{ $title }}</h4>
+            <h4 class="mb-2 text-{{ $color }}">{{ $title }}</h4>
             <!--end::Title-->
 
             <!--begin::Content-->
@@ -73,7 +73,7 @@
     <!--end::Alert-->
 @else
     <!--begin::Alert-->
-    <div class="alert alert-dismissible bg-{{ $color }} d-flex flex-center flex-column py-10 px-10 px-lg-20 mb-10">
+    <div id="{{ isset($id) ? $id : '' }}" class="alert alert-dismissible bg-{{ $color }} d-flex flex-center flex-column py-10 px-10 px-lg-20 mb-10 {{ isset($class) ? $class : '' }}">
         <!--begin::Close-->
         <button type="button" class="position-absolute top-0 end-0 m-2 btn btn-icon btn-icon-{{ $color }}" data-bs-dismiss="alert">
             <i class="fa-solid fa-times fa-lg"></i>
