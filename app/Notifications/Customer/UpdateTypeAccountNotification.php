@@ -18,6 +18,8 @@ class UpdateTypeAccountNotification extends Notification
 
     public Package $type;
 
+    public string $title = "Votre compte en ligne";
+
     /**
      * Create a new notification instance.
      *
@@ -51,7 +53,7 @@ class UpdateTypeAccountNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Votre compte en ligne')
+            ->subject($this->title)
             ->view('emails.customer.update_type_account', [
                 'customer' => $this->customer,
                 'type' => $this->type,
@@ -69,7 +71,7 @@ class UpdateTypeAccountNotification extends Notification
         return [
             'icon' => 'fa-box',
             'color' => 'primary',
-            'title' => 'Votre compte en ligne',
+            'title' => $this->title,
             'text' => "Votre compte est passée à l'offre ".$this->type->name.' à '.eur($this->type->price),
             'time' => now()->shortAbsoluteDiffForHumans(),
         ];
@@ -78,7 +80,7 @@ class UpdateTypeAccountNotification extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Votre compte en ligne')
+            ->title($this->title)
             ->icon('/storage/logo/logo_carre.png')
             ->body("Votre compte est passée à l'offre ".$this->type->name.' à '.eur($this->type->price));
     }

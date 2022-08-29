@@ -25,6 +25,8 @@ class CreateEpargneNotification extends Notification
 
     public CustomerEpargne $epargne;
 
+    public string $title = "Votre nouveau compte épargne est disponible";
+
     /**
      * Create a new notification instance.
      *
@@ -62,7 +64,7 @@ class CreateEpargneNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Votre nouveau compte épargne est disponible')
+            ->subject($this->title)
             ->view('emails.customer.create_epargne', [
                 'customer' => $this->customer,
                 'wallet' => $this->wallet,
@@ -82,7 +84,7 @@ class CreateEpargneNotification extends Notification
         return [
             'icon' => 'fa-certificate',
             'color' => 'primary',
-            'title' => 'Votre nouveau compte épargne est disponible',
+            'title' => $this->title,
             'text' => "Votre nouveau compte épargne est maintenant actif",
             'time' => now()->shortAbsoluteDiffForHumans(),
         ];
@@ -96,7 +98,7 @@ class CreateEpargneNotification extends Notification
     public function toWebPush(mixed $notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Votre nouveau compte épargne est disponible')
+            ->title($this->title)
             ->icon('/storage/logo/logo_carre.png')
             ->body('Votre nouveau compte épargne est maintenant actif');
     }

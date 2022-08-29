@@ -22,6 +22,8 @@ class CreateCreditCardNotification extends Notification
 
     public CustomerDocument $document;
 
+    public string $title = "Votre nouvelle carte bancaire";
+
     /**
      * Create a new notification instance.
      *
@@ -57,7 +59,7 @@ class CreateCreditCardNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Votre nouvelle carte bancaire')
+                    ->subject($this->title)
                     ->view('emails.customer.create_credit_card', [
                         'card' => $this->card,
                         'document' => $this->document,
@@ -76,7 +78,7 @@ class CreateCreditCardNotification extends Notification
         return [
             'icon' => 'fa-creditcard',
             'color' => 'primary',
-            'title' => 'Votre nouvelle carte bancaire',
+            'title' => $this->title,
             'text' => 'Une nouvelle carte bancaire à été créer',
             'time' => now()->shortAbsoluteDiffForHumans(),
         ];
@@ -85,7 +87,7 @@ class CreateCreditCardNotification extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Votre nouvelle carte bancaire')
+            ->title($this->title)
             ->icon('/storage/logo/logo_carre.png')
             ->body('Une nouvelle carte bancaire à été créer');
     }
