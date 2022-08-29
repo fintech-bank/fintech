@@ -9,6 +9,8 @@ use Illuminate\Notifications\Messages\OvhSmsMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class SendPasswordSms extends Notification
 {
@@ -19,9 +21,9 @@ class SendPasswordSms extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param $password
+     * @param string $password
      */
-    public function __construct($password)
+    public function __construct(string $password)
     {
         //
         $this->password = $password;
@@ -35,11 +37,19 @@ class SendPasswordSms extends Notification
      */
     public function via($notifiable)
     {
-        return [OvhSmsChannel::class];
+        return [OvhSmsChannel::class, WebPushChannel::class];
     }
 
     public function toOvhSms($notifiable)
     {
         return (new OvhSmsMessage("Votre mot de passe provisoire est le {$this->password}"));
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre mot de passe')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body("Votre mot de passe provisioire est le {$this->password}");
     }
 }

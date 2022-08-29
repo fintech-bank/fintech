@@ -19,6 +19,7 @@ use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerWallet;
 use App\Models\User;
 use App\Notifications\Core\SendPasswordSms;
+use App\Notifications\Customer\SendCodeCardNotification;
 use Authy\AuthyApi;
 use IbanGenerator\Generator;
 use Illuminate\Http\Request;
@@ -213,7 +214,7 @@ class CustomerController extends Controller
         $card = $this->createCreditCard($request, $wallet);
 
         // Envoie du mot de passe provisoire par SMS avec identifiant
-        $info->notify(new SendPasswordSms($user, $password));
+        $info->notify(new SendPasswordSms($password));
 
         \Storage::disk('public')->makeDirectory('gdd/'.$customer->id);
         foreach (DocumentCategory::all() as $doc) {
@@ -346,7 +347,7 @@ class CustomerController extends Controller
         $card_number = $creditcard->single();
         $card_code = rand(1000, 9999);
 
-        return CustomerCreditCard::create([
+        $card = CustomerCreditCard::create([
             'exp_month' => \Str::length(now()->month) <= 1 ? '0'.now()->month : now()->month,
             'number' => $card_number,
             'support' => $request->get('card_support'),
@@ -359,5 +360,8 @@ class CustomerController extends Controller
         ]);
 
         // Envoie du code de la carte bleu par sms
+        $card->wallet->customer->user->notify(new SendCodeCardNotification($card_code, $card));
+
+        return $card;
     }
 }

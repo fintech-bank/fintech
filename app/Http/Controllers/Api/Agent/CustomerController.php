@@ -202,7 +202,7 @@ class CustomerController extends Controller
         ]);
 
         // Envoie du code par sms
-        $customer->info->notify(new ReinitCodeCustomer($code));
+        $customer->user->notify(new ReinitCodeCustomer($code));
 
         return response()->json();
     }

@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.24.0.
+ * Generated for Laravel 9.26.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4302,7 +4302,7 @@
                         return $instance->make($name, $value, $minutes, $path, $domain, $secure, $httpOnly, $raw, $sameSite);
         }
                     /**
-         * Create a cookie that lasts "forever" (five years).
+         * Create a cookie that lasts "forever" (400 days).
          *
          * @param string $name
          * @param string $value
@@ -12166,13 +12166,13 @@
          * Dump the request items and end the script.
          *
          * @param mixed $keys
-         * @return void 
+         * @return \Illuminate\Http\never 
          * @static 
          */ 
         public static function dd(...$keys)
         {
                         /** @var \Illuminate\Http\Request $instance */
-                        $instance->dd(...$keys);
+                        return $instance->dd(...$keys);
         }
                     /**
          * Dump the items.
@@ -16887,6 +16887,42 @@
                         return $instance->useIntegrityKey($key);
         }
                     /**
+         * Set the Vite entry points.
+         *
+         * @param array $entryPoints
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function withEntryPoints($entryPoints)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->withEntryPoints($entryPoints);
+        }
+                    /**
+         * Set the Vite "hot" file path.
+         *
+         * @param string $path
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useHotFile($path)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useHotFile($path);
+        }
+                    /**
+         * Set the Vite build directory.
+         *
+         * @param string $path
+         * @return \Illuminate\Foundation\Vite 
+         * @static 
+         */ 
+        public static function useBuildDirectory($path)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->useBuildDirectory($path);
+        }
+                    /**
          * Use the given callback to resolve attributes for script tags.
          *
          * @param \Illuminate\Foundation\(callable(string,  string, ?array, ?array): array)|array  $attributes
@@ -16920,6 +16956,30 @@
         {
                         /** @var \Illuminate\Foundation\Vite $instance */
                         return $instance->reactRefresh();
+        }
+                    /**
+         * Get the URL for an asset.
+         *
+         * @param string $asset
+         * @param string|null $buildDirectory
+         * @return string 
+         * @static 
+         */ 
+        public static function asset($asset, $buildDirectory = null)
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->asset($asset, $buildDirectory);
+        }
+                    /**
+         * Get the Vite tag content as a string of HTML.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function toHtml()
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->toHtml();
         }
          
     }
@@ -18108,6 +18168,257 @@
      
 }
 
+    namespace Clockwork\Support\Laravel { 
+            /**
+     * 
+     *
+     */ 
+        class Facade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function addDataSource($dataSource)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->addDataSource($dataSource);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveRequest()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->resolveRequest();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveAsCommand($name, $exitCode = null, $arguments = [], $options = [], $argumentsDefaults = [], $optionsDefaults = [], $output = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->resolveAsCommand($name, $exitCode, $arguments, $options, $argumentsDefaults, $optionsDefaults, $output);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveAsQueueJob($name, $description = null, $status = 'processed', $payload = [], $queue = null, $connection = null, $options = [])
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->resolveAsQueueJob($name, $description, $status, $payload, $queue, $connection, $options);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function resolveAsTest($name, $status = 'passed', $statusMessage = null, $asserts = [])
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->resolveAsTest($name, $status, $statusMessage, $asserts);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function extendRequest($request = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->extendRequest($request);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function storeRequest()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->storeRequest();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function reset()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->reset();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function request($request = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->request($request);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function log($level = null, $message = null, $context = [])
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->log($level, $message, $context);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function timeline()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->timeline();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function event($description, $data = [])
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->event($description, $data);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function shouldCollect($shouldCollect = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->shouldCollect($shouldCollect);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function shouldRecord($shouldRecord = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->shouldRecord($shouldRecord);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function dataSources($dataSources = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->dataSources($dataSources);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function storage($storage = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->storage($storage);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function authenticator($authenticator = null)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->authenticator($authenticator);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getDataSources()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->getDataSources();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getRequest()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->getRequest();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setRequest($request)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->setRequest($request);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getStorage()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->getStorage();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setStorage($storage)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->setStorage($storage);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function getAuthenticator()
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->getAuthenticator();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setAuthenticator($authenticator)
+        {
+                        /** @var \Clockwork\Clockwork $instance */
+                        return $instance->setAuthenticator($authenticator);
+        }
+         
+    }
+     
+}
+
     namespace Laravel\Horizon { 
             /**
      * 
@@ -19278,142 +19589,6 @@
         public static function columnSort($label, $columnKey, $isDefault = false)
         {
                         return \Collective\Html\HtmlBuilder::columnSort($label, $columnKey, $isDefault);
-        }
-         
-    }
-     
-}
-
-    namespace Rinvex\Authy\Facades { 
-            /**
-     * 
-     *
-     */ 
-        class AuthyApp {
-                    /**
-         * Return application stats.
-         *
-         * @param string|null $ip
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function stats($ip = null)
-        {
-                        /** @var \Rinvex\Authy\App $instance */
-                        return $instance->stats($ip);
-        }
-                    /**
-         * Get application details.
-         *
-         * @param string|null $ip
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function details($ip = null)
-        {
-                        /** @var \Rinvex\Authy\App $instance */
-                        return $instance->details($ip);
-        }
-         
-    }
-            /**
-     * 
-     *
-     */ 
-        class AuthyUser {
-                    /**
-         * Register a new Authy user.
-         *
-         * @param string $email
-         * @param string $cellphone
-         * @param string $countryCode
-         * @param bool $sendInstallLink
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function register($email, $cellphone, $countryCode, $sendInstallLink = true)
-        {
-                        /** @var \Rinvex\Authy\User $instance */
-                        return $instance->register($email, $cellphone, $countryCode, $sendInstallLink);
-        }
-                    /**
-         * Register the given user activity.
-         *
-         * @param int $authyId
-         * @param string $type
-         * @param string $data
-         * @param string|null $ip
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function registerActivity($authyId, $type, $data, $ip = null)
-        {
-                        /** @var \Rinvex\Authy\User $instance */
-                        return $instance->registerActivity($authyId, $type, $data, $ip);
-        }
-                    /**
-         * Get status of the given user.
-         *
-         * @param int $authyId
-         * @param string|null $ip
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function status($authyId, $ip = null)
-        {
-                        /** @var \Rinvex\Authy\User $instance */
-                        return $instance->status($authyId, $ip);
-        }
-                    /**
-         * Delete the given Authy user.
-         *
-         * @param int $authyId
-         * @param string|null $ip
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function delete($authyId, $ip = null)
-        {
-                        /** @var \Rinvex\Authy\User $instance */
-                        return $instance->delete($authyId, $ip);
-        }
-         
-    }
-            /**
-     * 
-     *
-     */ 
-        class AuthyToken {
-                    /**
-         * Send verification token to the given Authy user.
-         *
-         * @param int $authyId
-         * @param string $method
-         * @param bool $force
-         * @param string|null $action
-         * @param string|null $actionMessage
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function send($authyId, $method = 'sms', $force = false, $action = null, $actionMessage = null)
-        {
-                        /** @var \Rinvex\Authy\Token $instance */
-                        return $instance->send($authyId, $method, $force, $action, $actionMessage);
-        }
-                    /**
-         * Verify the given token for the given Authy user.
-         *
-         * @param int $token
-         * @param int $authyId
-         * @param bool $force
-         * @param string|null $action
-         * @return \Rinvex\Authy\Response 
-         * @static 
-         */ 
-        public static function verify($token, $authyId, $force = false, $action = null)
-        {
-                        /** @var \Rinvex\Authy\Token $instance */
-                        return $instance->verify($token, $authyId, $force, $action);
         }
          
     }
@@ -22366,7 +22541,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -22382,7 +22557,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -22397,7 +22572,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @param string $boolean
              * @return \Illuminate\Database\Query\Builder 
              * @static 
@@ -22413,7 +22588,7 @@ namespace  {
              *
              * @param string $column
              * @param string $operator
-             * @param \DateTimeInterface|string|null $value
+             * @param \DateTimeInterface|string|int|null $value
              * @return \Illuminate\Database\Query\Builder 
              * @static 
              */ 
@@ -23803,12 +23978,10 @@ namespace  {
             class OCR extends \Alimranahmed\LaraOCR\Facades\OCR {}
             class LaRecipe extends \BinaryTorch\LaRecipe\LaRecipe {}
             class Breadcrumbs extends \Diglactic\Breadcrumbs\Breadcrumbs {}
+            class Clockwork extends \Clockwork\Support\Laravel\Facade {}
             class Horizon extends \Laravel\Horizon\Horizon {}
             class Form extends \Collective\Html\FormFacade {}
             class Html extends \Collective\Html\HtmlFacade {}
-            class AuthyApp extends \Rinvex\Authy\Facades\AuthyApp {}
-            class AuthyUser extends \Rinvex\Authy\Facades\AuthyUser {}
-            class AuthyToken extends \Rinvex\Authy\Facades\AuthyToken {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class Iseed extends \Orangehill\Iseed\Facades\Iseed {}
      

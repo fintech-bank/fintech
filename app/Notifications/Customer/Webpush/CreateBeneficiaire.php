@@ -1,30 +1,31 @@
 <?php
 
-namespace App\Notifications\Agent\Customer;
+namespace App\Notifications\Customer\Webpush;
 
+use App\Helper\CustomerHelper;
+use App\Models\Customer\CustomerBeneficiaire;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\Twilio\TwilioChannel;
-use NotificationChannels\Twilio\TwilioSmsMessage;
 use NotificationChannels\WebPush\WebPushChannel;
 use NotificationChannels\WebPush\WebPushMessage;
 
-class ReinitCodeCustomer extends Notification
+class CreateBeneficiaire extends Notification
 {
     use Queueable;
 
-    public string $code;
+    public CustomerBeneficiaire $beneficiaire;
 
     /**
      * Create a new notification instance.
      *
-     * @param string $code
+     * @param CustomerBeneficiaire $beneficiaire
      */
-    public function __construct(string $code)
+    public function __construct(CustomerBeneficiaire $beneficiaire)
     {
         //
-        $this->code = $code;
+        $this->beneficiaire = $beneficiaire;
     }
 
     /**
@@ -38,12 +39,11 @@ class ReinitCodeCustomer extends Notification
         return [WebPushChannel::class];
     }
 
-
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Code SECURPASS')
+            ->title('Nouveau bénéficiaire')
             ->icon('/storage/logo/logo_carre.png')
-            ->body("Votre code provisoire est le {$this->code}");
+            ->body('Un nouveau bénéficiaire à été ajouté à votre compte');
     }
 }

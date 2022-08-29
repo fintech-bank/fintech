@@ -8,6 +8,7 @@ use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerBeneficiaire;
 use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\CreateBeneficiaireNotification;
+use App\Notifications\Customer\Webpush\CreateBeneficiaire;
 use Illuminate\Http\Request;
 use Intervention\Validation\Rules\Bic;
 use Intervention\Validation\Rules\Iban;
@@ -42,6 +43,7 @@ class CustomerBeneficiaireController extends Controller
             ]);
 
             auth()->user()->notify(new CreateBeneficiaireNotification($customer, $beneficiaire, $wallet));
+            $customer->user->notify(new CreateBeneficiaire($beneficiaire));
 
             return response()->json();
         } catch (\Exception $exception) {

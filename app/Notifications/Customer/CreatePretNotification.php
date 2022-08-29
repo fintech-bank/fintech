@@ -2,31 +2,38 @@
 
 namespace App\Notifications\Customer;
 
+use App\Helper\CustomerLoanHelper;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerDocument;
+use App\Models\Customer\CustomerPret;
+use App\Models\Customer\CustomerWallet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class CreatePretNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
+    public Customer $customer;
 
-    public $wallet;
+    public CustomerWallet $wallet;
 
-    public $document;
+    public CustomerDocument $document;
 
-    public $pret;
+    public CustomerPret $pret;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $wallet
-     * @param $document
-     * @param $pret
+     * @param Customer $customer
+     * @param CustomerWallet $wallet
+     * @param CustomerDocument $document
+     * @param CustomerPret $pret
      */
-    public function __construct($customer, $wallet, $document, $pret)
+    public function __construct(Customer $customer,CustomerWallet $wallet,CustomerDocument $document,CustomerPret $pret)
     {
         //
         $this->customer = $customer;
@@ -43,7 +50,7 @@ class CreatePretNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', WebPushChannel::class];
     }
 
     /**
@@ -62,5 +69,30 @@ class CreatePretNotification extends Notification
                 'document' => $this->document,
                 'pret' => $this->pret,
             ]);
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            'icon' => 'fa-certificate',
+            'color' => 'primary',
+            'title' => 'Votre pret bancaire',
+            'text' => "Votre Pret est maintenant disponible",
+            'time' => now()->shortAbsoluteDiffForHumans(),
+        ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre Pret bancaire')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body("Votre Pret est maintenant disponible");
     }
 }

@@ -3,37 +3,40 @@
 namespace App\Notifications\Customer;
 
 use App\Helper\CustomerHelper;
+use App\Models\Customer\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class UpdateStatusAccountNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
+    public Customer $customer;
 
-    public $status;
-
-    /**
-     * @var null
-     */
-    public $reason;
+    public string $status;
 
     /**
-     * @var null
+     * @var string|null
      */
-    public $nameDocument;
+    public ?string $reason;
+
+    /**
+     * @var string|null
+     */
+    public ?string $nameDocument;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $status
-     * @param  null  $reason
-     * @param  null  $nameDocument
+     * @param Customer $customer
+     * @param string $status
+     * @param string|null $reason
+     * @param string|null $nameDocument
      */
-    public function __construct($customer, $status, $reason = null, $nameDocument = null)
+    public function __construct(Customer $customer, string $status,string $reason = null,string $nameDocument = null)
     {
         //
         $this->customer = $customer;
@@ -50,7 +53,7 @@ class UpdateStatusAccountNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', WebPushChannel::class];
     }
 
     /**
@@ -97,5 +100,13 @@ class UpdateStatusAccountNotification extends Notification
             'text' => 'Le status de votre compte est passée à: '.CustomerHelper::getStatusOpenAccount($this->status),
             'time' => now()->shortAbsoluteDiffForHumans(),
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre compte bancaire')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body('Le status de votre compte est passée à: '.CustomerHelper::getStatusOpenAccount($this->status));
     }
 }
