@@ -100,7 +100,7 @@ class CustomerWalletController extends Controller
                 $customer->user->notify(new \App\Notifications\Customer\CreateCreditCardNotification($customer, $credit_card, $doc_cb));
 
                 // Envoie du code carte bancaire par SMS
-                $customer->info->notify(new SendCodeCardNotification($customer, $credit_card->code, $credit_card));
+                $customer->info->notify(new SendCodeCardNotification($credit_card->code, $credit_card));
 
                 return response()->json([
                     'wallet' => $wallet,

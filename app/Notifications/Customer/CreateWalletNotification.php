@@ -2,28 +2,33 @@
 
 namespace App\Notifications\Customer;
 
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerDocument;
+use App\Models\Customer\CustomerWallet;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class CreateWalletNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
+    public Customer $customer;
 
-    public $wallet;
+    public CustomerWallet $wallet;
 
-    public $document;
+    public CustomerDocument $document;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $wallet
-     * @param $document
+     * @param Customer $customer
+     * @param CustomerWallet $wallet
+     * @param CustomerDocument $document
      */
-    public function __construct($customer, $wallet, $document)
+    public function __construct(Customer $customer, CustomerWallet $wallet, CustomerDocument $document)
     {
         //
         $this->customer = $customer;
@@ -39,7 +44,7 @@ class CreateWalletNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', WebPushChannel::class];
     }
 
     /**
@@ -57,5 +62,13 @@ class CreateWalletNotification extends Notification
                         'wallet' => $this->wallet,
                         'document' => $this->document,
                     ]);
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre nouveau compte bancaire est disponible')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body('Votre nouveau compte bancaire est maintenant actif');
     }
 }

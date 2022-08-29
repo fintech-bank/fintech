@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Agent\Customer;
 
+use App\Models\Customer\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -10,14 +11,14 @@ class ReinitAuthCustomer extends Notification
 {
     use Queueable;
 
-    public $customer;
+    public Customer $customer;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
+     * @param Customer $customer
      */
-    public function __construct($customer)
+    public function __construct(Customer $customer)
     {
         //
         $this->customer = $customer;

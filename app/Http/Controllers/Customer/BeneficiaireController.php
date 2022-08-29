@@ -6,6 +6,7 @@ use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Core\Bank;
 use App\Models\Customer\CustomerBeneficiaire;
+use App\Notifications\Customer\Webpush\CreateBeneficiaire;
 use Illuminate\Http\Request;
 use Intervention\Validation\Rules\Bic;
 use Intervention\Validation\Rules\Iban;
@@ -35,6 +36,7 @@ class BeneficiaireController extends Controller
 
         try {
             $beneficiaire = CustomerBeneficiaire::query()->create($request->all());
+            auth()->user()->notify(new CreateBeneficiaire($beneficiaire));
 
             return response()->json();
         } catch (\Exception $exception) {

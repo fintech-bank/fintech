@@ -5,6 +5,8 @@ namespace App\Notifications\Customer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class CheckCheckoutNotification extends Notification
 {
@@ -35,7 +37,7 @@ class CheckCheckoutNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', WebPushChannel::class];
     }
 
     /**
@@ -54,16 +56,11 @@ class CheckCheckoutNotification extends Notification
             ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    public function toWebPush($notifiable, $notification)
     {
-        return [
-            //
-        ];
+        return (new WebPushMessage)
+            ->title('Commande de chéquier')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body('Un nouveau chéquier à été commander sur votre compte');
     }
 }

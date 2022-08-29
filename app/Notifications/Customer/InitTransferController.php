@@ -6,6 +6,8 @@ use App\Helper\CustomerTransferHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class InitTransferController extends Notification
 {
@@ -32,7 +34,7 @@ class InitTransferController extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', WebPushChannel::class];
     }
 
     /**
@@ -66,5 +68,13 @@ class InitTransferController extends Notification
             'text' => 'Un virement de '.eur($this->transfer->amount).' à été initié pour '.CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire),
             'time' => now()->shortAbsoluteDiffForHumans(),
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Virement Bancaire')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body('Un virement de '.eur($this->transfer->amount).' à été initié pour '.CustomerTransferHelper::getNameBeneficiaire($this->transfer->beneficiaire));
     }
 }

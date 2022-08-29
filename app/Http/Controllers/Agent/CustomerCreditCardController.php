@@ -148,7 +148,7 @@ class CustomerCreditCardController extends Controller
                 'code' => $new_code,
             ]);
 
-            $card->wallet->customer->info->notify(new SendCodeCardNotification($card->wallet->customer, $new_code, $card));
+            $card->wallet->customer->info->notify(new SendCodeCardNotification($new_code, $card));
 
             return response()->json();
         } catch (\Exception $exception) {

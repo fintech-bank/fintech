@@ -2,28 +2,34 @@
 
 namespace App\Notifications\Customer;
 
+use App\Helper\CustomerLoanHelper;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerCreditCard;
+use App\Models\Customer\CustomerDocument;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class CreateCreditCardNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
+    public Customer $customer;
 
-    public $card;
+    public CustomerCreditCard $card;
 
-    public $document;
+    public CustomerDocument $document;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $card
-     * @param $document
+     * @param Customer $customer
+     * @param CustomerCreditCard $card
+     * @param CustomerDocument $document
      */
-    public function __construct($customer, $card, $document)
+    public function __construct(Customer $customer, CustomerCreditCard $card, CustomerDocument $document)
     {
         //
         $this->customer = $customer;
@@ -39,7 +45,7 @@ class CreateCreditCardNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', WebPushChannel::class];
     }
 
     /**
@@ -68,7 +74,19 @@ class CreateCreditCardNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'icon' => 'fa-creditcard',
+            'color' => 'primary',
+            'title' => 'Votre nouvelle carte bancaire',
+            'text' => 'Une nouvelle carte bancaire à été créer',
+            'time' => now()->shortAbsoluteDiffForHumans(),
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre nouvelle carte bancaire')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body('Une nouvelle carte bancaire à été créer');
     }
 }

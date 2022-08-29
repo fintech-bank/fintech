@@ -3,28 +3,32 @@
 namespace App\Notifications\Customer;
 
 use App\Helper\CustomerLoanHelper;
+use App\Models\Customer\Customer;
+use App\Models\Customer\CustomerPret;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class UpdateStatusLoanNotification extends Notification
 {
     use Queueable;
 
-    public $customer;
+    public Customer $customer;
 
-    public $loan;
+    public CustomerPret $loan;
 
-    public $status;
+    public string $status;
 
     /**
      * Create a new notification instance.
      *
-     * @param $customer
-     * @param $loan
-     * @param $status
+     * @param Customer $customer
+     * @param CustomerPret $loan
+     * @param string $status
      */
-    public function __construct($customer, $loan, $status)
+    public function __construct(Customer $customer, CustomerPret $loan, string $status)
     {
         //
         $this->customer = $customer;
@@ -40,7 +44,7 @@ class UpdateStatusLoanNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', WebPushChannel::class];
     }
 
     /**
@@ -75,5 +79,13 @@ class UpdateStatusLoanNotification extends Notification
             'text' => 'Le status de votre pret bancaire N°'.$this->loan->reference.' est passée à: '.CustomerLoanHelper::getStatusLoan($this->status),
             'time' => now()->shortAbsoluteDiffForHumans(),
         ];
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre Pret bancaire')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body('Le status de votre pret bancaire N°'.$this->loan->reference.' est passée à: '.CustomerLoanHelper::getStatusLoan($this->status, false));
     }
 }

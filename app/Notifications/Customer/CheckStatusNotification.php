@@ -6,6 +6,8 @@ use App\Helper\CustomerCheckHelper;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushChannel;
+use NotificationChannels\WebPush\WebPushMessage;
 
 class CheckStatusNotification extends Notification
 {
@@ -36,7 +38,7 @@ class CheckStatusNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', WebPushChannel::class];
     }
 
     /**
@@ -54,5 +56,13 @@ class CheckStatusNotification extends Notification
                 'check' => $this->check,
                 'check_status' => CustomerCheckHelper::getStatus($this->check->status),
             ]);
+    }
+
+    public function toWebPush($notifiable, $notification)
+    {
+        return (new WebPushMessage)
+            ->title('Votre commande de chéquier')
+            ->icon('/storage/logo/logo_carre.png')
+            ->body("L'état de votre commande de chéquier à été mise à jours");
     }
 }
