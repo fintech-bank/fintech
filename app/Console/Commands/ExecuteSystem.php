@@ -79,6 +79,9 @@ class ExecuteSystem extends Command
 
             case 'executeActiveAccount':
                 return $this->executeActiveAccount();
+
+            default:
+                $this->error("Aucun Argument");
         }
     }
 

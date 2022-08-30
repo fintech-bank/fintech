@@ -57,21 +57,31 @@ class LifeCommand extends Command
     {
         switch ($this->argument('action')) {
             case 'generateCustomer':
-                return $this->generateCustomer();
+                $this->generateCustomer();
+                break;
 
             case 'generateSalary':
-                return $this->generateSalary();
+                $this->generateSalary();
+                break;
 
             case 'generateDebit':
-                return $this->generateDebit();
+                $this->generateDebit();
+                break;
 
             case 'generatePrlvSepa':
-                return $this->generatePrlvSepa();
+                $this->generatePrlvSepa();
+                break;
 
             case 'generateMensualReleve':
-                return $this->generateMensualReleve();
+                $this->generateMensualReleve();
+                break;
+
+            default:
+                $this->error("Aucun Argument ");
 
         }
+
+        return null;
     }
 
     private function generateCustomer()
@@ -301,14 +311,15 @@ class LifeCommand extends Command
                     }
 
                     // Transfers du salaire
+                    $title = 'Virement Salaire '.now()->monthName;
                     CustomerTransactionHelper::create(
                         'credit',
                         'virement',
-                        'Virement Salaire '.now()->monthName,
+                        $title,
                         $customer->income->pro_incoming,
                         $account->id,
                         true,
-                        'Virement Salaire '.now()->monthName,
+                        $title,
                         now());
 
                     // Prise de la souscription
@@ -321,7 +332,8 @@ class LifeCommand extends Command
                             $account->id,
                             true,
                             'Cotisation Pack'.$customer->package->name.' - '.now()->monthName,
-                            now());
+                            now()
+                        );
                     }
                 }
             }
@@ -340,15 +352,17 @@ class LifeCommand extends Command
 
         foreach ($customers as $customer) {
             $wallet = $customer->wallets()->where('type', 'compte')->first();
-
+            $title = 'Virement Salaire '.now()->monthName;
             CustomerTransactionHelper::create(
                 'credit',
                 'virement',
-                'Virement Salaire '.now()->monthName,
+                $title,
+                $title,
                 $customer->income->pro_incoming,
                 $wallet->id,
                 true,
-                'Virement Salaire '.now()->monthName,
+                $title,
+                $title,
                 now());
         }
 
@@ -428,6 +442,8 @@ class LifeCommand extends Command
                                         }
                                     }
                                     break;
+                                default:
+                                    throw new \Exception('Unexpected value');
                             }
                             $nb++;
                         }
