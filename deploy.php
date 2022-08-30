@@ -29,10 +29,10 @@ task('deploy:secrets', function () {
 });
 
 host('fintech.ovh')
-    ->hostname('176.171.108.192')
-    ->stage('production')
-    ->user('root')
-    ->set('deploy_path', '/home/fintech/htdocs/fintech.ovh');
+    ->setHostname('176.171.108.192')
+    ->set('stage', 'production')
+    ->setRemoteUser('root')
+    ->setDeployPath('/home/fintech/htdocs/fintech.ovh');
 
 
 after('deploy:failed', 'deploy:unlock');
