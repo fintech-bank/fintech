@@ -71,7 +71,7 @@ class ImportDabs extends Command
 
                     $user = User::create([
                         'name' => $dab->name,
-                        'email' => Str::slug($dab->name).rand(1,500).'@'.$faker->safeEmailDomain,
+                        'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
                         'password' => \Hash::make('password'),
                         'customer' => 0,
                         'reseller' => 1,
@@ -137,7 +137,7 @@ class ImportDabs extends Command
 
                     $user = User::create([
                         'name' => $dab->name,
-                        'email' => Str::slug($dab->name).rand(1,500).'@'.$faker->safeEmailDomain,
+                        'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
                         'password' => \Hash::make('password'),
                         'customer' => 0,
                         'reseller' => 1,
@@ -203,7 +203,7 @@ class ImportDabs extends Command
 
                     $user = User::create([
                         'name' => $dab->name,
-                        'email' => Str::slug($dab->name).rand(1,500).'@'.$faker->safeEmailDomain,
+                        'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
                         'password' => \Hash::make('password'),
                         'customer' => 0,
                         'reseller' => 1,

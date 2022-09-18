@@ -109,7 +109,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function withdraw(Request $request, $card) {
+    public function withdraw(Request $request) {
 
         $card = \App\Models\Customer\CustomerCreditCard::find($request->get('card_id'));
         $code = Str::upper(Str::random(6));
