@@ -69,22 +69,7 @@ class ImportDabs extends Command
                         'place_id' => $tabac['place_id']
                     ]);
 
-                    $user = User::create([
-                        'name' => $dab->name,
-                        'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
-                        'password' => \Hash::make('password'),
-                        'customer' => 0,
-                        'reseller' => 1,
-                        'identifiant' => UserHelper::generateID(),
-                        'agency_id' => 1
-                    ]);
-
-                    $reseller = Reseller::create([
-                        'limit_outgoing' => 3500,
-                        'limit_incoming' => 10000,
-                        'user_id' => $user->id,
-                        'customer_withdraw_dabs_id' => $dab->id
-                    ]);
+                    $this->createUser($dab);
                     $ti++;
                 }
                 $this->info("Nombre de TABAC installé: " . $ti);
@@ -135,22 +120,7 @@ class ImportDabs extends Command
                         'place_id' => $bank['place_id']
                     ]);
 
-                    $user = User::create([
-                        'name' => $dab->name,
-                        'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
-                        'password' => \Hash::make('password'),
-                        'customer' => 0,
-                        'reseller' => 1,
-                        'identifiant' => UserHelper::generateID(),
-                        'agency_id' => 1
-                    ]);
-
-                    $reseller = Reseller::create([
-                        'limit_outgoing' => 3500,
-                        'limit_incoming' => 10000,
-                        'user_id' => $user->id,
-                        'customer_withdraw_dabs_id' => $dab->id
-                    ]);
+                    $this->createUser($dab);
                     $bi++;
                 }
                 $this->info("Nombre de Banque installé: " . $bi);
@@ -201,22 +171,7 @@ class ImportDabs extends Command
                         'place_id' => $supermarket['place_id']
                     ]);
 
-                    $user = User::create([
-                        'name' => $dab->name,
-                        'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
-                        'password' => \Hash::make('password'),
-                        'customer' => 0,
-                        'reseller' => 1,
-                        'identifiant' => UserHelper::generateID(),
-                        'agency_id' => 1
-                    ]);
-
-                    $reseller = Reseller::create([
-                        'limit_outgoing' => 3500,
-                        'limit_incoming' => 10000,
-                        'user_id' => $user->id,
-                        'customer_withdraw_dabs_id' => $dab->id
-                    ]);
+                    $this->createUser($dab);
 
                     $si++;
                 }
@@ -243,5 +198,26 @@ class ImportDabs extends Command
                 $this->info("Nombre de Banque mise à jours: " . $su);
             }
         }
+    }
+
+    private function createUser($dab)
+    {
+        $faker = Factory::create('fr_FR');
+        $user = User::create([
+            'name' => $dab->name,
+            'email' => Str::slug($dab->name).random_int(1,500).'@'.$faker->safeEmailDomain,
+            'password' => \Hash::make('password'),
+            'customer' => 0,
+            'reseller' => 1,
+            'identifiant' => UserHelper::generateID(),
+            'agency_id' => 1
+        ]);
+
+        $reseller = Reseller::create([
+            'limit_outgoing' => 3500,
+            'limit_incoming' => 10000,
+            'user_id' => $user->id,
+            'customer_withdraw_dabs_id' => $dab->id
+        ]);
     }
 }
