@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Core\Bank;
 use App\Models\Customer\Customer;
 use App\Services\BankFintech;
+use App\Services\GooglePlaceApi;
 use Auth;
 use Illuminate\Http\Request;
+use NSpehler\LaravelInsee\Facades\Insee;
+use Vicopo\Vicopo;
 
 class TestController extends Controller
 {
     public function test()
     {
-        $fin = new BankFintech();
-        $customer = Customer::find(1);
-        $agence = $customer->agency;
+        $api = new GooglePlaceApi();
+        //dd(geoip(\request()->ip()));
+        $c = $api->call('distributeur');
+        //$m = $c->where('opening_hours.open_now', true)->random();
 
-        dd($fin->callTransferDoc($customer, $agence, "MDB-GTFTDTKDKLLF-202208141705-00001"));
+        dd($c);
     }
 
     public function home()

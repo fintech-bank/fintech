@@ -64,6 +64,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerWallet
  * @property-read \App\Models\Customer\CustomerMobility|null $mobility
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerWithdraw[] $withdraws
+ * @property-read int|null $withdraws_count
  */
 class CustomerWallet extends Model
 {
@@ -138,5 +140,10 @@ class CustomerWallet extends Model
     public function mobility()
     {
         return $this->hasOne(CustomerMobility::class);
+    }
+
+    public function withdraws()
+    {
+        return $this->hasMany(CustomerWithdraw::class);
     }
 }

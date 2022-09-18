@@ -2,6 +2,7 @@
 
 namespace App\Models\Customer;
 
+use App\Helper\CustomerWalletHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -63,6 +64,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerCreditCard whereWarranty($value)
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerCreditCard
+ * @property-read bool $access_withdraw
+ * @property-read mixed $actual_limit_withdraw
+ * @property-read mixed $limit_withdraw
  */
 class CustomerCreditCard extends Model
 {
@@ -71,6 +75,7 @@ class CustomerCreditCard extends Model
     protected $guarded = [];
 
     public $timestamps = false;
+    protected $appends = ['limit_withdraw', 'access_withdraw', 'actual_limit_withdraw'];
 
     public function wallet()
     {
@@ -90,5 +95,24 @@ class CustomerCreditCard extends Model
     public function transactions()
     {
         return $this->hasMany(CustomerTransaction::class);
+    }
+
+    public function getLimitWithdrawAttribute()
+    {
+        return \App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($this);
+    }
+
+    public function getAccessWithdrawAttribute(): bool
+    {
+        if($this->wallet->status == 'active' && CustomerWalletHelper::getSoldeRemaining($this->wallet) < $this->limit_retrait && \App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($this) < $this->limit_retrait && $this->status == 'active') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getActualLimitWithdrawAttribute()
+    {
+        return \App\Helper\CustomerCreditCard::getTransactionsMonthWithdraw($this) - (-$this->limit_retrait);
     }
 }

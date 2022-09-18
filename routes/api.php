@@ -31,9 +31,22 @@ Route::get('/geo/cities/{postal}', [\App\Http\Controllers\Api\GeoController::cla
 
 Route::get('stats', [\App\Http\Controllers\Api\Agent\StatController::class, 'stat']);
 
+Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
+Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);
+Route::get('mobility/{mobility_id}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'getMobility']);
+
+Route::post('verifIban', \App\Http\Controllers\Api\IbanController::class);
+
+Route::get('dab', \App\Http\Controllers\Api\DabController::class);
+
+Route::prefix('versions')->group(function () {
+    Route::get('/types/all', [\App\Http\Controllers\Api\VersionController::class, 'typeAll']);
+});
+
 Route::prefix('customer')->group(function () {
     Route::post('/', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'info']);
     Route::post('verifSecure/{code}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifSecure']);
+    Route::get('{customer_id}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'get']);
     Route::get('{customer_id}/verifAllSolde', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifAllSolde']);
     Route::get('{customer_id}/verifUser', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'verifUser']);
 });
@@ -78,15 +91,15 @@ Route::prefix('card')->group(function () {
     Route::get('{card}/desactivate', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'desactivate']);
     Route::get('{card}/activate', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'activate']);
     Route::get('{card}/opposit', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'opposit']);
+    Route::get('{card}/requestWithdraw', [\App\Http\Controllers\Api\Customer\CustomerCreditCardController::class, 'requestWithdraw']);
 });
 
 Route::prefix('documents')->group(function () {
     Route::post('/lists', [\App\Http\Controllers\Api\Customer\DocumentController::class, 'lists']);
 });
 
-
-Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
-Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);
-Route::get('mobility/{mobility_id}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'getMobility']);
-
-Route::post('verifIban', \App\Http\Controllers\Api\IbanController::class);
+Route::prefix('withdraw')->group(function () {
+    Route::post('/', [\App\Http\Controllers\Api\Withdraw\WithdrawController::class, 'info']);
+    Route::get('/{id}', [\App\Http\Controllers\Api\Withdraw\WithdrawController::class, 'get']);
+    Route::delete('/{id}', [\App\Http\Controllers\Api\Withdraw\WithdrawController::class, 'delete']);
+});

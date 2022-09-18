@@ -6,6 +6,7 @@ use App\Models\Core\Agency;
 use App\Models\Core\Package;
 use App\Models\Core\TicketConversation;
 use App\Models\Customer\Customer;
+use App\Models\Reseller\Reseller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -66,6 +67,17 @@ use NotificationChannels\WebPush\HasPushSubscriptions;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @mixin IdeHelperUser
+ * @property-read Reseller|null $reseller
+ * @property string|null $stripe_id
+ * @property string|null $pm_type
+ * @property string|null $pm_last_four
+ * @property string|null $trial_ends_at
+ * @property-read Reseller|null $revendeur
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePmLastFour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePmType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereReseller($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereStripeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereTrialEndsAt($value)
  */
 class User extends Authenticatable
 {
@@ -115,5 +127,10 @@ class User extends Authenticatable
     public function agency()
     {
         return $this->belongsTo(Agency::class);
+    }
+
+    public function revendeur()
+    {
+        return $this->hasOne(Reseller::class);
     }
 }

@@ -160,7 +160,7 @@ class CustomerCreditCard
                 ->where('type', 'retrait')
                 ->where('confirmed', true)
                 ->where('customer_credit_card_id', $card->id)
-                ->whereBetween('confirmed_at', [now()->startOfMonth(), now()->endOfMonth()])
+                ->whereBetween('confirmed_at', [now()->subDays(7), now()])
                 ->get()
                 ->sum('amount');
         } else {
@@ -168,7 +168,7 @@ class CustomerCreditCard
                         ->where('type', 'retrait')
                         ->where('confirmed', true)
                         ->where('customer_credit_card_id', $card->id)
-                        ->whereBetween('confirmed_at', [now()->startOfMonth(), now()->endOfMonth()])
+                        ->whereBetween('confirmed_at', [now()->subDays(7), now()])
                         ->get()
                         ->sum('amount');
 

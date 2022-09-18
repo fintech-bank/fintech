@@ -6,6 +6,7 @@ use App\Http\Middleware\UserActivity;
 use App\Http\Middleware\UserIsAdminMiddleware;
 use App\Http\Middleware\UserIsAgentMiddleware;
 use App\Http\Middleware\UserIsCustomerMiddleware;
+use App\Http\Middleware\UserIsResellerMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -72,5 +73,6 @@ class Kernel extends HttpKernel
         'admin' => UserIsAdminMiddleware::class,
         'agent' => UserIsAgentMiddleware::class,
         'customer' => UserIsCustomerMiddleware::class,
+        'reseller' => UserIsResellerMiddleware::class,
     ];
 }

@@ -22,6 +22,8 @@ class HomeController extends Controller
             return redirect()->route('admin.dashboard');
         } elseif (auth()->user()->agent == 1) {
             return redirect()->route('agent.dashboard');
+        } elseif(auth()->user()->reseller == 1) {
+            return redirect()->route('reseller.dashboard');
         } else {
             if (auth()->user()->customers->status_open_account == 'terminated') {
                 return redirect()->route('customer.dashboard');

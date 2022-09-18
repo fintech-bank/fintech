@@ -49,4 +49,14 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             Route::resource('subcategory', \App\Http\Controllers\Admin\CmsSubcategoryController::class)->only('index', 'store', 'destroy');
         });
     });
+
+    Route::prefix('version')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\VersionController::class, 'index'])->name('admin.version.index');
+        Route::get('create', [\App\Http\Controllers\Admin\VersionController::class, 'create'])->name('admin.version.create');
+        Route::post('create', [\App\Http\Controllers\Admin\VersionController::class, 'store'])->name('admin.version.store');
+        Route::get('{version}', [\App\Http\Controllers\Admin\VersionController::class, 'show'])->name('admin.version.show');
+        Route::get('{version}/edit', [\App\Http\Controllers\Admin\VersionController::class, 'edit'])->name('admin.version.edit');
+        Route::put('{version}/edit', [\App\Http\Controllers\Admin\VersionController::class, 'update'])->name('admin.version.update');
+        Route::delete('{version}', [\App\Http\Controllers\Admin\VersionController::class, 'destroy'])->name('admin.version.destroy');
+    });
 });

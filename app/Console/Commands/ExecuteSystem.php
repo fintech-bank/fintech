@@ -79,6 +79,9 @@ class ExecuteSystem extends Command
 
             case 'executeActiveAccount':
                 return $this->executeActiveAccount();
+
+            default:
+                $this->error("Aucun Argument");
         }
     }
 
@@ -265,10 +268,12 @@ class ExecuteSystem extends Command
 
         try {
             foreach ($transactions as $transaction) {
-                if ($transaction->updated_at->between(now()->startOfDay(), now()->endOfDay())) {
-                    if ($transaction->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
-                        CustomerTransactionHelper::updated($transaction);
-                        $v++;
+                if($transaction->withdraw()->count() != 1) {
+                    if ($transaction->updated_at->between(now()->startOfDay(), now()->endOfDay())) {
+                        if ($transaction->amount <= CustomerWalletHelper::getSoldeRemaining($transaction->wallet)) {
+                            CustomerTransactionHelper::updated($transaction);
+                            $v++;
+                        }
                     }
                 }
             }

@@ -54,6 +54,8 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
         Route::post('/', [\App\Http\Controllers\Customer\PaymentController::class, 'store'])->name('customer.payment.store');
         Route::get('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'show'])->name('customer.payment.show');
         Route::put('{card_id}', [\App\Http\Controllers\Customer\PaymentController::class, 'update'])->name('customer.payment.update');
+
+        Route::post('{card_id}/withdraw', [\App\Http\Controllers\Customer\PaymentController::class, 'withdraw'])->name('customer.payment.withdraw');
     });
 
     Route::prefix('documents')->group(function () {

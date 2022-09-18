@@ -18,8 +18,20 @@ include 'front.php';
 include 'admin.php';
 include 'agent.php';
 include 'customer.php';
+include 'reseller.php';
 
 Route::get('/redirect', [\App\Http\Controllers\Front\HomeController::class, 'redirect']);
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'test']);
 Route::get('/home', [\App\Http\Controllers\TestController::class, 'home']);
 Route::post('/push', [\App\Http\Controllers\TestController::class, 'pushStore']);
+Route::post('webhooks/stripe', [\App\Http\Controllers\StripeWebhookController::class, 'handleWebhook']);
+
+Route::get('/fetch-url', function(\Illuminate\Http\Request $request){
+    return response()->json(LaravelEditorJs\Misc\UrlFetcher::fetch($request));
+});
+Route::post('/upload-file', function(\Illuminate\Http\Request $request){
+    return response()->json(LaravelEditorJs\Misc\FileUpload::upload($request));
+});
+Route::post('/fetch-url-image', function(\Illuminate\Http\Request $request){
+    return response()->json(LaravelEditorJs\Misc\FileUpload::fetchImage($request));
+});

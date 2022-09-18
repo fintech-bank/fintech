@@ -82,6 +82,41 @@
                     @else
                         <span class="text-success">{{ eur($wallet->balance_actual) }} <i class="fa-solid fa-arrow-right fa-lg ms-2"></i></span>
                     @endif
+                    @if($wallet)
+                    <div class="modal fade" tabindex="-1" id="export_account">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-bank">
+                                    <h5 class="modal-title text-white">Export d'écriture</h5>
+
+                                    <!--begin::Close-->
+                                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="fa-solid fa-times fa-lg text-white"></i>
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+
+                                <form id="formExportAccount" action="/api/wallet/{{ $wallet->id }}/exportAccount" method="POST">
+                                    <div class="modal-body">
+                                        <x-form.input-date
+                                            name="start"
+                                            type="text"
+                                            label="Date de début" />
+
+                                        <x-form.input-date
+                                            name="end"
+                                            type="text"
+                                            label="Date de fin" />
+                                    </div>
+
+                                    <div class="modal-footer d-flex flex-wrap">
+                                        <button type="submit" class="btn btn-bank w-100">Télécharger</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             @endforeach
             <div class="mb-3 fs-4">Epargnes disponible</div>
@@ -244,39 +279,6 @@
                 <div class="modal-footer d-flex flex-wrap">
                     <a href="" target="_blank" class="btn btn-bank w-100">Télécharger</a>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" tabindex="-1" id="export_account">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-bank">
-                    <h5 class="modal-title text-white">Export d'écriture</h5>
-
-                    <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="fa-solid fa-times fa-lg text-white"></i>
-                    </div>
-                    <!--end::Close-->
-                </div>
-
-                <form id="formExportAccount" action="/api/wallet/{{ $wallet->id }}/exportAccount" method="POST">
-                    <div class="modal-body">
-                        <x-form.input-date
-                            name="start"
-                            type="text"
-                            label="Date de début" />
-
-                        <x-form.input-date
-                            name="end"
-                            type="text"
-                            label="Date de fin" />
-                    </div>
-
-                    <div class="modal-footer d-flex flex-wrap">
-                        <button type="submit" class="btn btn-bank w-100">Télécharger</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

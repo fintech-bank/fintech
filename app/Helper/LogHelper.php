@@ -35,4 +35,9 @@ class LogHelper
             default: return 'Debug';
         }
     }
+
+    public static function error(string $exception, $t = null)
+    {
+        \Log::error($exception, $t);
+    }
 }

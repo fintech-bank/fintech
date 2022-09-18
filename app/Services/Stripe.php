@@ -6,10 +6,11 @@ use Stripe\StripeClient;
 
 class Stripe
 {
-    public $client;
+    public StripeClient $client;
 
     public function __construct()
     {
         $this->client = new StripeClient(config('services.stripe.api_secret'));
     }
+
 }
