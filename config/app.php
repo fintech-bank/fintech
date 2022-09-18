@@ -170,6 +170,10 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Illuminate\Notifications\OvhSmsChannelServiceProvider::class,
+        \Torann\GeoIP\GeoIPServiceProvider::class,
+        SKAgarwal\GoogleApi\ServiceProvider::class,
+        \App\Providers\StripeServiceProvider::class,
+        LaravelEditorJs\LaravelEditorJsProvider::class,
         /*
          * Application Service Providers...
          */
@@ -202,6 +206,9 @@ return [
         'AWS' => Aws\Laravel\AwsFacade::class,
         'PDF' => \Barryvdh\DomPDF\Facade\Pdf::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'GooglePlaces' => SKAgarwal\GoogleApi\Facade::class,
+        'StripeIdentity' => \App\Services\Stripe\Facade\StripeIdentityFacade::class,
     ])->toArray(),
 
 ];

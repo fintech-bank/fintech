@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Customer;
 
 use App\Helper\CustomerCreditCard;
 use App\Helper\CustomerFaceliaHelper;
+use App\Helper\CustomerTransactionHelper;
+use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
+use App\Models\Customer\CustomerWithdraw;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
     public function index()
     {
         //dd(auth()->user()->customers->wallets()->where('customer_id', auth()->user()->customers->id)->where('type', '!=', 'pret')->where('status', 'active')->get());
-
+        //dd(geoip(\request()->ip()));
         return view('customer.payment.index', [
             'customer' => auth()->user()->customers,
         ]);
@@ -105,6 +109,60 @@ class PaymentController extends Controller
         }
     }
 
+    public function withdraw(Request $request, $card) {
+
+        $card = \App\Models\Customer\CustomerCreditCard::find($request->get('card_id'));
+        $code = Str::upper(Str::random(6));
+        try {
+            $withdraw = CustomerWithdraw::create([
+                'reference' => Str::upper(Str::random(10)),
+                'amount' => $request->get('amount'),
+                'customer_wallet_id' => $card->wallet->id,
+                'customer_withdraw_dab_id' => $request->get('dab'),
+                'code' => base64_encode($code)
+            ]);
+
+            $transaction = CustomerTransactionHelper::create(
+                'debit',
+                'retrait',
+                'Retrait DAB '.$withdraw->reference.' - '.$withdraw->dab->name,
+                $withdraw->amount,
+                $card->wallet->id,
+                false,
+                'Retrait DAB '.$withdraw->reference.' - '.$withdraw->dab->name,
+                null,
+                now(),
+                $card->id
+            );
+
+            $withdraw->update([
+                'customer_transaction_id' => $transaction->id
+            ]);
+
+            DocumentFile::createDoc(
+                $card->wallet->customer,
+                'withdraw',
+                'Retrait Bancaire - '.$withdraw->updated_at->format('dmYHi').' - '.$withdraw->reference,
+                2,
+                $withdraw->reference,
+                true,
+                true,
+                true,
+                true,
+                ['withdraw' => $withdraw]
+            );
+
+            return response()->json();
+        }catch (\Exception $exception) {
+            LogHelper::error($exception->getMessage(), $exception);
+            return response()->json([
+                'errors' => [
+                    $exception->getMessage()
+                ]
+            ], 500);
+        }
+    }
+
     private function updateState($request, $card)
     {
         try {
@@ -116,7 +174,7 @@ class PaymentController extends Controller
 
             return response()->json();
         } catch (\Exception $exception) {
-            LogHelper::notify('critical', $exception);
+            LogHelper::error($exception->getMessage(), $exception);
 
             return response()->json([
                 'errors' => [
@@ -147,7 +205,7 @@ class PaymentController extends Controller
 
             return response()->json();
         } catch (\Exception $exception) {
-            LogHelper::notify('critical', $exception);
+            LogHelper::error($exception->getMessage(), $exception);
 
             return response()->json([
                 'errors' => [
@@ -156,4 +214,5 @@ class PaymentController extends Controller
             ], 500);
         }
     }
+
 }

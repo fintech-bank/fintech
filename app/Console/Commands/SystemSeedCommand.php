@@ -95,6 +95,9 @@ class SystemSeedCommand extends Command
         $this->info('Seeding: Liste des Sous Catégories de pages');
         $this->call('db:seed', ['class' => 'CmsSubCategorySeeder', 'force']);
 
+        $this->info("Seeding: Import des zones de retraits bancaires");
+        $this->call("import:dabs", ['force']);
+
         if ($this->option('test')) {
             $this->info('Seeding TESTING: Création de la base client');
             $this->createCustomer();

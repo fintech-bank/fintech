@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerTransaction whereUuid($value)
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerTransaction
+ * @property-read \App\Models\Customer\CustomerWithdraw|null $withdraw
  */
 class CustomerTransaction extends Model
 {
@@ -61,5 +62,10 @@ class CustomerTransaction extends Model
     public function card()
     {
         return $this->belongsTo(CustomerCreditCard::class, 'customer_credit_card_id');
+    }
+
+    public function withdraw()
+    {
+        return $this->hasOne(CustomerWithdraw::class);
     }
 }

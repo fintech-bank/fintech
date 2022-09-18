@@ -17884,6 +17884,283 @@
      
 }
 
+    namespace Torann\GeoIP\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class GeoIP {
+                    /**
+         * Get the location from the provided IP.
+         *
+         * @param string $ip
+         * @return \Torann\GeoIP\Location 
+         * @throws \Exception
+         * @static 
+         */ 
+        public static function getLocation($ip = null)
+        {
+                        /** @var \Torann\GeoIP\GeoIP $instance */
+                        return $instance->getLocation($ip);
+        }
+                    /**
+         * Get the currency code from ISO.
+         *
+         * @param string $iso
+         * @return string 
+         * @static 
+         */ 
+        public static function getCurrency($iso)
+        {
+                        /** @var \Torann\GeoIP\GeoIP $instance */
+                        return $instance->getCurrency($iso);
+        }
+                    /**
+         * Get service instance.
+         *
+         * @return \Torann\GeoIP\Contracts\ServiceInterface 
+         * @throws Exception
+         * @static 
+         */ 
+        public static function getService()
+        {
+                        /** @var \Torann\GeoIP\GeoIP $instance */
+                        return $instance->getService();
+        }
+                    /**
+         * Get cache instance.
+         *
+         * @return \Torann\GeoIP\Cache 
+         * @static 
+         */ 
+        public static function getCache()
+        {
+                        /** @var \Torann\GeoIP\GeoIP $instance */
+                        return $instance->getCache();
+        }
+                    /**
+         * Get the client IP address.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getClientIP()
+        {
+                        /** @var \Torann\GeoIP\GeoIP $instance */
+                        return $instance->getClientIP();
+        }
+                    /**
+         * Get configuration value.
+         *
+         * @param string $key
+         * @param mixed $default
+         * @return mixed 
+         * @static 
+         */ 
+        public static function config($key, $default = null)
+        {
+                        /** @var \Torann\GeoIP\GeoIP $instance */
+                        return $instance->config($key, $default);
+        }
+         
+    }
+     
+}
+
+    namespace SKAgarwal\GoogleApi { 
+            /**
+     * 
+     *
+     */ 
+        class Facade {
+                    /**
+         * Find Place Request to google places api.
+         *
+         * @param string $input (for example, a name, address, or phone number)
+         * @param string $inputType (textquery or phonenumber)
+         * @param array $params
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function findPlace($input, $inputType, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->findPlace($input, $inputType, $params);
+        }
+                    /**
+         * Place Nearby Search Request to google api.
+         *
+         * @param string $location
+         * @param string|null $radius
+         * @param array $params
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function nearbySearch($location, $radius = null, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->nearbySearch($location, $radius, $params);
+        }
+                    /**
+         * Place Text Search Request to google places api.
+         *
+         * @param string $query
+         * @param array $params
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function textSearch($query, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->textSearch($query, $params);
+        }
+                    /**
+         * Place Details Request to google places api.
+         *
+         * @param string $placeId
+         * @param array $params
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function placeDetails($placeId, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->placeDetails($placeId, $params);
+        }
+                    /**
+         * 
+         *
+         * @param string $photoReference
+         * @param array $params
+         * @throws \GuzzleHttp\Exception\GuzzleException
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return mixed|string 
+         * @static 
+         */ 
+        public static function photo($photoReference, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->photo($photoReference, $params);
+        }
+                    /**
+         * Place AutoComplete Request to google places api.
+         *
+         * @param string $input
+         * @param array $params
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function placeAutocomplete($input, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->placeAutocomplete($input, $params);
+        }
+                    /**
+         * Query AutoComplete Request to the Google api.
+         *
+         * @param string $input
+         * @param array $params
+         * @throws \SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function queryAutocomplete($input, $params = [])
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->queryAutocomplete($input, $params);
+        }
+                    /**
+         * 
+         *
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getStatus()
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->getStatus();
+        }
+                    /**
+         * 
+         *
+         * @return string|null 
+         * @static 
+         */ 
+        public static function getKey()
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->getKey();
+        }
+                    /**
+         * 
+         *
+         * @param string $key
+         * @return \SKAgarwal\GoogleApi\PlacesApi 
+         * @static 
+         */ 
+        public static function setKey($key)
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->setKey($key);
+        }
+                    /**
+         * 
+         *
+         * @param bool $verifySSL
+         * @return \SKAgarwal\GoogleApi\PlacesApi 
+         * @static 
+         */ 
+        public static function verifySSL($verifySSL = true)
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->verifySSL($verifySSL);
+        }
+                    /**
+         * 
+         *
+         * @param array $headers
+         * @return \SKAgarwal\GoogleApi\PlacesApi 
+         * @static 
+         */ 
+        public static function withHeaders($headers)
+        {
+                        /** @var \SKAgarwal\GoogleApi\PlacesApi $instance */
+                        return $instance->withHeaders($headers);
+        }
+         
+    }
+     
+}
+
+    namespace App\Services\Stripe\Facade { 
+            /**
+     * 
+     *
+     */ 
+        class StripeIdentityFacade {
+                    /**
+         * 
+         *
+         * @param array $metadata
+         * @return \Stripe\Identity\VerificationSession 
+         * @throws ApiErrorException
+         * @static 
+         */ 
+        public static function createIdentitySession($metadata)
+        {
+                        /** @var \App\Services\Stripe\Identity $instance */
+                        return $instance->createIdentitySession($metadata);
+        }
+         
+    }
+     
+}
+
     namespace Alimranahmed\LaraOCR\Facades { 
             /**
      * 
@@ -23975,6 +24252,9 @@ namespace  {
             class AWS extends \Aws\Laravel\AwsFacade {}
             class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Agent extends \Jenssegers\Agent\Facades\Agent {}
+            class GeoIP extends \Torann\GeoIP\Facades\GeoIP {}
+            class GooglePlaces extends \SKAgarwal\GoogleApi\Facade {}
+            class StripeIdentity extends \App\Services\Stripe\Facade\StripeIdentityFacade {}
             class OCR extends \Alimranahmed\LaraOCR\Facades\OCR {}
             class LaRecipe extends \BinaryTorch\LaRecipe\LaRecipe {}
             class Breadcrumbs extends \Diglactic\Breadcrumbs\Breadcrumbs {}

@@ -39,6 +39,19 @@ class CustomerController extends Controller
         }
     }
 
+    public function get($customer_id)
+    {
+        $customer = Customer::find($customer_id);
+
+        $wallets = $customer->wallets()->where('type', 'compte')->where('status', 'active')->get();
+
+
+        return response()->json([
+            "customer" => $customer,
+            "wallets" => $wallets
+        ]);
+    }
+
     public function verifAllSolde($customer_id)
     {
         $customer = Customer::find($customer_id);

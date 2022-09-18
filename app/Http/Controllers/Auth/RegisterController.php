@@ -325,7 +325,7 @@ class RegisterController extends Controller
 
         // Envoie du mot de passe provisoire par SMS avec identifiant
         try {
-            $info->notify(new SendPasswordSms($password));
+            $info->notify(new SendPasswordSms($customer, $password));
         }catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
         }

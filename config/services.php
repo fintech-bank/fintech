@@ -63,6 +63,10 @@ return [
 
     'selectra' => [
         'token' => env('API_SELECTRA_TOKEN')
+    ],
+
+    'google_api' => [
+        'api_key' => env("GOOGLE_API_KEY")
     ]
 
 ];

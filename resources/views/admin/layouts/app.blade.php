@@ -30,6 +30,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Page Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/plugins/custom/editormd/css/editormd.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/custom.css" rel="stylesheet" type="text/css" />
     @yield("css")
@@ -85,6 +86,7 @@ License: For each use you must have a valid license purchased only from above li
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+<script src="/assets/plugins/custom/editormd/editormd.min.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

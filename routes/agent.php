@@ -113,4 +113,8 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function () {
         Route::get('/', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'all'])->name('agent.loan.all');
         Route::get('{loan_id}', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'show'])->name('agent.loan.show');
     });
+
+    Route::prefix('withdraw')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Agent\CustomerWithdrawController::class, 'index'])->name('agent.withdraw.index');
+    });
 });

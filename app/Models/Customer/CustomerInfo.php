@@ -5,6 +5,7 @@ namespace App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 /**
  * App\Models\Customer\CustomerInfo
@@ -62,10 +63,13 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|CustomerInfo whereType($value)
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerInfo
+ * @property-read \Illuminate\Database\Eloquent\Collection|\NotificationChannels\WebPush\PushSubscription[] $pushSubscriptions
+ * @property-read int|null $push_subscriptions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|CustomerInfo verified()
  */
 class CustomerInfo extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasPushSubscriptions;
 
     protected $guarded = [];
 
@@ -76,6 +80,13 @@ class CustomerInfo extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function scopeVerified($query)
+    {
+        return $query->update([
+            'isVerified' => 1
+        ]);
     }
 
     public function routeNotificationForTwilio()

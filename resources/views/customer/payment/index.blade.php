@@ -156,6 +156,177 @@
         <span class="">Prélèvements reçus</span>
         <i class="fa-solid fa-angle-right"></i>
     </a>
+
+    <x-base.underline
+        title="Retrait Bancaire" class="w-450px mt-5 mb-5" />
+    @if($customer->info->isVerified == false)
+        <!--begin::Alert-->
+        <div class="alert alert-dismissible bg-warning d-flex flex-column flex-sm-row p-5 mb-10">
+            <!--begin::Icon-->
+            <!--<span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0">...</span>-->
+            <i class="fa-solid fa-warning text-white fa-2x me-4 mb-5 mb-sm-0"></i>
+            <!--end::Icon-->
+
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                <!--begin::Title-->
+                <h4 class="mb-2 text-white">Votre identité n'est pas vérifier</h4>
+                <!--end::Title-->
+
+                <!--begin::Content-->
+                <span>Veuillez vérifier votre identité avant d'effectuer une demande de retrait.</span>
+                <!--end::Content-->
+            </div>
+            <!--end::Wrapper-->
+
+            <!--begin::Close-->
+            <a href="{{ route('customer.profil.index') }}" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto">
+                <i class="fa-solid fa-up-right-from-square fa-lg text-white"></i>
+            </a>
+            <!--end::Close-->
+        </div>
+        <!--end::Alert-->
+    @else
+        @if(!isset($customer->wallets()->where('type', 'compte')->where('status', 'active')->first()->cards()->first()->id))
+            <!--begin::Alert-->
+            <div class="alert alert-dismissible bg-danger d-flex flex-column flex-sm-row p-5 mb-10">
+                <!--begin::Icon-->
+                <!--<span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-5 mb-sm-0">...</span>-->
+                <i class="fa-solid fa-xmark text-white fa-2x me-4 mb-5 mb-sm-0"></i>
+                <!--end::Icon-->
+
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                    <!--begin::Title-->
+                    <h4 class="mb-2 text-white">Aucune carte bancaire détecté</h4>
+                    <!--end::Title-->
+
+                    <!--begin::Content-->
+                    <span>Veuillez commander une nouvelle carte bancaire ou contacter un conseiller par chat.</span>
+                    <!--end::Content-->
+                </div>
+                <!--end::Wrapper-->
+
+            </div>
+            <!--end::Alert-->
+        @else
+            <div class="card card-flush shadow-sm mb-10" id="withdrawCheckout" data-card="{{ $customer->wallets()->where('type', 'compte')->where('status', 'active')->first()->cards()->first()->id }}">
+                <div class="card-header bg-bank">
+                    <h3 class="card-title text-white">Demande de retrait bancaire</h3>
+                </div>
+                <div class="card-body py-5">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="d-flex flex-column w-75" style="border-right: 2px solid #505050">
+                            <div class="d-flex flex-row align-items-center mb-3" >
+                                <div class="symbol symbol-50px symbol-circle me-3">
+                                    <div class="symbol-label fs-2 fw-semibold text-success">
+                                        <i class="fa-solid fa-lg" data-control="account_status"></i>
+                                    </div>
+                                </div>
+                                <div class="fs-3">Compte Positif</div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-3">
+                                <div class="symbol symbol-50px symbol-circle me-3">
+                                    <div class="symbol-label fs-2 fw-semibold text-success">
+                                        <i class="fa-solid fa-lg" data-control="card_status"></i>
+                                    </div>
+                                </div>
+                                <div class="fs-3">Carte bancaire active</div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-3">
+                                <div class="symbol symbol-50px symbol-circle me-3">
+                                    <div class="symbol-label fs-2 fw-semibold text-success">
+                                        <i class="fa-solid fa-lg" data-control="accept_withdraw"></i>
+                                    </div>
+                                </div>
+                                <div class="fs-3">Limite de retrait acceptable</div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column w-25 m-10">
+                            <div class="d-flex flex-column mb-5">
+                                <div class="">Limite de retrait</div>
+                                <div class="fs-2" data-control="limit_withdraw">
+                                    Chargement... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <div class="">Retrait actuel du compte</div>
+                                <div class="fs-2" data-control="used_withdraw">
+                                    Chargement... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column mb-5">
+                                <div class="">Limite de retrait actuel</div>
+                                <div class="fs-2" data-control="reste_withdraw">
+                                    Chargement... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex flex-end">
+                        <button class="btn btn-bank btn-withdraw-checkout" disabled="disabled">Effectuer une demande</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-flush shadow-sm">
+                <div class="card-header bg-bank">
+                    <h3 class="card-title text-white">Liste de mes retraits</h3>
+                </div>
+                <div class="card-body py-5">
+                    <table class="table table-striped" id="tableCustomerWithdraw">
+                        <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Montant</th>
+                            <th>Etat</th>
+                            <th>Date Limite de retrait</th>
+                            <th>Distributeur</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($customer->wallets()->where('type', 'compte')->where('status', 'active')->get() as $wallet)
+                            @foreach($wallet->withdraws as $with)
+                                <tr>
+                                    <td>{{ $with->reference }}</td>
+                                    <td>{{ eur($with->amount) }}</td>
+                                    <td>{!! \App\Helper\CustomerWithdrawHelper::getStatusWithdraw($with->status, true) !!}</td>
+                                    <td>{{ $with->created_at->addDays(5)->format('d/m/Y H:i') }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-sm-center mb-7">
+                                            <!--begin::Symbol-->
+                                            <div class="symbol symbol-50px me-5">
+												<span class="symbol-label">
+													<i class="fa-solid fa-exchange"></i>
+												</span>
+                                            </div>
+                                            <!--end::Symbol-->
+                                            <!--begin::Section-->
+                                            <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                                                <div class="flex-grow-1 me-2">
+                                                    <a href="" class="text-gray-800 text-hover-primary fs-6 fw-bold showMap" data-lat="{{ $with->dab->latitude }}" data-lng="{{ $with->dab->longitude }}" data-dab="{{ $with->dab->id }}">{{ $with->dab->name }}</a>
+                                                    <span class="text-muted fw-semibold d-block fs-7">{{ $with->dab->address }}, {{ $with->dab->postal }} {{ $with->dab->city }}</span>
+                                                </div>
+                                            </div>
+                                            <!--end::Section-->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-circle btn-primary btn-icon btnShowCode" data-id="{{ $with->id }}" data-bs-toggle="tooltip" title="Voir le code de retrait"><i class="fa-solid fa-hashtag"></i> </button>
+                                        <button class="btn btn-circle btn-danger btn-icon btnCancelWithdraw" data-id="{{ $with->id }}" data-bs-toggle="tooltip" title="Annuler le retrait"><i class="fa-solid fa-xmark"></i> </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @endif
+    @endif
+
     <div class="modal fade" tabindex="-1" id="AddCard">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -387,8 +558,138 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" tabindex="-1" id="RequestWithdraw" data-bs-focus="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h3 class="modal-title text-white">Demande de retrait</h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <form id="formRequestWithdraw" action="{{ route('customer.payment.withdraw', $customer->wallets()->where('type', 'compte')->where('status', 'active')->first()->cards()->first()->id) }}" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-10">
+                            <label for="" class="form-label required">Montant du retrait</label>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div id="slider_amount_withdraw"></div>
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" name="amount" class="form-control form-control-solid" id="amount_withdraw">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-10">
+                            <label for="card_id" class="form-label">Carte de retrait</label>
+                            <select id="card_id" class="form-select form-select-solid" data-control="select2" name="card_id" data-placeholder="Select an option" data-allow-clear="true">
+                                <option></option>
+                                @foreach($customer->wallets()->where('type', 'compte')->where('status', 'active')->first()->cards()->get() as $card)
+                                    <option value="{{ $card->id }}">Carte Bancaire {{ \App\Helper\CustomerCreditCard::getCreditCard($card->number) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-10">
+                            <label for="" class="form-label required">Distributeur disponible</label>
+                            <select class="form-select form-select-solid" name="dab" data-dropdown-parent="#RequestWithdraw" data-placeholder="Select an option" data-allow-clear="true">
+                                <option value=""></option>
+                                @foreach(\App\Models\Customer\CustomerWithdrawDab::where('postal', geoip(request()->ip())->postal_code)->get() as $dab)
+                                    <option value="{{ $dab->id }}"
+                                            data-name="{{ $dab->name }}"
+                                            data-address="{{ $dab->address }}, {{ $dab->postal }} {{ $dab->city }}"
+                                            data-img="{{ $dab->img }}"
+                                            data-open="{{ $dab->open }}"
+                                            data-lat="{{ $dab->latitude }}"
+                                            data-lon="{{ $dab->longitude }}"
+                                    >{{ $dab->name }}</option>
+                                @endforeach
+                            </select>
+                            <div id="map" class="mt-10" style="height: 300px"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <x-form.button />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="infoDab">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h3 class="modal-title text-white" data-info="name"></h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex flex-row justify-content-between align-items-center">
+                        <div class="d-flex flex-column">
+                            <div class="mb-10 d-flex flex-row align-items-center">
+                                <div class="symbol symbol-50px me-5">
+                                    <i class="fa-solid fa-3x fa-shopping-bag text-bank"></i>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <strong>Adresse</strong>
+                                    <p data-info="address">
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mb-10 d-flex flex-row align-items-center">
+                                <div class="symbol symbol-50px me-5">
+                                    <i class="fa-solid fa-3x text-bank fa-lock"></i>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <strong>Etat</strong>
+                                    <div data-info="status"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mapDab" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="showCode">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h3 class="modal-title text-white" data-content="title"></h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="d-flex flex-column flex-center">
+                        <div class="fs-2tx fw-bolder" data-content="code"></div>
+                        <div class="fs-3 text-muted countdown"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section("script")
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.api_key') }}&v=weekly"
+        defer
+    ></script>
+    <script src="https://raw.githubusercontent.com/mckamey/countdownjs/master/countdown.min.js"></script>
     @include("customer.scripts.payment.index")
 @endsection

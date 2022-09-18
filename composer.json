@@ -28,6 +28,7 @@
         "laravel-notification-channels/authy": "^9.1",
         "laravel-notification-channels/twilio": "^3.2",
         "laravel-notification-channels/webpush": "^7.0",
+        "laravel/cashier": "^14.1",
         "laravel/fortify": "^1.12",
         "laravel/framework": "^9.2",
         "laravel/horizon": "^5.9",
@@ -44,10 +45,14 @@
         "rinvex/laravel-authy": "^9.1",
         "rockett/weasyprint": "^6.1",
         "rplansky/credit-card": "dev-master",
+        "skagarwal/google-places-api": "^2.0",
         "spatie/laravel-slack-alerts": "^1.1",
         "stripe/stripe-php": "^8.9",
+        "torann/geoip": "^3.0",
         "twilio/sdk": "^6.37",
-        "viacreative/sudo-su": "^1.1"
+        "van-ons/laraberg": "^2.0",
+        "viacreative/sudo-su": "^1.1",
+        "zencoreitservices/laravel-editor-js": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",

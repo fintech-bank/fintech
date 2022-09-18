@@ -40,7 +40,11 @@ class SendCodeCardNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [OvhSmsChannel::class, WebPushChannel::class];
+        if(config('app.env') == 'local') {
+            return [WebPushChannel::class];
+        } else {
+            return [OvhSmsChannel::class, WebPushChannel::class];
+        }
     }
 
     public function toOvhSms($notifiable)

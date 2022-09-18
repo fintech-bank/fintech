@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1121.0",
+    "editor.md": "^1.5.0",
     "laravel-echo": "^1.11.4",
     "pusher-js": "^7.0.6"
   },
