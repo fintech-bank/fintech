@@ -66,6 +66,25 @@ License: For each use you must have a valid license purchased only from above li
     </div>
     <!--end::Page-->
 </div>
+<div class="modal fade" tabindex="-1" id="modalChangelog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-bank">
+                <h3 class="modal-title text-white" data-content="title"></h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="" id="changelogContent" data-content="content"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--begin::Scrolltop-->
 <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
@@ -86,6 +105,9 @@ License: For each use you must have a valid license purchased only from above li
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+<script src="/assets/plugins/custom/editormd/editormd.min.js"></script>
+<script src="/assets/plugins/custom/editormd/lib/marked.min.js"></script>
+<script src="/assets/plugins/custom/editormd/lib/prettify.min.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

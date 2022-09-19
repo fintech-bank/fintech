@@ -70,6 +70,25 @@ License: For each use you must have a valid license purchased only from above li
     </div>
     <!--end::Page-->
 </div>
+<div class="modal fade" tabindex="-1" id="modalChangelog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-bank">
+                <h3 class="modal-title text-white" data-content="title"></h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+                <div class="" id="changelogContent" data-content="content"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--begin::Scrolltop-->
 <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
@@ -95,6 +114,9 @@ License: For each use you must have a valid license purchased only from above li
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
         crossorigin=""></script>
+<script src="/assets/plugins/custom/editormd/editormd.min.js"></script>
+<script src="/assets/plugins/custom/editormd/lib/marked.min.js"></script>
+<script src="/assets/plugins/custom/editormd/lib/prettify.min.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>

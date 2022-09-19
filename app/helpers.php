@@ -59,3 +59,10 @@ if (! function_exists('api_error')) {
         ];
     }
 }
+
+if (! function_exists('getLatestVersion')) {
+    function getLatestVersion()
+    {
+        return \App\Models\Core\Version::where('publish', 1)->orderBy('id', 'desc')->first()->name;
+    }
+}

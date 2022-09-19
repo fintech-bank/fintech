@@ -2524,6 +2524,22 @@ tooltipElements.forEach(function (tooltip) {
     html: true
   });
 });
+document.querySelector("#showChangelog").addEventListener('click', function (e) {
+  e.preventDefault();
+  var modal = new bootstrap.Modal(document.querySelector("#modalChangelog"));
+  $.ajax({
+    url: '/api/versions/' + e.target.dataset.version,
+    success: function success(data) {
+      console.log(data);
+      document.querySelector("#modalChangelog").querySelector("[data-content='title']").innerHTML = "Note de mise \xE0 jour V.".concat(data.name);
+      editormd.markdownToHTML('changelogContent', {
+        markdown: data.content,
+        htmlDecode: true
+      });
+      modal.show();
+    }
+  });
+});
 /*window.addEventListener('load', () => {
     if("serviceWorker" in navigator) {
         navigator.serviceWorker.register(location.protocol + "//" + location.host+'/sw_customer.js');

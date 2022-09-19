@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b7a209850fac3eedee947b3ec5f1a39",
+    "content-hash": "bd0ba1689fea631a3538767a5bc55927",
     "packages": [
         {
             "name": "alimranahmed/laraocr",
@@ -7813,6 +7813,80 @@
             "time": "2016-02-05T00:00:00+00:00"
         },
         {
+            "name": "spatie/laravel-github-webhooks",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-github-webhooks.git",
+                "reference": "a388b86784af6cee226a850b8fd6489666c41c55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-github-webhooks/zipball/a388b86784af6cee226a850b8fd6489666c41c55",
+                "reference": "a388b86784af6cee226a850b8fd6489666c41c55",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.77|^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.0",
+                "spatie/laravel-webhook-client": "^3.1.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^5.5|^6.0",
+                "orchestra/testbench": "^6.24|^7.0",
+                "pestphp/pest": "^1.21",
+                "spatie/laravel-ray": "^1.29",
+                "spatie/pest-plugin-test-time": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\GitHubWebhooks\\GitHubWebhooksServiceProvider"
+                    ],
+                    "aliases": {
+                        "GitHubWebhooks": "Spatie\\GitHubWebhooks\\GitHubWebhooksFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\GitHubWebhooks\\": "src",
+                    "Spatie\\GitHubWebhooks\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Handle GitHub webhooks in a Laravel application",
+            "homepage": "https://github.com/spatie/laravel-github-webhooks",
+            "keywords": [
+                "laravel",
+                "laravel-github-webhooks",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-github-webhooks/issues",
+                "source": "https://github.com/spatie/laravel-github-webhooks/tree/1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-19T10:51:23+00:00"
+        },
+        {
             "name": "spatie/laravel-package-tools",
             "version": "1.13.5",
             "source": {
@@ -7953,6 +8027,75 @@
                 }
             ],
             "time": "2022-09-05T13:14:46+00:00"
+        },
+        {
+            "name": "spatie/laravel-webhook-client",
+            "version": "3.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-webhook-client.git",
+                "reference": "2f5de4d5afbde59b0289694e4f63899b3bf02bde"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-webhook-client/zipball/2f5de4d5afbde59b0289694e4f63899b3bf02bde",
+                "reference": "2f5de4d5afbde59b0289694e4f63899b3bf02bde",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/bus": "^8.50|^9.0",
+                "illuminate/database": "^8.50|^9.0",
+                "illuminate/support": "^8.50|^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.11"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0|^7.0",
+                "phpunit/phpunit": "^9.3",
+                "spatie/laravel-ray": "^1.24"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\WebhookClient\\WebhookClientServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\WebhookClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Receive webhooks in Laravel apps",
+            "homepage": "https://github.com/spatie/laravel-webhook-client",
+            "keywords": [
+                "laravel-webhook-client",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-webhook-client/issues",
+                "source": "https://github.com/spatie/laravel-webhook-client/tree/3.1.3"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2022-08-07T18:08:10+00:00"
         },
         {
             "name": "spomky-labs/base64url",

@@ -39,7 +39,10 @@ Route::post('verifIban', \App\Http\Controllers\Api\IbanController::class);
 
 Route::get('dab', \App\Http\Controllers\Api\DabController::class);
 
+Route::post('github/webhook', [\App\Http\Controllers\Api\GithubController::class, 'webhook']);
+
 Route::prefix('versions')->group(function () {
+    Route::get('{version_name}', [\App\Http\Controllers\Api\VersionController::class, 'get']);
     Route::get('/types/all', [\App\Http\Controllers\Api\VersionController::class, 'typeAll']);
 });
 
@@ -104,3 +107,4 @@ Route::prefix('withdraw')->group(function () {
     Route::get('/{id}', [\App\Http\Controllers\Api\Withdraw\WithdrawController::class, 'get']);
     Route::delete('/{id}', [\App\Http\Controllers\Api\Withdraw\WithdrawController::class, 'delete']);
 });
+
