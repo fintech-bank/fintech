@@ -56,6 +56,7 @@ Route::prefix('wallet')->group(function () {
     Route::get('{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'info']);
     Route::get('{id}/rib', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'rib']);
     Route::post('{id}/exportAccount', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'export']);
+    Route::post('{id}/refundAccount', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'refundRequest']);
 });
 
 Route::prefix('transaction')->group(function () {

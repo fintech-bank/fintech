@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api\Agent;
 use App\Helper\CustomerHelper;
 use App\Helper\CustomerWalletHelper;
 use App\Helper\DocumentFile;
+use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\CustomerBeneficiaire;
 use App\Models\Customer\CustomerWallet;
+use App\Services\Stripe;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -116,5 +118,32 @@ class CustomerWalletController extends Controller
             'end' => $end,
             'sum_last_name' => $wallet->balance_actual < 0 ? 'debiteur' : 'crediteur',
         ]);
+    }
+
+    public function refundRequest(Request $request, $wallet_id, Stripe $stripe)
+    {
+        $wallet = CustomerWallet::find($wallet_id);
+        try {
+            $paymentIntent = $stripe->client->paymentIntents->create([
+                'amount' => CustomerWalletHelper::calculateAmountStripe($request->get('items')[0]['amount']),
+                'currency' => 'eur',
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+                'metadata' => [
+                    'customer_id' => $wallet->customer->id,
+                    'wallet_id' => $wallet->id
+                ],
+            ]);
+
+            return response()->json(['clientSecret' => $paymentIntent->client_secret]);
+        }catch (\Error $exception) {
+            LogHelper::notify('critical', $exception->getMessage());
+            return response()->json([
+                'errors' => [
+                    $exception->getMessage()
+                ]
+            ], 500);
+        }
     }
 }
