@@ -156,7 +156,7 @@ class CustomerCreditCard
     public static function getTransactionsMonthWithdraw($card, $percent = false)
     {
         if ($percent == false) {
-            return $card->transactions()
+            return - $card->transactions()
                 ->where('type', 'retrait')
                 ->where('confirmed', true)
                 ->where('customer_credit_card_id', $card->id)
@@ -164,7 +164,7 @@ class CustomerCreditCard
                 ->get()
                 ->sum('amount');
         } else {
-            $tran = $card->transactions()
+            $tran = - $card->transactions()
                         ->where('type', 'retrait')
                         ->where('confirmed', true)
                         ->where('customer_credit_card_id', $card->id)
@@ -179,7 +179,7 @@ class CustomerCreditCard
     public static function getTransactionsMonthPayment($card, $percent = false)
     {
         if ($percent == false) {
-            return $card->transactions()
+            return - $card->transactions()
                 ->where('type', 'payment')
                 ->where('confirmed', true)
                 ->where('customer_credit_card_id', $card->id)
@@ -187,7 +187,7 @@ class CustomerCreditCard
                 ->get()
                 ->sum('amount');
         } else {
-            $tran = $card->transactions()
+            $tran = - $card->transactions()
                 ->where('type', 'payment')
                 ->where('confirmed', true)
                 ->where('customer_credit_card_id', $card->id)
