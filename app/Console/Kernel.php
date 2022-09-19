@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('life generateDebit')->everyTenMinutes()->description('Génération Aléatoire des débits');
         $schedule->command('life generateSalary')->monthlyOn(rand(1, 5), '02:00:00')->description('Génération des salaires')->emailOutputTo(config('mail.from.address'));
         $schedule->command('life generatePrlvSepa')->dailyAt('07:00:00')->description('Génération des Prélèvements SEPA')->emailOutputTo(config('mail.from.address'));
+        $schedule->command('life limitWithdraw')->dailyAt('07:00:00')->description('Suppression des retraits non effectuer')->emailOutputTo(config('mail.from.address'));
         $schedule->command('system:execute autoAcceptCreditPrlv')->dailyAt('08:00:00')->description('Acceptation automatique des Prélèvement SEPA')->emailOutputTo(config('mail.from.address'));
         $schedule->command('system:execute acceptedLoanCharge')->dailyAt('08:00:00')->description('Libération du montant du pret bancaire')->emailOutputTo(config('mail.from.address'));
         $schedule->command('system:execute initPrlvCptEpargne')->dailyAt('08:00:00')->description('Initialise les prélèvements des comptes épargnes')->emailOutputTo(config('mail.from.address'));

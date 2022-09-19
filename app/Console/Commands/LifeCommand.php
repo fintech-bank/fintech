@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Helper\CustomerFaceliaHelper;
+use App\Helper\CustomerHelper;
 use App\Helper\CustomerLoanHelper;
 use App\Helper\CustomerTransactionHelper;
 use App\Helper\DocumentFile;
@@ -24,6 +25,7 @@ use App\Models\Customer\CustomerSituation;
 use App\Models\Customer\CustomerSituationCharge;
 use App\Models\Customer\CustomerSituationIncome;
 use App\Models\Customer\CustomerWallet;
+use App\Models\Customer\CustomerWithdraw;
 use App\Models\User;
 use App\Notifications\Customer\Automate\GenerateMensualReleverNotification;
 use App\Notifications\Customer\Automate\NewPrlvPresented;
@@ -74,6 +76,10 @@ class LifeCommand extends Command
 
             case 'generateMensualReleve':
                 $this->generateMensualReleve();
+                break;
+
+            case 'limitWithdraw':
+                $this->limitWithdraw();
                 break;
 
             default:
@@ -525,5 +531,27 @@ class LifeCommand extends Command
         }
 
         $this->info('Nombre de relevé généré: '.$i);
+    }
+
+    private function limitWithdraw()
+    {
+        $withdraws = CustomerWithdraw::where('status', 'pending')->get();
+        $arr = [];
+
+        foreach ($withdraws as $withdraw) {
+            $limit = $withdraw->created_at->addDays(5);
+            if($limit->startOfDay() == now()->startOfDay()) {
+                $withdraw->transaction()->delete();
+                $withdraw->delete();
+                $arr[] = [
+                    'reference' => $withdraw->reference,
+                    'amount' => eur($withdraw->amount),
+                    'customer' => CustomerHelper::getName($withdraw->wallet->customer)
+                ];
+            }
+        }
+
+        $this->table(['Reference', 'Montant', 'Client'], $arr);
+        return 0;
     }
 }

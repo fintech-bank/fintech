@@ -106,4 +106,9 @@ class CustomerWalletHelper
         return $wallet->transactions()->whereBetween('updated_at', [now()->startOfMonth(), now()->endOfMonth()])->where('confirmed', false)->orderBy('updated_at', 'desc')->sum('amount');
     }
 
+    public static function calculateAmountStripe($amount):int
+    {
+        return $amount;
+    }
+
 }

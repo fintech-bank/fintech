@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reseller;
 
+use App\Helper\CustomerTransactionHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWithdraw;
@@ -39,10 +40,7 @@ class ResellerController extends Controller
     {
         $with = CustomerWithdraw::find($with_id);
         if (base64_decode($with->code) == $request->get('code')) {
-            $with->transaction()->update([
-                'confirmed' => 1,
-                'confirmed_at' => now()
-            ]);
+            CustomerTransactionHelper::updated($with->transaction);
 
             $with->update([
                 'status' => 'terminated'

@@ -12,7 +12,7 @@ class StripeWebhookController extends CashierController
     /**
      * Handle customer subscription updated.
      *
-     * @param  array  $payload
+     * @param array $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleCustomerSubscriptionUpdated(array $payload)
@@ -28,12 +28,17 @@ class StripeWebhookController extends CashierController
     {
         $result = $payload['data']['object'];
 
-        if($payload['data']['object']['status'] == 'verified') {
+        if ($payload['data']['object']['status'] == 'verified') {
             CustomerInfo::where('customer_id', $payload['data']['object']['metadata']['customer_id'])->first()->verified();
         }
 
         LogHelper::notify('info', "Les informations d'un utilisateur ont été vérifié");
 
         return $result;
+    }
+
+    protected function handlePaymentIntentCreated(array $payload)
+    {
+        $result = $payload['data']['object'];
     }
 }

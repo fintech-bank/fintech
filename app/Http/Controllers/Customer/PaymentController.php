@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerWallet;
 use App\Models\Customer\CustomerWithdraw;
+use App\Notifications\Customer\CreateWithdrawNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -151,6 +152,8 @@ class PaymentController extends Controller
                 true,
                 ['withdraw' => $withdraw]
             );
+
+            $card->wallet->customer->user->notify(new CreateWithdrawNotification($card->wallet->customer, $withdraw));
 
             return response()->json();
         }catch (\Exception $exception) {
