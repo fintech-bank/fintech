@@ -558,6 +558,7 @@
             </div>
         </div>
     </div>
+    @if($customer->wallets()->where('type', 'compte')->where('status', 'active')->get()->count() != 0)
     <div class="modal fade" tabindex="-1" id="RequestWithdraw" data-bs-focus="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -618,6 +619,7 @@
             </div>
         </div>
     </div>
+    @endif
     <div class="modal fade" tabindex="-1" id="infoDab">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
