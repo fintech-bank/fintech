@@ -290,5 +290,16 @@
         <!--end::Aside Menu-->
     </div>
     <!--end::Aside menu-->
+
+    <div class="aside-footer flex-column-auto py-5" id="kt_aside_footer">
+        <button id="showChangelog" data-version="{{ getLatestVersion() }}" class="btn btn-custom btn-primary w-100 align-items-center justify-content-between ribbon ribbon-end" >
+            @if(!session()->get('version_view.view'))
+            <div class="ribbon-label bg-danger">v.{{ getLatestVersion() }}</div>
+            @else
+                <div class="ribbon-label bg-primary">v.{{ getLatestVersion() }}</div>
+            @endif
+            <span class="btn-label">Version de l'app</span>
+        </button>
+    </div>
 </div>
 <!--end::Aside-->

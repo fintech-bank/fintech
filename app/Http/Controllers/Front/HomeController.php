@@ -9,6 +9,10 @@ class HomeController extends Controller
 {
     public function index()
     {
+        \Cache::clear();
+        if(!\Cache::has('version_view')) {
+            \Cache::put('version_view', ['view' => false, "latest_version" => getLatestVersion()]);
+        }
         if(Agent::isMobile() || Agent::isPhone()) {
             return redirect()->to(config('domain.mobile'));
         } else {

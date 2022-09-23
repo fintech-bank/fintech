@@ -388,6 +388,24 @@ tooltipElements.forEach(tooltip => {
     new bootstrap.Tooltip(tooltip, {html: true})
 })
 
+document.querySelector("#showChangelog").addEventListener('click', e => {
+    e.preventDefault()
+    let modal = new bootstrap.Modal(document.querySelector("#modalChangelog"))
+
+    $.ajax({
+        url: '/api/versions/'+e.target.dataset.version,
+        success: data => {
+            console.log(data)
+            document.querySelector("#modalChangelog").querySelector("[data-content='title']").innerHTML = `Note de mise à jour V.${data.name}`
+            editormd.markdownToHTML('changelogContent', {
+                markdown : data.content,
+                htmlDecode : true,
+            })
+            modal.show()
+        }
+    })
+})
+
 /*window.addEventListener('load', () => {
     if("serviceWorker" in navigator) {
         navigator.serviceWorker.register(location.protocol + "//" + location.host+'/sw_customer.js');
