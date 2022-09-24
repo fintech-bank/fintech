@@ -263,7 +263,7 @@ class ExecuteSystem extends Command
 
     private function executeTransactionComing()
     {
-        $transactions = CustomerTransaction::where('confirmed', false)->get();
+        $transactions = CustomerTransaction::where('confirmed', false)->where('designation', 'NOT LIKE', '%Remise%')->get();
         $v = 0;
 
         try {

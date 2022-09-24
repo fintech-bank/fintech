@@ -108,3 +108,15 @@ Route::prefix('withdraw')->group(function () {
     Route::delete('/{id}', [\App\Http\Controllers\Api\Withdraw\WithdrawController::class, 'delete']);
 });
 
+Route::prefix('deposit')->group(function () {
+    Route::prefix('checks')->group(function () {
+        Route::post('{deposit_id}', [\App\Http\Controllers\Api\DepositCheckController::class, 'addCheck']);
+        Route::get('{deposit_id}/valid', [\App\Http\Controllers\Api\DepositCheckController::class, 'validDeposit']);
+        Route::get('{deposit_id}/decline', [\App\Http\Controllers\Api\DepositCheckController::class, 'declineDeposit']);
+        Route::delete('{deposit_id}', [\App\Http\Controllers\Api\DepositCheckController::class, 'deleteDeposit']);
+        Route::get('{deposit_id}/checks', [\App\Http\Controllers\Api\DepositCheckController::class, 'listChecks']);
+        Route::get('{deposit_id}/checks/{check_id}/accept', [\App\Http\Controllers\Api\DepositCheckController::class, 'acceptCheck']);
+        Route::get('{deposit_id}/checks/{check_id}/decline', [\App\Http\Controllers\Api\DepositCheckController::class, 'declineCheck']);
+    });
+});
+

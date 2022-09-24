@@ -140,6 +140,16 @@
                         <span class="menu-title">Souscriptions</span>
                     </a>
                 </div>
+                @if($customer->package->check_deposit)
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('customer.deposit.check.index') }}">
+						<span class="menu-icon">
+							<i class="fa-solid fa-money-check fa-lg"></i>
+						</span>
+                            <span class="menu-title">Dépot de chèque</span>
+                        </a>
+                    </div>
+                @endif
             </div>
             <!--end::Menu-->
         </div>

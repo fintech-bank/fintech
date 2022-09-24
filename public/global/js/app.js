@@ -2518,12 +2518,6 @@ inputMasks.forEach(function (input) {
     "mask": input.dataset.mask
   }).mask(input);
 });
-var tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-tooltipElements.forEach(function (tooltip) {
-  new bootstrap.Tooltip(tooltip, {
-    html: true
-  });
-});
 document.querySelector("#showChangelog").addEventListener('click', function (e) {
   e.preventDefault();
   var modal = new bootstrap.Modal(document.querySelector("#modalChangelog"));

@@ -44,42 +44,72 @@
 
 @section("content")
     <div class="container-fluid">
-    @if($customer->info->isVerified == 0)
-        <!--begin::Alert-->
-            <div class="alert alert-dismissible bg-warning d-flex flex-column flex-sm-row p-5 mb-10">
-                <!--begin::Icon-->
-                <i class="fa-solid fa-warning fa-2x text-light me-4 mb-5 mb-sm-0"></i>
-                <!--end::Icon-->
+        @if($customer->info->isVerified == 0)
+            <!--begin::Alert-->
+                <div class="alert alert-dismissible bg-warning d-flex flex-column flex-sm-row p-5 mb-10">
+                    <!--begin::Icon-->
+                    <i class="fa-solid fa-warning fa-2x text-light me-4 mb-5 mb-sm-0"></i>
+                    <!--end::Icon-->
 
-                <!--begin::Wrapper-->
-                <div class="d-flex flex-column text-light pe-0 pe-sm-10">
-                    <!--begin::Title-->
-                    <h4 class="mb-2 light text-light">Vérification identité</h4>
-                    <!--end::Title-->
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                        <!--begin::Title-->
+                        <h4 class="mb-2 light text-light">Vérification identité</h4>
+                        <!--end::Title-->
 
-                    <!--begin::Content-->
-                    <span>L'identité de ce client n'à pas été vérifier</span>
-                    <!--end::Content-->
+                        <!--begin::Content-->
+                        <span>L'identité de ce client n'à pas été vérifier</span>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Wrapper-->
+
+                    <!--begin::Close-->
+                    <a href="{{ route('agent.customer.verify.start', $customer->id) }}" id="btnVerify"
+                       class="btn btn-sm btn-light-warning position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 ms-sm-auto">
+                            <span class="indicator-label">
+                                Vérifier
+                            </span>
+                        <span class="indicator-progress">
+                                Veuillez Patienté... <span
+                                class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                    </a>
+                    <!--<button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <span class="svg-icon svg-icon-2x svg-icon-light">...</span>
+                    </button>-->
+                    <!--end::Close-->
                 </div>
-                <!--end::Wrapper-->
+                <!--end::Alert-->
+            @endif
+        @if(\App\Helper\CustomerDepositCheckHelper::calcCountPendingDeposit($customer) > 0)
+                <!--begin::Alert-->
+                <div class="alert alert-dismissible bg-primary d-flex flex-column flex-sm-row p-5 mb-10">
+                    <!--begin::Icon-->
+                    <i class="fa-solid fa-question-circle text-light fa-2x me-4 mb-5 mb-sm-0"></i>
+                    <!--end::Icon-->
 
-                <!--begin::Close-->
-                <a href="{{ route('agent.customer.verify.start', $customer->id) }}" id="btnVerify"
-                   class="btn btn-sm btn-light-warning position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 ms-sm-auto">
-                        <span class="indicator-label">
-                            Vérifier
-                        </span>
-                    <span class="indicator-progress">
-                            Veuillez Patienté... <span
-                            class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                        </span>
-                </a>
-                <!--<button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
-                    <span class="svg-icon svg-icon-2x svg-icon-light">...</span>
-                </button>-->
-                <!--end::Close-->
-            </div>
-            <!--end::Alert-->
+                    <!--begin::Wrapper-->
+                    <div class="d-flex flex-column text-light pe-0 pe-sm-10">
+                        <!--begin::Title-->
+                        <h4 class="mb-2 text-light">Remise de chèque</h4>
+                        <!--end::Title-->
+
+                        <!--begin::Content-->
+                        <span>Vous avez une ou plusieurs remises de chèque à vérifié</span>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Wrapper-->
+
+                    <!--begin::Close-->
+                    <a href="#remise" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-toggle="tab">
+                        <i class="fa-solid fa-money-check fa-2x text-light"></i>
+                    </a>
+                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <i class="fa-solid fa-xmark fa-2x text-light"></i>
+                    </button>
+                    <!--end::Close-->
+                </div>
+                <!--end::Alert-->
         @endif
         <div class="d-flex flex-column flex-xl-row">
             <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
@@ -271,6 +301,10 @@
                     <li class="nav-item">
                         <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
                            href="#support">Supports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab"
+                           href="#remise">Remise de chèque</a>
                     </li>
                     <!--end:::Tab item-->
                     <!--begin:::Tab item-->
@@ -1387,6 +1421,57 @@
 
                     </div>
                     <!--end:::Tab pane-->
+
+                    <div class="tab-pane fade" id="remise" role="tabpanel">
+                        <div class="card card-flush shadow-sm">
+                            <div class="card-header">
+                                <h3 class="card-title">Liste des remises de chèques</h3>
+                            </div>
+                            <div class="card-body py-5">
+                                <table class="table table-striped table-hover" id="liste_remise">
+                                    <thead>
+                                        <tr>
+                                            <th>Référence</th>
+                                            <th>Montant</th>
+                                            <th class="text-center">Nombre de chèque</th>
+                                            <th>Etat</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($customer->wallets as $wallet)
+                                            @foreach($wallet->deposits as $deposit)
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex flex-row align-items-center">
+                                                            <div class="symbol symbol-50px symbol-circle">
+                                                                <div class="symbol-label fs-2 fw-semibold text-success"><i class="fa-solid fa-wallet"></i></div>
+                                                            </div>
+                                                            <div class="d-flex flex-column">
+                                                                <strong>{{ $deposit->reference }}</strong>
+                                                                <div class="text-muted">{{ $wallet->number_account }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ eur($deposit->amount) }}</td>
+                                                    <td class="text-center"><span class="badge badge-circle badge-secondary">{{ $deposit->lists()->count() }}</span> </td>
+                                                    <td>{!! $deposit->status_label !!}</td>
+                                                    <td class="text-end">
+                                                        <button class="btn btn-primary btn-icon btn-sm viewChecks me-3" data-deposit="{{ $deposit->id }}" data-bs-toggle="tooltip" title="Gestion des chèques"><i class="fa-solid fa-money-check"></i> </button>
+                                                        @if($deposit->state == 'pending')
+                                                            <button class="btn btn-success btn-icon btn-sm validDeposit" data-deposit="{{ $deposit->id }}" data-bs-toggle="tooltip" title="Valider la remise"><i class="fa-solid fa-check"></i> </button>
+                                                            <button class="btn btn-danger btn-icon btn-sm declineDeposit" data-deposit="{{ $deposit->id }}" data-bs-toggle="tooltip" title="Décliner la remise"><i class="fa-solid fa-xmark"></i> </button>
+                                                            <button class="btn btn-danger btn-icon btn-sm deleteDeposit ms-3" data-deposit="{{ $deposit->id }}" data-bs-toggle="tooltip" title="Supprimer la remise"><i class="fa-solid fa-trash"></i> </button>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--end:::Tab content-->
             </div>
@@ -1850,6 +1935,37 @@
                         <x-form.button/>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="viewChecks">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-bank">
+                    <h3 class="modal-title text-white" data-content="title"></h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <table class="table table-striped table-hover gs-7" id="liste_remise_checks">
+                        <thead>
+                            <tr>
+                                <th>Numéro de chèque</th>
+                                <th>Identité du chèque</th>
+                                <th>Montant</th>
+                                <th>Date de dépot</th>
+                                <th>Vérifié ?</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="lists"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

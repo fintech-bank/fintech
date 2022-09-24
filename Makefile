@@ -27,5 +27,5 @@ update:
 	php artisan down
 	composer install
 	php artisan system:clear
-	php artisan system:seed --base
+	php artisan migrate
 	php artisan up

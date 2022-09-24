@@ -81,4 +81,11 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
         Route::get('mobility/{mobility_id}/document', [\App\Http\Controllers\Customer\MobilityController::class, 'showDocument'])->name('customer.subscription.mobility.document');
         Route::post('mobility/{mobility_id}/document/signate', [\App\Http\Controllers\Customer\MobilityController::class, 'signateDocument'])->name('customer.subscription.mobility.document.signate');
     });
+
+    Route::prefix('deposit')->group(function () {
+        Route::prefix('check')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Customer\Deposit\CheckController::class, 'index'])->name('customer.deposit.check.index');
+            Route::post('/', [\App\Http\Controllers\Customer\Deposit\CheckController::class, 'store'])->name('customer.deposit.check.store');
+        });
+    });
 });

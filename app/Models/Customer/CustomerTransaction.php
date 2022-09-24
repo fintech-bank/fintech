@@ -45,6 +45,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @mixin IdeHelperCustomerTransaction
  * @property-read \App\Models\Customer\CustomerWithdraw|null $withdraw
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerCheckDeposit[] $check_deposit
+ * @property-read int|null $check_deposit_count
  */
 class CustomerTransaction extends Model
 {
@@ -67,5 +69,10 @@ class CustomerTransaction extends Model
     public function withdraw()
     {
         return $this->hasOne(CustomerWithdraw::class);
+    }
+
+    public function check_deposit()
+    {
+        return $this->hasMany(CustomerCheckDeposit::class);
     }
 }

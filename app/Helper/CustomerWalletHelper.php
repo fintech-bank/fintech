@@ -59,7 +59,7 @@ class CustomerWalletHelper
 
     public static function getNameAccount($wallet)
     {
-        return CustomerHelper::getName($wallet->customer).' - Compte courant N°'.$wallet->number_account;
+        return CustomerHelper::getName($wallet->customer).' - '.$wallet->type_text.' N°'.$wallet->number_account;
     }
 
     /**
