@@ -66,6 +66,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\Customer\CustomerMobility|null $mobility
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerWithdraw[] $withdraws
  * @property-read int|null $withdraws_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerCheckDeposit[] $deposit_check
+ * @property-read int|null $deposit_check_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Customer\CustomerCheckDeposit[] $depositCheck
+ * @property-read string|null $type_text
  */
 class CustomerWallet extends Model
 {
@@ -76,6 +80,8 @@ class CustomerWallet extends Model
     public $timestamps = false;
 
     protected $dates = ['alert_date'];
+
+    protected $appends = ['type_text'];
 
     public function customer()
     {
@@ -145,5 +151,20 @@ class CustomerWallet extends Model
     public function withdraws()
     {
         return $this->hasMany(CustomerWithdraw::class);
+    }
+
+    public function deposits()
+    {
+        return $this->hasMany(CustomerCheckDeposit::class);
+    }
+
+    public function getTypeTextAttribute(): ?string
+    {
+        return match ($this->type) {
+            'compte' => 'Compte Courant',
+            'pret' => 'Pret Bancaire',
+            'epargne' => 'Compte Epargne',
+            default => null
+        };
     }
 }

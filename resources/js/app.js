@@ -383,11 +383,6 @@ inputMasks.forEach(input => {
     }).mask(input)
 })
 
-let tooltipElements = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-tooltipElements.forEach(tooltip => {
-    new bootstrap.Tooltip(tooltip, {html: true})
-})
-
 document.querySelector("#showChangelog").addEventListener('click', e => {
     e.preventDefault()
     let modal = new bootstrap.Modal(document.querySelector("#modalChangelog"))

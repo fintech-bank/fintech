@@ -87,6 +87,12 @@ Route::prefix('agence')->middleware(['auth', 'agent'])->group(function () {
                     Route::put('{loan_id}/remb', [\App\Http\Controllers\Agent\CustomerLoanController::class, 'remb'])->name('agent.customer.wallet.loan.remb');
                     Route::get('{loan_id}/table', [\App\Http\Controllers\PdfController::class, 'loanTable'])->name('agent.customer.wallet.loan.table');
                 });
+
+                Route::prefix('deposit')->group(function () {
+                    Route::prefix('check')->group(function () {
+                        Route::get('/', [\App\Http\Controllers\Agent\CustomerDepositCheckController::class, 'index'])->name('customer.wallet.deposit.check.index');
+                    });
+                });
             });
         });
 

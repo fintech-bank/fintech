@@ -6,7 +6,11 @@
         btnCode: document.querySelector('#btnCode'),
         btnAuth: document.querySelector('#btnAuth'),
         btnCreateWallet: document.querySelector('#btnCreateWallet'),
-        btnSigns: document.querySelectorAll('.sign')
+        btnSigns: document.querySelectorAll('.sign'),
+        btnViewChecks: document.querySelectorAll('.viewChecks'),
+        btnValidDeposit: document.querySelectorAll('.validDeposit'),
+        btnDeclineDeposit: document.querySelectorAll('.declineDeposit'),
+        btnDeleteDeposit: document.querySelectorAll('.deleteDeposit'),
     }
 
     let modals = {
@@ -17,7 +21,8 @@
         modalCreateWallet: document.querySelector('#createWallet'),
         modalCreateEpargne: document.querySelector('#createEpargne'),
         modalCreatePret: document.querySelector('#createPret'),
-        modalCreateCard: document.querySelector("#add_credit_card")
+        modalCreateCard: document.querySelector("#add_credit_card"),
+        modalViewChecks: document.querySelector("#viewChecks")
     }
 
     let elements = {
@@ -26,6 +31,17 @@
         tableCard: $("#liste_card"),
         epargnePlanInfo: document.querySelector("#epargne_plan_info"),
         pretPlanInfo: document.querySelector("#pret_plan_info"),
+    }
+
+    let tables = {
+        tableListeDeposit: $("#liste_remise"),
+        tableListeDepositChecks: $("#liste_remise_checks"),
+        tableListeDepositChecksLists: document.querySelector('#liste_remise_checks').querySelector('#lists'),
+    }
+
+    let blocks = {
+        blockModalViewCheck: new KTBlockUI(modals.modalViewChecks.querySelector('.modal-body')),
+        blockTableDeposit: new KTBlockUI(document.querySelector("#liste_remise").querySelector('tbody'))
     }
 
     if (buttons.btnVerify) {
@@ -39,6 +55,28 @@
                     e.target.removeAttribute('data-kt-indicator')
                     console.log(data)
                 }
+            })
+        })
+    }
+    if (buttons.btnViewChecks) {
+        buttons.btnViewChecks.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                updateListCheck(e.target, modals.modalViewChecks)
+            })
+        })
+    }
+    if (buttons.btnValidDeposit) {
+        buttons.btnValidDeposit.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault()
+                blocks.blockTableDeposit.block()
+
+                $.ajax({
+                    url: `/api/deposit/checks/${e.target.dataset.deposit}/valid`,
+                    success: data => {
+                    }
+                })
             })
         })
     }
@@ -114,15 +152,21 @@
         block.block()
 
         $.ajax({
-            url: '/api/epargne/'+item.value,
+            url: '/api/epargne/' + item.value,
             success: data => {
                 block.release()
                 console.log(data)
-                modals.modalCreateEpargne.querySelector(".profit_percent").innerHTML = data.profit_percent+' %'
-                modals.modalCreateEpargne.querySelector(".lock_days").innerHTML = data.lock_days+' jours'
-                modals.modalCreateEpargne.querySelector(".profit_days").innerHTML = "Montant des interet remis à zero tous les "+data.profit_days+" jours"
-                modals.modalCreateEpargne.querySelector(".init").innerHTML = new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.init)
-                modals.modalCreateEpargne.querySelector(".limit").innerHTML = new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.limit)
+                modals.modalCreateEpargne.querySelector(".profit_percent").innerHTML = data.profit_percent + ' %'
+                modals.modalCreateEpargne.querySelector(".lock_days").innerHTML = data.lock_days + ' jours'
+                modals.modalCreateEpargne.querySelector(".profit_days").innerHTML = "Montant des interet remis à zero tous les " + data.profit_days + " jours"
+                modals.modalCreateEpargne.querySelector(".init").innerHTML = new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR'
+                }).format(data.init)
+                modals.modalCreateEpargne.querySelector(".limit").innerHTML = new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR'
+                }).format(data.limit)
             },
             error: err => {
                 console.error(err)
@@ -135,14 +179,20 @@
         block.block()
 
         $.ajax({
-            url: '/api/pret/'+item.value,
+            url: '/api/pret/' + item.value,
             success: data => {
                 block.release()
                 console.log(data)
-                modals.modalCreatePret.querySelector(".min").innerHTML = new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.min)
-                modals.modalCreatePret.querySelector(".max").innerHTML = new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(data.max)
-                modals.modalCreatePret.querySelector(".duration").innerHTML = data.duration+' mois'
-                modals.modalCreatePret.querySelector(".interest").innerHTML = data.interests[0].interest+' %'
+                modals.modalCreatePret.querySelector(".min").innerHTML = new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR'
+                }).format(data.min)
+                modals.modalCreatePret.querySelector(".max").innerHTML = new Intl.NumberFormat('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR'
+                }).format(data.max)
+                modals.modalCreatePret.querySelector(".duration").innerHTML = data.duration + ' mois'
+                modals.modalCreatePret.querySelector(".interest").innerHTML = data.interests[0].interest + ' %'
                 modals.modalCreatePret.querySelector(".instruction").innerHTML = data.instruction
             },
             error: err => {
@@ -152,7 +202,7 @@
     }
 
     let getPhysicalInfo = (item) => {
-        if(item.value == 'physique') {
+        if (item.value == 'physique') {
             modals.modalCreateCard.querySelector('#physical_card').classList.remove('d-none')
         } else {
             modals.modalCreateCard.querySelector('#physical_card').classList.add('d-none')
@@ -173,6 +223,92 @@
             error: err => {
                 block.release()
                 console.log(err)
+            }
+        })
+    }
+
+    let updateListCheck = (e, divModal) => {
+        let modal = new bootstrap.Modal(divModal)
+        if(divModal.hasAttribute('role') === true) {
+            modal.hide()
+        } else {
+            modal.hide()
+        }
+        $.ajax({
+            url: `/api/deposit/checks/${e.dataset.deposit}/checks`,
+            success: data => {
+                console.log(data)
+                modal.show()
+                blocks.blockModalViewCheck.block()
+                tables.tableListeDepositChecksLists.innerHTML = ``
+                data.lists.forEach(list => {
+                    tables.tableListeDepositChecksLists.innerHTML += `
+                            <tr>
+                                <td>${list.number}</td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bolder">${list.name_deposit}</span>
+                                        <span class="text-muted">${list.bank_deposit}</span>
+                                    </div>
+                                </td>
+                                <td>${new Intl.NumberFormat('fr-FR', {
+                        style: 'currency',
+                        currency: 'eur'
+                    }).format(list.amount)}</td>
+                                <td>${list.date_deposit_format}</td>
+                                <td>${list.is_verified_label}</td>
+                                <td>
+                                    <button class="btn btn-success btn-sm btn-icon" data-deposit="${data.deposit.id}" data-check="${list.id}" onclick="acceptCheck(this)"><i class="fa-solid fa-check"></i> </button>
+                                    <button class="btn btn-danger btn-sm btn-icon" data-deposit="${data.deposit.id}" data-check="${list.id}" onclick="declineCheck(this)"><i class="fa-solid fa-xmark"></i> </button>
+                                </td>
+                            </tr>
+                            `
+                })
+                tables.tableListeDepositChecks.dataTable()
+                blocks.blockModalViewCheck.release()
+            }
+        })
+
+    }
+
+    let acceptCheck = (item) => {
+        Swal.fire({
+            title: 'Êtes-vous sur ?',
+            text: `Avez-vous bien vérifier le chèque ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6bc743',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, valider ce chèque'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/api/deposit/checks/${item.dataset.deposit}/checks/${item.dataset.check}/accept`,
+                    success: data => {
+                        updateListCheck(item, modals.modalViewChecks)
+                    }
+                })
+            }
+        })
+    }
+
+    let declineCheck = (item) => {
+        Swal.fire({
+            title: 'Êtes-vous sur ?',
+            text: `Avez-vous bien vérifier le chèque ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6bc743',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, décliner ce chèque'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/api/deposit/checks/${item.dataset.deposit}/checks/${item.dataset.check}/decline`,
+                    success: data => {
+                        updateListCheck(item, modals.modalViewChecks)
+                    }
+                })
             }
         })
     }
@@ -352,7 +488,10 @@
                             <h1 class="fw-bolder mb-5">Demande de découvert bancaire</h1>
                             <div class="separator separator-dashed border-danger opacity-25 mb-5"></div>
                             <div class="mb-9 text-black">
-                                Votre demande de découvert bancaire à été pré-accepter pour un montant maximal de <strong>${new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'eur'}).format(data.value)}</strong> au taux débiteur de ${data.taux}.
+                                Votre demande de découvert bancaire à été pré-accepter pour un montant maximal de <strong>${new Intl.NumberFormat('fr-FR', {
+                        style: 'currency',
+                        currency: 'eur'
+                    }).format(data.value)}</strong> au taux débiteur de ${data.taux}.
                             </div>
                         </div>
                     </div>
@@ -413,7 +552,7 @@
                 const errors = err.responseJSON.errors
 
                 Object.keys(errors).forEach(key => {
-                    toastr.error(errors[key][0], "Champs: "+key, {
+                    toastr.error(errors[key][0], "Champs: " + key, {
                         "positionClass": "toastr-bottom-right",
                     })
                 })
@@ -430,7 +569,7 @@
                 method: 'POST',
                 success: data => {
                     showFile.querySelector('.content').innerHTML = ``
-                    if(data.count === 0) {
+                    if (data.count === 0) {
                         showFile.querySelector(".empty").classList.remove('d-none')
                     } else {
                         showFile.querySelector(".empty").classList.add('d-none')
@@ -444,7 +583,6 @@
             })
         })
     })
-
 
 
     $("#country").select2({
@@ -562,16 +700,16 @@
                 simulateResult.querySelector('table').classList.remove('d-none')
                 form.find('[data-result="type_loan"]').html(data.type_loan)
                 form.find('[data-result="amount_loan"]').html(data.amount_loan)
-                form.find('[data-result="duration"]').html(data.duration+' mois')
-                form.find('[data-result="mensuality"]').html(data.mensuality+' / par mois')
+                form.find('[data-result="duration"]').html(data.duration + ' mois')
+                form.find('[data-result="mensuality"]').html(data.mensuality + ' / par mois')
                 form.find('[data-result="amount_interest"]').html(data.interest)
-                form.find('[data-result="amount_insurance"]').html(data.insurance_du+` (${data.insurance_mensuality} / par mois)`)
+                form.find('[data-result="amount_insurance"]').html(data.insurance_du + ` (${data.insurance_mensuality} / par mois)`)
                 form.find('[data-result="amount_du"]').html(data.amount_du)
                 form.find('[data-result="request_project"]').html(data.check_pret.resultat)
 
-                if(data.check_pret.resultat <= 4) {
+                if (data.check_pret.resultat <= 4) {
                     form.find('[data-result="request_project"]').addClass('text-danger')
-                } else if(data.check_pret.resultat >= 5 && data.check_pret.resultat <= 7) {
+                } else if (data.check_pret.resultat >= 5 && data.check_pret.resultat <= 7) {
                     form.find('[data-result="request_project"]').addClass('text-warning')
                 } else {
                     form.find('[data-result="request_project"]').addClass('text-success')
@@ -585,7 +723,7 @@
                 const errors = err.responseJSON.errors
 
                 Object.keys(errors).forEach(key => {
-                    toastr.error(errors[key],null, {
+                    toastr.error(errors[key], null, {
                         "positionClass": "toastr-bottom-right",
                     })
                 })
@@ -602,6 +740,8 @@
         info: !1,
         order: []
     })
+
+    tables.tableListeDeposit.DataTable()
 
     document.querySelector('[data-kt-customer-table-filter="search"]').addEventListener("keyup", (function (e) {
         tableWallet.search(e.target.value).draw()
@@ -630,7 +770,7 @@
             "all" === a && (a = "")
         }));
 
-        const r = a + " "+ h;
+        const r = a + " " + h;
         tableWallet.search(r).draw()
     })
     document.querySelector('[data-kt-card-table-filter="filter"]').addEventListener('click', () => {
@@ -646,7 +786,7 @@
             "all" === a && (a = "")
         }));
 
-        const r = a + " "+ h;
+        const r = a + " " + h;
         tableCard.search(r).draw()
     })
 
