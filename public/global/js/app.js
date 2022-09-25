@@ -2162,6 +2162,9 @@ module.exports = {
   \*****************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+    toSafeInteger = _require.toSafeInteger;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 $.ajaxSetup({
@@ -2531,6 +2534,16 @@ document.querySelector("#showChangelog").addEventListener('click', function (e) 
         htmlDecode: true
       });
       modal.show();
+    }
+  });
+});
+document.querySelector('[data-action="appear_notification"]').addEventListener('click', function (e) {
+  e.preventDefault();
+  $.ajax({
+    url: '/customer/profil/notification/read',
+    method: 'PUT',
+    error: function error() {
+      toastr.error("Impossible de valider les notifications !");
     }
   });
 });

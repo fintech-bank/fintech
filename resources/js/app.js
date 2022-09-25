@@ -1,3 +1,5 @@
+const { toSafeInteger } = require('lodash');
+
 require('./bootstrap');
 
 $.ajaxSetup({
@@ -397,6 +399,18 @@ document.querySelector("#showChangelog").addEventListener('click', e => {
                 htmlDecode : true,
             })
             modal.show()
+        }
+    })
+})
+
+document.querySelector('[data-action="appear_notification"]').addEventListener('click', e => {
+    e.preventDefault()
+    
+    $.ajax({
+        url: '/customer/profil/notification/read',
+        method: 'PUT',
+        error: () => {
+            toastr.error("Impossible de valider les notifications !")
         }
     })
 })

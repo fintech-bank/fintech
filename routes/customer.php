@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Customer\ProfilController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,7 @@ Route::prefix('customer')->middleware(['auth', 'customer'])->group(function () {
         Route::get('/password', [\App\Http\Controllers\Customer\ProfilController::class, 'requestPassword'])->name('customer.profil.requestPassword');
 
         Route::put('/', [\App\Http\Controllers\Customer\ProfilController::class, 'update'])->name('customer.profil.update');
+        Route::put('/notification/read', [ProfilController::class, 'readNotification']);
     });
 
     Route::prefix('wallets')->group(function () {
