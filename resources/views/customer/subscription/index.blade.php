@@ -165,8 +165,9 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="requests" role="tabpanel">
+                @if($customer->mobilities()->count() != 0)
                 <x-base.underline title="Demande de mobilité bancaire" class="w-100 mt-5 mb-5" size-text="fs-2"  size="3"/>
-                <div class="row">
+                <div class="row mb-10">
                     @foreach($customer->mobilities as $mobility)
                         <div class="col-xl-4">
                             <div class="card card-xl-stretch mb-xl-8 bg-light">
@@ -212,6 +213,50 @@
                         </div>
                     @endforeach
                 </div>
+                @endif
+
+                @if($customer->prets()->count() != 0)
+                <x-base.underline title="Pret Bancaire" class="w-100 mt-5 mb-5" size-text="fs-2"  size="3"/>
+                <div class="row mb-10">
+                    @foreach ($customer->prets as $pret)
+                        @if($pret->status == 'open' || $pret->status == 'study')
+                            <div class="col-xl-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-bank">
+                                        <h3 class="card-title text-white">Pret N°{{ $pret->reference }}</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex flex-row justify-content-around align-items-center">
+                                            <div>
+                                                <div class="d-flex flex-column mb-5">
+                                                    <div class="fw-bolder">Type de Crédit</div>
+                                                    <div class="text-muted">{{ $pret->plan->name }}</div>
+                                                </div>
+                                                <div class="d-flex flex-column mb-5">
+                                                    <div class="fw-bolder">Montant du pret</div>
+                                                    <div class="text-muted">{{ eur($pret->amount_loan) }}</div>
+                                                </div>
+                                                <div class="d-flex flex-column mb-5">
+                                                    <div class="fw-bolder">Mensualité</div>
+                                                    <div class="text-muted">{{ $pret->duration }} mensualités de {{ eur($pret->mensuality) }}</div>
+                                                </div>
+                                                <div class="d-flex flex-column mb-5">
+                                                    <div class="fw-bolder">Compte de paiement</div>
+                                                    <div class="text-muted">{{ App\Helper\CustomerWalletHelper::getNameAccount($pret->payment, true) }}</div>
+                                                </div>
+                                            </div>
+                                            {!! $pret->status_label !!}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        {!! $pret->status_explanation !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+                @endif
             </div>
         </div>
     </div>
