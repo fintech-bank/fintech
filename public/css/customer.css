@@ -1,0 +1,85 @@
+#progress-bar {
+  display: table;
+  width: 100%;
+  margin: 0;
+  padding: 15px 15px 0;
+  table-layout: fixed;
+  width: 100%;
+  counter-reset: step;
+}
+#progress-bar li {
+  list-style-type: none;
+  display: table-cell;
+  width: 20%;
+  float: left;
+  font-size: 16px;
+  position: relative;
+  text-align: center;
+}
+#progress-bar li:before {
+  width: 50px;
+  height: 50px;
+  color: #212121;
+  content: counter(step);
+  counter-increment: step;
+  line-height: 50px;
+  font-size: 18px;
+  border: 1px solid #464646;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  background-color: #fff;
+}
+#progress-bar li:after {
+  width: 100%;
+  height: 10px;
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  top: 25px;
+  left: -50%;
+  z-index: -1;
+}
+#progress-bar li:first-child:after {
+  content: none;
+}
+#progress-bar li.step-done {
+  color: #003ab6;
+}
+#progress-bar li.step-done:before {
+  border-color: #003ab6;
+  background-color: #003ab6;
+  color: #fff;
+  content: "\f00c";
+  font-family: "FontAwesome";
+}
+#progress-bar li.step-done + li:after {
+  background-color: #003ab6;
+}
+#progress-bar li.step-error {
+  color: #d31002;
+}
+#progress-bar li.step-error:before {
+  border-color: #d31002;
+  background-color: #d31002;
+  color: #fff;
+  content: "\f00d";
+  font-family: "FontAwesome";
+}
+#progress-bar li.step-active {
+  color: #003ab6;
+}
+#progress-bar li.step-active:before {
+  border-color: #003ab6;
+  color: #003ab6;
+  font-weight: 700;
+}
+
+.image-input .image-input-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 0.475rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

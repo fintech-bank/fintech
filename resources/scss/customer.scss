@@ -1,0 +1,91 @@
+$default: #212121;
+$grey: #464646;
+$main-color: #003ab6;
+$error-color: #d31002;
+
+// Progress bar
+#progress-bar {
+    display: table;
+    width: 100%;
+    margin: 0;
+    padding: 15px 15px 0;
+    table-layout: fixed;
+    width: 100%;
+    counter-reset: step;
+    li {
+      list-style-type: none;
+      display: table-cell;
+      width: 20%;
+      float: left;
+      font-size: 16px;
+      position: relative;
+      text-align: center;
+      &:before {
+        width: 50px;
+        height: 50px;
+        color: $default;
+        content: counter(step);
+        counter-increment: step;
+        line-height: 50px;
+        font-size: 18px;
+        border: 1px solid $grey;
+        display: block;
+        text-align: center;
+        margin: 0 auto 10px auto;
+        border-radius: 50%;
+        background-color: #fff;
+      }
+      &:after {
+        width: 100%;
+        height: 10px;
+        content: '';
+        position: absolute;
+        background-color: #fff;
+        top: 25px;
+        left: -50%;
+        z-index: -1;
+      }
+      &:first-child:after {
+        content: none;
+      }
+      &.step-done {
+        color: $main-color;
+        &:before {
+          border-color: $main-color;
+          background-color: $main-color;
+          color: #fff;
+          content: "\f00c";
+          font-family: "FontAwesome";
+        }
+        & + li:after {
+          background-color: $main-color;
+        }
+      }
+      &.step-error {
+        color: $error-color;
+        &:before {
+          border-color: $error-color;
+          background-color: $error-color;
+          color: #fff;
+          content: "\f00d";
+          font-family: "FontAwesome";
+        }
+      }
+      &.step-active {
+        color: $main-color;
+        &:before {
+          border-color: $main-color;
+          color: $main-color;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .image-input .image-input-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 0.475rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+}

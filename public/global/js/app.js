@@ -19804,6 +19804,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/scss/customer.scss":
+/*!**************************************!*\
+  !*** ./resources/scss/customer.scss ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/scss/app.scss":
 /*!*********************************!*\
   !*** ./resources/scss/app.scss ***!
@@ -20179,6 +20192,7 @@ process.umask = function() { return 0; };
 /******/ 			"css/admin": 0,
 /******/ 			"css/front": 0,
 /******/ 			"css/app": 0,
+/******/ 			"css/customer": 0,
 /******/ 			"css/email": 0
 /******/ 		};
 /******/ 		
@@ -20229,13 +20243,14 @@ process.umask = function() { return 0; };
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/scss/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/scss/front.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/scss/admin.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/scss/account.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/scss/pdf.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/email"], () => (__webpack_require__("./resources/scss/email.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/front.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/admin.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/account.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/pdf.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/email.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/pdf","css/account","css/admin","css/front","css/app","css/customer","css/email"], () => (__webpack_require__("./resources/scss/customer.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

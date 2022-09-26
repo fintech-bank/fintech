@@ -49,6 +49,7 @@ class CustomerDocument extends Model
     protected $guarded = [];
 
     protected $dates = ['created_at', 'updated_at', 'signed_at'];
+    protected $append = ['signed_by_client_label'];
 
     public function customer()
     {
@@ -65,5 +66,14 @@ class CustomerDocument extends Model
         return $query->update([
             'signed_by_client' => 1
         ]);
+    }
+
+    public function getSignedByClientLabelAttribute()
+    {
+        if($this->signed_by_client == 0) {
+            return "<div class='badge badge-danger'>Non Signé</div>";
+        } else {
+            return "<div class='badge badge-success'>Signé</div>";
+        }
     }
 }
