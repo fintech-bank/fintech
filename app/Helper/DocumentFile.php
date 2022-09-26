@@ -6,6 +6,7 @@ use App\Models\Core\DocumentCategory;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerDocument;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\File;
 
 class DocumentFile
 {
@@ -143,5 +144,29 @@ class DocumentFile
         }
 
         return $document;
+    }
+
+    public static function getAllFiles($directory)
+    {
+        $files = \Storage::disk('public')->allFiles($directory);
+        $arr = [];
+
+        foreach ($files as $file) {
+            $arr[] = $file;
+        }
+
+        return (object) $arr;
+    }
+
+    public static function getExtensionFileIcon($file)
+    {
+        $str = explode('.', $file);
+        $s = $str[1];
+
+        switch ($s) {
+            case 'jpg' || 'png' || 'jpeg': return '<i class="fa-solid fa-file-image"></i>';
+            case 'pdf': return '<i class="fa-solid fa-file-pdf"></i>';
+            default: return '<i class="fa-solid fa-file"></i>';
+        }
     }
 }
