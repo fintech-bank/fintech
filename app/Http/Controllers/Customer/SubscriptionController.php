@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Helper\CustomerLoanHelper;
 use App\Helper\CustomerMobilityHelper;
 use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
@@ -12,9 +13,12 @@ use App\Models\Core\Package;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerDocument;
 use App\Models\Customer\CustomerMobility;
+use App\Models\Customer\CustomerPret;
 use App\Notifications\Agent\Customer\UpdateTypeAccountNotification;
 use App\Notifications\Customer\SendCodeToSignEmailNotification;
 use App\Notifications\Customer\SendCodeToSignSMSNotification;
+use App\Services\CheckPretService;
+use Http;
 use Illuminate\Http\Request;
 use Intervention\Validation\Rules\Iban;
 
@@ -110,9 +114,9 @@ class SubscriptionController extends Controller
             }
 
             if(config('app.env') == 'local') {
-                auth()->user()->notify(new SendCodeToSignEmailNotification($document, $code));
+                auth()->user->notify(new SendCodeToSignEmailNotification($document, $code));
             } else {
-                auth()->user()->notify(new SendCodeToSignSMSNotification($document, $code));
+                auth()->user->notify(new SendCodeToSignSMSNotification($document, $code));
             }
 
             return response()->json(compact('mobility', 'document'));
@@ -142,5 +146,101 @@ class SubscriptionController extends Controller
         $loan_plan = LoanPlan::where('name', 'LIKE', '%Crédit Personnel%')->first();
 
         return view('customer.subscription.loan.personnalSimulate', compact('customer', 'loan_plan'));
+    }
+
+    public function personnalSubscribe(Request $request)
+    {
+        //dd();
+        $tmp = (object) $request->all();
+        $customer = Customer::find($request->get('customer_id'));
+        $simulate = Http::post(config('app.url').'/api/pret/simulate/personnal', [
+            "amount" => $request->get('amount'),
+            "dureation" => $request->get('duration')
+        ])->object();
+        //dd($simulate);
+
+        return view('customer.subscription.loan.personnalSubscribe', [
+            'info' => $tmp,
+            'customer' => $customer,
+            "simulate" => $simulate
+        ]);
+    }
+
+    public function personnal(Request $request)
+    {
+        //dd($request->get('action'));
+        $customer = Customer::find($request->get('customer_id'));
+        switch($request->get('action')) {
+            case 'response':
+                $check = $this->personnalResponse($request);
+                if($check['resultat'] <= 5) {
+                    return view('customer.subscription.loan.personnalResponse', [
+                        'info' => (object) $request->except('action'),
+                        'state' => "refused",
+                        'customer' => $customer
+                    ]);
+                } else {
+                    return view('customer.subscription.loan.personnalResponse', [
+                        'info' => (object) $request->except('action'),
+                        'state' => "accepted",
+                        'customer' => $customer
+                    ]);
+                }
+                break;
+
+            case 'justificatif':
+                    $loan = $this->createLoan($request, $customer);
+                    return view('customer.subscription.loan.personnalJustify', [
+                        'info' => (object) $request->except('action'),
+                        'customer' => $customer,
+                        'loan' => $loan
+                    ]);
+                break;
+
+            case 'signate':
+                    $loan = CustomerPret::find($request->get('loan_id'));
+                    $this->importJustifyFileLoan($request, $customer, $loan);
+                    $documents = $customer->documents()->where('document_category_id', 3)->where('signable', 1)->where('signed_by_client', 0)->where('name', 'LIKE', '%'.$loan->reference.'%')->get();
+
+                    return view('customer.subscription.loan.personnalSignate', [
+                        'loan' => $loan,
+                        'customer' => $customer,
+                        'documents' => $documents
+                    ]);
+                    break;
+
+            case 'terminate':
+                $loan = CustomerPret::find($request->get('loan_id'));
+                return view('customer.subscription.loan.personnalTerminate', [
+                    'loan' => $loan,
+                    'customer' => $customer
+                ]);
+                break;
+        }
+    }
+
+    private function personnalResponse($request)
+    {
+        $check = new CheckPretService();
+        $customer = Customer::find($request->get('customer_id'));
+        $wallet_principal = $customer->wallets()->where('type', 'compte')->where('status', 'active')->first();
+
+        return $check->handle($wallet_principal, $customer);
+    }
+
+    private function createLoan($request, Customer $customer)
+    {
+        $wallet = $customer->wallets()->where('type', 'compte')->where('status', 'active')->first();
+
+        return CustomerLoanHelper::createLoan($wallet, $customer, $request->get('amount'), 6, $request->get('duration'));
+    }
+
+    private function importJustifyFileLoan($request, Customer $customer, CustomerPret $loan)
+    {
+        $request->file('justify_cni_recto')->storeAs('/temp/loan/'.$customer->id.'/'.$loan->reference, 'cni_recto.'.$request->file('justify_cni_recto')->getClientOriginalExtension(), 'public');
+        $request->file('justify_cni_verso')->storeAs('/temp/loan/'.$customer->id.'/'.$loan->reference, 'cni_verso.'.$request->file('justify_cni_verso')->getClientOriginalExtension(), 'public');
+        $request->file('justify_revenue_one')->storeAs('/temp/loan/'.$customer->id.'/'.$loan->reference, 'rev_one.'.$request->file('justify_revenue_one')->getClientOriginalExtension(), 'public');
+        $request->file('justify_revenue_two')->storeAs('/temp/loan/'.$customer->id.'/'.$loan->reference, 'rev_two.'.$request->file('justify_revenue_two')->getClientOriginalExtension(), 'public');
+        $request->file('justify_domicile')->storeAs('/temp/loan/'.$customer->id.'/'.$loan->reference, 'domicile.'.$request->file('justify_domicile')->getClientOriginalExtension(), 'public');
     }
 }

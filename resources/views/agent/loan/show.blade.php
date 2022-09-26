@@ -142,7 +142,7 @@
                 <!--end::Card-->
             </div>
             <div class="flex-lg-row-fluid ms-lg-15">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm mb-10">
                     <div class="card-header">
                         <h3 class="card-title">Pret bancaire N°{{ $loan->reference }}</h3>
                         <div class="card-toolbar">
@@ -263,6 +263,27 @@
                         Footer
                     </div>
                 </div>
+                @if ($loan->status == 'open' || $loan->status == 'study')
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-bank">
+                            <h3 class="card-title text-white">Pièces justificatives</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-row justify-content-around">
+                                @foreach(\App\Helper\DocumentFile::getAllFiles('/temp/loan/'.$loan->customer->id.'/'.$loan->reference) as $file)
+                                    <a class="card card-flush shadow-sm text-black" href="/storage/{{ $file }}" target="_blank">
+                                        <div class="card-body py-5">
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <div class="fs-5tx">{!! \App\Helper\DocumentFile::getExtensionFileIcon($file) !!}</div>
+                                                {{ $file }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

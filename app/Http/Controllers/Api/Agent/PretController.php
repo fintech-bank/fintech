@@ -97,15 +97,7 @@ class PretController extends Controller
         if($checkPret['resultat'] <= 5) {
             return response()->json(['errors' => $checkPret['text']], 500);
         } else {
-            $pret = CustomerLoanHelper::createLoan(
-                $wallet,
-                $customer,
-                $request->get('amount'),
-                $plan->id,
-                $request->get('duration'),
-            );
-
-            return response()->json($pret);
+            return response()->json();
         }
     }
 }

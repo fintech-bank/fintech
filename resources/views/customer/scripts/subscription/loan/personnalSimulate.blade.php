@@ -110,7 +110,7 @@
             },
             success: data => {
                 elements.btnSubmit.removeAttribute('data-kt-indicator')
-                console.log(data)
+                window.location.href=`/customer/subscribe/loan/personnal/subscribe?amount=${elements.input_amount.value}&customer_id={{ $customer->id }}&duration=${elements.input_duration.value}`
             },
             error: err => {
                 elements.btnSubmit.removeAttribute('data-kt-indicator')

@@ -17,7 +17,8 @@ mix.js('resources/js/app.js', 'public/global/js')
     .sass('resources/scss/admin.scss', 'public/css/admin.css')
     .sass('resources/scss/account.scss', 'public/css/account.css')
     .sass('resources/scss/pdf.scss', 'public/css/pdf.css')
-    .sass('resources/scss/email.scss', 'public/css/email.css');
+    .sass('resources/scss/email.scss', 'public/css/email.css')
+    .sass('resources/scss/customer.scss', 'public/css/customer.css');
 
 mix.disableNotifications()
 mix.browserSync({

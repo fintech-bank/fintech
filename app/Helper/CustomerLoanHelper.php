@@ -127,7 +127,7 @@ class CustomerLoanHelper
 
             $doc_pret = DocumentFile::createDoc(
                 $customer,
-                'Contrat de crédit facelia',
+                'Contrat de credit facelia',
                 $loan->reference.' - Information Contractuel Facelia',
                 3,
                 null,
@@ -143,8 +143,8 @@ class CustomerLoanHelper
         } else {
             $doc_pret = DocumentFile::createDoc(
                 $customer,
-                'Contrat de crédit Personnel',
-                $loan->reference.' - Offre de contrat de credit: Pret Personnel',
+                'Contrat de credit Personnel',
+                $loan->reference.' - Offre de contrat de credit Pret Personnel',
                 3,
                 null,
                 true,
@@ -172,7 +172,7 @@ class CustomerLoanHelper
 
         DocumentFile::createDoc(
             $customer,
-            'Information Précontractuel Normalisé',
+            'Information Precontractuel Normalise',
             $loan->reference.' - Information Precontractuel Normalise',
             3,
             null,
@@ -212,7 +212,7 @@ class CustomerLoanHelper
         );
         DocumentFile::createDoc(
             $customer,
-            'Mandat Prélèvement Sepa',
+            'Mandat Prelevement Sepa',
             $loan->reference.' - Mandat Prelevement Sepa',
             3,
             null,
@@ -239,7 +239,9 @@ class CustomerLoanHelper
             ]
         );
 
-        auth()->user()->notify(new CreatePretNotification($customer, $wallet, $doc_pret));
+        if(auth()->user()->agent == 1) {
+            auth()->user()->notify(new CreatePretNotification($customer, $wallet, $doc_pret));
+        }
         $customer->user->notify(new \App\Notifications\Customer\CreatePretNotification($customer, $wallet, $doc_pret, $loan));
 
         return $loan;

@@ -130,6 +130,21 @@ class ProfilController extends Controller
         ]);
     }
 
+    public function readNotification()
+    {
+        try {
+            auth()->user()->unreadNotifications->markAsRead();
+
+            return response()->json();
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => [
+                    $e->getMessage(),
+                ]
+                ], 500);
+        }
+    }
+
     private function phoneVerificationToken($mobile)
     {
         $twilio = new Twillo();
@@ -169,4 +184,5 @@ class ProfilController extends Controller
             return $exception;
         }
     }
+
 }

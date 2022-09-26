@@ -57,9 +57,13 @@ class CustomerWalletHelper
         }
     }
 
-    public static function getNameAccount($wallet)
+    public static function getNameAccount($wallet, $generic = false)
     {
-        return CustomerHelper::getName($wallet->customer).' - '.$wallet->type_text.' N°'.$wallet->number_account;
+        if(!$generic) {
+            return CustomerHelper::getName($wallet->customer).' - '.$wallet->type_text.' N°'.$wallet->number_account;
+        } else {
+            return $wallet->type_text.' N°'.$wallet->number_account;
+        }
     }
 
     /**
