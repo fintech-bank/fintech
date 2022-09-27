@@ -68,7 +68,7 @@ class SubscriptionController extends Controller
         }
     }
 
-    public function mobility(Request $request, DocumentFile $documentFile)
+    public function mobility(Request $request)
     {
         $request->validate([
             'old_iban' => new Iban(),
