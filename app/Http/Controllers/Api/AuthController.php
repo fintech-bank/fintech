@@ -16,8 +16,6 @@ class AuthController extends Controller
         $s_id = User::where('identifiant', $request->get('identifiant'))->count();
         $user = User::where('identifiant', $request->get('identifiant'))->first();
 
-        dd();
-
         try {
             if($s_id == 1) {
                 if(base64_decode($user->customers->auth_code) == $request->get('code')) {
