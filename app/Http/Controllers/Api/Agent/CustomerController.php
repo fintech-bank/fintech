@@ -305,6 +305,11 @@ class CustomerController extends Controller
         return response()->json(["mobility" => $mobility, "other" => $other]);
     }
 
+    public function storeMobility(Request $request)
+    {
+
+    }
+
     private function PhoneVerification($customer)
     {
         try {

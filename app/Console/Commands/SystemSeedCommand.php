@@ -114,7 +114,6 @@ class SystemSeedCommand extends Command
             'admin' => false,
             'agent' => false,
             'customer' => true,
-            'identifiant' => UserHelper::generateID(),
             'agency_id' => $agency->id,
         ]);
 

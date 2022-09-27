@@ -110,10 +110,13 @@ License: For each use you must have a valid license purchased only from above li
 <script src="/assets/js/scripts.bundle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
-<script src="//code.tidio.co/et1dkherzl4eyesbwuluuxbvsvwvvzxz.js" async></script>
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
         integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
         crossorigin=""></script>
+<script
+    src='//eu.fw-cdn.com/10390477/276006.js'
+    chat='true'>
+</script>
 <script src="/assets/plugins/custom/editormd/editormd.min.js"></script>
 <script src="/assets/plugins/custom/editormd/lib/marked.min.js"></script>
 <script src="/assets/plugins/custom/editormd/lib/prettify.min.js"></script>
