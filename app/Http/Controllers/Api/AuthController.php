@@ -16,6 +16,8 @@ class AuthController extends Controller
         $s_id = User::where('identifiant', $request->get('identifiant'))->count();
         $user = User::where('identifiant', $request->get('identifiant'))->first();
 
+        dd();
+
         try {
             if($s_id == 1) {
                 if(base64_decode($user->customers->auth_code) == $request->get('code')) {
@@ -35,7 +37,7 @@ class AuthController extends Controller
             }
         }catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
-            return response()->json($exception->getMessage(), 500);
+            return response()->json($exception, 500);
         }
     }
 }
