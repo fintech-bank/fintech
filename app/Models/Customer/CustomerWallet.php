@@ -158,13 +158,16 @@ class CustomerWallet extends Model
         return $this->hasMany(CustomerCheckDeposit::class);
     }
 
+    /**
+     * @return string|null
+     */
     public function getTypeTextAttribute(): ?string
     {
-        return match ($this->type) {
-            'compte' => 'Compte Courant',
-            'pret' => 'Pret Bancaire',
-            'epargne' => 'Compte Epargne',
-            default => null
-        };
+        switch ($this->type) {
+            case 'compte': return 'Compte Courant';
+            case 'pret': return 'Pret Bancaire';
+            case 'epargne': return 'Compte Epargne';
+            default: return null;
+        }
     }
 }

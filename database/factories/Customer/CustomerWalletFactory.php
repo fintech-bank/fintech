@@ -28,7 +28,7 @@ class CustomerWalletFactory extends Factory
             'number_account' => $this->faker->randomNumber(9),
             'iban' => $this->faker->iban('FR'),
             'rib_key' => rand(10, 99),
-            'status' => $status[rand(0, 3)],
+            'status' => 'active',
             'balance_actual' => $balance_actual,
             'balance_coming' => $balance_coming,
             'decouvert' => $decouvert,
