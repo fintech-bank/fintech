@@ -33,7 +33,7 @@ class AuthController extends Controller
                 return response()->json(['state' => 'error']);
             }
         }catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), 500);
+            return response()->json($exception, 500);
         }
     }
 }
