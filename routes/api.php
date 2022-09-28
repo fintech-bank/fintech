@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('auth')->group(function () {
-    Route::post('/', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-});
-
 Route::get('/geo/countries', function () {
     $result = \App\Helper\GeoHelper::getAllCountries();
     $json = [];
@@ -38,6 +34,10 @@ Route::get('stats', [\App\Http\Controllers\Api\Agent\StatController::class, 'sta
 Route::get('beneficiaire/{id}', [\App\Http\Controllers\Api\Agent\CustomerWalletController::class, 'getBeneficiaire']);
 Route::get('sepas/{customer}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'listeSepas']);
 Route::get('mobility/{mobility_id}', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'getMobility']);
+
+Route::prefix('auth')->group(function () {
+    Route::post('/', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+});
 
 Route::prefix('mobility')->group(function () {
     Route::post('/', [\App\Http\Controllers\Api\Agent\CustomerController::class, 'storeMobility']);

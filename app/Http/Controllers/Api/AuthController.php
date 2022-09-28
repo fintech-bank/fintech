@@ -24,7 +24,7 @@ class AuthController extends Controller
                             'state' => 'success',
                             'identifiant' => $user->identifiant,
                             'name' => $user->name,
-                            'wallet' => CustomerWalletHelper::getNameAccount($user->customers->wallets()->where('type', 'compte')->where('status', 'active')->first(), true)
+                            'wallet' => $user->customers->wallets()->where('type', 'compte')->where('status', 'active')->first()->number_account
                         ]
                     ]);
                 }else{
