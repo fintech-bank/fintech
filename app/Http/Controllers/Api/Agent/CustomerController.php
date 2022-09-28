@@ -297,16 +297,15 @@ class CustomerController extends Controller
 
     public function storeMobility(Request $request)
     {
-        //dd($request->all());
         $bank = Bank::where('bic', $request->get('old_bic'))->first();
         $wallet = CustomerWallet::where('number_account', $request->get('customer_wallet_number'))->first();
         $customer = $wallet->customer;
-        $code = random_int(100000,999999);
-        $serach_iban = CustomerMobility::where('old_iban', $request->get('old_iban'))->exists();
-        $mandate = "MDB-".$request->get('old_bic').'T'.$customer->user->agency->bic.now()->format('dmY').'-'.random_int(10000,99999);
+        $code = random_int(100000, 999999);
+        $search_iban = CustomerMobility::where('old_iban', $request->get('old_iban'))->exists();
+        $mandate = "MDB-" . $request->get('old_bic') . 'T' . $customer->user->agency->bic . now()->format('dmY') . '-' . random_int(10000, 99999);
 
 
-        if($serach_iban) {
+        if ($search_iban) {
             return response()->json([
                 'errors' => "Ce compte fait déjà l'objet d'un transfert de banque",
             ]);
@@ -330,15 +329,16 @@ class CustomerController extends Controller
             ]);
 
             try {
-                $document = DocumentFile::createDoc($customer, 'mandate mobility', 'Mandat de mobilité bancaire - '.$mandate, 3, $mandate,
-                    true, true, true, true, ['mobility' => $mobility]);
-            }catch (\Exception $exception) {
+                $document = DocumentFile::createDoc($customer, 'mandate mobility', 'Mandat de mobilité bancaire - ' . $mandate, 3, $mandate,
+                    true, true, true, true, ['mobility' => $mobility]
+                );
+            } catch (\Exception $exception) {
                 LogHelper::notify('critical', $exception);
                 return response()->json($exception->getMessage(), 500);
             }
 
             return response()->json(compact('mobility', 'document'));
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             LogHelper::notify('critical', $exception);
             return response()->json($exception->getMessage(), 500);
         }
