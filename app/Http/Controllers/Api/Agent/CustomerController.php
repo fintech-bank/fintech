@@ -301,9 +301,9 @@ class CustomerController extends Controller
         $bank = Bank::where('bic', $request->get('old_bic'))->first();
         $wallet = CustomerWallet::where('number_account', $request->get('customer_wallet_number'))->first();
         $customer = $wallet->customer;
-        $code = rand(100000,999999);
+        $code = random_int(100000,999999);
         $serach_iban = CustomerMobility::where('old_iban', $request->get('old_iban'))->exists();
-        $mandate = "MDB-".$request->get('old_bic').'T'.$customer->user->agency->bic.now()->format('dmY').'-'.rand(10000,99999);
+        $mandate = "MDB-".$request->get('old_bic').'T'.$customer->user->agency->bic.now()->format('dmY').'-'.random_int(10000,99999);
 
 
         if($serach_iban) {
