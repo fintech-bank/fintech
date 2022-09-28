@@ -10,10 +10,12 @@ use App\Helper\DocumentFile;
 use App\Helper\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\Agent\Customer\WriteMail;
+use App\Models\Core\Bank;
 use App\Models\Core\Package;
 use App\Models\Customer\Customer;
 use App\Models\Customer\CustomerInfo;
 use App\Models\Customer\CustomerMobility;
+use App\Models\Customer\CustomerWallet;
 use App\Notifications\Agent\Customer\ReinitAuthCustomer;
 use App\Notifications\Agent\Customer\ReinitCodeCustomer;
 use App\Notifications\Agent\Customer\ReinitPasswordCustomer;
@@ -21,6 +23,7 @@ use App\Notifications\Agent\Customer\UpdateStatusAccountNotification;
 use App\Notifications\Agent\Customer\UpdateTypeAccountNotification;
 use App\Notifications\Customer\PhoneVerificationNotification;
 use App\Services\Twillo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Twilio\Exceptions\TwilioException;
 
@@ -292,6 +295,55 @@ class CustomerController extends Controller
         return response()->json($arr);
     }
 
+    public function storeMobility(Request $request)
+    {
+        $bank = Bank::where('bic', $request->get('old_bic'))->first();
+        $wallet = CustomerWallet::where('number_account', $request->get('customer_wallet_number'))->first();
+        $customer = $wallet->customer;
+        $code = random_int(100000, 999999);
+        $search_iban = CustomerMobility::where('old_iban', $request->get('old_iban'))->exists();
+        $mandate = "MDB-" . $request->get('old_bic') . 'T' . $customer->user->agency->bic . now()->format('dmY') . '-' . random_int(10000, 99999);
+
+
+        if ($search_iban) {
+            return response()->json([
+                'errors' => "Ce compte fait déjà l'objet d'un transfert de banque",
+            ]);
+        }
+
+        try {
+            $mobility = $customer->mobilities()->create([
+                'status' => 'bank_start',
+                'old_iban' => str_replace(' ', '', $request->get('old_iban')),
+                'old_bic' => $request->get('old_bic'),
+                'mandate' => $mandate,
+                'start' => now(),
+                'end_prov' => now()->addDays(22)->startOfDay(),
+                'end_prlv' => Carbon::createFromTimestamp(strtotime($request->get('end_prlv'))),
+                'close_account' => 1,
+                'customer_id' => $customer->id,
+                'bank_id' => $bank->id,
+                'customer_wallet_id' => $wallet->id,
+                'comment' => CustomerMobilityHelper::getStatus('bank_start', 'comment'),
+                'code' => base64_encode($code)
+            ]);
+
+            try {
+                $document = DocumentFile::createDoc($customer, 'mandate mobility', 'Mandat de mobilité bancaire - ' . $mandate, 3, $mandate,
+                    true, true, true, true, ['mobility' => $mobility]
+                );
+            } catch (\Exception $exception) {
+                LogHelper::notify('critical', $exception);
+                return response()->json($exception->getMessage(), 500);
+            }
+
+            return response()->json(compact('mobility', 'document'));
+        } catch (\Exception $exception) {
+            LogHelper::notify('critical', $exception);
+            return response()->json($exception->getMessage(), 500);
+        }
+    }
+
     public function getMobility($mobility_id)
     {
         $mobility = CustomerMobility::with('bank', 'customer', 'wallet')->find($mobility_id);
@@ -305,10 +357,6 @@ class CustomerController extends Controller
         return response()->json(["mobility" => $mobility, "other" => $other]);
     }
 
-    public function storeMobility(Request $request)
-    {
-
-    }
 
     private function PhoneVerification($customer)
     {
